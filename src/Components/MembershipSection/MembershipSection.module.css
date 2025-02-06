@@ -1,0 +1,173 @@
+.container {
+    min-height: 100vh;
+    width: 100vw;
+    padding: 2.5rem 0;
+    background-size: cover;
+    background-position: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    left: 50%;
+    right: 50%;
+    margin-left: -50vw;
+    margin-right: -50vw;
+}
+
+.innerContainer {
+    max-width: 1200px;
+    margin: 0 auto;
+    width: 95%;
+    background-color: transparent;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 0 1rem;
+}
+
+.title {
+    font-family: "Anton, sans-serif";
+    font-size: 1.5rem;
+    color: white;
+    margin-bottom: 1.5rem;
+    text-align: center;
+}
+
+.cardContainer {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    width: 100%;
+    gap: 1.5rem;
+}
+
+.memberCard {
+    width: 100%;
+    border-radius: 0.75rem;
+    overflow: hidden;
+}
+
+.cardImage {
+    height: 200px;
+}
+
+.cardImage img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 0.75rem;
+    box-shadow: 0 0 20px rgba(255,215,0,0.6), 0 0 30px rgba(255,215,0,0.4), 0 0 40px rgba(255,215,0,0.2), inset 0 0 20px rgba(255,215,0,0.4);
+}
+
+.cardContent {
+    padding: 1rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.cardTitle {
+    font-family: "Anton, sans-serif";
+    font-size: 1.5rem;
+    color: white;
+}
+
+.cardDescription {
+    font-size: 0.875rem;
+    color: white;
+    margin-top: 0.5rem;
+}
+
+.buttonWrapper {
+    position: relative;
+    overflow: hidden;
+    border-radius: 0.25rem;
+    margin-top: 1rem;
+    align-self: flex-start;
+}
+
+.buttonGradient {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(to right, #663399, #3366cc);
+    transform: translateX(-100%);
+    transition: transform 700ms ease-out;
+}
+
+.buttonWrapper:hover .buttonGradient {
+    transform: translateX(0);
+}
+
+.button {
+    font-family: "Anton, sans-serif";
+    position: relative;
+    width: 100%;
+    padding: 0.5rem 1rem;
+    color: black;
+    background-color: #f3ea28;
+    font-size: 0.875rem;
+    transition: colors 300ms;
+}
+
+.button:hover {
+    background-color: transparent;
+    color: white;
+}
+
+@media (min-width: 768px) {
+    .innerContainer {
+        width: 90%;
+    }
+
+    .title {
+        font-size: 1.875rem;
+        margin-bottom: 2.5rem;
+    }
+
+    .cardContainer {
+        flex-direction: row;
+        gap: 1rem;
+    }
+
+    .memberCard {
+        width: 48%;
+    }
+
+    .cardImage {
+        height: 250px;
+    }
+
+    .cardTitle {
+        font-size: 1.875rem;
+    }
+
+    .cardDescription, .button {
+        font-size: 1rem;
+    }
+
+    .button {
+        width: 236px;
+        padding: 0.5rem 1.5rem;
+    }
+}
+
+@media (min-width: 1024px) {
+    .innerContainer {
+        width: 1200px;
+    }
+
+    .title {
+        font-size: 2.25rem;
+    }
+
+    .memberCard {
+        width: 580px;
+    }
+
+    .cardImage {
+        height: 300px;
+    }
+}

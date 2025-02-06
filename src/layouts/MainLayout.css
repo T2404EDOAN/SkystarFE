@@ -1,0 +1,20 @@
+.layout {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.main-content {
+  flex: 1;
+  width: 100%;
+  width: 1200px;
+  margin: 0 auto;
+  margin-top: 77px; /* giữ khoảng cách với header */
+  padding: 0 16px; /* thêm padding cho responsive */
+}
+
+@media (min-width: 1200px) {
+  .main-content {
+    padding: 0; /* bỏ padding khi màn hình đủ rộng */
+  }
+}

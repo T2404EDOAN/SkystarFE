@@ -1,0 +1,248 @@
+header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 80px;
+  background: #fff;
+  z-index: 1000;
+  /* ...existing code... */
+}
+
+.header {
+  background-color: #0f172a;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index: 10;
+}
+
+.header-container {
+  width: 100%;
+  padding-left: 1rem;
+  padding-right: 1rem;
+  max-width: 1200px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.header-content {
+  max-width: 1200px;
+  margin: 0 auto;
+  height: 100%;
+  padding: 0 16px;
+  /* ...existing code... */
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 78px;
+}
+
+.logo-section {
+  display: flex;
+  align-items: center;
+  text-decoration: none;
+  color: inherit;
+}
+
+.logo {
+  height: 2rem;
+}
+
+.logo-text {
+  color: white;
+  font-weight: bold;
+  font-size: 1.125rem;
+  margin-left: 0.5rem;
+}
+
+.desktop-nav {
+  display: none;
+}
+
+.desktop-nav-lg {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  flex: 1;
+  gap: 1.5rem;
+}
+
+.action-button {
+  position: relative;
+  width: 125px;
+  height: 40px;
+  border-radius: 0.375rem;
+  overflow: hidden;
+  font-family: 'Anton';
+}
+
+.action-button-yellow {
+  background-color: #f3ea28;
+  color: black;
+}
+
+.action-button-purple {
+  background-color: #639;
+  color: white;
+}
+
+.action-button-content {
+  position: relative;
+  z-index: 10;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+  gap: 0.5rem;
+  transition: color 0.3s;
+}
+
+.action-button-content:hover {
+  color: white;
+}
+
+.action-button-bg-yellow {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(to right, #663399, #3366cc);
+  transform: translateX(-100%);
+  transition: transform 0.3s ease-out;
+}
+
+.action-button-bg-yellow:hover {
+  transform: translateX(0);
+}
+
+.action-button-bg-orange {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(to right, #ff6d00, #ffc107);
+  transform: translateX(-100%);
+  transition: transform 0.3s ease-out;
+}
+
+.action-button-bg-orange:hover {
+  transform: translateX(0);
+}
+
+.search-bar {
+  display: flex;
+  align-items: center;
+  background-color: white;
+  border-radius: 9999px;
+  padding-left: 1rem;
+  padding-right: 1rem;
+  padding-top: 0.5rem;
+  padding-bottom: 0.5rem;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  width: 15rem;
+}
+
+.search-input {
+  width: 100%;
+  outline: none;
+  color: #4b5563;
+}
+
+.search-icon {
+  height: 1.25rem;
+  width: 1.25rem;
+  color: #9ca3af;
+}
+
+.user-actions {
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+  text-decoration: none;
+  color: white !important; /* Force white color */
+}
+
+.user-actions:hover {
+  color: white !important; /* Keep white color on hover */
+}
+
+.user-icon {
+  width: 30px;
+  height: 30px;
+  color: white; /* Ensure icon is white */
+}
+
+.user-text {
+  font-size: 1rem;
+  color: white; /* Ensure text is white */
+}
+
+.secondary-nav {
+  display: none;
+}
+
+.secondary-nav-lg {
+  display: block;
+  background-color: #0f172a;
+}
+
+.secondary-nav-container {
+  width: 100%;
+  max-width: 1200px;
+  margin-left: auto;
+  margin-right: auto;
+  border-top: 1px solid #374151;
+}
+
+.secondary-nav-content {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  height: 50px;
+  color: white;
+}
+
+.secondary-nav-item {
+  display: flex;
+  align-items: center;
+  gap: 2rem;
+}
+
+.secondary-nav-link {
+  transition: color 0.3s;
+  text-decoration: none;
+  color: inherit;
+}
+
+.secondary-nav-link:hover {
+  color: #fbbf24;
+}
+
+.dropdown {
+  position: relative;
+}
+
+.dropdown-content {
+  display: flex;
+  align-items: center;
+
+  cursor: pointer;
+  transition: color 0.3s;
+}
+
+.dropdown-content:hover {
+  color: #fbbf24;
+}
+
+.dropdown-icon {
+  height: 1.25rem;
+  width: 1.25rem;
+  color: white;
+}
+
+.dropdown-icon:hover {
+  color: #fbbf24;
+}
