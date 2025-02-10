@@ -6,18 +6,18 @@ import { SearchOutlined, UserOutlined } from "@ant-design/icons";
 import type { MenuProps } from "antd";
 
 const Header: React.FC = () => {
-  const items: MenuProps['items'] = [
+  const items: MenuProps["items"] = [
     {
-      label: 'Rạp 1',
-      key: '1',
+      label: "Rạp 1",
+      key: "1",
     },
     {
-      label: 'Rạp 2',
-      key: '2',
+      label: "Rạp 2",
+      key: "2",
     },
     {
-      label: 'Rạp 3',
-      key: '3',
+      label: "Rạp 3",
+      key: "3",
     },
   ];
 
@@ -39,7 +39,11 @@ const Header: React.FC = () => {
             {/* Action Buttons */}
             <div className="flex space-x-4">
               <Link to="/booking">
-                <Button type="primary" style={{ backgroundColor: '#f3ea28', color: 'black' }} className="action-button">
+                <Button
+                  type="primary"
+                  style={{ backgroundColor: "#f3ea28", color: "black" }}
+                  className="action-button"
+                >
                   <img
                     src="https://cinestar.com.vn/assets/images/ic-ticket.svg"
                     alt="ticket"
@@ -58,7 +62,7 @@ const Header: React.FC = () => {
             />
 
             {/* User Actions */}
-            <Link to="/login" className="user-actions">
+            <Link to="/Login" className="user-actions">
               <UserOutlined className="user-icon" />
               <div className="user-text">Đăng nhập</div>
             </Link>
@@ -79,13 +83,23 @@ const Header: React.FC = () => {
                 </div>
               </Dropdown>
 
-              <Link to="/showtimes" className="secondary-nav-link">Lịch chiếu</Link>
+              <Link to="/showtimes" className="secondary-nav-link">
+                Lịch chiếu
+              </Link>
             </div>
             <div className="secondary-nav-item">
-              <Link to="/promotions" className="secondary-nav-link">Khuyến mãi</Link>
-              <Link to="/events" className="secondary-nav-link">Thuê sự kiện</Link>
-              <Link to="/entertainment" className="secondary-nav-link">Tất cả các giải trí</Link>
-              <Link to="/about" className="secondary-nav-link">Giới thiệu</Link>
+              <Link to="/promotions" className="secondary-nav-link">
+                Khuyến mãi
+              </Link>
+              <Link to="/events" className="secondary-nav-link">
+                Thuê sự kiện
+              </Link>
+              <Link to="/entertaiment" className="secondary-nav-link">
+                Tất cả các giải trí
+              </Link>
+              <Link to="/about" className="secondary-nav-link">
+                Giới thiệu
+              </Link>
             </div>
           </nav>
         </div>

@@ -1,0 +1,33 @@
+.box_entertaiment {
+  max-width: 1200px;
+  width: 100%;
+  margin: 0 auto;
+}
+
+.title_entertaiment {
+  color: #f8fafc;
+  font-size: 40px;
+  text-align: center;
+  font-weight: bold;
+  margin-top: 30px;
+}
+.content_entertaiment {
+  padding-bottom: 100px;
+}
+.img_entertaiment {
+  width: 100%;
+  height: 200px;
+  object-fit: cover;
+  border-radius: 1px;
+  padding-top: 5px;
+  padding-bottom: 5px;
+}
+.item_entertaiment {
+  margin-top: 30px;
+  margin-bottom: 30px;
+}
+.img_entertaiment:hover {
+  transform: scale(1.025);
+  opacity: 0.8;
+  box-shadow: yellow 0px 0px 5px;
+}

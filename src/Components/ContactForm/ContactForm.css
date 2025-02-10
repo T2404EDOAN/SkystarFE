@@ -11,6 +11,7 @@
   max-width: 1280px;
   display: flex;
   flex-direction: column;
+  justify-content: space-between; /* Add this line */
 }
 
 .contact-title {
@@ -69,6 +70,7 @@
   background-color: #3366cccc;
   padding: 1rem;
   border-radius: 0.5rem;
+  overflow: hidden; /* Add this line */
 }
 
 .form-title {
@@ -85,21 +87,23 @@
   font-size: 0.875rem;
 }
 
-.form-input {
+.form-input, .form-textarea {
   width: 100%;
-  padding: 0.5rem;
+  padding: 0.75rem; /* Increase padding */
   margin-bottom: 1rem;
   background-color: white;
   color: #1f2937;
-  border-radius: 0.125rem;
+  border: 1px solid #d1d5db; /* Add border */
+  border-radius: 0.375rem; /* Increase border-radius */
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05); /* Add box-shadow */
+  transition: border-color 0.3s, box-shadow 0.3s; /* Add transition */
+  box-sizing: border-box; /* Add this line */
 }
 
-.form-textarea {
-  width: 100%;
-  padding: 0.5rem;
-  background-color: white;
-  color: #1f2937;
-  border-radius: 0.125rem;
+.form-input:focus, .form-textarea:focus {
+  border-color: #2563eb; /* Change border color on focus */
+  box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.3); /* Add focus shadow */
+  outline: none; /* Remove default outline */
 }
 
 .submit-button {
@@ -146,6 +150,7 @@
   .contact-wrapper {
     flex-direction: row;
     gap: 2rem;
+    justify-content: space-between; /* Add this line */
   }
 
   .contact-title {
