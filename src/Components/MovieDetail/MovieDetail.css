@@ -1,0 +1,342 @@
+.movie-detail-container {
+    width: 1200px;
+    margin: 0 auto;
+  
+    color: white;
+    padding: 1rem;
+}
+
+.movie-header {
+    display: flex;
+    gap: 1.5rem;
+}
+
+.movie-poster {
+    width: 484px;
+    height: 729px;
+    object-fit: cover;
+    border-radius: 0.5rem;
+}
+
+.movie-info {
+    flex: 1;
+}
+
+.movie-title {
+  font-family: "Anton", sans-serif;
+    font-size: 40px;
+    margin-bottom: 1rem;
+}
+
+.info-list {
+    color: white;
+    font-size: 1rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+    padding-left: 0;
+    list-style: none;
+}
+
+.info-item {
+    display: flex;
+    align-items: center;
+}
+
+.info-icon {
+    width: 1.5rem;
+    height: 1.5rem;
+    margin-right: 0.5rem;
+}
+
+.info-icon.yellow-icon {
+    color: #f3ea28;
+    fill: #f3ea28;
+}
+
+.section-title {
+    font-family: "Anton", sans-serif;
+    font-size: 40px;
+    margin-bottom: 0.5rem;
+    margin-top: 1.5rem;
+}
+
+.trailer-button {
+    margin-top: 1.5rem;
+    padding: 0.5rem 1.5rem;
+    background-color: rgb(239, 68, 68);
+    border-radius: 0.25rem;
+    color: white;
+    font-weight: 500;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.trailer-button:hover {
+    background-color: rgb(220, 38, 38);
+    transform: scale(1.05);
+}
+
+.icon-yellow {
+    color: #f3ea28;
+}
+
+.showtimes-section {
+    margin-top: 2rem;
+    padding-top: 2rem;
+
+    text-align: center;
+}
+
+.dates-container {
+    display: flex;
+    gap: 1.5rem;
+    margin-top: 1rem;
+    justify-content: center;
+}
+
+.date-box {
+    width: 100px;
+    height: 100px;
+    border: 1px solid #f3ea28;
+    border-radius: 8px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    gap: 8px;
+}
+
+.date-box:hover, .date-box.active {
+    background: transparent;
+    transform: scale(1.05);
+}
+
+.weekday {
+    font-size: 1.2rem;
+    font-weight: bold;
+    color: #f3ea28;
+}
+
+.date {
+    font-size: 1rem;
+    font-family: "Anton", sans-serif;
+    color: #f3ea28;
+}
+
+.cinemas-list {
+    margin-top: 2rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+    text-align: left;
+}
+
+.cinema-item {
+    padding: 1.5rem;
+    background-color: #639;
+    border-radius: 3px;
+}
+
+.cinema-name {
+    font-size: 24px;
+    color: #f3ea28;
+    margin-bottom: 0.5rem;
+}
+
+.cinema-address {
+    color: #ffffff;
+    font-size: 16px;
+    margin-bottom: 1rem;
+}
+
+.showtime-buttons {
+    display: flex;
+    gap: 1rem;
+    flex-wrap: wrap;
+    margin-top: 1rem;
+}
+
+.time-btn {
+    padding: 0.5rem 1rem;
+    border: .5px solid #f8fafc;
+    border-radius: 4px;
+    color: #f8fafc;
+    background: transparent;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    outline: none; /* Remove default outline */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.time-btn:hover,
+.time-btn:focus,
+.time-btn.selected {
+    color: #f3ea28;
+    border-color: #f3ea28;
+    transform: scale(1.05);
+    outline: none;
+}
+
+.room-name {
+    font-size: 0.8em;
+    opacity: 0.8;
+    margin-top: 2px;
+}
+
+.cinema-list-title {
+    font-family: "Anton", sans-serif;
+    font-size: 40px;
+    margin: 2.5rem 0;
+    text-align: left;
+}
+
+.seats-section {
+    margin-top: 3rem;
+    padding-top: 2rem;
+    border-top: 1px solid rgba(255,255,255,0.1);
+}
+
+.seat-types {
+    display: flex;
+    gap: 2rem;
+    justify-content: center;
+    margin: 2rem 0;
+}
+
+.seat-type {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.seat-example {
+    width: 30px;
+    height: 30px;
+    border-radius: 4px;
+}
+
+.seat-example.booked {
+    background-color: #4a4a4a;
+    border: 1px solid #666;
+}
+
+.seat-example.selected {
+    background-color: transparent;
+    border: 1px solid #f3ea28;
+}
+
+.seat-example.couple {
+    background-color: #e91e63;
+    border: 1px solid #ff4081;
+}
+
+.seat-label {
+    color: #f8fafc;
+    font-size: 0.9rem;
+}
+
+.screen-container {
+    margin: 4rem 0;  /* More margin */
+    perspective: 700px;  /* Increased perspective */
+}
+
+.screen {
+    background: rgba(243, 234, 40, 0.2);
+    height: 90px;  /* Taller screen */
+    width: 100%;
+    transform: rotateX(-30deg);
+    box-shadow: 0 3px 10px rgba(243, 234, 40, 0.7);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #f3ea28;
+    font-size: 1.2rem;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+}
+
+.seat-map {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;  /* Increased from 0.8rem */
+    align-items: center;
+    margin: 2rem 0;
+    padding: 0 2rem; /* Add horizontal padding */
+}
+
+.seat-row {
+    display: flex;
+    gap: 1rem;  /* Increased from 0.8rem */
+    align-items: center;
+}
+
+.row-label {
+    width: 40px;  /* Increased width */
+    color: #f3ea28;
+    font-weight: bold;
+    text-align: center;
+    font-size: 1.1rem; /* Larger font */
+}
+
+.seat {
+    width: 40px;  /* Changed from 45px */
+    height: 29px;  /* Changed from 45px */
+    border-radius: 6px;  /* Increased from 4px for more rounded corners */
+    border: 1px solid #f8fafc;
+    background: white;  /* Changed from transparent */
+    color: #639;  /* Changed from #f8fafc */
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-size: 14px;  /* Updated font size */
+    font-family: "Anton", sans-serif;  /* Updated font family */
+    /* Add flexbox properties to center text */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.seat.available:hover {
+    transform: scale(1.1);
+    border-color: #f3ea28;
+    color: #639;  /* Keep text color consistent on hover */
+    background: white;  /* Keep background white on hover */
+}
+
+.seat.selected {
+    border-color: transparent;
+    color: #639;
+    background: #f3ea28;
+}
+
+.seat.booked {
+    background: #4a4a4a;
+    border-color: #666;
+    cursor: not-allowed;
+    color: #666;
+}
+
+.seat.couple {
+    background: #e91e63;
+    border-color: #ff4081;
+    color: white;
+}
+
+.no-showtimes {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 200px;
+  font-size: 1.5rem;
+  color: #f8fafc;
+  text-align: center;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 8px;
+  margin: 2rem 0;
+  font-family: "Anton", sans-serif;
+}

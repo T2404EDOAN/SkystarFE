@@ -1,11 +1,24 @@
 import React from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import { useAuth } from "../../context/AuthContext";
 import "./Header.css";
 import { Input, Button, Dropdown } from "antd";
 import { SearchOutlined, UserOutlined } from "@ant-design/icons";
 import type { MenuProps } from "antd";
 
 const Header: React.FC = () => {
+  const { isAuthenticated, user, logout } = useAuth();
+  const navigate = useNavigate();
+
+  const handleLogout = () => {
+    logout();
+    navigate('/');
+  };
+
+  const handleProfileClick = () => {
+    navigate('/user-info');
+  };
+
   const items: MenuProps["items"] = [
     {
       label: "Rạp 1",
@@ -21,9 +34,21 @@ const Header: React.FC = () => {
     },
   ];
 
+  const userMenuItems: MenuProps["items"] = [
+    {
+      label: "Thông tin tài khoản",
+      key: "profile",
+      onClick: handleProfileClick
+    },
+    {
+      label: "Đăng xuất",
+      key: "logout",
+      onClick: handleLogout,
+    },
+  ];
+
   return (
     <header className="header">
-      {/* Main Header */}
       <div className="header-container">
         <div className="header-content">
           {/* Logo Section */}
@@ -38,7 +63,7 @@ const Header: React.FC = () => {
           <div className="desktop-nav desktop-nav-lg">
             {/* Action Buttons */}
             <div className="flex space-x-4">
-              <Link to="/booking">
+              <Link to="/movie-detail">
                 <Button
                   type="primary"
                   style={{ backgroundColor: "#f3ea28", color: "black" }}
@@ -61,11 +86,20 @@ const Header: React.FC = () => {
               className="search-bar"
             />
 
-            {/* User Actions */}
-            <Link to="/Login" className="user-actions">
-              <UserOutlined className="user-icon" />
-              <div className="user-text">Đăng nhập</div>
-            </Link>
+            {/* Update User Actions section */}
+            {isAuthenticated ? (
+              <Dropdown menu={{ items: userMenuItems }} placement="bottomRight">
+                <div className="user-actions">
+                  <UserOutlined className="user-icon" />
+                  <div className="user-text">{user?.fullName}</div>
+                </div>
+              </Dropdown>
+            ) : (
+              <Link to="/Login" className="user-actions">
+                <UserOutlined className="user-icon" />
+                <div className="user-text">Đăng nhập</div>
+              </Link>
+            )}
           </div>
         </div>
       </div>

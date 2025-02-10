@@ -211,7 +211,7 @@
   height: 40px; /* Chiều cao cho phần actions */
 }
 
-.trailer-button {
+.trailer-buttonNow {
   display: flex;
   align-items: center;
   justify-content: center;

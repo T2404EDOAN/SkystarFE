@@ -331,7 +331,7 @@ const NowPlayingMovies: React.FC = () => {
                 <h3 className="movie-info-title">{movie.title}</h3>
               </div>
               <div className="movie-actions">
-                <div className="trailer-button" onClick={() => handleTrailerClick(movie.trailerUrl || "")}>
+                <div className="trailer-buttonNow" onClick={() => handleTrailerClick(movie.trailerUrl || "")}>
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
                     width="24"

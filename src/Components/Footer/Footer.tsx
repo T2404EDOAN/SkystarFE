@@ -8,13 +8,13 @@ const Footer: React.FC = () => {
     <footer>
       <div className="footer-container">
         {/* Container chính */}
-        <div className="flex flex-col lg:flex-row gap-8">
+        <div className="main-container">
           {/* Logo và phần tagline */}
-          <div className="flex-1 text-center lg:text-left">
+          <div className="logo-section">
             <img
               src="/logo.png"
               alt="Cinestar Logo"
-              className="footer-logo mx-auto lg:mx-0"
+              className="footer-logo"
             />
             <p className="footer-tagline">BE HAPPY, BE A STAR</p>
             <div className="footer-buttons">
@@ -26,7 +26,7 @@ const Footer: React.FC = () => {
                   <img
                     src="https://cinestar.com.vn/assets/images/ic-ticket.svg"
                     alt="ticket"
-                    className="w-5 h-5"
+                    className="icon-size"
                   />
                   <span>ĐẶT VÉ NGAY</span>
                 </Link>
@@ -39,17 +39,18 @@ const Footer: React.FC = () => {
                   <img
                     src="https://cinestar.com.vn/assets/images/ic-cor.svg"
                     alt="popcorn"
-                    className="w-5 h-5"
+                    className="icon-size"
                   />
                   <span>ĐẶT BẮP NƯỚC</span>
                 </Link>
               </button>
             </div>
+            {/* Di chuyển social icons vào đây */}
             <div className="footer-social-icons">
-              <FaYoutube className="footer-social-icon hover:text-red-600" />
-              <FaFacebook className="footer-social-icon hover:text-blue-600" />
-              <FaTiktok className="footer-social-icon hover:text-gray-500" />
-              <FaWhatsapp className="footer-social-icon hover:text-green-600" />
+              <FaYoutube className="footer-social-icon" />
+              <FaFacebook className="footer-social-icon" />
+              <FaTiktok className="footer-social-icon" />
+              <FaWhatsapp className="footer-social-icon" />
             </div>
           </div>
 

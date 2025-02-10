@@ -2,9 +2,11 @@ import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom"; // Correct import for Link and useNavigate
 import { FaRegEye, FaEyeSlash } from "react-icons/fa6";
 import axios from "axios";
+import { useAuth } from "../../context/AuthContext";
 import "./Login.css";
 
 const Login = () => {
+  const { login } = useAuth();
   const [activeTab, setActiveTab] = useState("login");
   const [dob, setDob] = useState("");
   const [cccd, setCccd] = useState("");
@@ -34,7 +36,6 @@ const Login = () => {
     e.preventDefault();
 
     if (activeTab === "login") {
-      // Login logic
       try {
         const response = await axios.get(
           "http://35.175.173.235:8080/api/users",
@@ -45,10 +46,8 @@ const Login = () => {
             },
           }
         );
-        console.log(response);
-        const users = response.data; // Lấy danh sách người dùng
-
-        // Tìm người dùng khớp với identifier và password
+        
+        const users = response.data;
         const user = users.find(
           (user) =>
             (user.email === identifier || user.username === identifier) &&
@@ -56,8 +55,9 @@ const Login = () => {
         );
 
         if (user) {
-          console.log("Login successful", response.data);
-          alert("Đăng nhập thành công");
+          console.log("Login successful", user);
+          login(user); // Save user data to context
+          
           navigate("/");
         } else {
           setLoginError("Tài khoản hoặc mật khẩu không đúng");

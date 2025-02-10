@@ -1,15 +1,22 @@
 footer {
   background: linear-gradient(106deg, #663399, #3366cc 102.69%);
   color: white;
-  width: 100%;
+  width: 100vw;  /* Changed from 100% to 100vw */
   min-height: 773px;
   margin-top: auto;
+  position: relative;  /* Added */
+  left: 50%;          /* Added */
+  right: 50%;        /* Added */
+  margin-left: -50vw; /* Added */
+  margin-right: -50vw;/* Added */
 }
 
 .footer-container {
-  max-width: 1224px;
+  max-width: 1200px;  /* Changed from 1224px to match body width */
   margin: 0 auto;
   padding: 60px 16px 24px;
+  width: 100%;
+  box-sizing: border-box; /* Added */
 }
 
 .footer-logo {
@@ -57,7 +64,7 @@ footer {
 
 .footer-social-icons {
   display: flex;
-  justify-content: center;
+  justify-content: flex-start; /* Thay đổi từ center sang flex-start */
   gap: 16px;
   margin-top: 24px;
 }
@@ -66,6 +73,10 @@ footer {
   width: 32px;
   height: 32px;
   transition: color 0.3s;
+}
+
+.footer-social-icon:hover {
+  color: #f3ea28;
 }
 
 .footer-links {
@@ -133,4 +144,56 @@ footer {
 
 .footer-company-info p {
   margin-bottom: 8px;
+}
+
+/* Add responsive adjustments */
+@media (min-width: 1024px) {
+  .footer-links {
+    grid-template-columns: repeat(4, 1fr);
+    gap: 24px;
+  }
+  
+  .footer-link-column {
+    text-align: left;
+  }
+  
+  .footer-social-icons {
+    justify-content: flex-start;
+  }
+}
+
+/* New classes to replace Tailwind */
+.main-container {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
+
+.logo-section {
+  flex: 1;
+  text-align: center;
+}
+
+.logo-section img {
+  margin: 0 auto;
+}
+
+/* Media queries */
+@media (min-width: 1024px) {
+  .main-container {
+    flex-direction: row;
+  }
+
+  .logo-section {
+    text-align: left;
+  }
+
+  .logo-section img {
+    margin: 0;
+  }
+}
+
+.icon-size {
+  width: 1.25rem;
+  height: 1.25rem;
 }
