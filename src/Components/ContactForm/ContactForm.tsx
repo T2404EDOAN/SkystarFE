@@ -6,7 +6,7 @@ const ContactForm = () => {
     <div className="contact-container">
       <div className="contact-wrapper">
         {/* Left Column */}
-        <div className="flex-1 mb-8 md:mb-0">
+        <div className="flex-1 mb-8 md:mb-0" style={{ flex: 1 }}>
           <div className="flex flex-col justify-center items-center text-center">
             <h2 className="contact-title">LIÊN HỆ VỚI CHÚNG TÔI</h2>
 
@@ -37,7 +37,7 @@ const ContactForm = () => {
         </div>
 
         {/* Right Column */}
-        <div className="contact-form">
+        <div className="contact-form" style={{ flex: 1 }}>
           <h2 className="form-title">THÔNG TIN LIÊN HỆ</h2>
           <div className="contact-info">
             <p className="mb-2">📧 marketing.skystar@gmail.com</p>

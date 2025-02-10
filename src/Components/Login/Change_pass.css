@@ -1,0 +1,57 @@
+.box_change_pass {
+  max-width: 1200px;
+  width: 100%;
+  margin: 0 auto;
+  color: aliceblue;
+  text-align: center;
+}
+.title_change {
+  font-size: 40px;
+  font-weight: 700;
+}
+.des_change {
+  font-size: 16px;
+}
+.form-input1 {
+  width: 100%;
+  max-width: 448px;
+  height: 44.8px;
+  padding: 10px;
+  box-sizing: border-box;
+  border: 0.1rem solid #e2e8f0;
+  margin-top: 20px;
+  margin-bottom: 10px;
+}
+.auth-button1 {
+  width: 448px;
+  height: 40.8px;
+  background-color: #f3ea20;
+  position: relative;
+  overflow: hidden;
+  border-radius: 3px;
+  margin-bottom: 468px;
+}
+.auth-button1::before {
+  content: "";
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(to right, #673ab7, #2196f3);
+  top: 0;
+  left: -100%;
+  transition: all 0.4s ease-in-out;
+  z-index: 1;
+}
+.auth-button1:hover::before {
+  left: 0;
+}
+.auth-button1 span {
+  position: relative;
+  color: #000;
+  font-weight: 700;
+  z-index: 2;
+}
+.auth-button1:hover span {
+  transition: all 0.2s ease-in-out;
+  color: #fff;
+}
