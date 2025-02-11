@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from "react";  // Add useRef import
+import React, { useState, useEffect, useRef, useCallback } from "react";  // Add useRef import
 import { useParams } from "react-router-dom";
 import axios from "axios";
 import './MovieDetail.css';
@@ -25,6 +25,8 @@ const MovieDetail = () => {
     vip: 90000
   });
   const seatsRef = useRef(null);  // Add this line after other state declarations
+  const [holdTimer, setHoldTimer] = useState(null);
+  const HOLD_TIMEOUT = 5 * 60 * 1000; // 5 minutes in milliseconds
 
   // Get next 5 days from today
   const getNext5Days = (showtimes) => {
@@ -165,7 +167,14 @@ const MovieDetail = () => {
   const handleSeatClick = async (seat) => {  // Change parameter to receive full seat object
     if (selectedSeats.includes(seat.seatNumber)) {
       setSelectedSeats(prev => prev.filter(s => s !== seat.seatNumber));
-      setShowPayment(selectedSeats.length > 1);
+      if (selectedSeats.length <= 1) {
+        setShowPayment(false);
+        // Clear timer when no seats are selected
+        if (holdTimer) {
+          clearTimeout(holdTimer);
+          setHoldTimer(null);
+        }
+      }
       return;
     }
   
@@ -176,6 +185,10 @@ const MovieDetail = () => {
           setSelectedSeats(prev => {
             const newSeats = [...prev, seat.seatNumber];
             setShowPayment(newSeats.length > 0);
+            // Start timer when first seat is selected
+            if (newSeats.length === 1) {
+              startHoldTimer();
+            }
             return newSeats;
           });
         } else {
@@ -273,6 +286,27 @@ const MovieDetail = () => {
       return total + (isVIP ? ticketPrices.vip : ticketPrices.standard);
     }, 0);
   };
+
+  const startHoldTimer = useCallback(() => {
+    if (holdTimer) {
+      clearTimeout(holdTimer);
+    }
+    
+    const timer = setTimeout(() => {
+      alert('Thời gian giữ ghế đã hết. Trang sẽ được tải lại.');
+      window.location.reload();
+    }, HOLD_TIMEOUT);
+    
+    setHoldTimer(timer);
+  }, [holdTimer]);
+
+  useEffect(() => {
+    return () => {
+      if (holdTimer) {
+        clearTimeout(holdTimer);
+      }
+    };
+  }, [holdTimer]);
 
   if (loading) return <div>Loading...</div>;
   if (!movieData) return <div>Movie not found</div>;

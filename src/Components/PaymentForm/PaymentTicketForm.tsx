@@ -70,7 +70,7 @@ const PaymentTicketForm: React.FC<PaymentFormProps> = ({
               </div>
               <div className="showtime-info">
                 <span>{roomName}</span>
-                <span>|</span>
+            
                 <span>{showTime}</span>
               </div>
             </div>

@@ -271,14 +271,14 @@ const Showtimes: React.FC = () => {
         </div>
 
         {/* Movie Info Section */}
-        <div className="movie-info">
+        <div className="movie-info1">
           <img
             src="/path-to-poster.jpg"
             alt="Movie Poster"
             className="movie-poster"
           />
           <div>
-            <h2 className="movie-title">Movie Title</h2>
+            <h2 className="movie-title3">Movie Title</h2>
             <p className="movie-details">Genre: Action</p>
             <p className="movie-details">Duration: 120 mins</p>
             <p className="movie-details">Country: USA</p>
