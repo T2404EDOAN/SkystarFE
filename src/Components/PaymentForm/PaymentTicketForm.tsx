@@ -7,7 +7,11 @@ interface PaymentFormProps {
   roomName: string;
   cinemaName: string;
   showTime: string;
-  selectedSeats: string[];
+  selectedSeats: Array<{
+    seatNumber: string;
+    seatType: string;
+    price: number;  // Add this
+  }>;
   onConfirm: (movieInfo: {
     title: string;
     roomName: string;
@@ -44,13 +48,17 @@ const PaymentTicketForm: React.FC<PaymentFormProps> = ({
     return `${minutes}:${remainingSeconds.toString().padStart(2, '0')}`;
   };
 
+  const calculateTotalPrice = () => {
+    return selectedSeats.reduce((total, seat) => total + seat.price, 0);
+  };
+
   const handleConfirm = () => {
     onConfirm({
       title,
       roomName,
       cinemaName,
       showTime,
-      selectedSeats
+      selectedSeats: selectedSeats.map(seat => seat.seatNumber)
     });
   };
 
@@ -62,15 +70,13 @@ const PaymentTicketForm: React.FC<PaymentFormProps> = ({
             <h1 className="movie-title-pay">{title}</h1>
             <div>
               <div className="cinema-info">
-                <span>{cinemaName}</span>
-                <span className="divider">|</span>
-                <span className="seats-info">
-                  Ghế: {selectedSeats.join(", ")}
-                </span>
+                {`${cinemaName} | ${selectedSeats[0]?.seatType || 'Standard'}`}
               </div>
               <div className="showtime-info">
                 <span>{roomName}</span>
-            
+                <span className="divider">|</span>
+                <span>{selectedSeats.map(seat => seat.seatNumber).join(", ")}</span>
+                <span className="divider">|</span>
                 <span>{showTime}</span>
               </div>
             </div>
@@ -90,6 +96,9 @@ const PaymentTicketForm: React.FC<PaymentFormProps> = ({
                 Thời gian giữ ghế: {formatTime(timeLeft)}
               </span>
             </div>
+            <div className="total-price">
+              Tổng tiền: {calculateTotalPrice().toLocaleString('vi-VN')}đ
+            </div>
           </div>
           <Link to="/dat-ve">
             <button
@@ -97,7 +106,7 @@ const PaymentTicketForm: React.FC<PaymentFormProps> = ({
               className="book-button"
               disabled={timeLeft <= 0}
             >
-              {timeLeft > 0 ? 'Đặt vé' : 'Hết thời gian'}
+              {timeLeft > 0 ? `Đặt vé - ${calculateTotalPrice().toLocaleString('vi-VN')}đ` : 'Hết thời gian'}
             </button>
           </Link>
         </div>

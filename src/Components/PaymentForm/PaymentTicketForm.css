@@ -35,11 +35,15 @@
 
 .seats-info {
   color: #f8fafc;
+  font-weight: 500;
 }
 
 .showtime-info {
   font-size: 0.875rem;
   color: #f8fafc;
+  margin-top: 8px;
+  font-size: 15px;
+  color: #333;
 }
 
 .showtime-info span:not(:last-child) {
@@ -96,7 +100,7 @@
 }
 
 .timer-container {
-  margin-bottom: 10px;
+  margin-bottom: 15px;
 }
 
 .timer-wrapper {
@@ -116,4 +120,45 @@
 
 .timer-text {
   font-weight: 500;
+}
+
+.cinema-info {
+  margin: 10px 0;
+  font-size: 15px;
+  color: #f8fafc;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.cinema-info .divider {
+  margin: 0 8px;
+  color: #9ca3af;
+}
+
+.showtime-info span {
+  color: #f8fafc;
+}
+
+.cinema-info, .showtime-info {
+  margin: 10px 0;
+  font-size: 15px;
+  color: #f8fafc;
+}
+
+.cinema-info .divider, 
+.showtime-info .divider {
+  margin: 0 8px;
+  color: #9ca3af;
+}
+
+.showtime-info span {
+  color: #f8fafc;
+}
+
+.total-price {
+  text-align: left;
+  font-size: 1.1rem;
+  font-weight: 600;
+  margin-top: 8px;
 }
