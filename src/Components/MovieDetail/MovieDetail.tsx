@@ -140,43 +140,60 @@ const MovieDetail = () => {
 
   const holdSeat = async (showtimeId, seatNumber) => {
     try {
-      await axios.post(`http://35.175.173.235:8080/api/seats/${showtimeId}/hold`, {
-        seatNumber: seatNumber
-      });
-      return true;
+      const seat = availableSeats.find(s => s.seatNumber === seatNumber);
+      if (!seat) {
+        console.error('Seat not found:', seatNumber);
+        return false;
+      }
+  
+      const response = await axios.post(
+        `http://localhost:8080/api/seats/${showtimeId}/hold?seatId=${seat.id}`
+      );
+      
+      console.log('Hold seat response:', response);
+      return response.status === 200 || response.status === 201;
     } catch (error) {
-      console.error('Error holding seat:', error);
+      console.error('Hold seat error details:', {
+        error: error?.response?.data,
+        status: error?.response?.status,
+        message: error?.message
+      });
       return false;
     }
   };
-
-  const handleSeatClick = async (seatNumber) => {
-    if (selectedSeats.includes(seatNumber)) {
-      // Remove seat from selection
-      setSelectedSeats(prev => prev.filter(seat => seat !== seatNumber));
+  
+  const handleSeatClick = async (seat) => {  // Change parameter to receive full seat object
+    if (selectedSeats.includes(seat.seatNumber)) {
+      setSelectedSeats(prev => prev.filter(s => s !== seat.seatNumber));
       setShowPayment(selectedSeats.length > 1);
       return;
     }
-
-    // Try to hold the seat
-    if (selectedShowtimeId) {
-      const success = await holdSeat(selectedShowtimeId, seatNumber);
-      if (success) {
-        setSelectedSeats(prev => {
-          const newSeats = [...prev, seatNumber];
-          setShowPayment(newSeats.length > 0);
-          return newSeats;
-        });
-      } else {
-        alert('Không thể đặt ghế này. Vui lòng thử lại hoặc chọn ghế khác.');
+  
+    try {
+      if (selectedShowtimeId) {
+        const success = await holdSeat(selectedShowtimeId, seat.seatNumber);
+        if (success) {
+          setSelectedSeats(prev => {
+            const newSeats = [...prev, seat.seatNumber];
+            setShowPayment(newSeats.length > 0);
+            return newSeats;
+          });
+        } else {
+          alert('Ghế này không thể đặt. Vui lòng chọn ghế khác.');
+        }
       }
+    } catch (error) {
+      console.error('Error in handleSeatClick:', error);
+      alert('Có lỗi xảy ra khi đặt ghế. Vui lòng thử lại.');
     }
   };
+  
 
   const seatTypes = [
-    { type: 'booked', label: 'Ghế đã đặt' },
+    { type: 'standard', label: 'Ghế thường - 75.000đ' },
+    { type: 'couple', label: 'Ghế đôi - 150.000đ' },
     { type: 'selected', label: 'Ghế đang chọn' },
-    { type: 'couple', label: 'Ghế đôi' }
+    { type: 'booked', label: 'Ghế đã đặt' }
   ];
 
   const getSeatMap = (cinemaId, showtime) => {
@@ -203,15 +220,51 @@ const MovieDetail = () => {
   };
 
   const groupSeatsByRow = (seats) => {
-    return seats.reduce((acc, seat) => {
-      const row = seat.seatNumber.charAt(0);
-      if (!acc[row]) {
-        acc[row] = [];
+    const grouped = seats.reduce((acc, seat) => {
+      // Separate couple seats into their own row
+      if (seat.seatType === "COUPLE") {
+        if (!acc["COUPLE"]) {
+          acc["COUPLE"] = [];
+        }
+        acc["COUPLE"].push(seat);
+      } else {
+        const row = seat.seatNumber.charAt(0);
+        if (!acc[row]) {
+          acc[row] = [];
+        }
+        acc[row].push(seat);
       }
-      acc[row].push(seat);
       return acc;
     }, {});
+  
+    // Move COUPLE row to the end
+    if (grouped["COUPLE"]) {
+      const coupleSeats = grouped["COUPLE"];
+      delete grouped["COUPLE"];
+      grouped["COUPLE"] = coupleSeats;
+    }
+  
+    return grouped;
   };
+  
+  // Update seat button rendering to handle couple seats
+  const renderSeat = (seat) => {
+    const isCouple = seat.seatType === "COUPLE";
+    return (
+      <button
+        key={seat.id}
+        className={`seat 
+          ${seat.status === 'SOLD' ? 'booked' : 'available'} 
+          ${selectedSeats.includes(seat.seatNumber) ? 'selected' : ''}
+          ${isCouple ? 'couple-seat' : ''}`}
+        disabled={seat.status === 'SOLD'}
+        onClick={() => handleSeatClick(seat)}
+      >
+        {seat.seatNumber}
+      </button>
+    );
+  };
+  
 
   const calculateTotalPrice = () => {
     return selectedSeats.reduce((total, seat) => {
@@ -404,48 +457,33 @@ const MovieDetail = () => {
 
             <div className="seat-map">
               {Object.entries(groupSeatsByRow(availableSeats))
-                .sort(([rowA], [rowB]) => rowA.localeCompare(rowB))
+                .sort(([rowA], [rowB]) => {
+                  // Ensure COUPLE row is always last
+                  if (rowA === "COUPLE") return 1;
+                  if (rowB === "COUPLE") return -1;
+                  return rowA.localeCompare(rowB);
+                })
                 .map(([row, seats]) => (
                   <div key={row} className="seat-row">
-                    <div className="row-label">{row}</div>
+                    <div className="row-label">{row === "COUPLE" ? "Đôi" : row}</div>
                     {seats
                       .sort((a, b) => {
                         const numA = parseInt(a.seatNumber.slice(1));
                         const numB = parseInt(b.seatNumber.slice(1));
                         return numA - numB;
                       })
-                      .map((seat) => (
-                        <button
-                          key={seat.id}
-                          className={`seat ${seat.status === 'SOLD' ? 'booked' : 'available'} 
-                            ${selectedSeats.includes(seat.seatNumber) ? 'selected' : ''}`}
-                          disabled={seat.status === 'SOLD'}
-                          onClick={() => handleSeatClick(seat.seatNumber)}
-                        >
-                          {seat.seatNumber}
-                        </button>
-                      ))}
+                      .map(renderSeat)}
                   </div>
               ))}
             </div>
 
             <div className="seat-types">
-              <div className="seat-type">
-                <div className="seat-example standard"></div>
-                <span className="seat-label">Ghế Standard - 75.000đ</span>
-              </div>
-              <div className="seat-type">
-                <div className="seat-example vip"></div>
-                <span className="seat-label">Ghế VIP - 90.000đ</span>
-              </div>
-              <div className="seat-type">
-                <div className="seat-example selected"></div>
-                <span className="seat-label">Ghế đang chọn</span>
-              </div>
-              <div className="seat-type">
-                <div className="seat-example booked"></div>
-                <span className="seat-label">Ghế đã bán</span>
-              </div>
+              {seatTypes.map((type) => (
+                <div key={type.type} className="seat-type">
+                  <div className={`seat-example ${type.type}`}></div>
+                  <span className="seat-label">{type.label}</span>
+                </div>
+              ))}
             </div>
           </div>
         )}

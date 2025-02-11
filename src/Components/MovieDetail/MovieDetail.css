@@ -25,7 +25,6 @@
 .movie-title {
   font-family: "Anton", sans-serif;
     font-size: 40px;
-
 }
 
 .info-list {
@@ -211,46 +210,61 @@
     gap: 2rem;
     justify-content: center;
     margin: 2rem 0;
+    flex-wrap: wrap; /* Allow wrapping on smaller screens */
+    padding: 0 1rem;
 }
 
 .seat-type {
     display: flex;
     align-items: center;
-    gap: 0.5rem;
+    gap: 1rem;
 }
 
 .seat-example {
-    width: 30px;
-    height: 30px;
-    border-radius: 4px;
-}
-
-.seat-example.booked {
-    background-color: #4a4a4a;
-    border: 1px solid #666;
-}
-
-.seat-example.selected {
-    background-color: #f3ea28; /* Match the actual selected seat color */
-    border: none;
-}
-
-.seat-example.couple {
-    background-color: #e91e63;
-    border: 1px solid #ff4081;
+  width: 40px;  /* Match seat button width */
+  height: 29px; /* Match seat button height */
+  border-radius: 6px;
+  border: 1px solid #f8fafc;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 14px;
+  font-family: "Anton", sans-serif;
 }
 
 .seat-example.standard {
-  background-color: #444451;
+  background-color: #f8fafc;
+  color: #639;
 }
 
-.seat-example.vip {
-  background-color: #f1b722;
+.seat-example.couple {
+  width: 80px !important;
+  background-color: #f8fafc;
+  color: #639;
+  clip-path: polygon(
+    0 0, 
+    45% 0, 
+    50% 15%, 
+    55% 0, 
+    100% 0, 
+    100% 100%, 
+    55% 100%, 
+    50% 85%, 
+    45% 100%, 
+    0 100%
+  );
 }
 
-.seat-label {
-    color: #f8fafc;
-    font-size: 0.9rem;
+.seat-example.selected {
+  background-color: #f3ea28;
+  color: #639;
+  border-color: transparent;
+}
+
+.seat-example.booked {
+  background-color: #4a4a4a;
+  color: #666;
+  border-color: #666;
 }
 
 .screen-container {
@@ -288,20 +302,24 @@
     align-items: center;
     margin: 2rem 0;
     padding: 0 2rem; /* Add horizontal padding */
+    width: 100%; /* Add full width */
 }
 
 .seat-row {
     display: flex;
     gap: 1rem;  /* Increased from 0.8rem */
     align-items: center;
+    width: 100%; /* Add full width */
+    justify-content: flex-start; /* Align to the left */
 }
 
 .row-label {
     width: 40px;  /* Increased width */
-    color: #f3ea28;
     font-weight: bold;
-    text-align: center;
+    text-align: right; /* Right align the text */
     font-size: 1.1rem; /* Larger font */
+    margin-right: 1.5rem; /* Add more space after label */
+    flex-shrink: 0; /* Prevent label from shrinking */
 }
 
 .seat {
@@ -369,6 +387,33 @@
     background: #e91e63;
     border-color: #ff4081;
     color: white;
+}
+
+.couple-seat {
+  width: 80px !important;
+  background-color: #f8fafc;
+  position: relative;
+
+  clip-path: polygon(
+    0 0, 
+    45% 0, 
+    50% 15%, 
+    55% 0, 
+    100% 0, 
+    100% 100%, 
+    55% 100%, 
+    50% 85%, 
+    45% 100%, 
+    0 100%
+  );
+}
+
+.couple-seat.selected {
+  background-color: #f3ea28;
+}
+
+.couple-seat.booked {
+  background-color: #4a4a4a;
 }
 
 .no-showtimes {

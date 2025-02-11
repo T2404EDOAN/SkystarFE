@@ -59,7 +59,7 @@ const PaymentTicketForm: React.FC<PaymentFormProps> = ({
       <div className="payment-form-content">
         <div className="movie-info-section">
           <div>
-            <h1 className="movie-title">{title}</h1>
+            <h1 className="movie-title-pay">{title}</h1>
             <div>
               <div className="cinema-info">
                 <span>{cinemaName}</span>
