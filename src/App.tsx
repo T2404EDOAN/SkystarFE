@@ -18,8 +18,12 @@ import Billiard from "./Components/EntertaimentOptions/Billiard";
 import Opera from "./Components/EntertaimentOptions/Opera";
 import Gym from "./Components/EntertaimentOptions/Gym";
 import MovieDetail from "./Components/MovieDetail/MovieDetail";
-import { AuthProvider } from './context/AuthContext';
+import { AuthProvider } from "./context/AuthContext";
 import UserInfo from "./Components/Login/UserInfo";
+import Showtimes from "./Components/Showtimes/Showtimes";
+import EventRentalPage from "./Components/EventRentalPage/EventRentalPage";
+import EventStar from "./Components/EventRentalPage/Events/EventStar";
+import Cinema from "./Components/EventRentalPage/Events/Cinema";
 
 // ...other imports
 
@@ -43,6 +47,10 @@ function App() {
             <Route path="/gym" element={<Gym />} />
             <Route path="/movie-detail/:movieId" element={<MovieDetail />} />
             <Route path="/user-info" element={<UserInfo />} />
+            <Route path="/showtimes" element={<Showtimes />} />
+            <Route path="/thue-su-kien" element={<EventRentalPage />} />
+            <Route path="/thue-su-kien/all" element={<EventStar />} />
+            <Route path="/thue-su-kien/cinema" element={<Cinema />} />
           </Routes>
         </MainLayout>
       </BrowserRouter>

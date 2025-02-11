@@ -1,0 +1,61 @@
+.movie-booking-container {
+  min-height: 100vh;
+  padding: 24px;
+}
+
+.movie-booking-wrapper {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.header-selection {
+  display: flex;
+  gap: 16px;
+  margin-bottom: 32px;
+}
+
+.selection-box {
+  border: 1px solid gray;
+  border-radius: 8px;
+  padding: 16px;
+  width: 290px;
+}
+
+.selection-title {
+  color: #f3ea28;
+  font-size: 24px;
+}
+
+.selection-dropdown {
+  width: 100%;
+  border: 1px solid gray;
+  border-radius: 8px;
+  padding: 8px;
+  color: black;
+}
+
+.movie-info {
+  display: flex;
+  gap: 24px;
+  margin-bottom: 32px;
+  border-bottom: 1px solid gray;
+  padding-bottom: 24px;
+}
+
+.movie-poster {
+  width: 384px;
+  height: 571px;
+  object-fit: cover;
+  border-radius: 8px;
+}
+
+.movie-title {
+  color: white;
+  font-size: 20px;
+  font-family: "Anton, sans-serif";
+}
+
+.movie-details {
+  color: gray;
+  font-size: 16px;
+}

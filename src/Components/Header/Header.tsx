@@ -12,11 +12,11 @@ const Header: React.FC = () => {
 
   const handleLogout = () => {
     logout();
-    navigate('/');
+    navigate("/");
   };
 
   const handleProfileClick = () => {
-    navigate('/user-info');
+    navigate("/user-info");
   };
 
   const items: MenuProps["items"] = [
@@ -38,7 +38,7 @@ const Header: React.FC = () => {
     {
       label: "Thông tin tài khoản",
       key: "profile",
-      onClick: handleProfileClick
+      onClick: handleProfileClick,
     },
     {
       label: "Đăng xuất",
@@ -125,7 +125,7 @@ const Header: React.FC = () => {
               <Link to="/promotions" className="secondary-nav-link">
                 Khuyến mãi
               </Link>
-              <Link to="/events" className="secondary-nav-link">
+              <Link to="/thue-su-kien" className="secondary-nav-link">
                 Thuê sự kiện
               </Link>
               <Link to="/entertaiment" className="secondary-nav-link">
