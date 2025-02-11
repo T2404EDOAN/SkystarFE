@@ -25,7 +25,7 @@
 .movie-title {
   font-family: "Anton", sans-serif;
     font-size: 40px;
-    margin-bottom: 1rem;
+
 }
 
 .info-list {
@@ -141,17 +141,19 @@
     border-radius: 3px;
 }
 
+.cinema-info {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 16px;
+}
+
 .cinema-name {
     font-size: 24px;
     color: #f3ea28;
-    margin-top: 0;
-    margin-bottom: 0.5rem;
 }
 
 .cinema-address {
-    color: #ffffff;
     font-size: 16px;
-    margin-bottom: 1rem;
 }
 
 .showtime-buttons {
@@ -272,7 +274,6 @@
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    color: #f3ea28;
     font-family: "Anton", sans-serif;
     font-size: 24px;
     text-transform: uppercase;

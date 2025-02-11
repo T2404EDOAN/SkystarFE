@@ -1,8 +1,10 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";  // Add useRef import
 import { useParams } from "react-router-dom";
 import axios from "axios";
 import './MovieDetail.css';
 import TrailerModal from '../Trailer/TrailerModal';
+import PaymentTicketForm from '../PaymentForm/PaymentTicketForm';
+import { createPortal } from 'react-dom';
 
 const MovieDetail = () => {
   const { movieId } = useParams();
@@ -17,6 +19,12 @@ const MovieDetail = () => {
   const [availableSeats, setAvailableSeats] = useState([]);
   const [selectedShowtimeId, setSelectedShowtimeId] = useState(null);
   const [showTrailer, setShowTrailer] = useState(false);
+  const [showPayment, setShowPayment] = useState(false);
+  const [ticketPrices, setTicketPrices] = useState({
+    standard: 75000,
+    vip: 90000
+  });
+  const seatsRef = useRef(null);  // Add this line after other state declarations
 
   // Get next 5 days from today
   const getNext5Days = (showtimes) => {
@@ -104,12 +112,22 @@ const MovieDetail = () => {
     }
   };
 
-  const handleTimeSelection = (cinema, time, showtimeId) => {
+  const handleTimeSelection = async (cinema, time, showtimeId) => {
     setSelectedTime(time);
     setSelectedCinema(cinema);
     setSelectedSeats([]);
     setSelectedShowtimeId(showtimeId);
-    fetchSeats(showtimeId);
+    
+    // Fetch seats first
+    await fetchSeats(showtimeId);
+    
+    // Scroll after a longer delay to ensure content is rendered
+    setTimeout(() => {
+      seatsRef.current?.scrollIntoView({ 
+        behavior: 'smooth',
+        block: 'start'
+      });
+    }, 300); // Increased delay to 300ms
   };
 
   const handleTrailerClick = () => {
@@ -120,13 +138,39 @@ const MovieDetail = () => {
     setShowTrailer(false);
   };
 
-  const handleSeatClick = (seatNumber) => {
-    setSelectedSeats(prev => {
-      if (prev.includes(seatNumber)) {
-        return prev.filter(seat => seat !== seatNumber);
+  const holdSeat = async (showtimeId, seatNumber) => {
+    try {
+      await axios.post(`http://35.175.173.235:8080/api/seats/${showtimeId}/hold`, {
+        seatNumber: seatNumber
+      });
+      return true;
+    } catch (error) {
+      console.error('Error holding seat:', error);
+      return false;
+    }
+  };
+
+  const handleSeatClick = async (seatNumber) => {
+    if (selectedSeats.includes(seatNumber)) {
+      // Remove seat from selection
+      setSelectedSeats(prev => prev.filter(seat => seat !== seatNumber));
+      setShowPayment(selectedSeats.length > 1);
+      return;
+    }
+
+    // Try to hold the seat
+    if (selectedShowtimeId) {
+      const success = await holdSeat(selectedShowtimeId, seatNumber);
+      if (success) {
+        setSelectedSeats(prev => {
+          const newSeats = [...prev, seatNumber];
+          setShowPayment(newSeats.length > 0);
+          return newSeats;
+        });
+      } else {
+        alert('Không thể đặt ghế này. Vui lòng thử lại hoặc chọn ghế khác.');
       }
-      return [...prev, seatNumber];
-    });
+    }
   };
 
   const seatTypes = [
@@ -169,234 +213,259 @@ const MovieDetail = () => {
     }, {});
   };
 
+  const calculateTotalPrice = () => {
+    return selectedSeats.reduce((total, seat) => {
+      // VIP seats are typically rows A-C
+      const isVIP = ['A', 'B', 'C'].includes(seat.charAt(0));
+      return total + (isVIP ? ticketPrices.vip : ticketPrices.standard);
+    }, 0);
+  };
+
   if (loading) return <div>Loading...</div>;
   if (!movieData) return <div>Movie not found</div>;
 
   const availableDates = getNext5Days(movieData.showtimes);
 
   return (
-    <div className="movie-detail-container">
-      {showTrailer && movieData.trailerUrl && (
-        <TrailerModal 
-          trailerUrl={movieData.trailerUrl} 
-          onClose={handleCloseTrailer} 
-        />
-      )}
+    <>
+      <div className="movie-detail-container">
+        {showTrailer && movieData.trailerUrl && (
+          <TrailerModal 
+            trailerUrl={movieData.trailerUrl} 
+            onClose={handleCloseTrailer} 
+          />
+        )}
 
-      <div className="movie-header">
-        <img 
-          src={movieData.posterUrl} 
-          alt={movieData.title} 
-          className="movie-poster" 
-        />
-        <div className="movie-info">
-          <h1 className="movie-title">{movieData.title}</h1>
-          <ul className="info-list">
-            <li className="info-item">
-              <img
-                src="https://cinestar.com.vn/assets/images/icon-tag.svg"
-                alt="Age Restriction"
-                className="info-icon"
-              />
-              {movieData.category.name}
-            </li>
-            <li className="info-item">
-              <img
-                src="https://cinestar.com.vn/assets/images/icon-clock.svg"
-                alt="Duration"
-                className="info-icon"
-              />
-              {movieData.duration} phút
-            </li>
-            <li className="info-item">
-              <svg
-                className="info-icon yellow-icon"
-                aria-hidden="true"
-                xmlns="http://www.w3.org/2000/svg"
-                width="24"
-                height="24"
-                fill="currentColor"
-                viewBox="0 0 24 24"
-              >
-                <path
-                  fill-rule="evenodd"
-                  d="M8.64 4.737A7.97 7.97 0 0 1 12 4a7.997 7.997 0 0 1 6.933 4.006h-.738c-.65 0-1.177.25-1.177.9 0 .33 0 2.04-2.026 2.008-1.972 0-1.972-1.732-1.972-2.008 0-1.429-.787-1.65-1.752-1.923-.374-.105-.774-.218-1.166-.411-1.004-.497-1.347-1.183-1.461-1.835ZM6 4a10.06 10.06 0 0 0-2.812 3.27A9.956 9.956 0 0 0 2 12c0 5.289 4.106 9.619 9.304 9.976l.054.004a10.12 10.12 0 0 0 1.155.007h.002a10.024 10.024 0 0 0 1.5-.19 9.925 9.925 0 0 0 2.259-.754 10.041 10.041 0 0 0 4.987-5.263A9.917 9.917 0 0 0 22 12a10.025 10.025 0 0 0-.315-2.5A10.001 10.001 0 0 0 12 2a9.964 9.964 0 0 0-6 2Zm13.372 11.113a2.575 2.575 0 0 0-.75-.112h-.217A3.405 3.405 0 0 0 15 18.405v1.014a8.027 8.027 0 0 0 4.372-4.307ZM12.114 20H12A8 8 0 0 1 5.1 7.95c.95.541 1.421 1.537 1.835 2.415.209.441.403.853.637 1.162.54.712 1.063 1.019 1.591 1.328.52.305 1.047.613 1.6 1.316 1.44 1.825 1.419 4.366 1.35 5.828Z"
-                  clip-rule="evenodd"
+        <div className="movie-header">
+          <img 
+            src={movieData.posterUrl} 
+            alt={movieData.title} 
+            className="movie-poster" 
+          />
+          <div className="movie-info">
+            <h1 className="movie-title">{movieData.title}</h1>
+            <ul className="info-list">
+              <li className="info-item">
+                <img
+                  src="https://cinestar.com.vn/assets/images/icon-tag.svg"
+                  alt="Age Restriction"
+                  className="info-icon"
                 />
-              </svg>
-              {movieData.productionCountry}
-            </li>
-            <li className="info-item">
-              <svg
-                className="info-icon yellow-icon"
-                aria-hidden="true"
-                xmlns="http://www.w3.org/2000/svg"
-                width="24"
-                height="24"
-                fill="none"
-                viewBox="0 0 24 24"
-              >
-                <path
-                  stroke="currentColor"
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                  stroke-width="2"
-                  d="M7 9h5m3 0h2M7 12h2m3 0h5M5 5h14a1 1 0 0 1 1 1v9a1 1 0 0 1-1 1h-6.616a1 1 0 0 0-.67.257l-2.88 2.592A.5.5 0 0 1 8 18.477V17a1 1 0 0 0-1-1H5a1 1 0 0 1-1-1V6a1 1 0 0 1 1-1Z"
+                {movieData.category.name}
+              </li>
+              <li className="info-item">
+                <img
+                  src="https://cinestar.com.vn/assets/images/icon-clock.svg"
+                  alt="Duration"
+                  className="info-icon"
                 />
-              </svg>
-              {movieData.language}
-            </li>
-            <li className="info-item">
-              <svg
-                className="info-icon yellow-icon"
-                aria-hidden="true"
-                xmlns="http://www.w3.org/2000/svg"
-                width="24"
-                height="24"
-                fill="none"
-                viewBox="0 0 24 24"
-              >
-                <path
-                  stroke="currentColor"
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                  stroke-width="2"
-                  d="M16 12h4m-2 2v-4M4 18v-1a3 3 0 0 1 3-3h4a3 3 0 0 1 3 3v1a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1Zm8-10a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z"
-                />
-              </svg>
-              {movieData.ageRating}
-            </li>
-          </ul>
-          <div>
-            <h2 className="section-title">Mô Tả</h2>
-            <p>Đạo diễn: {movieData.director}<br />
-               Diễn viên: {movieData.cast}</p>
-          </div>
-          <div>
-            <h2 className="section-title">Nội Dung Phim</h2>
-            <p>{movieData.description}</p>
-          </div>
-          <button 
-            className="trailer-button"
-            onClick={handleTrailerClick}
-          >
-            Xem Trailer
-          </button>
-        </div>
-      </div>
-
-      <div className="showtimes-section">
-        <h2 className="section-title">Lịch Chiếu</h2>
-        
-        {(!movieData.showtimes || movieData.showtimes.length === 0) ? (
-          <div className="no-showtimes">
-            <p>Không có lịch chiếu</p>
-          </div>
-        ) : (
-          <>
-            <div className="dates-container">
-              {availableDates.map((dateInfo) => (
-                <div 
-                  key={dateInfo.date}
-                  className={`date-box ${selectedDate === dateInfo.date ? 'active' : ''}`}
-                  onClick={() => setSelectedDate(dateInfo.date)}
+                {movieData.duration} phút
+              </li>
+              <li className="info-item">
+                <svg
+                  className="info-icon yellow-icon"
+                  aria-hidden="true"
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="24"
+                  height="24"
+                  fill="currentColor"
+                  viewBox="0 0 24 24"
                 >
-                  <span className="date">{dateInfo.formattedDate}</span>
-                  <span className="weekday">{dateInfo.weekday}</span>
-                </div>
+                  <path
+                    fill-rule="evenodd"
+                    d="M8.64 4.737A7.97 7.97 0 0 1 12 4a7.997 7.997 0 0 1 6.933 4.006h-.738c-.65 0-1.177.25-1.177.9 0 .33 0 2.04-2.026 2.008-1.972 0-1.972-1.732-1.972-2.008 0-1.429-.787-1.65-1.752-1.923-.374-.105-.774-.218-1.166-.411-1.004-.497-1.347-1.183-1.461-1.835ZM6 4a10.06 10.06 0 0 0-2.812 3.27A9.956 9.956 0 0 0 2 12c0 5.289 4.106 9.619 9.304 9.976l.054.004a10.12 10.12 0 0 0 1.155.007h.002a10.024 10.024 0 0 0 1.5-.19 9.925 9.925 0 0 0 2.259-.754 10.041 10.041 0 0 0 4.987-5.263A9.917 9.917 0 0 0 22 12a10.025 10.025 0 0 0-.315-2.5A10.001 10.001 0 0 0 12 2a9.964 9.964 0 0 0-6 2Zm13.372 11.113a2.575 2.575 0 0 0-.75-.112h-.217A3.405 3.405 0 0 0 15 18.405v1.014a8.027 8.027 0 0 0 4.372-4.307ZM12.114 20H12A8 8 0 0 1 5.1 7.95c.95.541 1.421 1.537 1.835 2.415.209.441.403.853.637 1.162.54.712 1.063 1.019 1.591 1.328.52.305 1.047.613 1.6 1.316 1.44 1.825 1.419 4.366 1.35 5.828Z"
+                    clip-rule="evenodd"
+                  />
+                </svg>
+                {movieData.productionCountry}
+              </li>
+              <li className="info-item">
+                <svg
+                  className="info-icon yellow-icon"
+                  aria-hidden="true"
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="24"
+                  height="24"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    stroke="currentColor"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width="2"
+                    d="M7 9h5m3 0h2M7 12h2m3 0h5M5 5h14a1 1 0 0 1 1 1v9a1 1 0 0 1-1 1h-6.616a1 1 0 0 0-.67.257l-2.88 2.592A.5.5 0 0 1 8 18.477V17a1 1 0 0 0-1-1H5a1 1 0 0 1-1-1V6a1 1 0 0 1 1-1Z"
+                  />
+                </svg>
+                {movieData.language}
+              </li>
+              <li className="info-item">
+                <svg
+                  className="info-icon yellow-icon"
+                  aria-hidden="true"
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="24"
+                  height="24"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    stroke="currentColor"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width="2"
+                    d="M16 12h4m-2 2v-4M4 18v-1a3 3 0 0 1 3-3h4a3 3 0 0 1 3 3v1a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1Zm8-10a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z"
+                  />
+                </svg>
+                {movieData.ageRating}
+              </li>
+            </ul>
+            <div>
+              <h2 className="section-title">Mô Tả</h2>
+              <p>Đạo diễn: {movieData.director}<br />
+                 Diễn viên: {movieData.cast}</p>
+            </div>
+            <div>
+              <h2 className="section-title">Nội Dung Phim</h2>
+              <p>{movieData.description}</p>
+            </div>
+            <button 
+              className="trailer-button"
+              onClick={handleTrailerClick}
+            >
+              Xem Trailer
+            </button>
+          </div>
+        </div>
+
+        <div className="showtimes-section">
+          <h2 className="section-title">Lịch Chiếu</h2>
+          
+          {(!movieData.showtimes || movieData.showtimes.length === 0) ? (
+            <div className="no-showtimes">
+              <p>Không có lịch chiếu</p>
+            </div>
+          ) : (
+            <>
+              <div className="dates-container">
+                {availableDates.map((dateInfo) => (
+                  <div 
+                    key={dateInfo.date}
+                    className={`date-box ${selectedDate === dateInfo.date ? 'active' : ''}`}
+                    onClick={() => setSelectedDate(dateInfo.date)}
+                  >
+                    <span className="date">{dateInfo.formattedDate}</span>
+                    <span className="weekday">{dateInfo.weekday}</span>
+                  </div>
+                ))}
+              </div>
+
+              <h2 className="cinema-list-title">DANH SÁCH RẠP</h2>
+              <div className="cinemas-list">
+                {selectedDate && groupedShowtimes[selectedDate] && 
+                  Object.values(groupedShowtimes[selectedDate]).map((cinema: any) => (
+                    <div key={cinema.name} className="cinema-item">
+                      <div className="cinema-info">
+                        <h3 className="cinema-name">{cinema.name}</h3>
+                        <div className="cinema-address">{cinema.address}</div>
+                      </div>
+                      <div className="showtime-buttons">
+                        {cinema.showtimes.map((show, index) => (
+                          <button 
+                            key={index} 
+                            className={`time-btn ${
+                              selectedTime === show.time && selectedCinema?.name === cinema.name ? 'selected' : ''
+                            }`}
+                            onClick={() => handleTimeSelection(cinema, show.time, show.id)}
+                          >
+                            <span className="time">{show.time}</span>
+                          </button>
+                        ))}
+                      </div>
+                    </div>
+                  ))}
+              </div>
+            </>
+          )}
+        </div>
+
+        {selectedTime && availableSeats.length > 0 && (
+          <div className="seats-section" ref={seatsRef}>  {/* Add ref here */}
+            <h2 className="cinema-list-title text-center">
+              CHỌN GHẾ - {selectedCinema?.showtimes.find(s => s.time === selectedTime)?.roomName.toUpperCase()}
+            </h2>
+
+            <div className="screen-container">
+              <div className="screen-wrapper">
+                <img src="https://cinestar.com.vn/assets/images/img-screen.png" alt="Màn hình" className="screen-img" />
+                <div className="screen-text">Màn hình</div>
+              </div>
+            </div>
+
+            <div className="seat-map">
+              {Object.entries(groupSeatsByRow(availableSeats))
+                .sort(([rowA], [rowB]) => rowA.localeCompare(rowB))
+                .map(([row, seats]) => (
+                  <div key={row} className="seat-row">
+                    <div className="row-label">{row}</div>
+                    {seats
+                      .sort((a, b) => {
+                        const numA = parseInt(a.seatNumber.slice(1));
+                        const numB = parseInt(b.seatNumber.slice(1));
+                        return numA - numB;
+                      })
+                      .map((seat) => (
+                        <button
+                          key={seat.id}
+                          className={`seat ${seat.status === 'SOLD' ? 'booked' : 'available'} 
+                            ${selectedSeats.includes(seat.seatNumber) ? 'selected' : ''}`}
+                          disabled={seat.status === 'SOLD'}
+                          onClick={() => handleSeatClick(seat.seatNumber)}
+                        >
+                          {seat.seatNumber}
+                        </button>
+                      ))}
+                  </div>
               ))}
             </div>
 
-            <h2 className="cinema-list-title">DANH SÁCH RẠP</h2>
-            <div className="cinemas-list">
-              {selectedDate && groupedShowtimes[selectedDate] && 
-                Object.values(groupedShowtimes[selectedDate]).map((cinema: any) => (
-                  <div key={cinema.name} className="cinema-item">
-                    <div className="cinema-info">
-                      <h3 className="cinema-name">{cinema.name}</h3>
-                      <p className="cinema-address">{cinema.address}</p>
-                    </div>
-                    <div className="showtime-buttons">
-                      {cinema.showtimes.map((show, index) => (
-                        <button 
-                          key={index} 
-                          className={`time-btn ${
-                            selectedTime === show.time && selectedCinema?.name === cinema.name ? 'selected' : ''
-                          }`}
-                          onClick={() => handleTimeSelection(cinema, show.time, show.id)}
-                        >
-                          <span className="time">{show.time}</span>
-                        </button>
-                      ))}
-                    </div>
-                  </div>
-                ))}
+            <div className="seat-types">
+              <div className="seat-type">
+                <div className="seat-example standard"></div>
+                <span className="seat-label">Ghế Standard - 75.000đ</span>
+              </div>
+              <div className="seat-type">
+                <div className="seat-example vip"></div>
+                <span className="seat-label">Ghế VIP - 90.000đ</span>
+              </div>
+              <div className="seat-type">
+                <div className="seat-example selected"></div>
+                <span className="seat-label">Ghế đang chọn</span>
+              </div>
+              <div className="seat-type">
+                <div className="seat-example booked"></div>
+                <span className="seat-label">Ghế đã bán</span>
+              </div>
             </div>
-          </>
+          </div>
         )}
       </div>
 
-      {selectedTime && availableSeats.length > 0 && (
-        <div className="seats-section">
-          <h2 className="cinema-list-title text-center">
-            CHỌN GHẾ - {selectedCinema?.showtimes.find(s => s.time === selectedTime)?.roomName.toUpperCase()}
-          </h2>
-
-          <div className="screen-container">
-            <div className="screen-wrapper">
-              <img src="https://cinestar.com.vn/assets/images/img-screen.png" alt="Màn hình" className="screen-img" />
-              <div className="screen-text">Màn hình</div>
-            </div>
-          </div>
-
-          <div className="seat-map">
-            {Object.entries(groupSeatsByRow(availableSeats))
-              .sort(([rowA], [rowB]) => rowA.localeCompare(rowB))
-              .map(([row, seats]) => (
-                <div key={row} className="seat-row">
-                  <div className="row-label">{row}</div>
-                  {seats
-                    .sort((a, b) => {
-                      const numA = parseInt(a.seatNumber.slice(1));
-                      const numB = parseInt(b.seatNumber.slice(1));
-                      return numA - numB;
-                    })
-                    .map((seat) => (
-                      <button
-                        key={seat.id}
-                        className={`seat ${seat.status === 'SOLD' ? 'booked' : 'available'} 
-                          ${selectedSeats.includes(seat.seatNumber) ? 'selected' : ''}`}
-                        disabled={seat.status === 'SOLD'}
-                        onClick={() => handleSeatClick(seat.seatNumber)}
-                      >
-                        {seat.seatNumber}
-                      </button>
-                    ))}
-                </div>
-            ))}
-          </div>
-
-          <div className="seat-types">
-            <div className="seat-type">
-              <div className="seat-example standard"></div>
-              <span className="seat-label">Ghế Standard - 75.000đ</span>
-            </div>
-            <div className="seat-type">
-              <div className="seat-example vip"></div>
-              <span className="seat-label">Ghế VIP - 90.000đ</span>
-            </div>
-            <div className="seat-type">
-              <div className="seat-example selected"></div>
-              <span className="seat-label">Ghế đang chọn</span>
-            </div>
-            <div className="seat-type">
-              <div className="seat-example booked"></div>
-              <span className="seat-label">Ghế đã bán</span>
-            </div>
-          </div>
-        </div>
+      {showPayment && createPortal(
+        <PaymentTicketForm
+          title={movieData.title}
+          roomName={selectedCinema?.showtimes.find(s => s.time === selectedTime)?.roomName || ''}
+          cinemaName={selectedCinema?.name || ''}
+          showTime={`${selectedTime} - ${selectedDate}`}
+          selectedSeats={selectedSeats}
+          totalPrice={calculateTotalPrice()}
+          onConfirm={(movieInfo) => {
+            console.log('Payment confirmed:', movieInfo);
+          }}
+        />,
+        document.body
       )}
-    </div>
+    </>
   );
 };
 

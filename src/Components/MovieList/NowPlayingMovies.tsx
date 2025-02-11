@@ -215,7 +215,7 @@ const NowPlayingMovies: React.FC = () => {
   return (
     <div className="movie-container">
       <Header isOverlayActive={!!trailerUrl} />
-      <h2 className="movie-title" style={{ fontFamily: "Anton, sans-serif" }}>
+      <h2 className="movie-title1" style={{ fontFamily: "Anton, sans-serif" }}>
         PHIM ĐANG CHIẾU
       </h2>
       {trailerUrl && (

@@ -1,0 +1,116 @@
+.payment-form-container {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  width: 100%;
+  background-color: #0f172a;
+  color: white;
+  border-top: 1px solid rgba(248, 250, 252, 0.5);
+  border-color: #4b5563;
+  height: 131px;
+  z-index: 999; /* Ensure it stays on top of other content */
+  box-shadow: 0 -4px 6px -1px rgba(0, 0, 0, 0.1);
+}
+
+.payment-form-content {
+  width: 1200px;
+  margin: 0 auto;
+  display: flex;
+  gap: 1rem;
+  height: 100%;
+}
+
+.movie-info-section {
+  width: 66.666667%;
+  padding-right: 1rem;
+}
+
+.divider {
+  color: #9ca3af;
+}
+
+.seats-info {
+  color: #f8fafc;
+}
+
+.showtime-info {
+  font-size: 0.875rem;
+  color: #f8fafc;
+}
+
+.showtime-info span:not(:last-child) {
+  margin-right: 0.5rem;
+}
+
+.vertical-divider {
+  width: 0.125rem;
+  background-color: #4b5563;
+}
+
+.button-section {
+  width: 33.333333%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 10px;
+}
+
+.book-button {
+  width: 100%;
+  color: white;
+  padding: 0.5rem 1rem;
+  border-radius: 0.25rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  transition: all 0.3s;
+  border: 2px solid #4b5563;
+  background-color: #fbbf24;
+  color: #0f172a;
+  border: none;
+}
+
+.book-button:hover {
+  background-color: #f59e0b;
+  color: #0f172a;
+}
+
+.book-button:disabled {
+  background-color: #6b7280;
+  cursor: not-allowed;
+}
+
+.price-info {
+  margin-top: 0.5rem;
+  font-size: 1.125rem;
+  font-weight: bold;
+  color: #fbbf24;
+}
+
+/* Add padding to the main content to prevent overlap with fixed payment form */
+.movie-detail-container {
+  padding-bottom: 140px; /* slightly more than payment form height */
+}
+
+.timer-container {
+  margin-bottom: 10px;
+}
+
+.timer-wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  color: #fbbf24;
+  font-size: 0.875rem;
+}
+
+.timer-icon {
+  width: 20px;
+  height: 20px;
+  color: #fbbf24;
+}
+
+.timer-text {
+  font-weight: 500;
+}
