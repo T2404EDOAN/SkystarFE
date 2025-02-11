@@ -120,7 +120,7 @@ const About = () => {
         <div className="des_ab_3">
           Các phòng chiếu được trang bị các thiết bị tiên tiến như hệ thống âm
           thanh vòm, màn hình rộng và độ phân giải cao, tạo nên hình ảnh sắc nét
-          và âm thanh sống động.
+          và âm thanh sống động..
         </div>
         <div className="des_ab_main">
           <div className="main_left">
