@@ -17,6 +17,7 @@ import Bowling from "./Components/EntertaimentOptions/Bowling";
 import Billiard from "./Components/EntertaimentOptions/Billiard";
 import Opera from "./Components/EntertaimentOptions/Opera";
 import Gym from "./Components/EntertaimentOptions/Gym";
+import Coffee from "./Components/EntertaimentOptions/Coffee";
 import MovieDetail from "./Components/MovieDetail/MovieDetail";
 import { AuthProvider } from "./context/AuthContext";
 import UserInfo from "./Components/Login/UserInfo";
@@ -45,6 +46,7 @@ function App() {
             <Route path="/billiard" element={<Billiard />} />
             <Route path="/opera" element={<Opera />} />
             <Route path="/gym" element={<Gym />} />
+            <Route path="/coffee" element={<Coffee />} />
             <Route path="/movie-detail/:movieId" element={<MovieDetail />} />
             <Route path="/user-info" element={<UserInfo />} />
             <Route path="/showtimes" element={<Showtimes />} />

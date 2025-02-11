@@ -130,7 +130,7 @@ const About = () => {
             />
           </div>
           <div className="main_right">
-            <div className="container">
+            <div className="container1">
               {data.map((item, index) => (
                 <div className="card" key={index}>
                   <h2>{item.title}</h2>
