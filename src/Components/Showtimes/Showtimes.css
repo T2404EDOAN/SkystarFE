@@ -34,7 +34,7 @@
   color: black;
 }
 
-.movie-info {
+.movie-info1 {
   display: flex;
   gap: 24px;
   margin-bottom: 32px;
@@ -49,9 +49,8 @@
   border-radius: 8px;
 }
 
-.movie-title {
+.movie-title3 {
   color: white;
-  font-size: 20px;
   font-family: "Anton, sans-serif";
 }
 
