@@ -1,12 +1,12 @@
-.auth-tabs-container {
+.login-tabs-container {
   max-width: 1200px;
   width: 100%;
   margin: 0 auto;
-  padding-bottom: 50px;
-  margin-top: 30px;
+
   color: black;
 }
-.auth-tabs {
+
+.login-tabs {
   width: 600px;
   height: 45px;
   display: flex;
@@ -15,25 +15,29 @@
   color: black;
   font-weight: 800;
 }
-.auth-tabs button {
+
+.login-tabs button {
   background-color: #0f172a;
   color: white;
 }
-#loginin,
-#loginup {
+
+#login-in,
+#login-up {
   width: 300px;
   font-size: 14px;
   border-radius: 0px;
   border-bottom-left-radius: 0px;
   border-bottom-right-radius: 0px;
 }
-.auth-tab.active {
+
+.login-tab.login-active {
   background-color: #f8fafc;
   color: #000;
   font-weight: 800;
 }
-.auth-tabs-form.login-active,
-.auth-tabs-form.register-active {
+
+.login-tabs-form.login-form-active,
+.login-tabs-form.register-form-active {
   background-color: #f8fafc;
   width: 600px;
   font-size: 16px;
@@ -45,37 +49,44 @@
   align-items: center;
   margin-top: -20px;
 }
-.form-group {
+
+.login-form-group {
   margin-bottom: 15px;
   width: 100%;
 }
-.form-label {
+
+.login-form-label {
   display: block;
   margin-bottom: 5px;
   width: 100%;
   text-align: left;
 }
-.remember-me {
+
+.login-remember-me {
   float: left;
 }
-.form-input {
+
+.login-form-input {
   width: 100%;
   max-width: 528px;
   padding: 10px;
   box-sizing: border-box;
   border: 0.1rem solid #e2e8f0;
 }
-.space {
+
+.login-space {
   padding-left: 10px;
 }
-.auth-button {
+
+.login-auth-button {
   width: 528px;
   height: 46px;
   background-color: #f3ea20;
   position: relative;
   overflow: hidden;
 }
-.auth-button::before {
+
+.login-auth-button::before {
   content: "";
   position: absolute;
   width: 100%;
@@ -86,28 +97,34 @@
   transition: all 0.4s ease-in-out;
   z-index: 1;
 }
-.auth-button:hover::before {
+
+.login-auth-button:hover::before {
   left: 0;
 }
-.auth-button span {
+
+.login-auth-button span {
   position: relative;
   font-weight: 700;
   z-index: 2;
 }
-.auth-button:hover span {
+
+.login-auth-button:hover span {
   transition: all 0.2s ease-in-out;
   color: #fff;
 }
-.forgot-password {
+
+.login-forgot-password {
   width: 100%;
   text-align: right;
   margin-top: 10px;
   margin-bottom: 25px;
   margin-right: 15px;
 }
-a {
+
+.login-forgot-password-link {
   color: black;
 }
-.red {
+
+.login-red {
   color: red;
 }

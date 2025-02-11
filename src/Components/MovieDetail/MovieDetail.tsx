@@ -120,6 +120,15 @@ const MovieDetail = () => {
     setShowTrailer(false);
   };
 
+  const handleSeatClick = (seatNumber) => {
+    setSelectedSeats(prev => {
+      if (prev.includes(seatNumber)) {
+        return prev.filter(seat => seat !== seatNumber);
+      }
+      return [...prev, seatNumber];
+    });
+  };
+
   const seatTypes = [
     { type: 'booked', label: 'Ghế đã đặt' },
     { type: 'selected', label: 'Ghế đang chọn' },
@@ -317,7 +326,6 @@ const MovieDetail = () => {
                           onClick={() => handleTimeSelection(cinema, show.time, show.id)}
                         >
                           <span className="time">{show.time}</span>
-                          <small className="room-name">{show.roomName}</small>
                         </button>
                       ))}
                     </div>
@@ -330,25 +338,15 @@ const MovieDetail = () => {
 
       {selectedTime && availableSeats.length > 0 && (
         <div className="seats-section">
-          <h2 className="cinema-list-title">PHÒNG GHẾ</h2>
-          
-          <div className="seat-types">
-            <div className="seat-type">
-              <div className="seat-example available"></div>
-              <span className="seat-label">Ghế trống</span>
-            </div>
-            <div className="seat-type">
-              <div className="seat-example booked"></div>
-              <span className="seat-label">Ghế đã bán</span>
-            </div>
-            <div className="seat-type">
-              <div className="seat-example selected"></div>
-              <span className="seat-label">Ghế đang chọn</span>
-            </div>
-          </div>
+          <h2 className="cinema-list-title text-center">
+            CHỌN GHẾ - {selectedCinema?.showtimes.find(s => s.time === selectedTime)?.roomName.toUpperCase()}
+          </h2>
 
           <div className="screen-container">
-            <div className="screen">Màn hình</div>
+            <div className="screen-wrapper">
+              <img src="https://cinestar.com.vn/assets/images/img-screen.png" alt="Màn hình" className="screen-img" />
+              <div className="screen-text">Màn hình</div>
+            </div>
           </div>
 
           <div className="seat-map">
@@ -376,6 +374,25 @@ const MovieDetail = () => {
                     ))}
                 </div>
             ))}
+          </div>
+
+          <div className="seat-types">
+            <div className="seat-type">
+              <div className="seat-example standard"></div>
+              <span className="seat-label">Ghế Standard - 75.000đ</span>
+            </div>
+            <div className="seat-type">
+              <div className="seat-example vip"></div>
+              <span className="seat-label">Ghế VIP - 90.000đ</span>
+            </div>
+            <div className="seat-type">
+              <div className="seat-example selected"></div>
+              <span className="seat-label">Ghế đang chọn</span>
+            </div>
+            <div className="seat-type">
+              <div className="seat-example booked"></div>
+              <span className="seat-label">Ghế đã bán</span>
+            </div>
           </div>
         </div>
       )}

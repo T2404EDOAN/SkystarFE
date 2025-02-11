@@ -16,22 +16,20 @@ header {
   left: 0;
   width: 100%;
   z-index: 10;
+  /* ...existing code... */
 }
 
 .header-container {
-  width: 100%;
-  padding-left: 1rem;
-  padding-right: 1rem;
-  max-width: 1200px;
-  margin-left: auto;
-  margin-right: auto;
+  margin: 0 auto;
+  width: 1200px;
+  padding: 0;
 }
 
 .header-content {
   max-width: 1200px;
   margin: 0 auto;
   height: 100%;
-  padding: 0 16px;
+  padding: 0;  /* Bỏ padding vì đã có container 1200px */
   /* ...existing code... */
   display: flex;
   align-items: center;
@@ -190,10 +188,8 @@ header {
 }
 
 .secondary-nav-container {
-  width: 100%;
-  max-width: 1200px;
-  margin-left: auto;
-  margin-right: auto;
+  width: 1200px;
+  margin: 0 auto;
   border-top: 1px solid #374151;
 }
 

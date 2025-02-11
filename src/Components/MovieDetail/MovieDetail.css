@@ -144,6 +144,7 @@
 .cinema-name {
     font-size: 24px;
     color: #f3ea28;
+    margin-top: 0;
     margin-bottom: 0.5rem;
 }
 
@@ -168,10 +169,13 @@
     background: transparent;
     cursor: pointer;
     transition: all 0.3s ease;
-    outline: none; /* Remove default outline */
+    outline: none;
     display: flex;
-    flex-direction: column;
     align-items: center;
+    justify-content: center;
+    outline: none !important;
+    -webkit-tap-highlight-color: transparent;
+    -webkit-focus-ring-color: transparent;
 }
 
 .time-btn:hover,
@@ -183,10 +187,9 @@
     outline: none;
 }
 
-.room-name {
-    font-size: 0.8em;
-    opacity: 0.8;
-    margin-top: 2px;
+.time-btn:focus {
+    outline: none !important;
+    box-shadow: none !important;
 }
 
 .cinema-list-title {
@@ -199,7 +202,6 @@
 .seats-section {
     margin-top: 3rem;
     padding-top: 2rem;
-    border-top: 1px solid rgba(255,255,255,0.1);
 }
 
 .seat-types {
@@ -227,13 +229,21 @@
 }
 
 .seat-example.selected {
-    background-color: transparent;
-    border: 1px solid #f3ea28;
+    background-color: #f3ea28; /* Match the actual selected seat color */
+    border: none;
 }
 
 .seat-example.couple {
     background-color: #e91e63;
     border: 1px solid #ff4081;
+}
+
+.seat-example.standard {
+  background-color: #444451;
+}
+
+.seat-example.vip {
+  background-color: #f1b722;
 }
 
 .seat-label {
@@ -242,23 +252,32 @@
 }
 
 .screen-container {
-    margin: 4rem 0;  /* More margin */
-    perspective: 700px;  /* Increased perspective */
+    margin: 4rem 0;
+    text-align: center;
 }
 
-.screen {
-    background: rgba(243, 234, 40, 0.2);
-    height: 90px;  /* Taller screen */
-    width: 100%;
-    transform: rotateX(-30deg);
-    box-shadow: 0 3px 10px rgba(243, 234, 40, 0.7);
-    display: flex;
-    align-items: center;
-    justify-content: center;
+.screen-img {
+    max-width: 100%;
+    height: auto;
+    transform: perspective(400px) rotateX(-5deg);
+}
+
+.screen-wrapper {
+    position: relative;
+    display: inline-block;
+}
+
+.screen-text {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
     color: #f3ea28;
-    font-size: 1.2rem;
+    font-family: "Anton", sans-serif;
+    font-size: 24px;
     text-transform: uppercase;
     letter-spacing: 2px;
+    text-shadow: 0 2px 4px rgba(0,0,0,0.5);
 }
 
 .seat-map {
@@ -292,26 +311,50 @@
     background: white;  /* Changed from transparent */
     color: #639;  /* Changed from #f8fafc */
     cursor: pointer;
-    transition: all 0.3s ease;
+    transition: all 0.05s ease-out; /* Giảm thời gian transition xuống rất thấp */
+    will-change: transform, background-color; /* Tối ưu hóa cho animation */
     font-size: 14px;  /* Updated font size */
     font-family: "Anton", sans-serif;  /* Updated font family */
     /* Add flexbox properties to center text */
     display: flex;
     align-items: center;
     justify-content: center;
+    -webkit-tap-highlight-color: transparent; /* Loại bỏ highlight khi tap trên mobile */
+    user-select: none; /* Prevent text selection */
+    outline: none !important;
+    -webkit-tap-highlight-color: transparent;
+    -webkit-focus-ring-color: transparent;
+}
+
+.seat:active {
+    transition: none; /* Bỏ transition khi click */
+    transform: scale(0.95); /* Thêm hiệu ứng click */
 }
 
 .seat.available:hover {
     transform: scale(1.1);
-    border-color: #f3ea28;
-    color: #639;  /* Keep text color consistent on hover */
-    background: white;  /* Keep background white on hover */
+    color: #639;
+    background: white;
+}
+
+/* Thêm style mới để giữ màu cho ghế đã chọn khi hover */
+.seat.selected:hover {
+    background: #f3ea28 !important; /* Giữ màu vàng */
+    color: #639 !important;
+    border-color: transparent !important;
+}
+
+.seat:focus {
+    outline: none !important;
+    box-shadow: none !important;
 }
 
 .seat.selected {
+    transition: none; /* Bỏ transition khi selected */
     border-color: transparent;
     color: #639;
-    background: #f3ea28;
+    background: #f3ea28; /* Yellow color */
+    transform: scale(1.1); /* Slightly larger when selected */
 }
 
 .seat.booked {
@@ -339,4 +382,8 @@
   border-radius: 8px;
   margin: 2rem 0;
   font-family: "Anton", sans-serif;
+}
+
+.text-center {
+    text-align: center !important;
 }

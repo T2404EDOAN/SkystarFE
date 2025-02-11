@@ -121,42 +121,41 @@ const Login = () => {
   };
 
   return (
-    <div className="auth-tabs-container">
-      <div className="auth-tabs">
+    <div className="login-tabs-container">
+      <div className="login-tabs">
         <button
-          className={`auth-tab ${activeTab === "login" ? "active" : ""}`}
+          className={`login-tab ${activeTab === "login" ? "login-active" : ""}`}
           onClick={() => setActiveTab("login")}
-          id="loginin"
+          id="login-in"
         >
           Đăng Nhập
         </button>
         <button
-          className={`auth-tab ${activeTab === "register" ? "active" : ""}`}
+          className={`login-tab ${activeTab === "register" ? "login-active" : ""}`}
           onClick={() => setActiveTab("register")}
-          id="loginup"
+          id="login-up"
         >
           Đăng Ký
         </button>
       </div>
 
-      {/* Form */}
       <form
-        className={`auth-tabs-form ${
-          activeTab === "login" ? "login-active" : "register-active"
+        className={`login-tabs-form ${
+          activeTab === "login" ? "login-form-active" : "register-form-active"
         }`}
         onSubmit={handleSubmit}
       >
         {activeTab === "login" ? (
           <>
-            <div className="form-group">
-              <label className="form-label">
+            <div className="login-form-group">
+              <label className="login-form-label">
                 Tài khoản, Email hoặc số điện thoại{" "}
-                <span className="red">*</span>
+                <span className="login-red">*</span>
               </label>
               <input
                 type="text"
                 required
-                className="form-input"
+                className="login-form-input"
                 placeholder="Tài khoản, Email hoặc số điện thoại"
                 value={identifier}
                 onChange={(e) => {
@@ -165,17 +164,17 @@ const Login = () => {
                   setLoginError("");
                 }}
               />
-              {loginError && <span className="error">{loginError}</span>}
+              {loginError && <span className="login-error">{loginError}</span>}
             </div>
-            <div className="form-group">
-              <label className="form-label">
-                Mật khẩu <span className="red">*</span>
+            <div className="login-form-group">
+              <label className="login-form-label">
+                Mật khẩu <span className="login-red">*</span>
               </label>
               <div style={{ position: "relative" }}>
                 <input
                   type={passwordVisible ? "text" : "password"}
                   required
-                  className="form-input"
+                  className="login-form-input"
                   placeholder="Mật khẩu"
                   value={password}
                   onChange={(e) => {
@@ -196,110 +195,110 @@ const Login = () => {
                   {passwordVisible ? <FaEyeSlash /> : <FaRegEye />}
                 </span>
               </div>
-              {loginError && <span className="error">{loginError}</span>}
+              {loginError && <span className="login-error">{loginError}</span>}
             </div>
-            <div className="form-group">
-              <label className="remember-me">
-                <input type="checkbox" className="form-checkbox" />
-                <span className="space">Lưu mật khẩu đăng nhập</span>
+            <div className="login-form-group">
+              <label className="login-remember-me">
+                <input type="checkbox" className="login-form-checkbox" />
+                <span className="login-space">Lưu mật khẩu đăng nhập</span>
               </label>
             </div>
-            <div className="forgot-password">
-              <Link to="/change_pass" className="forgot-password-link">
+            <div className="login-forgot-password">
+              <Link to="/change_pass" className="login-forgot-password-link">
                 Quên mật khẩu?
               </Link>
             </div>
-            <button type="submit" className="auth-button">
+            <button type="submit" className="login-auth-button">
               <span>ĐĂNG NHẬP</span>
             </button>
           </>
         ) : (
           <>
-            <div className="form-group">
-              <label className="form-label">
-                Họ và tên <span className="red">*</span>
+            <div className="login-form-group">
+              <label className="login-form-label">
+                Họ và tên <span className="login-red">*</span>
               </label>
               <input
                 type="text"
                 required
-                className="form-input"
+                className="login-form-input"
                 value={fullName}
                 onChange={(e) => setFullName(e.target.value)}
                 placeholder="Nhập họ và tên"
               />
             </div>
-            <div className="form-group">
-              <label className="form-label">
-                Tên đăng nhập <span className="red">*</span>
+            <div className="login-form-group">
+              <label className="login-form-label">
+                Tên đăng nhập <span className="login-red">*</span>
               </label>
               <input
                 type="text"
                 required
-                className="form-input"
+                className="login-form-input"
                 value={username}
                 onChange={(e) => setUsername(e.target.value)}
                 placeholder="Nhập tên đăng nhập"
               />
             </div>
-            <div className="form-group">
-              <label className="form-label">
-                Ngày sinh <span className="red">*</span>
+            <div className="login-form-group">
+              <label className="login-form-label">
+                Ngày sinh <span className="login-red">*</span>
               </label>
               <input
                 type="date"
                 value={dob}
                 onChange={(e) => setDob(e.target.value)}
-                className="form-input"
+                className="login-form-input"
                 required
               />
             </div>
-            <div className="form-group">
-              <label className="form-label">
-                Số điện thoại <span className="red">*</span>
+            <div className="login-form-group">
+              <label className="login-form-label">
+                Số điện thoại <span className="login-red">*</span>
               </label>
               <input
                 type="tel"
                 required
-                className="form-input"
+                className="login-form-input"
                 value={phoneNumber}
                 onChange={(e) => setPhoneNumber(e.target.value)}
                 placeholder="Nhập số điện thoại"
               />
             </div>
-            <div className="form-group">
-              <label className="form-label">
-                CCCD <span className="red">*</span>
+            <div className="login-form-group">
+              <label className="login-form-label">
+                CCCD <span className="login-red">*</span>
               </label>
               <input
                 type="text"
                 value={cccd}
                 onChange={(e) => setCccd(e.target.value)}
-                className="form-input"
+                className="login-form-input"
                 placeholder="Nhập số CCCD"
                 required
               />
             </div>
-            <div className="form-group">
-              <label className="form-label">
-                Địa chỉ <span className="red">*</span>
+            <div className="login-form-group">
+              <label className="login-form-label">
+                Địa chỉ <span className="login-red">*</span>
               </label>
               <input
                 type="text"
                 required
-                className="form-input"
+                className="login-form-input"
                 value={address}
                 onChange={(e) => setAddress(e.target.value)}
                 placeholder="Nhập địa chỉ"
               />
             </div>
-            <div className="form-group">
-              <label className="form-label">
-                Email <span className="red">*</span>
+            <div className="login-form-group">
+              <label className="login-form-label">
+                Email <span className="login-red">*</span>
               </label>
               <input
                 type="email"
                 required
-                className="form-input"
+                className="login-form-input"
                 placeholder="Nhập email"
                 value={identifier}
                 onChange={(e) => {
@@ -307,17 +306,17 @@ const Login = () => {
                   setEmailError("");
                 }}
               />
-              {emailError && <span className="error">{emailError}</span>}
+              {emailError && <span className="login-error">{emailError}</span>}
             </div>
-            <div className="form-group">
-              <label className="form-label">
-                Mật khẩu <span className="red">*</span>
+            <div className="login-form-group">
+              <label className="login-form-label">
+                Mật khẩu <span className="login-red">*</span>
               </label>
               <div style={{ position: "relative" }}>
                 <input
                   type={passwordVisible ? "text" : "password"}
                   required
-                  className="form-input"
+                  className="login-form-input"
                   placeholder="Mật khẩu"
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
@@ -336,15 +335,15 @@ const Login = () => {
                 </span>
               </div>
             </div>
-            <div className="form-group">
-              <label className="form-label">
-                Xác nhận mật khẩu <span className="red">*</span>
+            <div className="login-form-group">
+              <label className="login-form-label">
+                Xác nhận mật khẩu <span className="login-red">*</span>
               </label>
               <div style={{ position: "relative" }}>
                 <input
                   type={confirmPasswordVisible ? "text" : "password"}
                   required
-                  className="form-input"
+                  className="login-form-input"
                   placeholder="Xác nhận mật khẩu"
                   value={confirmPassword}
                   onChange={(e) => setConfirmPassword(e.target.value)}
@@ -363,10 +362,10 @@ const Login = () => {
                 </span>
               </div>
               {registrationError && (
-                <span className="error">{registrationError}</span>
+                <span className="login-error">{registrationError}</span>
               )}
             </div>
-            <button type="submit" className="auth-button">
+            <button type="submit" className="login-auth-button">
               <span>ĐĂNG KÝ</span>
             </button>
           </>

@@ -10,7 +10,7 @@ const MainLayout: React.FC<{ children: React.ReactNode }> = ({ children }) => {
       <main className="main-content">
         {children}
       </main>
-      <Footer />
+      {/* <Footer /> */}
     </div>
   );
 };

@@ -6,11 +6,9 @@
 
 .main-content {
   flex: 1;
-  width: 100%;
   width: 1200px;
   margin: 0 auto;
-  margin-top: 77px; /* giữ khoảng cách với header */
-  padding: 0 16px; /* thêm padding cho responsive */
+  margin-top: 120px;
 }
 
 @media (min-width: 1200px) {

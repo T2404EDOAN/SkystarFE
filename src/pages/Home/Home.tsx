@@ -10,7 +10,7 @@ import ContactForm from '../../Components/ContactForm/ContactForm';
 const Home: React.FC = () => {
   return (
     <div className="home">
-      <Banner />
+       <Banner />
       <NowPlayingMovies />
       <CommingSoonMovies />
   

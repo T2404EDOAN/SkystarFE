@@ -8,7 +8,6 @@
   color-scheme: light dark;
   color: rgba(255, 255, 255, 0.87);
   background-color: #242424;
-
   font-synthesis: none;
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
@@ -25,13 +24,13 @@ a:hover {
 }
 
 body {
-  margin: 0;
+  margin: 0 auto;
   display: flex;
+  width: 1200px;
   place-items: center;
   min-width: 320px;
   min-height: 100vh;
-  background-color: #0f172a; /* Thêm màu nền */
-  color: white; /* Thêm màu chữ trắng để tương phản */
+
 }
 
 h1 {
@@ -49,9 +48,6 @@ button {
   background-color: #1a1a1a;
   cursor: pointer;
   transition: border-color 0.25s;
-}
-button:hover {
-  border-color: #646cff;
 }
 button:focus,
 button:focus-visible {

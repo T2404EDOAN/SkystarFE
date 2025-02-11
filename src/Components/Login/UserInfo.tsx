@@ -25,26 +25,21 @@ const UserInfo: React.FC = () => {
         return (
           <div className="user-info">
             <div className="user-info-section">
-              <h3>Thông tin cá nhân</h3>
-              <div className="form-row">
-                <div className="form-group">
-                  <label htmlFor="name">Họ và tên:</label>
-                  <input type="text" id="name" value={user.fullName} readOnly />
-                </div>
-                <div className="form-group">
-                  <label htmlFor="birthDate">Ngày sinh:</label>
-                  <input type="text" id="birthDate" value={user.dateOfBirth} readOnly />
-                </div>
+              <div className="info-box">
+                <label htmlFor="name">Họ và tên:</label>
+                <input type="text" id="name" value={user.fullName} readOnly />
               </div>
-              <div className="form-row">
-                <div className="form-group">
-                  <label htmlFor="phone">Số điện thoại:</label>
-                  <input type="text" id="phone" value={user.phoneNumber} readOnly />
-                </div>
-                <div className="form-group">
-                  <label htmlFor="email">Email:</label>
-                  <input type="email" id="email" value={user.email} readOnly />
-                </div>
+              <div className="info-box">
+                <label htmlFor="birthDate">Ngày sinh:</label>
+                <input type="text" id="birthDate" value={user.dateOfBirth} readOnly />
+              </div>
+              <div className="info-box">
+                <label htmlFor="phone">Số điện thoại:</label>
+                <input type="text" id="phone" value={user.phoneNumber} readOnly />
+              </div>
+              <div className="info-box">
+                <label htmlFor="email">Email:</label>
+                <input type="email" id="email" value={user.email} readOnly />
               </div>
             </div>
             
