@@ -1,196 +1,150 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from "react";
+import './PaymentFormDetail.css';  // Thêm dòng này vào đầu file
 
-function PaymentFormDetail({ movieInfo }) {
-  const [currentTab, setCurrentTab] = useState(1);
-  const [formData, setFormData] = useState({
-    name: '',
-    phone: '',
-    email: '',
-    agreeTerms: false,
-    agreeCinestar: false
-  });
+const PaymentFormDetail = () => {
+  const [fullName, setFullName] = useState("");
+  const [phone, setPhone] = useState("");
+  const [email, setEmail] = useState("");
+  const [ageVerified, setAgeVerified] = useState(false);
+  const [termsAccepted, setTermsAccepted] = useState(false);
+  const [activeStep, setActiveStep] = useState(1); // Add this for tracking active step
 
-  useEffect(() => {
-    if (movieInfo) {
-      setMovieDetails(movieInfo);
-    }
-  }, [movieInfo]);
-
-  const [movieDetails, setMovieDetails] = useState({
-    title: '',
-    cinema: '',
-    address: '',
-    time: '',
-    room: '',
-    tickets: '',
-    type: '',
-    seat: '',
-    price: ''
-  });
-
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    setCurrentTab(2);
+  const handleNameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setFullName(e.target.value);
   };
 
-  const renderCustomerInfo = () => (
-    <form onSubmit={handleSubmit} className="space-y-4">
-      <div>
-        <input
-          type="text"
-          placeholder="Họ và tên"
-          className="w-full p-3 rounded"
-          required
-        />
-      </div>
-      <div>
-        <input
-          type="tel"
-          placeholder="Số điện thoại"
-          className="w-full p-3 rounded"
-          required
-        />
-      </div>
-      <div>
-        <input
-          type="email"
-          placeholder="Email"
-          className="w-full p-3 rounded"
-          required
-        />
-      </div>
-      <div className="space-y-2">
-        <label className="flex items-center text-white">
-          <input type="checkbox" className="mr-2" required />
-          <span>Đảm bảo mua vé đúng số tuổi quy định.</span>
-        </label>
-        <label className="flex items-center text-white">
-          <input type="checkbox" className="mr-2" required />
-          <span>Đồng ý với điều khoản của Cinestar</span>
-        </label>
-      </div>
-      <button
-        type="submit"
-        className="w-full bg-yellow-400 py-3 rounded font-bold hover:bg-yellow-500"
-      >
-        TIẾP TỤC
-      </button>
-    </form>
-  );
+  const handlePhoneChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setPhone(e.target.value);
+  };
 
-  const renderPaymentMethods = () => (
-    <div className="space-y-4">
-      <button className="w-full bg-gray-800 text-white p-4 rounded flex items-center space-x-3 hover:bg-gray-700">
-        <img src="momo-icon.svg" alt="Momo" className="w-8 h-8" />
-        <span>Thanh toán qua Momo</span>
-      </button>
-      
-      <button className="w-full bg-gray-800 text-white p-4 rounded flex items-center space-x-3 hover:bg-gray-700">
-        <img src="mastercard-icon.svg" alt="Thẻ nội địa" className="w-8 h-8" />
-        <span>Thanh toán qua Thẻ nội địa</span>
-      </button>
-      
-      <button className="w-full bg-gray-800 text-white p-4 rounded flex items-center space-x-3 hover:bg-gray-700">
-        <img src="card-icon.svg" alt="Thẻ quốc tế" className="w-8 h-8" />
-        <span>Thanh toán qua thẻ quốc tế</span>
-      </button>
+  const handleEmailChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setEmail(e.target.value);
+  };
 
-      <div className="bg-blue-600 p-4 rounded flex items-center space-x-2">
-        <span className="text-yellow-400">🏷️</span>
-        <span className="text-white">Chọn hoặc nhập mã giảm giá</span>
-      </div>
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    // Validate form
+    if (fullName && phone && email && ageVerified && termsAccepted) {
+      setActiveStep(2); // Move to step 2
+    }
+  };
 
-      <div className="flex space-x-4">
-        <button 
-          onClick={() => setCurrentTab(1)}
-          className="w-1/2 bg-yellow-400 py-3 rounded font-bold hover:bg-yellow-500"
-        >
-          QUAY LẠI
-        </button>
-        <button 
-          className="w-1/2 bg-gray-600 py-3 rounded font-bold text-white hover:bg-gray-700"
-        >
-          THANH TOÁN
-        </button>
-      </div>
-    </div>
-  );
+  const handleBack = () => {
+    setActiveStep(1);
+  };
 
   return (
-    <div className="min-h-screen bg-gray-900 py-8">
-      <div className="max-w-screen-xl mx-auto px-4">
-        <h1 className="text-white text-2xl font-bold mb-8">TRANG THANH TOÁN</h1>
-        
-        <div className="flex flex-col md:flex-row gap-8">
-          {/* Left side */}
-          <div className="w-full md:w-1/2">
-            <div className="steps flex justify-between mb-8">
-              <div className={`${currentTab === 1 ? 'text-yellow-400' : 'text-white'}`}>
-                <span className="mr-2">1</span>
-                <span>THÔNG TIN KHÁCH HÀNG</span>
-              </div>
-              <div className={`${currentTab === 2 ? 'text-yellow-400' : 'text-white'}`}>
-                <span className="mr-2">2</span>
-                <span>THANH TOÁN</span>
-              </div>
-              <div className="text-white">
-                <span className="mr-2">3</span>
-                <span>THÔNG TIN VÉ PHIM</span>
-              </div>
+    <div className="skystar-payment-container">
+      <div className="skystar-payment-header">
+        <h1 className="skystar-payment-title">TRANG THANH TOÁN</h1>
+        <ul className="skystar-payment-steps">
+          <li className={activeStep === 1 ? 'active' : ''}>
+            <span className="step-number">1</span>
+            <span className="step-text">Thông tin thanh toán</span>
+          </li>
+          <li className={activeStep === 2 ? 'active' : ''}>
+            <span className="step-number">2</span>
+            <span className="step-text">Thanh toán</span>
+          </li>
+          <li className={activeStep === 3 ? 'active' : ''}>
+            <span className="step-number">3</span>
+            <span className="step-text">Thông tin phim</span>
+          </li>
+        </ul>
+      </div>
+      <div className="skystar-payment-content" style={{
+        display: 'flex',
+        gap: '2rem',
+      }}>
+        <div className="skystar-payment-form-wrapper" style={{
+          flex: 1,
+          display: activeStep === 1 ? 'block' : 'none', // Only show on step 1
+        }}>
+          <form className="skystar-payment-form" onSubmit={handleSubmit}>
+            <div className="skystar-form-group">
+              <label htmlFor="fullName" className="skystar-form-label">Họ và tên</label>
+              <input
+                type="text"
+                id="fullName"
+                value={fullName}
+                onChange={handleNameChange}
+                className="skystar-form-input"
+                required
+              />
+            </div>
+            <div className="skystar-form-group">
+              <label htmlFor="phone" className="skystar-form-label">Số điện thoại</label>
+              <input
+                type="tel"
+                id="phone"
+                value={phone}
+                onChange={handlePhoneChange}
+                className="skystar-form-input"
+                required
+              />
+            </div>
+            <div className="skystar-form-group">
+              <label htmlFor="email" className="skystar-form-label">Email</label>
+              <input
+                type="email"
+                id="email"
+                value={email}
+                onChange={handleEmailChange}
+                className="skystar-form-input"
+                required
+              />
+            </div>
+            <div className="skystar-form-checkbox-group">
+              <input
+                type="checkbox"
+                id="ageVerification"
+                checked={ageVerified}
+                onChange={(e) => setAgeVerified(e.target.checked)}
+                className="skystar-form-checkbox"
+                required
+              />
+              <label htmlFor="ageVerification" className="skystar-form-checkbox-label">
+                Đảm bảo mua vé đúng số tuổi quy định
+              </label>
             </div>
 
-            {currentTab === 1 ? renderCustomerInfo() : renderPaymentMethods()}
-          </div>
-
-          {/* Right side - Movie Info */}
-          <div className="w-full md:w-1/2">
-            <div className="bg-blue-600 p-6 rounded-lg text-white">
-              <div className="flex justify-between items-center mb-4">
-                <h2 className="text-xl font-bold">{movieDetails.title}</h2>
-                <div className="bg-yellow-400 text-black px-3 py-1 rounded">
-                  04:47
-                </div>
-              </div>
-              <p className="text-sm mb-1">Phim dành cho khán giả từ đủ 13 tuổi trở lên (13+)</p>
-              <h3 className="font-bold mb-1">{movieDetails.cinema}</h3>
-              <p className="text-sm mb-4">{movieDetails.address}</p>
-              
-              <div className="space-y-2">
-                <p><span className="text-yellow-400">Thời gian:</span> {movieDetails.time}</p>
-                <div className="grid grid-cols-3 gap-4">
-                  <div>
-                    <p className="text-yellow-400">Phòng chiếu</p>
-                    <p>{movieDetails.room}</p>
-                  </div>
-                  <div>
-                    <p className="text-yellow-400">Số vé</p>
-                    <p>{movieDetails.tickets}</p>
-                  </div>
-                  <div>
-                    <p className="text-yellow-400">Loại vé</p>
-                    <p>{movieDetails.type}</p>
-                  </div>
-                </div>
-                <div className="grid grid-cols-2 gap-4">
-                  <div>
-                    <p className="text-yellow-400">Loại ghế</p>
-                    <p>Ghế Đôi</p>
-                  </div>
-                  <div>
-                    <p className="text-yellow-400">Số ghế</p>
-                    <p>{movieDetails.seat}</p>
-                  </div>
-                </div>
-              </div>
-              
-              <div className="border-t mt-4 pt-4">
-                <div className="flex justify-between items-center">
-                  <p className="font-bold">SỐ TIỀN CẦN THANH TOÁN</p>
-                  <p className="font-bold">{movieDetails.price}</p>
-                </div>
-              </div>
+            <div className="skystar-form-checkbox-group">
+              <input
+                type="checkbox"
+                id="termsAcceptance"
+                checked={termsAccepted}
+                onChange={(e) => setTermsAccepted(e.target.checked)}
+                className="skystar-form-checkbox"
+                required
+              />
+              <label htmlFor="termsAcceptance" className="skystar-form-checkbox-label">
+                Đồng ý với điều khoản của Cinestar
+              </label>
             </div>
+            <button 
+              type="submit" 
+              className="skystar-form-submit"
+              disabled={!fullName || !phone || !email || !ageVerified || !termsAccepted}
+            >
+              Tiếp tục
+            </button>
+          </form>
+        </div>
+        {activeStep === 2 && (
+          <div className="skystar-payment-step2" style={{ flex: 1 }}>
+            <h2>Thanh toán</h2>
+            <button 
+              onClick={handleBack}
+              className="skystar-form-back"
+            >
+              Quay lại
+            </button>
+            {/* Step 2 content will go here */}
           </div>
+        )}
+        <div className="skystar-payment-summary" style={{
+          flex: 1,
+        }}>
         </div>
       </div>
     </div>

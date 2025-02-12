@@ -1,0 +1,148 @@
+.skystar-payment-content {
+  display: flex;
+  gap: 2rem;
+
+}
+.skystar-payment-container{
+    padding-top: 30px;
+}
+
+.skystar-payment-form-wrapper,
+.skystar-payment-summary {
+  flex: 1;
+}
+.skystar-payment-title{
+    font-size: 40px;
+    font-family: "Anton", sans-serif;
+}
+.skystar-payment-form-wrapper {
+
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.skystar-payment-form {
+  max-width: 100%;
+}
+
+.skystar-form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  margin-bottom: 1rem;
+}
+
+.skystar-form-label {
+  font-weight: 500;
+}
+
+.skystar-form-input {
+  padding: 0.5rem;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  width: 100%;
+  box-sizing: border-box;  /* Add this to include padding in width calculation */
+}
+
+.skystar-form-checkbox-group {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-bottom: 1rem;
+}
+
+.skystar-form-checkbox-label {
+  font-size: 0.9rem;
+  user-select: none;
+}
+
+.skystar-form-checkbox {
+  width: 16px;
+  height: 16px;
+  cursor: pointer;
+}
+
+.skystar-payment-steps {
+  display: flex;
+  list-style: none;
+  padding: 0;
+  margin: 2rem 0;
+  justify-content: left;
+  gap: 3rem;
+}
+
+.skystar-payment-steps li {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: 0.5rem;
+}
+
+.step-number {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  width: 30px;
+  height: 30px;
+  color: white;
+  border-radius: 50%;
+  font-size: 20px;
+  font-family: "Anton", sans-serif;
+}
+
+.step-text {
+  font-size: 0.9rem;
+  font-family: "Anton", sans-serif;
+  font-size: 20px;
+  
+}
+
+.skystar-payment-steps li.active .step-text {
+  color: #FFD700; /* Yellow color for active step */
+}
+
+.skystar-payment-steps li.active .step-number {
+  background-color: #FFD700;
+  color: #000;
+}
+
+.skystar-form-submit {
+  width: 100%;
+  padding: 0.75rem;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  font-size: 1rem;
+  font-weight: 500;
+  cursor: pointer;
+  margin-top: 1rem;
+  transition: background-color 0.2s;
+}
+
+.skystar-form-submit:hover {
+  background-color: #0056b3;
+}
+
+.skystar-form-submit:disabled {
+  background-color: #ccc;
+  cursor: not-allowed;
+}
+
+.skystar-form-back {
+  padding: 0.75rem 1.5rem;
+  background-color: #6c757d;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  font-size: 1rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.skystar-form-back:hover {
+  background-color: #5a6268;
+}
