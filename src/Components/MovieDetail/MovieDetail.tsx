@@ -528,6 +528,7 @@ const MovieDetail = () => {
           title={movieData.title}
           roomName={selectedCinema?.showtimes.find(s => s.time === selectedTime)?.roomName || ''}
           cinemaName={selectedCinema?.name || ''}
+          cinemaAddress={selectedCinema?.address || ''} // Add this
           showTime={`${selectedTime} - ${selectedDate}`}
           selectedSeats={selectedSeats.map(seatNumber => {
             const seat = availableSeats.find(s => s.seatNumber === seatNumber);

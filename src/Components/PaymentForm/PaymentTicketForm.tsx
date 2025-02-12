@@ -1,4 +1,4 @@
-import { Link } from "react-router";
+import { Link, useNavigate } from "react-router-dom";  // Fix import
 import { useState, useEffect } from 'react';
 import './PaymentTicketForm.css';
 
@@ -6,6 +6,7 @@ interface PaymentFormProps {
   title: string;
   roomName: string;
   cinemaName: string;
+  cinemaAddress: string; // Add this
   showTime: string;
   selectedSeats: Array<{
     seatNumber: string;
@@ -26,10 +27,12 @@ const PaymentTicketForm: React.FC<PaymentFormProps> = ({
   title,
   roomName,
   cinemaName,
+  cinemaAddress, // Add this to props destructuring
   showTime,
   selectedSeats,
   onConfirm,
 }) => {
+  const navigate = useNavigate();  // Add this
   const [timeLeft, setTimeLeft] = useState(300); // 5 minutes in seconds
 
   useEffect(() => {
@@ -62,6 +65,22 @@ const PaymentTicketForm: React.FC<PaymentFormProps> = ({
     });
   };
 
+  const handleBooking = () => {
+    const movieInfo = {
+      title,
+      roomName,
+      cinemaName,
+      cinemaAddress, // Use the prop here
+      showTime,
+      selectedSeats,
+      totalPrice: calculateTotalPrice(),
+      holdTimer: timeLeft,
+      movieType: "Hành động" // Add movie type
+    };
+
+    navigate('/payment', { state: movieInfo });  // Fix navigation path
+  };
+
   return (
     <div className="payment-form-container">
       <div className="payment-form-content">
@@ -89,7 +108,7 @@ const PaymentTicketForm: React.FC<PaymentFormProps> = ({
           <div className="timer-container">
             <div className="timer-wrapper">
               <svg className="timer-icon" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24">
-                <path fill="currentColor" d="M12 2C6.486 2 2 6.486 2 12s4.486 10 10 10 10-4.486 10-10S17.514 2 12 2zm0 18c-4.411 0-8-3.589-8-8s3.589-8 8-8 8 3.589 8 8-3.589 8-8 8z"/>
+                <path fill="currentColor" d="M12 2C6.486 2 2 6.486 2 12s4.486 10 10 10 10-4.486 10-10S17.514 2 12 2zm0 18c-4.411 0-8-3.589-8-8s3.589-8 8 8-3.589 8-8 8z"/>
                 <path fill="currentColor" d="M13 7h-2v5.414l3.293 3.293 1.414-1.414L13 11.586z"/>
               </svg>
               <span className="timer-text">
@@ -100,15 +119,13 @@ const PaymentTicketForm: React.FC<PaymentFormProps> = ({
               Tổng tiền: {calculateTotalPrice().toLocaleString('vi-VN')}đ
             </div>
           </div>
-          <Link to="/dat-ve">
-            <button
-              onClick={handleConfirm}
-              className="book-button"
-              disabled={timeLeft <= 0}
-            >
-              {timeLeft > 0 ? `Đặt vé - ${calculateTotalPrice().toLocaleString('vi-VN')}đ` : 'Hết thời gian'}
-            </button>
-          </Link>
+          <button
+            onClick={handleBooking}  // Use handleBooking instead of old handler
+            className="book-button"
+            disabled={timeLeft <= 0}
+          >
+            {timeLeft > 0 ? `Đặt vé - ${calculateTotalPrice().toLocaleString('vi-VN')}đ` : 'Hết thời gian'}
+          </button>
         </div>
       </div>
     </div>

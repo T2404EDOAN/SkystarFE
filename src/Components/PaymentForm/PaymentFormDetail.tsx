@@ -1,13 +1,34 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import { Input } from 'antd';
+import { useLocation } from 'react-router-dom';
 import './PaymentFormDetail.css';  // Thêm dòng này vào đầu file
 
 const PaymentFormDetail = () => {
+  const location = useLocation();
+  const movieInfo = location.state;
+
+  // Add console.log to debug
+  useEffect(() => {
+    console.log('Movie Info:', movieInfo);
+  }, [movieInfo]);
+
   const [fullName, setFullName] = useState("");
   const [phone, setPhone] = useState("");
   const [email, setEmail] = useState("");
   const [ageVerified, setAgeVerified] = useState(false);
   const [termsAccepted, setTermsAccepted] = useState(false);
   const [activeStep, setActiveStep] = useState(1); // Add this for tracking active step
+
+  useEffect(() => {
+    if (movieInfo?.holdTimer) {
+      const timer = setTimeout(() => {
+        alert('Thời gian giữ ghế đã hết. Trang sẽ được tải lại.');
+        window.location.reload();
+      }, movieInfo.holdTimer * 1000);
+      
+      return () => clearTimeout(timer);
+    }
+  }, [movieInfo]);
 
   const handleNameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setFullName(e.target.value);
@@ -52,46 +73,40 @@ const PaymentFormDetail = () => {
           </li>
         </ul>
       </div>
-      <div className="skystar-payment-content" style={{
-        display: 'flex',
-        gap: '2rem',
-      }}>
-        <div className="skystar-payment-form-wrapper" style={{
-          flex: 1,
-          display: activeStep === 1 ? 'block' : 'none', // Only show on step 1
-        }}>
+      <div className="skystar-payment-content">
+        <div className="skystar-payment-form-wrapper">
           <form className="skystar-payment-form" onSubmit={handleSubmit}>
             <div className="skystar-form-group">
               <label htmlFor="fullName" className="skystar-form-label">Họ và tên</label>
-              <input
-                type="text"
+              <Input
                 id="fullName"
                 value={fullName}
                 onChange={handleNameChange}
                 className="skystar-form-input"
                 required
+                size="large"
               />
             </div>
             <div className="skystar-form-group">
               <label htmlFor="phone" className="skystar-form-label">Số điện thoại</label>
-              <input
-                type="tel"
+              <Input
                 id="phone"
                 value={phone}
                 onChange={handlePhoneChange}
                 className="skystar-form-input"
                 required
+                size="large"
               />
             </div>
             <div className="skystar-form-group">
               <label htmlFor="email" className="skystar-form-label">Email</label>
-              <input
-                type="email"
+              <Input
                 id="email"
                 value={email}
                 onChange={handleEmailChange}
                 className="skystar-form-input"
                 required
+                size="large"
               />
             </div>
             <div className="skystar-form-checkbox-group">
@@ -131,20 +146,102 @@ const PaymentFormDetail = () => {
           </form>
         </div>
         {activeStep === 2 && (
-          <div className="skystar-payment-step2" style={{ flex: 1 }}>
-            <h2>Thanh toán</h2>
-            <button 
-              onClick={handleBack}
-              className="skystar-form-back"
-            >
-              Quay lại
-            </button>
-            {/* Step 2 content will go here */}
+          <div className="skystar-payment-step2">
+            <h2>Phương thức thanh toán</h2>
+            <div className="payment-methods">
+              <div className="payment-method-item momo">
+                <div className="payment-method-header">
+                  <img 
+                    src="/momo-logo.png" 
+                    alt="Momo" 
+                    className="payment-method-logo"
+                  />
+                  <span className="payment-method-name">Ví Momo</span>
+                </div>
+                <div className="payment-method-content">
+                  <p>Quét mã QR để thanh toán</p>
+                  <div className="qr-code-container">
+                    <img 
+                      src="/momo-qr.png" 
+                      alt="Momo QR Code" 
+                      className="qr-code"
+                    />
+                  </div>
+                  <div className="payment-instructions">
+                    <p>Bước 1: Mở ứng dụng Momo trên điện thoại</p>
+                    <p>Bước 2: Chọn "Quét mã QR"</p>
+                    <p>Bước 3: Quét mã và xác nhận thanh toán</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div className="payment-actions">
+              <button 
+                onClick={handleBack}
+                className="skystar-form-back"
+              >
+                Quay lại
+              </button>
+            </div>
           </div>
         )}
-        <div className="skystar-payment-summary" style={{
-          flex: 1,
-        }}>
+        <div className="skystar-payment-summary">
+          <div className="skystar-payment-movie-info">
+            <div className="info-row movie-title-row">
+              <div className="title-hold">
+                <div className="movie-details">
+                  <span className="movie-name">{movieInfo?.title}</span>
+                  <span className="movie-genre">{movieInfo?.movieType || 'Phim'}</span>
+                </div>
+              </div>
+              <div className="hold-time">
+                <span className="hold-timer">{Math.floor(movieInfo?.holdTimer / 60)}:
+                  {(movieInfo?.holdTimer % 60).toString().padStart(2, '0')}</span>
+              </div>
+            </div>
+            
+            <div className="info-row cinema-info-row">
+              <div className="cinema-details">
+                <span className="cinema-name">{movieInfo?.cinemaName}</span>
+                <span className="cinema-address">{movieInfo?.cinemaAddress}</span>
+              </div>
+            </div>
+            
+            <div className="info-row showtime-info-row">
+              <div className="showtime-details">
+                <span className="time-label">Thời gian</span>
+                <span className="time-value">{movieInfo?.showTime}</span>
+              </div>
+            </div>
+            
+            <div className="info-row room-info-row">
+              <div className="room-details">
+                <span className="detail-label">Phòng chiếu</span>
+                <span className="detail-value">{movieInfo?.roomName}</span>
+              </div>
+              <div className="ticket-count">
+                <span className="detail-label">Số vé</span>
+                <span className="detail-value">{movieInfo?.selectedSeats?.length}</span>
+              </div>
+              <div className="ticket-type">
+                <span className="detail-label">Loại vé</span>
+                <span className="detail-value">{movieInfo?.selectedSeats[0]?.seatType || 'Thường'}</span>
+              </div>
+              <div className="seat-numbers">
+                <span className="detail-label">Số ghế</span>
+                <span className="detail-value">
+                  {movieInfo?.selectedSeats?.map(seat => seat.seatNumber).join(', ')}
+                </span>
+              </div>
+            </div>
+            
+            <div className="info-row total-row">
+              <span className="label">Số tiền cần thanh toán</span>
+              <span className="value">
+                {movieInfo?.totalPrice?.toLocaleString('vi-VN')} VND
+              </span>
+            </div>
+          </div>
         </div>
       </div>
     </div>

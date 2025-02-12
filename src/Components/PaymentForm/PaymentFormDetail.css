@@ -21,6 +21,10 @@
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
+.skystar-payment-form-wrapper.hidden {
+  display: none;
+}
+
 .skystar-payment-form {
   max-width: 100%;
 }
@@ -37,11 +41,13 @@
 }
 
 .skystar-form-input {
-  padding: 0.5rem;
+  padding: 0.8rem;
   border: 1px solid #ccc;
   border-radius: 4px;
   width: 100%;
-  box-sizing: border-box;  /* Add this to include padding in width calculation */
+  box-sizing: border-box;
+  height: 45px;
+  font-size: 16px;
 }
 
 .skystar-form-checkbox-group {
@@ -145,4 +151,266 @@
 
 .skystar-form-back:hover {
   background-color: #5a6268;
+}
+
+/* Payment Summary Styles */
+.skystar-payment-summary {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  max-height: 500px;
+}
+
+.skystar-payment-movie-info {
+  flex: 5;
+  background: #36c;
+  padding: 1rem;
+  border-radius: 5px;
+  margin-bottom: 0.5rem;
+  overflow-y: auto;
+}
+
+.info-row {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 0.75rem;
+}
+
+.info-row:last-child {
+  margin-bottom: 0;
+}
+
+.total-row {
+  font-weight: bold;
+  font-size: 1.2em;
+  margin-top: 1.5rem;
+  padding-top: 1.5rem;
+  border-top: 2px dashed #ccc;
+}
+
+.total-row .label,
+.total-row .value {
+  font-size: 1.1em;
+}
+
+.skystar-payment-total {
+  flex: 2;
+  padding: 0.25rem;
+  border-radius: 8px;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  min-height: fit-content;
+}
+
+.skystar-payment-total h3 {
+  margin: 0;
+  font-size: 16px;
+}
+
+.total-amount {
+  margin: 0;
+  font-size: 18px;
+  font-weight: bold;
+  color: #e71a0f;
+  line-height: 1.2;
+}
+
+.skystar-payment-step2 {
+  flex: 1;
+  padding: 20px;
+  background: #fff;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+}
+
+.skystar-payment-form-wrapper {
+  display: block;
+}
+
+.skystar-payment-form-wrapper[style*="none"] {
+  display: none;
+}
+
+.movie-title-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 1rem;
+  padding-bottom: 0.5rem;
+}
+
+.title-hold {
+  display: flex;
+  gap: 0.5rem;
+  max-width: 70%;
+}
+
+.movie-name {
+font-size: 24px; 
+font-family: "Anton", sans-serif;
+}
+
+.hold-time {
+  background-color: #e71a0f;
+  padding: 0.25rem 0.5rem;
+  border-radius: 4px;
+}
+
+.hold-timer {
+  color: white;
+  font-weight: bold;
+  font-size: 14px;
+}
+
+.cinema-info-row {
+  align-items: flex-start;
+  margin-bottom: 1rem;
+  padding-bottom: 0.5rem;
+}
+
+.cinema-details {
+  display: flex;
+  flex-direction: column;
+  text-align: left;
+}
+
+.cinema-name {
+  font-weight: 500;
+  margin-bottom: 4px;
+}
+
+.cinema-address {
+  font-size: 0.9em;
+}
+
+.showtime-info-row {
+  align-items: flex-start;
+  margin-bottom: 1.5rem;
+  padding-bottom: 0.5rem;
+}
+
+.showtime-details {
+  display: flex;
+  flex-direction: column;
+
+  text-align: left;
+}
+
+.time-label {
+  font-size: 0.9em;
+ 
+  color: #FFD700;
+  margin-bottom: 4px;
+}
+
+.time-value {
+  font-weight: 500;
+}
+
+.room-info-row {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+  padding-bottom: 0.5rem;
+}
+
+.room-details,
+.ticket-count,
+.ticket-type,
+.seat-numbers {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.detail-label {
+  font-size: 0.9em;
+ color: #FFD700;
+}
+
+.detail-value {
+  font-weight: 500;
+}
+
+.movie-details {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.movie-genre {
+  font-size: 0.9em;
+  color: #FFD700;
+}
+
+.combo-row {
+  margin-bottom: 1.5rem;
+  padding-bottom: 0.5rem;
+}
+
+.payment-methods {
+  margin: 20px 0;
+}
+
+.payment-method-item {
+  border: 1px solid #e0e0e0;
+  border-radius: 8px;
+  padding: 20px;
+  margin-bottom: 20px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.payment-method-item:hover {
+  border-color: #007bff;
+  background-color: #f8f9fa;
+}
+
+.payment-method-header {
+  display: flex;
+  align-items: center;
+}
+
+.payment-method-logo {
+  font-size: 18px;
+  font-weight: 600;
+}
+
+.payment-method-content {
+  text-align: center;
+}
+
+.qr-code-container {
+  margin: 20px auto;
+  width: 200px;
+  height: 200px;
+}
+
+.qr-code {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+.payment-instructions {
+  text-align: left;
+  margin-top: 20px;
+}
+
+.payment-instructions p {
+  margin: 8px 0;
+  color: #666;
+}
+
+.payment-actions {
+  margin-top: 20px;
+  display: flex;
+  justify-content: space-between;
+}
+
+.momo {
+  border-color: #ae2070;
 }
