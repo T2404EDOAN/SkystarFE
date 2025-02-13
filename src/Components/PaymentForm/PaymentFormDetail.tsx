@@ -74,112 +74,101 @@ const PaymentFormDetail = () => {
         </ul>
       </div>
       <div className="skystar-payment-content">
-        <div className="skystar-payment-form-wrapper">
-          <form className="skystar-payment-form" onSubmit={handleSubmit}>
-            <div className="skystar-form-group">
-              <label htmlFor="fullName" className="skystar-form-label">Họ và tên</label>
-              <Input
-                id="fullName"
-                value={fullName}
-                onChange={handleNameChange}
-                className="skystar-form-input"
-                required
-                size="large"
-              />
-            </div>
-            <div className="skystar-form-group">
-              <label htmlFor="phone" className="skystar-form-label">Số điện thoại</label>
-              <Input
-                id="phone"
-                value={phone}
-                onChange={handlePhoneChange}
-                className="skystar-form-input"
-                required
-                size="large"
-              />
-            </div>
-            <div className="skystar-form-group">
-              <label htmlFor="email" className="skystar-form-label">Email</label>
-              <Input
-                id="email"
-                value={email}
-                onChange={handleEmailChange}
-                className="skystar-form-input"
-                required
-                size="large"
-              />
-            </div>
-            <div className="skystar-form-checkbox-group">
-              <input
-                type="checkbox"
-                id="ageVerification"
-                checked={ageVerified}
-                onChange={(e) => setAgeVerified(e.target.checked)}
-                className="skystar-form-checkbox"
-                required
-              />
-              <label htmlFor="ageVerification" className="skystar-form-checkbox-label">
-                Đảm bảo mua vé đúng số tuổi quy định
-              </label>
-            </div>
+        {activeStep === 1 && (
+          <div className="skystar-payment-form-wrapper">
+            <form className="skystar-payment-form" onSubmit={handleSubmit}>
+              <div className="skystar-form-group">
+                <label htmlFor="fullName" className="skystar-form-label">Họ và tên</label>
+                <Input
+                  id="fullName"
+                  value={fullName}
+                  onChange={handleNameChange}
+                  className="skystar-form-input"
+                  required
+                  size="large"
+                />
+              </div>
+              <div className="skystar-form-group">
+                <label htmlFor="phone" className="skystar-form-label">Số điện thoại</label>
+                <Input
+                  id="phone"
+                  value={phone}
+                  onChange={handlePhoneChange}
+                  className="skystar-form-input"
+                  required
+                  size="large"
+                />
+              </div>
+              <div className="skystar-form-group">
+                <label htmlFor="email" className="skystar-form-label">Email</label>
+                <Input
+                  id="email"
+                  value={email}
+                  onChange={handleEmailChange}
+                  className="skystar-form-input"
+                  required
+                  size="large"
+                />
+              </div>
+              <div className="skystar-form-checkbox-group">
+                <input
+                  type="checkbox"
+                  id="ageVerification"
+                  checked={ageVerified}
+                  onChange={(e) => setAgeVerified(e.target.checked)}
+                  className="skystar-form-checkbox"
+                  required
+                />
+                <label htmlFor="ageVerification" className="skystar-form-checkbox-label">
+                  Đảm bảo mua vé đúng số tuổi quy định
+                </label>
+              </div>
 
-            <div className="skystar-form-checkbox-group">
-              <input
-                type="checkbox"
-                id="termsAcceptance"
-                checked={termsAccepted}
-                onChange={(e) => setTermsAccepted(e.target.checked)}
-                className="skystar-form-checkbox"
-                required
-              />
-              <label htmlFor="termsAcceptance" className="skystar-form-checkbox-label">
-                Đồng ý với điều khoản của Cinestar
-              </label>
-            </div>
-            <button 
-              type="submit" 
-              className="skystar-form-submit"
-              disabled={!fullName || !phone || !email || !ageVerified || !termsAccepted}
-            >
-              Tiếp tục
-            </button>
-          </form>
-        </div>
+              <div className="skystar-form-checkbox-group">
+                <input
+                  type="checkbox"
+                  id="termsAcceptance"
+                  checked={termsAccepted}
+                  onChange={(e) => setTermsAccepted(e.target.checked)}
+                  className="skystar-form-checkbox"
+                  required
+                />
+                <label htmlFor="termsAcceptance" className="skystar-form-checkbox-label">
+                  Đồng ý với điều khoản của Cinestar
+                </label>
+              </div>
+              <button 
+                type="submit" 
+                className="skystar-form-submit"
+                disabled={!fullName || !phone || !email || !ageVerified || !termsAccepted}
+              >
+                Tiếp tục
+              </button>
+            </form>
+          </div>
+        )}
         {activeStep === 2 && (
           <div className="skystar-payment-step2">
-            <h2>Phương thức thanh toán</h2>
-            <div className="payment-methods">
-              <div className="payment-method-item momo">
-                <div className="payment-method-header">
-                  <img 
-                    src="/momo-logo.png" 
-                    alt="Momo" 
-                    className="payment-method-logo"
-                  />
-                  <span className="payment-method-name">Ví Momo</span>
-                </div>
-                <div className="payment-method-content">
-                  <p>Quét mã QR để thanh toán</p>
-                  <div className="qr-code-container">
-                    <img 
-                      src="/momo-qr.png" 
-                      alt="Momo QR Code" 
-                      className="qr-code"
-                    />
-                  </div>
-                  <div className="payment-instructions">
-                    <p>Bước 1: Mở ứng dụng Momo trên điện thoại</p>
-                    <p>Bước 2: Chọn "Quét mã QR"</p>
-                    <p>Bước 3: Quét mã và xác nhận thanh toán</p>
-                  </div>
-                </div>
+      
+            <div className="payment-methods-container">
+              <div className="payment-method-box">
+                <img src="/momo-logo.png" alt="Momo" />
+              
+                <p>Thanh toán qua ví Momo</p>
+              </div>
+              <div className="payment-method-box">
+                <img src="/zalopay-logo.png" alt="ZaloPay" />
+               
+                <p>Thanh toán qua ví ZaloPay</p>
+              </div>
+              <div className="payment-method-box">
+                <img src="/vnpay-logo.png" alt="VNPay" />
+               
+                <p>Thanh toán qua VNPay</p>
               </div>
             </div>
             <div className="payment-actions">
-              <button 
-                onClick={handleBack}
-                className="skystar-form-back"
-              >
+              <button onClick={handleBack} className="skystar-form-back">
                 Quay lại
               </button>
             </div>
