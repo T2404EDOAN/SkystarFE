@@ -27,6 +27,7 @@ import EventStar from "./Components/EventRentalPage/Events/EventStar";
 import Cinema from "./Components/EventRentalPage/Events/Cinema";
 import PaymentPage from "./Components/PaymentForm/PaymentPage/PaymentPage";
 import PaymentFormDetail from "./Components/PaymentForm/PaymentFormDetail";
+import Promotion from "./Components/Promotions/Promotions";
 
 // ...other imports
 
@@ -39,6 +40,7 @@ function App() {
             <Route path="/" element={<Home />} />
             <Route path="/booking" element={<Booking />} />
             <Route path="/login" element={<Login />} />
+            <Route path="/promotions" element={<Promotion />} />
             <Route path="/change_pass" element={<Change_pass />} />
             <Route path="/about" element={<About />} />
             <Route path="/entertaiment" element={<EntertaimentOptions />} />\
