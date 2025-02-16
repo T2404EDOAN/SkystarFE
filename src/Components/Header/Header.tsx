@@ -63,7 +63,7 @@ const Header: React.FC = () => {
           <div className="desktop-nav desktop-nav-lg">
             {/* Action Buttons */}
             <div className="flex space-x-4">
-              <Link to="/movie-detail">
+              <Link to="/payment">
                 <Button
                   type="primary"
                   style={{ backgroundColor: "#f3ea28", color: "black" }}

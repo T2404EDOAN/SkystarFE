@@ -25,6 +25,8 @@ import Showtimes from "./Components/Showtimes/Showtimes";
 import EventRentalPage from "./Components/EventRentalPage/EventRentalPage";
 import EventStar from "./Components/EventRentalPage/Events/EventStar";
 import Cinema from "./Components/EventRentalPage/Events/Cinema";
+import PaymentPage from "./Components/PaymentForm/PaymentPage/PaymentPage";
+import PaymentFormDetail from "./Components/PaymentForm/PaymentFormDetail";
 
 // ...other imports
 
@@ -53,6 +55,7 @@ function App() {
             <Route path="/thue-su-kien" element={<EventRentalPage />} />
             <Route path="/thue-su-kien/all" element={<EventStar />} />
             <Route path="/thue-su-kien/cinema" element={<Cinema />} />
+            <Route path="/payment" element={<PaymentFormDetail />} />
           </Routes>
         </MainLayout>
       </BrowserRouter>

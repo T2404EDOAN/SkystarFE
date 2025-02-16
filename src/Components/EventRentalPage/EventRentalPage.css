@@ -1,0 +1,93 @@
+.container-event-rental {
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+  font-family: sans-serif;
+  padding: 0 16px;
+}
+
+.header-event-rental {
+  text-align: center;
+  padding: 24px 0;
+  color: white;
+}
+
+.header-title-event-rental {
+  font-size: 32px;
+  margin-bottom: 8px;
+}
+
+.header-subtitle-event-rental {
+  font-size: 20px;
+  margin-bottom: 8px;
+}
+
+.header-text-event-rental {
+  font-size: 16px;
+  padding: 0 16px;
+}
+
+.main-content-event-rental {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  padding: 24px 0;
+}
+
+.event-section {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 16px;
+}
+
+.event-section.reverse {
+  flex-direction: row-reverse;
+}
+
+.event-text-event-rental {
+  width: 50%;
+  color: white;
+  padding: 16px;
+}
+
+.event-title-event-rental {
+  font-size: 24px;
+  margin-bottom: 8px;
+}
+
+.event-description {
+  font-size: 16px;
+  margin-bottom: 8px;
+}
+
+.event-info {
+  font-size: 14px;
+  margin-bottom: 4px;
+}
+
+.event-phone {
+  font-size: 18px;
+  font-weight: bold;
+}
+
+.contact-button-event-rental {
+  background-color: #ffcc00;
+  color: black;
+  padding: 10px 16px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  font-weight: 700;
+}
+
+.contact-button-event-rental:hover {
+  background-color: #e6b800;
+}
+
+.event-image {
+  width: 600px;
+  height: 395px;
+  object-fit: cover;
+}
