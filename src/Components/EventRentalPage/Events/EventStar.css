@@ -1,0 +1,85 @@
+.event-types {
+    margin-top: 20px !important;
+}
+
+.carousel-control-prev,
+.carousel-control-next {
+  width: 5%; /* Điều chỉnh chiều rộng của nút */
+  height: 400% !important; /* Kéo dài nút theo chiều dọc */
+  top: 0;
+  bottom: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  opacity: 0 !important;
+}
+.carousel-indicators {
+    display: none !important;
+  }
+
+.contact-but {
+    background-color: #F3EA27 !important;
+    color: #000000 !important;
+    padding: 10px 15px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    align-items: center;
+    margin-top: 15px !important;
+    font-size: 14px; 
+    justify-content: center;
+    display: inline-flex;
+}
+
+ .btn:hover {
+    background-color:#663399 !important;
+    color: white !important;
+}
+
+.custom{
+    height: 500px !important;
+    overflow: hidden;
+  }
+
+a {
+    text-decoration: none; /* Bỏ gạch chân cho tất cả các liên kết */
+    color: inherit; /* Giữ màu sắc của văn bản cha */
+}
+
+.list {
+    display: flex; /* Sử dụng Flexbox */
+    justify-content: space-between; /* Cách đều giữa các mục */
+    padding: 0; /* Bỏ padding mặc định */
+    list-style: none; /* Bỏ dấu đầu dòng */
+    width: 80%; /* Chiều rộng của danh sách, có thể điều chỉnh */
+    margin: 0 auto; /* Căn giữa danh sách */
+}
+
+.list-item {
+    flex: 1; /* Để các mục có chiều rộng bằng nhau */
+    margin: 0 10px; /* Khoảng cách giữa các mục */
+}
+
+.list-item a {
+    display: flex; /* Sử dụng Flexbox để căn giữa icon và text */
+    align-items: center; /* Căn giữa theo chiều dọc */
+    padding: 10px; /* Khoảng cách bên trong */
+    border-radius: 5px; /* Bo góc */
+    text-decoration: none; /* Bỏ gạch chân */
+    text-align: center; /* Căn giữa chữ */
+}
+
+.list-item a i {
+    margin-right: 10px; /* Khoảng cách giữa icon và text */
+    color: #F3EA27; /* Đổi màu icon (vd: màu vàng) */
+}
+.color-icon {
+    display: flex; /* Sử dụng Flexbox */
+    justify-content: center; /* Căn giữa theo chiều ngang */
+    align-items: center; /* Căn giữa theo chiều dọc */
+}
+
+.color-icon a i {
+    margin-right: 10px; /* Khoảng cách giữa icon và text */
+    color: #F3EA27; /* Đổi màu icon (vd: màu vàng) */
+}
