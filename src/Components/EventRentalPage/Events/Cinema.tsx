@@ -105,8 +105,8 @@ const Cinema = () => {
       <div className="mt-5 mb-5">
         <Row gx={5}>
           <Col xs={12} lg={6} position="relative" >
-            <h2 text-color="white">THUÊ RẠP TỔ CHỨC SỰ KIỆN</h2>
-            <p text-color="white">Sự kiện ra mắt sản phẩm, họp công ty, hội nghị khách hàng...<br />
+            <h2 className="cinema-h2">THUÊ RẠP TỔ CHỨC SỰ KIỆN</h2>
+            <p className="cinema-p">Sự kiện ra mắt sản phẩm, họp công ty, hội nghị khách hàng...<br />
               Hỗ trợ sảnh rạp tổ chức đón khách, chụp hình thảm đỏ, tương tác với truyền thông tại chỗ
               Có nhiều kinh nghiệm tổ chức họp báo ra mắt phim, ra mắt MV ... SKYSTAR sẽ giúp bạn đưa sản phẩm tới công chúng gần hơn! <br />
               Liên hệ tư vấn vui lòng để thông tin ở bên dưới hoặc inbox fanpage SKYSTAR <br />
@@ -120,13 +120,13 @@ const Cinema = () => {
 
       {/* Phần 2: các địa điểm */}
       <div className="mt-5 mb-5">
-        <h2 className="md-6">CÁC CỤM ĐỊA ĐIỂM CHO THUÊ</h2>
+        <h2 className="cinema-h2 md-6">CÁC CỤM ĐỊA ĐIỂM CHO THUÊ</h2>
         <PlaceCard />
       </div>
 
       {/* Phần 3: đặt lịch và đặt vé */}
       <div className="mt-5 mb-5">
-        <h2 className="mt-5">LIÊN HỆ: LẬP KẾ HOẠCH CÙNG SKYSTAR NGAY</h2>
+        <h2 className="cinema-h2 mt-5">LIÊN HỆ: LẬP KẾ HOẠCH CÙNG SKYSTAR NGAY</h2>
         <Row>
           <Col md={8}>
             <Row>
@@ -135,8 +135,8 @@ const Cinema = () => {
               </Col>
           <Col md={6}>
             <form className="form-row needs-validation" noValidate onSubmit={handleSubmit}>
-              <div className="mb-3 form-ct">
-                <label htmlFor="validationFullName" className="form-label">Họ và Tên</label>
+              <div className="mb-3 cinema-form-ct">
+                <label htmlFor="validationFullName" className="cinema-form-label">Họ và Tên</label>
                 <input
                   type="text"
                   className="form-control"
@@ -150,8 +150,8 @@ const Cinema = () => {
                 {/* <div className="valid-feedback">Looks good!</div> */}
               </div>
 
-              <div className="mb-3 form-ct">
-                <label htmlFor="validationPhone" className="form-label">Số Điện Thoại</label>
+              <div className="mb-3 cinema-form-ct">
+                <label htmlFor="validationPhone" className="cinema-form-label">Số Điện Thoại</label>
                 <input
                   type="tel"
                   className="form-control"
@@ -165,8 +165,8 @@ const Cinema = () => {
                 {/* <div className="valid-feedback">Looks good!</div> */}
               </div>
 
-              <div className="mb-3 form-ct">
-                <label htmlFor="validationEmail" className="form-label">Email</label>
+              <div className="mb-3 cinema-form-ct">
+                <label htmlFor="validationEmail" className="cinema-form-label">Email</label>
                 <input
                   type="email"
                   className="form-control"
@@ -180,8 +180,8 @@ const Cinema = () => {
                 {/* <div className="valid-feedback">Looks good!</div> */}
               </div>
 
-              <div className="mb-3 form-ct">
-                <label htmlFor="validationLocation" className="form-label">Chọn Địa Điểm</label>
+              <div className="mb-3 cinema-form-ct">
+                <label htmlFor="validationLocation" className="cinema-form-label">Chọn Địa Điểm</label>
                 <select
                   className="form-select"
                   //id="validationLocation"
@@ -198,8 +198,8 @@ const Cinema = () => {
                 {/* <div className="invalid-feedback">Please select a valid location.</div> */}
               </div>
 
-              <div className="mb-3 form-ct">
-                <label htmlFor="validationService" className="form-label">Chọn Dịch Vụ</label>
+              <div className="mb-3 cinema-form-ct">
+                <label htmlFor="validationService" className="cinema-form-label">Chọn Dịch Vụ</label>
                 <select
                   className="form-select"
                   //id="validationService"
@@ -218,8 +218,8 @@ const Cinema = () => {
                 {/* <div className="invalid-feedback">Please select a valid service.</div> */}
               </div>
 
-              <div className="mb-3 form-ct">
-                <label htmlFor="validationSpecialRequest" className="form-label">Hãy nói cho SKYSTAR biết những dự định của bạn nha</label>
+              <div className="mb-3 cinema-form-ct">
+                <label htmlFor="validationSpecialRequest" className="cinema-form-label">Hãy nói cho SKYSTAR biết những dự định của bạn nha</label>
                 <textarea
                   className="form-control"
                   placeholder="Ghi chú / yêu cầu đặc biệt"
@@ -230,18 +230,18 @@ const Cinema = () => {
                 ></textarea>
               </div>
 
-              <div className="md-3 form-ct">
-                <button className="btn btn-primary submit-but" type="button" onClick={handleSubmit}>Gửi</button>
+              <div className="md-3 cinema-form-ct">
+                <button className="btn btn-primary cinema-submit-but" type="button" onClick={handleSubmit}>Gửi</button>
               </div>
             </form>
             {/* Modal thông báo */}
       {showModal && (
-        <div className="modal">
-          <div className="modal-content">
-            <span className="close" onClick={closeModal}>&times;</span>
-            <h2>Thông báo</h2>
-            <p>Gửi thông tin thành công! <br /> Cảm ơn bạn đã liên hệ với SKYSTAR.</p>
-            <button className="notii" onClick={closeModal}>Đồng ý</button>
+        <div className="cinema-modal">
+          <div className="cinema-modal-content">
+            <span className="cinema-close" onClick={closeModal}>&times;</span>
+            <h2 className="cinema-h2">Thông báo</h2>
+            <p className="cinema-p">Gửi thông tin thành công! <br /> Cảm ơn bạn đã liên hệ với SKYSTAR.</p>
+            <button className="cinema-notii" onClick={closeModal}>Đồng ý</button>
           </div>
         </div>
       )}

@@ -1,11 +1,11 @@
-h2 {
+.cinema-h2 {
     color: white !important; /* Màu chữ tiêu đề */
     text-align: center; /* Căn giữa tiêu đề */
     margin-top: 25px !important; /*Khoảng cách trên tiêu đề*/
     margin-bottom: 15px; /* Khoảng cách dưới tiêu đề */
-  }
+}
   
-p {
+.cinema-p {
     color: white; /* Màu chữ cho đoạn văn */
     /*/text-align: center; /* Căn giữa đoạn văn */
     max-width: 600px; /* Giới hạn chiều rộng */
@@ -13,23 +13,22 @@ p {
     padding: 0 15px; /*Khoảng cách hai bên */
 } 
 
-
-.place-title, .place-subtitle {
+.cinema-place-title, .cinema-place-subtitle {
     font-size: 16px;
     font-weight: bold;
     text-align: left;
     margin-left: 20px;
     margin-right: -20px;
     color:white !important; /* Màu chữ cho tiêu đề và phụ đề */
-  }
+}
 
-.form-label {
+.cinema-form-label {
     color: white;
     font-size: 14px; 
     box-sizing: border-box;
-  }
+}
 
-.submit-but {
+.cinema-submit-but {
     background-color: #F3EA27 !important;
     color: #000000 !important;
     padding: 10px 15px;
@@ -41,16 +40,16 @@ p {
     font-size: 14px; 
 }
 
-.submit-but:hover {
+.cinema-submit-but:hover {
     background-color:#663399 !important;
     color: white !important;
 }
 
-.form-ct {
+.cinema-form-ct {
     width: 100%;
 }
 
-.modal {
+.cinema-modal {
     display: flex;
     justify-content: center;
     align-items: center;
@@ -62,32 +61,32 @@ p {
     height: 100%;
     overflow: auto;
     background-color: rgba(0, 0, 0, 0.7); /* Nền tối mờ */
-  }
+}
   
-.modal-content {
+.cinema-modal-content {
     background-color: #0F172A;
     padding: 20px;
     border-radius: 10px;
     width: 300px; /* Chiều rộng modal */
     text-align: center;
-  }
+}
   
-.close {
+.cinema-close {
     display: none;
     color: #aaa;
     float: right;
     font-size: 28px;
     font-weight: bold;
-  }
+}
   
-.close:hover,
-.close:focus {
+.cinema-close:hover,
+.cinema-close:focus {
     color: black;
     text-decoration: none;
     cursor: pointer;
-  }
+}
   
-.notii {
+.cinema-notii {
     margin-top: 15px;
     padding: 10px 15px;
     background-color: #F3EA27;
@@ -95,9 +94,9 @@ p {
     border: none;
     border-radius: 5px;
     cursor: pointer;
-  }
+}
   
-.notii:hover {
+.cinema-notii:hover {
     background-color:#663399 !important;
     color: white !important;
-  }
+}

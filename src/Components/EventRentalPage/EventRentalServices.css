@@ -1,0 +1,105 @@
+.services-section {
+  padding: 2rem 0;
+  color: white;
+  padding-bottom: 50px;
+}
+
+@media (min-width: 768px) {
+  .services-section {
+    padding: 3rem 0;
+    padding-bottom: 100px;
+  }
+}
+
+.services-title {
+  font-size: 1.5rem;
+  margin-bottom: 1rem;
+  padding: 0 1rem;
+  font-family: "Anton, sans-serif";
+}
+
+@media (min-width: 768px) {
+  .services-title {
+    font-size: 1.875rem;
+  }
+}
+
+.services-subtitle {
+  margin-bottom: 1.5rem;
+  padding: 0 1rem;
+}
+
+@media (min-width: 768px) {
+  .services-subtitle {
+    margin-bottom: 2rem;
+  }
+}
+
+.services-grid {
+  display: grid;
+  grid-template-columns: repeat(1, 1fr);
+  gap: 1rem;
+  padding: 0 1rem;
+}
+
+@media (min-width: 768px) {
+  .services-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (min-width: 1024px) {
+  .services-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+.service-card {
+  position: relative;
+  overflow: hidden;
+}
+
+.service-image {
+  width: 100%;
+  height: 200px;
+  object-fit: cover;
+  border-radius: 0.5rem;
+  transition: transform 0.5s;
+}
+
+@media (min-width: 768px) {
+  .service-image {
+    height: 250px;
+  }
+}
+
+.service-card:hover .service-image {
+  transform: scale(1.1);
+}
+
+.service-overlay {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  background: linear-gradient(to top, black, transparent);
+  padding: 1rem;
+}
+
+.service-name {
+  text-align: center;
+}
+
+.service-hover-effect {
+  position: absolute;
+  inset: 0;
+  background-color: white;
+  opacity: 0;
+  transform: translateX(-100%);
+  transition: transform 0.5s ease-in-out;
+  pointer-events: none;
+}
+
+.service-card:hover .service-hover-effect {
+  opacity: 0.2;
+  transform: translateX(100%);
+}

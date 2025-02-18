@@ -1,6 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import "./EventRentalPage.css";
+import "./EventRentalServices.css";
 
 const EventRentalPage = () => {
   return (
@@ -37,7 +38,7 @@ const EventRentalPage = () => {
               </p>
               <p className="event-phone">0342556642</p>
               <button className="contact-button-event-rental">
-                LIÊN HỆ NGAY
+                <span>LIÊN HỆ NGAY</span>
               </button>
             </div>
             <img
@@ -55,105 +56,85 @@ const EventRentalPage = () => {
         ))}
 
         {/* Services Section */}
-        <section className="py-8 md:py-12 text-white pb-[50px] md:pb-[100px]">
-          <h2
-            className="text-2xl md:text-3xl mb-4 px-4"
-            style={{ fontFamily: "Anton, sans-serif" }}
-          >
+        <section className="services-section">
+          <h2 className="services-title">
             CÁC DỊCH VỤ CHO THUÊ KHÁC
           </h2>
-          <p className="mb-6 md:mb-8 px-4">
+          <p className="services-subtitle">
             Bạn đang tìm kiếm một địa điểm để --
           </p>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 px-4">
-            {/* Service Cards - Keep the existing card structure but update classes */}
-            <Link
-              to="/thue-su-kien/cinema"
-              className="relative group overflow-hidden"
-            >
+          <div className="services-grid">
+            <Link to="/thue-su-kien/cinema" className="service-card">
               <img
                 src="https://api-website.cinestar.com.vn/media/.renditions/wysiwyg/CMSPage/to-chuc-su-kien/rap-chieu-phim.png"
                 alt="Rạp chiếu phim"
-                className="w-full h-[200px] md:h-[250px] object-cover rounded-lg transition-transform duration-500 group-hover:scale-110"
+                className="service-image"
               />
-              <div className="absolute bottom-0 w-full bg-gradient-to-t from-black to-transparent p-4">
-                <p className="text-center">RẠP CHIẾU PHIM</p>
+              <div className="service-overlay">
+                <p className="service-name">RẠP CHIẾU PHIM</p>
               </div>
-              <div className="absolute inset-0 bg-white opacity-0 group-hover:opacity-20 translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-500 ease-in-out pointer-events-none" />
+              <div className="service-hover-effect" />
             </Link>
 
-            <Link
-              to="/thue-su-kien/all"
-              className="relative group overflow-hidden"
-            >
+            <Link to="/thue-su-kien/all" className="service-card">
               <img
                 src="https://api-website.cinestar.com.vn/media/.renditions/wysiwyg/CMSPage/to-chuc-su-kien/rap-chieu-phim.png"
                 alt="Nhà hát opera"
-                className="w-full h-[200px] md:h-[250px] object-cover rounded-lg transition-transform duration-500 group-hover:scale-110"
+                className="service-image"
               />
-              <div className="absolute bottom-0 w-full bg-gradient-to-t from-black to-transparent p-4">
-                <p className="text-center">NHÀ HÁT OPERA</p>
+              <div className="service-overlay">
+                <p className="service-name">NHÀ HÁT OPERA</p>
               </div>
-              <div className="absolute inset-0 bg-white opacity-0 group-hover:opacity-20 translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-500 ease-in-out pointer-events-none" />
+              <div className="service-hover-effect" />
             </Link>
 
-            <Link
-              to="/thue-su-kien/all"
-              className="relative group overflow-hidden"
-            >
+            <Link to="/thue-su-kien/all" className="service-card">
               <img
                 src="https://api-website.cinestar.com.vn/media/.renditions/wysiwyg/CMSPage/to-chuc-su-kien/kid-zone.png"
                 alt="Kidzone"
-                className="w-full h-[200px] md:h-[250px] object-cover rounded-lg transition-transform duration-500 group-hover:scale-110"
+                className="service-image"
               />
-              <div className="absolute bottom-0 w-full bg-gradient-to-t from-black to-transparent p-4">
-                <p className="text-center">KIDZONE</p>
+              <div className="service-overlay">
+                <p className="service-name">KIDZONE</p>
               </div>
-              <div className="absolute inset-0 bg-white opacity-0 group-hover:opacity-20 translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-500 ease-in-out pointer-events-none" />
+              <div className="service-hover-effect" />
             </Link>
 
-            <Link
-              to="/thue-su-kien/all"
-              className="relative group overflow-hidden"
-            >
+            <Link to="/thue-su-kien/all" className="service-card">
               <img
                 src="https://api-website.cinestar.com.vn/media/.renditions/wysiwyg/CMSPage/to-chuc-su-kien/bowling.png"
                 alt="Bowling"
-                className="w-full h-[200px] md:h-[250px] object-cover rounded-lg transition-transform duration-500 group-hover:scale-110"
+                className="service-image"
               />
-              <div className="absolute bottom-0 w-full bg-gradient-to-t from-black to-transparent p-4">
-                <p className="text-center">BOWLING</p>
+              <div className="service-overlay">
+                <p className="service-name">BOWLING</p>
               </div>
-              <div className="absolute inset-0 bg-white opacity-0 group-hover:opacity-20 translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-500 ease-in-out pointer-events-none" />
+              <div className="service-hover-effect" />
             </Link>
             
-            <Link
-              to="/thue-su-kien/all"
-              className="relative group overflow-hidden">
+            <Link to="/thue-su-kien/all" className="service-card">
               <img
                 src="https://api-website.cinestar.com.vn/media/.renditions/wysiwyg/CMSPage/to-chuc-su-kien/nhahang.png"
                 alt="Nhà hàng"
-                className="w-full h-[200px] md:h-[250px] object-cover rounded-lg transition-transform duration-500 group-hover:scale-110"
+                className="service-image"
               />
-              <div className="absolute bottom-0 w-full bg-gradient-to-t from-black to-transparent p-4">
-                <p className="text-center">NHÀ HÀNG</p>
+              <div className="service-overlay">
+                <p className="service-name">NHÀ HÀNG</p>
               </div>
-              <div className="absolute inset-0 bg-white opacity-0 group-hover:opacity-20 translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-500 ease-in-out pointer-events-none" />
+              <div className="service-hover-effect" />
             </Link>
 
-            <Link
-              to="/thue-su-kien/all"
-              className="relative group overflow-hidden">
+            <Link to="/thue-su-kien/all" className="service-card">
               <img
                 src="https://api-website.cinestar.com.vn/media/.renditions/wysiwyg/CMSPage/to-chuc-su-kien/bida.png"
                 alt="Billiards"
-                className="w-full h-[200px] md:h-[250px] object-cover rounded-lg transition-transform duration-500 group-hover:scale-110"
+                className="service-image"
               />
-              <div className="absolute bottom-0 w-full bg-gradient-to-t from-black to-transparent p-4">
-                <p className="text-center">BILLIARDS</p>
+              <div className="service-overlay">
+                <p className="service-name">BILLIARDS</p>
               </div>
-              <div className="absolute inset-0 bg-white opacity-0 group-hover:opacity-20 translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-500 ease-in-out pointer-events-none" />
+              <div className="service-hover-effect" />
             </Link>
           </div>
         </section>

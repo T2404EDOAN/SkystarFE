@@ -2,7 +2,7 @@
   width: 100%;
   max-width: 1200px;
   margin: 0 auto;
-  font-family: sans-serif;
+  
   padding: 0 16px;
 }
 
@@ -72,18 +72,40 @@
 }
 
 .contact-button-event-rental {
-  background-color: #ffcc00;
+  background-color: #f3ea28;
   color: black;
-  padding: 10px 16px;
-  border: none;
-  border-radius: 4px;
-  cursor: pointer;
-  transition: background-color 0.3s ease;
-  font-weight: 700;
+  height: 40px;
+  width: 150px;
+  border-radius: 0.375rem;
+  overflow: hidden;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: "Anton", sans-serif;
 }
 
-.contact-button-event-rental:hover {
-  background-color: #e6b800;
+.contact-button-event-rental span {
+  position: relative;
+  z-index: 10;
+  transition: color 0.3s;
+}
+
+.contact-button-event-rental::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to right, #663399, #3366cc);
+  transform: translateX(-100%);
+  transition: transform 0.3s ease-out;
+}
+
+.contact-button-event-rental:hover::before {
+  transform: translateX(0);
+}
+
+.contact-button-event-rental:hover span {
+  color: white;
 }
 
 .event-image {
