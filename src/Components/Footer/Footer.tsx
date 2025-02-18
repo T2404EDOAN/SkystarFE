@@ -45,7 +45,6 @@ const Footer: React.FC = () => {
                 </Link>
               </button>
             </div>
-            {/* Di chuyển social icons vào đây */}
             <div className="footer-social-icons">
               <FaYoutube className="footer-social-icon" />
               <FaFacebook className="footer-social-icon" />
