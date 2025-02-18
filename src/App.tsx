@@ -28,6 +28,7 @@ import Cinema from "./Components/EventRentalPage/Events/Cinema";
 import PaymentPage from "./Components/PaymentForm/PaymentPage/PaymentPage";
 import PaymentFormDetail from "./Components/PaymentForm/PaymentFormDetail";
 import Promotion from "./Components/Promotions/Promotions";
+import ScrollToTop from './components/ScrollToTop';
 
 // ...other imports
 
@@ -35,6 +36,7 @@ function App() {
   return (
     <AuthProvider>
       <BrowserRouter>
+        <ScrollToTop />
         <MainLayout>
           <Routes>
             <Route path="/" element={<Home />} />

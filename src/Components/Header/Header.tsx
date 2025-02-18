@@ -52,8 +52,8 @@ const Header: React.FC = () => {
       <div className="header-container">
         <div className="header-content">
           {/* Logo Section */}
-          <div className="logo-section">
-            <Link to="/" className="logo-section">
+          <div className="header-logo-section">
+            <Link to="/" className="header-logo-section">
               <img src="/logo.png" alt="Logo" className="logo" />
               <span className="logo-text">SKYSTAR</span>
             </Link>

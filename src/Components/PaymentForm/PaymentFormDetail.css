@@ -14,6 +14,7 @@
 .skystar-payment-title{
     font-size: 40px;
     font-family: "Anton", sans-serif;
+    color: #ccc;
 }
 .skystar-payment-form-wrapper {
 
@@ -38,6 +39,7 @@
 
 .skystar-form-label {
   font-weight: 500;
+  color: white;
 }
 
 .skystar-form-input {
@@ -60,6 +62,7 @@
 .skystar-form-checkbox-label {
   font-size: 0.9rem;
   user-select: none;
+  color: white;
 }
 
 .skystar-form-checkbox {
@@ -102,6 +105,7 @@
   font-size: 0.9rem;
   font-family: "Anton", sans-serif;
   font-size: 20px;
+  color: white;
   
 }
 
@@ -174,6 +178,7 @@
   display: flex;
   justify-content: space-between;
   margin-bottom: 0.75rem;
+  color: white;
 }
 
 .info-row:last-child {
@@ -252,6 +257,7 @@
 .movie-name {
 font-size: 24px; 
 font-family: "Anton", sans-serif;
+color: white;
 }
 
 .hold-time {
@@ -285,6 +291,7 @@ font-family: "Anton", sans-serif;
 
 .cinema-address {
   font-size: 0.9em;
+  color: white;
 }
 
 .showtime-info-row {
@@ -309,6 +316,7 @@ font-family: "Anton", sans-serif;
 
 .time-value {
   font-weight: 500;
+  color: white;
 }
 
 .room-info-row {
@@ -335,6 +343,7 @@ font-family: "Anton", sans-serif;
 
 .detail-value {
   font-weight: 500;
+  color: white;
 }
 
 .movie-details {
