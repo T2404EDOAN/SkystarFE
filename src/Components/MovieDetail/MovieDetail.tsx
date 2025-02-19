@@ -82,7 +82,7 @@ const MovieDetail = () => {
   useEffect(() => {
     const fetchMovieDetail = async () => {
       try {
-        const response = await axios.get(`http://localhost:8080/api/movies/${movieId}`);
+        const response = await axios.get(`http://35.175.173.235:8080/api/movies/${movieId}`);
         setMovieData(response.data);
         const grouped = groupShowtimesByDate(response.data.showtimes);
         setGroupedShowtimes(grouped);
@@ -107,7 +107,7 @@ const MovieDetail = () => {
 
   const fetchSeats = async (showtimeId) => {
     try {
-      const response = await axios.get(`http://localhost:8080/api/showtimes/${showtimeId}/seats`);
+      const response = await axios.get(`http://35.175.173.235:8080/api/showtimes/${showtimeId}/seats`);
       setAvailableSeats(response.data.content);
     } catch (error) {
       console.error('Error fetching seats:', error);

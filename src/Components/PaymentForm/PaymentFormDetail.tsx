@@ -83,7 +83,7 @@ const PaymentFormDetail = () => {
         };
 
         const response = await axios.post(
-          'http://localhost:8080/api/bookings/create',
+          'http://35.175.173.235:8080/api/bookings/create',
           bookingData
         );
 
