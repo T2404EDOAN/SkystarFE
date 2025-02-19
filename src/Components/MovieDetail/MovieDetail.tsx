@@ -82,7 +82,7 @@ const MovieDetail = () => {
   useEffect(() => {
     const fetchMovieDetail = async () => {
       try {
-        const response = await axios.get(`http://35.175.173.235:8080/api/movies/${movieId}`);
+        const response = await axios.get(`http://localhost:8080/api/movies/${movieId}`);
         setMovieData(response.data);
         const grouped = groupShowtimesByDate(response.data.showtimes);
         setGroupedShowtimes(grouped);
@@ -92,7 +92,7 @@ const MovieDetail = () => {
         if (availableDates.length > 0) {
           setSelectedDate(availableDates[0].date);
         }
-        
+        console.ư
         setLoading(false);
       } catch (error) {
         console.error('Error fetching movie details:', error);
@@ -107,7 +107,7 @@ const MovieDetail = () => {
 
   const fetchSeats = async (showtimeId) => {
     try {
-      const response = await axios.get(`http://35.175.173.235:8080/api/showtimes/${showtimeId}/seats`);
+      const response = await axios.get(`http://localhost:8080/api/showtimes/${showtimeId}/seats`);
       setAvailableSeats(response.data.content);
     } catch (error) {
       console.error('Error fetching seats:', error);
@@ -115,6 +115,7 @@ const MovieDetail = () => {
   };
 
   const handleTimeSelection = async (cinema, time, showtimeId) => {
+    console.log('Selected Showtime ID:', showtimeId); // Debug log
     setSelectedTime(time);
     setSelectedCinema(cinema);
     setSelectedSeats([]);
@@ -164,12 +165,11 @@ const MovieDetail = () => {
     }
   };
   
-  const handleSeatClick = async (seat) => {  // Change parameter to receive full seat object
+  const handleSeatClick = async (seat) => {
     if (selectedSeats.includes(seat.seatNumber)) {
-      setSelectedSeats(prev => prev.filter(s => s !== seat.seatNumber));
+      setSelectedSeats(prev => prev.filter(s => s.seatNumber !== seat.seatNumber));
       if (selectedSeats.length <= 1) {
         setShowPayment(false);
-        // Clear timer when no seats are selected
         if (holdTimer) {
           clearTimeout(holdTimer);
           setHoldTimer(null);
@@ -177,15 +177,20 @@ const MovieDetail = () => {
       }
       return;
     }
-  
+
     try {
       if (selectedShowtimeId) {
         const success = await holdSeat(selectedShowtimeId, seat.seatNumber);
         if (success) {
+          // Store both seat number and ID
           setSelectedSeats(prev => {
-            const newSeats = [...prev, seat.seatNumber];
+            const newSeats = [...prev, {
+              seatNumber: seat.seatNumber,
+              id: seat.id,
+              type: seat.seatType,
+              price: seat.price
+            }];
             setShowPayment(newSeats.length > 0);
-            // Start timer when first seat is selected
             if (newSeats.length === 1) {
               startHoldTimer();
             }
@@ -200,7 +205,6 @@ const MovieDetail = () => {
       alert('Có lỗi xảy ra khi đặt ghế. Vui lòng thử lại.');
     }
   };
-  
 
   const seatTypes = [
     { type: 'standard', label: 'Ghế thường - 75.000đ' },
@@ -268,7 +272,7 @@ const MovieDetail = () => {
         key={seat.id}
         className={`seat 
           ${seat.status === 'SOLD' ? 'booked' : 'available'} 
-          ${selectedSeats.includes(seat.seatNumber) ? 'selected' : ''}
+          ${selectedSeats.some(s => s.seatNumber === seat.seatNumber) ? 'selected' : ''}
           ${isCouple ? 'couple-seat' : ''}`}
         disabled={seat.status === 'SOLD'}
         onClick={() => handleSeatClick(seat)}
@@ -282,7 +286,7 @@ const MovieDetail = () => {
   const calculateTotalPrice = () => {
     return selectedSeats.reduce((total, seat) => {
       // VIP seats are typically rows A-C
-      const isVIP = ['A', 'B', 'C'].includes(seat.charAt(0));
+      const isVIP = ['A', 'B', 'C'].includes(seat.seatNumber.charAt(0));
       return total + (isVIP ? ticketPrices.vip : ticketPrices.standard);
     }, 0);
   };
@@ -528,19 +532,17 @@ const MovieDetail = () => {
           title={movieData.title}
           roomName={selectedCinema?.showtimes.find(s => s.time === selectedTime)?.roomName || ''}
           cinemaName={selectedCinema?.name || ''}
-          cinemaAddress={selectedCinema?.address || ''} // Add this
+          cinemaAddress={selectedCinema?.address || ''}
           showTime={`${selectedTime} - ${selectedDate}`}
-          selectedSeats={selectedSeats.map(seatNumber => {
-            const seat = availableSeats.find(s => s.seatNumber === seatNumber);
-            return {
-              seatNumber: seat.seatNumber,
-              seatType: seat.seatType,
-              price: seat.price
-            };
-          })}
+          selectedSeats={selectedSeats}
+          showtimeId={selectedShowtimeId} // Ensure it's passed as is
           totalPrice={calculateTotalPrice()}
+          holdTimer={HOLD_TIMEOUT / 1000}
           onConfirm={(movieInfo) => {
-            console.log('Payment confirmed:', movieInfo);
+            console.log('Payment confirmed:', {
+              ...movieInfo,
+              showtimeId: selectedShowtimeId // Log to verify
+            });
           }}
         />,
         document.body

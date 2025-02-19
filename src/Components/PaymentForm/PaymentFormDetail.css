@@ -137,7 +137,7 @@
 }
 
 .skystar-form-submit:disabled {
-  background-color: #ccc;
+  background-color: #cccccc;
   cursor: not-allowed;
 }
 
@@ -503,4 +503,14 @@ color: white;
   margin: 5px 0 0;
   font-size: 14px;
   color: #666;
+}
+
+.error-message {
+  color: #dc3545;
+  background-color: #f8d7da;
+  border: 1px solid #f5c6cb;
+  padding: 10px;
+  margin: 10px 0;
+  border-radius: 4px;
+  text-align: center;
 }

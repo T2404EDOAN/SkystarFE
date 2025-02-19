@@ -13,6 +13,7 @@ interface PaymentFormProps {
     seatType: string;
     price: number;  // Add this
   }>;
+  showtimeId: number; // Make sure this is included in the props
   onConfirm: (movieInfo: {
     title: string;
     roomName: string;
@@ -21,6 +22,7 @@ interface PaymentFormProps {
     selectedSeats: string[];
   }) => void;
   totalPrice: number;
+  holdTimer: number;
 }
 
 const PaymentTicketForm: React.FC<PaymentFormProps> = ({
@@ -30,6 +32,7 @@ const PaymentTicketForm: React.FC<PaymentFormProps> = ({
   cinemaAddress, // Add this to props destructuring
   showTime,
   selectedSeats,
+  showtimeId, // Add this to props destructuring
   onConfirm,
 }) => {
   const navigate = useNavigate();  // Add this
@@ -65,20 +68,28 @@ const PaymentTicketForm: React.FC<PaymentFormProps> = ({
     });
   };
 
-  const handleBooking = () => {
-    const movieInfo = {
-      title,
-      roomName,
-      cinemaName,
-      cinemaAddress, // Use the prop here
-      showTime,
-      selectedSeats,
-      totalPrice: calculateTotalPrice(),
-      holdTimer: timeLeft,
-      movieType: "Hành động" // Add movie type
-    };
+  const handleProceedToPayment = () => {
+    // Debug log to verify data
+    console.log('Proceeding to payment with data:', {
+      showtimeId: showtimeId,
+      title: title,
+      selectedSeats: selectedSeats
+    });
 
-    navigate('/payment', { state: movieInfo });  // Fix navigation path
+    navigate('/payment', {
+      state: {
+        title: title,
+        roomName: roomName,
+        cinemaName: cinemaName,
+        cinemaAddress: cinemaAddress,
+        showTime: showTime,
+        selectedSeats: selectedSeats,
+        totalPrice: calculateTotalPrice(),
+        holdTimer: timeLeft,
+        movieType: "Hành động",
+        showtimeId: showtimeId, // Make sure showtimeId is included
+      }
+    });
   };
 
   return (
@@ -120,7 +131,7 @@ const PaymentTicketForm: React.FC<PaymentFormProps> = ({
             </div>
           </div>
           <button
-            onClick={handleBooking}  // Use handleBooking instead of old handler
+            onClick={handleProceedToPayment}  // Use handleProceedToPayment instead of old handler
             className="book-button"
             disabled={timeLeft <= 0}
           >

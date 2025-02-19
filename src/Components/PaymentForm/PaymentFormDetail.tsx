@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from "react";
 import { Input } from 'antd';
-import { useLocation } from 'react-router-dom';
-import './PaymentFormDetail.css';  // Thêm dòng này vào đầu file
+import { useLocation, useNavigate } from 'react-router-dom';
+import axios from 'axios';
+import './PaymentFormDetail.css';
 
 const PaymentFormDetail = () => {
   const location = useLocation();
@@ -12,12 +13,29 @@ const PaymentFormDetail = () => {
     console.log('Movie Info:', movieInfo);
   }, [movieInfo]);
 
+  useEffect(() => {
+    // Debug logs
+    console.log('Full Movie Info:', movieInfo);
+    console.log('Showtime ID:', movieInfo?.showtimeId);
+  }, [movieInfo]);
+
+  // Add debug log at the top of component
+  useEffect(() => {
+    console.log('PaymentFormDetail received state:', {
+      movieInfo,
+      showtimeId: movieInfo?.showtimeId
+    });
+  }, [movieInfo]);
+
   const [fullName, setFullName] = useState("");
   const [phone, setPhone] = useState("");
   const [email, setEmail] = useState("");
   const [ageVerified, setAgeVerified] = useState(false);
   const [termsAccepted, setTermsAccepted] = useState(false);
   const [activeStep, setActiveStep] = useState(1); // Add this for tracking active step
+  const [isLoading, setIsLoading] = useState(false);
+
+  const navigate = useNavigate();
 
   useEffect(() => {
     if (movieInfo?.holdTimer) {
@@ -42,11 +60,44 @@ const PaymentFormDetail = () => {
     setEmail(e.target.value);
   };
 
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    // Validate form
+    
+    if (!movieInfo?.showtimeId || !movieInfo?.selectedSeats) {
+      alert('Thông tin đặt vé không hợp lệ');
+      return;
+    }
+
     if (fullName && phone && email && ageVerified && termsAccepted) {
-      setActiveStep(2); // Move to step 2
+      try {
+        setIsLoading(true);
+
+        const bookingData = {
+          guestName: fullName,
+          guestEmail: email,
+          guestPhone: phone,
+          showtimeId: movieInfo.showtimeId,
+          totalSeats: movieInfo.selectedSeats.length,
+          totalAmount: movieInfo.totalPrice,
+          seatIds: movieInfo.selectedSeats.map(seat => seat.id)
+        };
+
+        const response = await axios.post(
+          'http://localhost:8080/api/bookings/create',
+          bookingData
+        );
+
+        if (response.status === 200 || response.status === 201) {
+          setActiveStep(2); // Move to payment step
+        } else {
+          alert('Đặt vé thất bại. Vui lòng thử lại.');
+        }
+      } catch (error) {
+        console.error('Booking error:', error);
+        alert('Đặt vé thất bại. Vui lòng thử lại.');
+      } finally {
+        setIsLoading(false);
+      }
     }
   };
 
@@ -140,9 +191,9 @@ const PaymentFormDetail = () => {
               <button 
                 type="submit" 
                 className="skystar-form-submit"
-                disabled={!fullName || !phone || !email || !ageVerified || !termsAccepted}
+                disabled={!fullName || !phone || !email || !ageVerified || !termsAccepted || isLoading}
               >
-                Tiếp tục
+                {isLoading ? 'Đang xử lý...' : 'Tiếp tục'}
               </button>
             </form>
           </div>
