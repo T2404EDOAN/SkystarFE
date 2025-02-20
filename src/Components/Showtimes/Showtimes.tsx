@@ -1,289 +1,302 @@
-// types.ts
-interface Movie {
-  id: string;
-  title: string;
-  genre: string;
-  duration: number;
-  country: string;
-  language: string;
-  ageRating: string;
-  poster: string;
-}
-
-interface Theater {
-  id: string;
-  name: string;
-  location: string;
-  address: string;
-  showTimes: {
-    type: "STANDARD" | "DELUXE";
-    times: string[];
-  }[];
-}
-
-// MovieBooking.tsx
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import { FaTag, FaClock, FaGlobe, FaComment, FaUserPlus } from "react-icons/fa";
+import axios from "axios";
 import "./Showtimes.css";
+
+interface Movie {
+  id: number;
+  title: string;
+  originalTitle: string;
+  trailerUrl: string;
+  posterUrl: string;
+  backdropUrl: string | null;
+  duration: number;
+  description: string;
+  shortDescription: string;
+  category: {
+    id: number;
+    name: string;
+    description: string;
+  };
+  director: string;
+  cast: string;
+  productionCompany: string;
+  productionCountry: string;
+  releaseDate: string;
+  endDate: string;
+  ageRating: string;
+  language: string;
+  subtitles: string;
+  rating: number;
+  ratingCount: number;
+  status: string;
+  genres: string[];
+  showtimes: Showtime[];
+}
+
+interface Showtime {
+  id: number;
+  movieId: number;
+  theatresName: string;
+  theaterAddress: string;
+  roomId: number;
+  showDate: string;
+  showTime: string;
+  endTime: string;
+  roomName: string;
+}
+
+interface DateOption {
+  date: string;
+  display: string;
+}
 
 const Showtimes: React.FC = () => {
   const [selectedDate, setSelectedDate] = useState("");
   const [selectedMovie, setSelectedMovie] = useState("");
   const [selectedTheater, setSelectedTheater] = useState("");
+  const [selectedTimes, setSelectedTimes] = useState<{ [key: string]: string }>(
+    {}
+  );
+  const [movies, setMovies] = useState<Movie[]>([]);
+  const [dates, setDates] = useState<DateOption[]>([]);
+  const [loading, setLoading] = useState(true);
 
-  // Mock data
-  const mockMovies: Movie[] = [
-    {
-      id: "1",
-      title: '"CUỚI HỎN" BANH RAP CUỐI NĂM VỚI 404',
-      genre: "Comedy",
-      duration: 104,
-      country: "Thailand",
-      language: "VN",
-      ageRating: "16+",
-      poster: "/path-to-poster.jpg",
-    },
-    {
-      id: "2",
-      title: "New Movie Title",
-      genre: "Action",
-      duration: 120,
-      country: "USA",
-      language: "EN",
-      ageRating: "18+",
-      poster: "/path-to-new-poster.jpg",
-    },
-    {
-      id: "3",
-      title: "Another Movie Title",
-      genre: "Drama",
-      duration: 130,
-      country: "France",
-      language: "FR",
-      ageRating: "12+",
-      poster: "/path-to-another-poster.jpg",
-    },
-  ];
+  useEffect(() => {
+    const fetchMoviesAndTheaters = async () => {
+      try {
+        const response = await axios.get(
+          "http://35.175.173.235:8080/api/movies"
+        );
+        const data = response.data;
+        console.log("Movies and theaters:", data);
+        setMovies(data.content);
+        setLoading(false);
+      } catch (error) {
+        console.error("Error fetching movies and theaters:", error);
+        setLoading(false);
+      }
+    };
+    fetchMoviesAndTheaters();
 
-  const mockTheaters: Theater[] = [
-    {
-      id: "1",
-      name: "Cinestar",
-      location: "Hue",
-      address: "25 Mai Ba Trung, Vinh Ninh, Thanh pho Hue",
-      showTimes: [
-        {
-          type: "STANDARD",
-          times: [
-            "14:10",
-            "15:00",
-            "16:10",
-            "17:05",
-            "18:15",
-            "19:10",
-            "19:45",
-            "20:20",
-            "21:15",
-            "21:50",
-            "22:30",
-            "23:20",
-          ],
-        },
-      ],
-    },
-    {
-      id: "2",
-      name: "Cinestar",
-      location: "Da Lat",
-      address: "Quảng trường Lâm Viên, P10, TP.Đà Lạt, Lâm Đồng",
-      showTimes: [
-        {
-          type: "STANDARD",
-          times: [
-            "14:15",
-            "15:20",
-            "17:25",
-            "18:25",
-            "19:10",
-            "20:30",
-            "21:15",
-            "22:00",
-            "22:40",
-            "23:20",
-          ],
-        },
-      ],
-    },
-    {
-      id: "3",
-      name: "Cinestar",
-      location: "Da Lat",
-      address: "Quảng trường Lâm Viên, P10, TP.Đà Lạt, Lâm Đồng",
-      showTimes: [
-        {
-          type: "STANDARD",
-          times: [
-            "14:15",
-            "15:20",
-            "17:25",
-            "18:25",
-            "19:10",
-            "20:30",
-            "21:15",
-            "22:00",
-            "22:40",
-            "23:20",
-          ],
-        },
-      ],
-    },
-    {
-      id: "4",
-      name: "Cinestar",
-      location: "Da Lat",
-      address: "Quảng trường Lâm Viên, P10, TP.Đà Lạt, Lâm Đồng",
-      showTimes: [
-        {
-          type: "STANDARD",
-          times: [
-            "14:15",
-            "15:20",
-            "17:25",
-            "18:25",
-            "19:10",
-            "20:30",
-            "21:15",
-            "22:00",
-            "22:40",
-            "23:20",
-          ],
-        },
-      ],
-    },
-    {
-      id: "5",
-      name: "Cinestar",
-      location: "Da Lat",
-      address: "Quảng trường Lâm Viên, P10, TP.Đà Lạt, Lâm Đồng",
-      showTimes: [
-        {
-          type: "STANDARD",
-          times: [
-            "14:15",
-            "15:20",
-            "17:25",
-            "18:25",
-            "19:10",
-            "20:30",
-            "21:15",
-            "22:00",
-            "22:40",
-            "23:20",
-          ],
-        },
-      ],
-    },
-    {
-      id: "6",
-      name: "Cinestar",
-      location: "Da Lat",
-      address: "Quảng trường Lâm Viên, P10, TP.Đà Lạt, Lâm Đồng",
-      showTimes: [
-        {
-          type: "STANDARD",
-          times: [
-            "14:15",
-            "15:20",
-            "17:25",
-            "18:25",
-            "19:10",
-            "20:30",
-            "21:15",
-            "22:00",
-            "22:40",
-            "23:20",
-          ],
-        },
-      ],
-    },
-    {
-      id: "7",
-      name: "Cinestar",
-      location: "Da Lat",
-      address: "Quảng trường Lâm Viên, P10, TP.Đà Lạt, Lâm Đồng",
-      showTimes: [
-        {
-          type: "STANDARD",
-          times: [
-            "14:15",
-            "15:20",
-            "17:25",
-            "18:25",
-            "19:10",
-            "20:30",
-            "21:15",
-            "22:00",
-            "22:40",
-            "23:20",
-          ],
-        },
-      ],
-    },
-    // Add more theaters...
-  ];
+    const today = new Date();
+    const next7Days: DateOption[] = [];
+    for (let i = 0; i < 7; i++) {
+      const date = new Date(today);
+      date.setDate(today.getDate() + i);
+      next7Days.push({
+        date: date.toISOString().split("T")[0],
+        display: `${date.toLocaleDateString("en-US", {
+          weekday: "long",
+        })}, ${date.toLocaleDateString("en-US")}`,
+      });
+    }
+    setDates(next7Days);
+  }, []);
 
+  const handleTimeSelect = (
+    theaterAddress: string,
+    roomName: string,
+    showtimeId: number,
+    time: string
+  ) => {
+    setSelectedTimes((prevSelectedTimes) => ({
+      ...prevSelectedTimes,
+      [`${theaterAddress}-${roomName}`]: time,
+    }));
+  };
+
+  const groupShowtimesByTheater = (showtimes: Showtime[]) => {
+    return showtimes.reduce((acc, showtime) => {
+      if (!acc[showtime.theaterAddress]) {
+        acc[showtime.theaterAddress] = {};
+      }
+      if (!acc[showtime.theaterAddress][showtime.roomName]) {
+        acc[showtime.theaterAddress][showtime.roomName] = [];
+      }
+      acc[showtime.theaterAddress][showtime.roomName].push(showtime);
+      return acc;
+    }, {} as { [key: string]: { [key: string]: Showtime[] } });
+  };
+
+  const getUniqueTheaters = (movies: Movie[]) => {
+    const theaterMap = new Map<string, string>();
+    movies.forEach((movie) => {
+      movie.showtimes.forEach((showtime) => {
+        if (!theaterMap.has(showtime.theaterAddress)) {
+          theaterMap.set(showtime.theaterAddress, showtime.theatresName);
+        }
+      });
+    });
+    return Array.from(theaterMap.entries());
+  };
   return (
-    <div className="movie-booking-container">
-      <div className="movie-booking-wrapper">
+    <div className="container-showtimes">
+      <div className="wrapper-showtimes">
         {/* Header Selection */}
-        <div className="header-selection">
-          <div className="selection-box">
-            <div className="selection-title">1. Date</div>
+        <div className="header-selection-showtimes">
+          <div
+            className="selection-box-showtimes"
+            id="selection-box-showtimes1"
+          >
+            <label>1. Date</label>
             <select
-              className="selection-dropdown"
               value={selectedDate}
               onChange={(e) => setSelectedDate(e.target.value)}
             >
-              <option value="">Today 27/12</option>
+              {dates.map((dateOption) => (
+                <option key={dateOption.date} value={dateOption.date}>
+                  {dateOption.display}
+                </option>
+              ))}
             </select>
           </div>
 
-          <div className="selection-box">
-            <div className="selection-title">2. Movie</div>
+          <div
+            className="selection-box-showtimes"
+            id="selection-box-showtimes2"
+          >
+            <label>2. Movie</label>
             <select
-              className="selection-dropdown"
               value={selectedMovie}
               onChange={(e) => setSelectedMovie(e.target.value)}
             >
-              <option value="">Select Movie</option>
+              <option value="">All Movie</option>
+              {movies.map((movie) => (
+                <option key={movie.id} value={movie.id}>
+                  {movie.title}
+                </option>
+              ))}
             </select>
           </div>
 
-          <div className="selection-box">
-            <div className="selection-title">3. Theater</div>
+          <div
+            className="selection-box-showtimes"
+            id="selection-box-showtimes3"
+          >
+            <label>3. Theater</label>
             <select
-              className="selection-dropdown"
               value={selectedTheater}
               onChange={(e) => setSelectedTheater(e.target.value)}
             >
-              <option value="">Select Theater</option>
+              <option value="">All Theater</option>
+              {getUniqueTheaters(movies).map(
+                ([theaterAddress, theatresName]) => (
+                  <option key={theaterAddress} value={theaterAddress}>
+                    {theatresName}
+                  </option>
+                )
+              )}
             </select>
           </div>
         </div>
 
         {/* Movie Info Section */}
-        <div className="movie-info1">
-          <img
-            src="/path-to-poster.jpg"
-            alt="Movie Poster"
-            className="movie-poster"
-          />
-          <div>
-            <h2 className="movie-title3">Movie Title</h2>
-            <p className="movie-details">Genre: Action</p>
-            <p className="movie-details">Duration: 120 mins</p>
-            <p className="movie-details">Country: USA</p>
-          </div>
-        </div>
+        {movies.map((movie) => {
+          const groupedShowtimes = groupShowtimesByTheater(movie.showtimes);
+          return (
+            <div key={movie.id} className="movie-info-showtimes">
+              <div className="movie-main-poster-showtimes">
+                <div className="movie-poster-showtimes">
+                  <img src={movie.posterUrl} alt={movie.title} />
+                </div>
+                <div className="movie-details-showtimes">
+                  <h2 className="movie-title-showtimes">{movie.title}</h2>
+                  <ul>
+                    <li>
+                      <FaTag size={24} />
+                      <p className="text1">Genre: {movie.category.name}</p>
+                    </li>
+                    <li>
+                      <FaClock size={24} />
+                      <p className="text1">Duration: {movie.duration} min</p>
+                    </li>
+                    <li>
+                      <FaGlobe size={24} />
+                      <p className="text1">
+                        Country: {movie.productionCountry}
+                      </p>
+                    </li>
+                    <li>
+                      <FaComment size={24} />
+                      <p className="text1">Language: {movie.language}</p>
+                    </li>
+                    <li>
+                      <FaUserPlus size={24} />
+                      <p className="text1">Age Rating: {movie.ageRating}</p>
+                    </li>
+                  </ul>
+                </div>
+              </div>
+
+              <div className="box-theater-showtimes">
+                {Object.keys(groupedShowtimes).map((theaterAddress) => (
+                  <div
+                    key={theaterAddress}
+                    className="theater-info-main-showtimes"
+                  >
+                    <div className="theater-info-showtimes">
+                      <h2 className="theater-title-showtimes">Skystar</h2>
+                      <p className="theater-details-showtimes">
+                        {
+                          groupedShowtimes[theaterAddress][
+                            Object.keys(groupedShowtimes[theaterAddress])[0]
+                          ][0].theatresName
+                        }
+                      </p>
+                      <p className="theater-details-showtimes">
+                        {theaterAddress}
+                      </p>
+                    </div>
+                    <div className="showtimes-showtimes">
+                      {Object.keys(groupedShowtimes[theaterAddress]).map(
+                        (roomName) => (
+                          <div
+                            key={roomName}
+                            className="showtime-type-showtimes"
+                          >
+                            <h5>{roomName}</h5>
+                            <ul className="time-showtimes">
+                              {groupedShowtimes[theaterAddress][roomName].map(
+                                (showtime, index) => (
+                                  <li key={showtime.id}>
+                                    <button
+                                      className={
+                                        selectedTimes[
+                                          `${theaterAddress}-${roomName}`
+                                        ] === showtime.showTime ||
+                                        (index === 0 &&
+                                          !selectedTimes[
+                                            `${theaterAddress}-${roomName}`
+                                          ])
+                                          ? "selected"
+                                          : ""
+                                      }
+                                      onClick={() =>
+                                        handleTimeSelect(
+                                          theaterAddress,
+                                          roomName,
+                                          showtime.id,
+                                          showtime.showTime
+                                        )
+                                      }
+                                    >
+                                      {showtime.showTime}
+                                    </button>
+                                  </li>
+                                )
+                              )}
+                            </ul>
+                          </div>
+                        )
+                      )}
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+          );
+        })}
       </div>
     </div>
   );
