@@ -62,7 +62,8 @@ button {
 @media (prefers-color-scheme: light) {
   body{
     background-color: #0f172a !important; 
-    color: white;
+   
+    
   }
   a:hover {
     color: #747bff;

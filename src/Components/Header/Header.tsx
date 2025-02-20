@@ -51,42 +51,42 @@ const Header: React.FC = () => {
     <header className="header">
       <div className="header-container">
         <div className="header-content">
-          {/* Logo Section */}
-          <div className="header-logo-section">
-            <Link to="/" className="header-logo-section">
-              <img src="/logo.png" alt="Logo" className="logo" />
-              <span className="logo-text">SKYSTAR</span>
+          {/* Division 1: Logo */}
+         
+            <Link to="/" className="logo-link">
+              <img 
+                src="/logo.png" 
+                alt="Logo" 
+                className="logo" 
+              />
+            </Link>
+         
+
+          {/* Division 2: Book Ticket Button */}
+          <div className="booking-section">
+            <Link to="/payment">
+              <Button
+                type="primary"
+                style={{ backgroundColor: "#f3ea28", color: "black" }}
+                className="action-button"
+              >
+                <img
+                  src="https://cinestar.com.vn/assets/images/ic-ticket.svg"
+                  alt="ticket"
+                  className="w-5 h-5"
+                />
+                <span>ĐẶT VÉ NGAY</span>
+              </Button>
             </Link>
           </div>
 
-          {/* Desktop Navigation */}
-          <div className="desktop-nav desktop-nav-lg">
-            {/* Action Buttons */}
-            <div className="flex space-x-4">
-              <Link to="/payment">
-                <Button
-                  type="primary"
-                  style={{ backgroundColor: "#f3ea28", color: "black" }}
-                  className="action-button"
-                >
-                  <img
-                    src="https://cinestar.com.vn/assets/images/ic-ticket.svg"
-                    alt="ticket"
-                    className="w-5 h-5"
-                  />
-                  <span>ĐẶT VÉ NGAY</span>
-                </Button>
-              </Link>
-            </div>
-
-            {/* Search Bar */}
+          {/* Division 3: Search and User Actions */}
+          <div className="actions-section">
             <Input
               placeholder="Tìm phim, rạp"
               prefix={<SearchOutlined className="search-icon" />}
               className="search-bar"
             />
-
-            {/* Update User Actions section */}
             {isAuthenticated ? (
               <Dropdown menu={{ items: userMenuItems }} placement="bottomRight">
                 <div className="user-actions">

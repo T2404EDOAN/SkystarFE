@@ -10,21 +10,17 @@ const PaymentFormDetail = () => {
 
   // Add console.log to debug
   useEffect(() => {
-    console.log('Movie Info:', movieInfo);
+    
   }, [movieInfo]);
 
   useEffect(() => {
-    // Debug logs
-    console.log('Full Movie Info:', movieInfo);
-    console.log('Showtime ID:', movieInfo?.showtimeId);
+
+
   }, [movieInfo]);
 
   // Add debug log at the top of component
   useEffect(() => {
-    console.log('PaymentFormDetail received state:', {
-      movieInfo,
-      showtimeId: movieInfo?.showtimeId
-    });
+   
   }, [movieInfo]);
 
   const [fullName, setFullName] = useState("");
@@ -34,6 +30,16 @@ const PaymentFormDetail = () => {
   const [termsAccepted, setTermsAccepted] = useState(false);
   const [activeStep, setActiveStep] = useState(1); // Add this for tracking active step
   const [isLoading, setIsLoading] = useState(false);
+
+  // Add new state for payment status
+  const [paymentStatus, setPaymentStatus] = useState({
+    success: false,
+    orderId: '',
+    transId: '',
+    amount: ''
+  });
+
+  const [bookingId, setBookingId] = useState<string>('');
 
   const navigate = useNavigate();
 
@@ -47,6 +53,20 @@ const PaymentFormDetail = () => {
       return () => clearTimeout(timer);
     }
   }, [movieInfo]);
+
+  // Add effect to check URL params for payment result
+  useEffect(() => {
+    const params = new URLSearchParams(window.location.search);
+    if (params.get('resultCode') === '0') {
+      setPaymentStatus({
+        success: true,
+        orderId: params.get('orderId') || '',
+        transId: params.get('transId') || '',
+        amount: params.get('amount') || ''
+      });
+      setActiveStep(3); // Move to success screen
+    }
+  }, []);
 
   const handleNameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setFullName(e.target.value);
@@ -88,6 +108,7 @@ const PaymentFormDetail = () => {
         );
 
         if (response.status === 200 || response.status === 201) {
+          setBookingId(response.data.id); // Store the booking ID
           setActiveStep(2); // Move to payment step
         } else {
           alert('Đặt vé thất bại. Vui lòng thử lại.');
@@ -98,6 +119,43 @@ const PaymentFormDetail = () => {
       } finally {
         setIsLoading(false);
       }
+    }
+  };
+
+  const handleMomoPayment = async () => {
+    try {
+      setIsLoading(true);
+      const paymentData = {
+        orderInfo: "Thanh toán vé xem phim",
+        amount: movieInfo.totalPrice.toString(),
+        bookingId: bookingId // Add bookingId to payment request
+      };
+
+      // Add console.log to show payment data
+      console.log('Payment Data being sent to Momo:', {
+        paymentData,
+        movieInfo: {
+          title: movieInfo?.title,
+          totalPrice: movieInfo?.totalPrice,
+          selectedSeats: movieInfo?.selectedSeats
+        }
+      });
+
+      const response = await axios.post(
+        'http://localhost:8080/api/payments/momo',
+        paymentData
+      );
+
+      if (response.data && response.data.payUrl) {
+        window.location.href = response.data.payUrl;
+      } else {
+        alert('Không thể khởi tạo thanh toán. Vui lòng thử lại.');
+      }
+    } catch (error) {
+      console.error('Payment error:', error);
+      alert('Lỗi thanh toán. Vui lòng thử lại.');
+    } finally {
+      setIsLoading(false);
     }
   };
 
@@ -200,21 +258,17 @@ const PaymentFormDetail = () => {
         )}
         {activeStep === 2 && (
           <div className="skystar-payment-step2">
-      
             <div className="payment-methods-container">
-              <div className="payment-method-box">
+              <div className="payment-method-box" onClick={handleMomoPayment} style={{ cursor: 'pointer' }}>
                 <img src="/momo-logo.png" alt="Momo" />
-              
                 <p>Thanh toán qua ví Momo</p>
               </div>
               <div className="payment-method-box">
                 <img src="/zalopay-logo.png" alt="ZaloPay" />
-               
                 <p>Thanh toán qua ví ZaloPay</p>
               </div>
               <div className="payment-method-box">
                 <img src="/vnpay-logo.png" alt="VNPay" />
-               
                 <p>Thanh toán qua VNPay</p>
               </div>
             </div>
@@ -222,6 +276,27 @@ const PaymentFormDetail = () => {
               <button onClick={handleBack} className="skystar-form-back">
                 Quay lại
               </button>
+            </div>
+          </div>
+        )}
+        {activeStep === 3 && (
+          <div className="payment-success-container">
+            <div className="payment-success-content">
+              <img src="/success-icon.png" alt="Success" className="success-icon" />
+              <h2>Thanh toán thành công!</h2>
+              <div className="payment-details">
+                <p>Mã đơn hàng: {paymentStatus.orderId}</p>
+                <p>Mã giao dịch: {paymentStatus.transId}</p>
+                <p>Số tiền: {parseInt(paymentStatus.amount).toLocaleString('vi-VN')} VND</p>
+              </div>
+              <div className="payment-actions">
+                <button 
+                  onClick={() => navigate('/')} 
+                  className="back-to-home"
+                >
+                  Về trang chủ
+                </button>
+              </div>
             </div>
           </div>
         )}

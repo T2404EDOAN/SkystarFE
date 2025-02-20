@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef, useCallback } from "react";  // Add useRef import
+import React, { useState, useEffect, useRef } from "react";  // Add useRef import
 import { useParams } from "react-router-dom";
 import axios from "axios";
 import './MovieDetail.css';
@@ -25,8 +25,6 @@ const MovieDetail = () => {
     vip: 90000
   });
   const seatsRef = useRef(null);  // Add this line after other state declarations
-  const [holdTimer, setHoldTimer] = useState(null);
-  const HOLD_TIMEOUT = 5 * 60 * 1000; // 5 minutes in milliseconds
 
   // Get next 5 days from today
   const getNext5Days = (showtimes) => {
@@ -141,64 +139,28 @@ const MovieDetail = () => {
     setShowTrailer(false);
   };
 
-  const holdSeat = async (showtimeId, seatNumber) => {
-    try {
-      const seat = availableSeats.find(s => s.seatNumber === seatNumber);
-      if (!seat) {
-        console.error('Seat not found:', seatNumber);
-        return false;
-      }
-  
-      const response = await axios.post(
-        `http://35.175.173.235:8080/api/seats/${showtimeId}/hold?seatId=${seat.id}`
-      );
-      
-      console.log('Hold seat response:', response);
-      return response.status === 200 || response.status === 201;
-    } catch (error) {
-      console.error('Hold seat error details:', {
-        error: error?.response?.data,
-        status: error?.response?.status,
-        message: error?.message
-      });
-      return false;
-    }
-  };
-  
   const handleSeatClick = async (seat) => {
     if (selectedSeats.includes(seat.seatNumber)) {
       setSelectedSeats(prev => prev.filter(s => s.seatNumber !== seat.seatNumber));
       if (selectedSeats.length <= 1) {
         setShowPayment(false);
-        if (holdTimer) {
-          clearTimeout(holdTimer);
-          setHoldTimer(null);
-        }
       }
       return;
     }
 
     try {
       if (selectedShowtimeId) {
-        const success = await holdSeat(selectedShowtimeId, seat.seatNumber);
-        if (success) {
-          // Store both seat number and ID
-          setSelectedSeats(prev => {
-            const newSeats = [...prev, {
-              seatNumber: seat.seatNumber,
-              id: seat.id,
-              type: seat.seatType,
-              price: seat.price
-            }];
-            setShowPayment(newSeats.length > 0);
-            if (newSeats.length === 1) {
-              startHoldTimer();
-            }
-            return newSeats;
-          });
-        } else {
-          alert('Ghế này không thể đặt. Vui lòng chọn ghế khác.');
-        }
+        // Store both seat number and ID
+        setSelectedSeats(prev => {
+          const newSeats = [...prev, {
+            seatNumber: seat.seatNumber,
+            id: seat.id,
+            type: seat.seatType,
+            price: seat.price
+          }];
+          setShowPayment(newSeats.length > 0);
+          return newSeats;
+        });
       }
     } catch (error) {
       console.error('Error in handleSeatClick:', error);
@@ -290,27 +252,6 @@ const MovieDetail = () => {
       return total + (isVIP ? ticketPrices.vip : ticketPrices.standard);
     }, 0);
   };
-
-  const startHoldTimer = useCallback(() => {
-    if (holdTimer) {
-      clearTimeout(holdTimer);
-    }
-    
-    const timer = setTimeout(() => {
-      alert('Thời gian giữ ghế đã hết. Trang sẽ được tải lại.');
-      window.location.reload();
-    }, HOLD_TIMEOUT);
-    
-    setHoldTimer(timer);
-  }, [holdTimer]);
-
-  useEffect(() => {
-    return () => {
-      if (holdTimer) {
-        clearTimeout(holdTimer);
-      }
-    };
-  }, [holdTimer]);
 
   if (loading) return <div>Loading...</div>;
   if (!movieData) return <div>Movie not found</div>;
@@ -537,7 +478,6 @@ const MovieDetail = () => {
           selectedSeats={selectedSeats}
           showtimeId={selectedShowtimeId} // Ensure it's passed as is
           totalPrice={calculateTotalPrice()}
-          holdTimer={HOLD_TIMEOUT / 1000}
           onConfirm={(movieInfo) => {
             console.log('Payment confirmed:', {
               ...movieInfo,
