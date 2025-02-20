@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { FaTag, FaClock, FaGlobe, FaComment, FaUserPlus } from "react-icons/fa";
 import axios from "axios";
 import "./Showtimes.css";
+import NowPlayingMovies from "../MovieList/NowPlayingMovies";
 
 interface Movie {
   id: number;
@@ -60,39 +61,87 @@ const Showtimes: React.FC = () => {
   );
   const [movies, setMovies] = useState<Movie[]>([]);
   const [dates, setDates] = useState<DateOption[]>([]);
+  const [filteredMovies, setFilteredMovies] = useState<Movie[]>([]);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    const fetchMoviesAndTheaters = async () => {
+    const fetchInitialData = async () => {
       try {
         const response = await axios.get(
           "http://35.175.173.235:8080/api/movies"
         );
         const data = response.data;
-        console.log("Movies and theaters:", data);
         setMovies(data.content);
+
+        // Set up dates
+        const today = new Date();
+        const next7Days: DateOption[] = [];
+        for (let i = 0; i < 7; i++) {
+          const date = new Date(today);
+          date.setDate(today.getDate() + i);
+          next7Days.push({
+            date: date.toISOString().split("T")[0],
+            display: `${date.toLocaleDateString("en-US", {
+              weekday: "long",
+            })}, ${date.toLocaleDateString("en-US")}`,
+          });
+        }
+        setDates(next7Days);
+
+        // Set default date and trigger initial filter
+        const defaultDate = today.toISOString().split("T")[0];
+        setSelectedDate(defaultDate);
+
+        // Perform initial filter
+        const params = {
+          title: "",
+          searchDate: defaultDate,
+          cinema: "",
+        };
+        const filterResponse = await axios.get(
+          "http://localhost:8081/api/movies/search",
+          { params }
+        );
+        setFilteredMovies(filterResponse.data);
+
         setLoading(false);
       } catch (error) {
-        console.error("Error fetching movies and theaters:", error);
+        console.error("Error fetching initial data:", error);
         setLoading(false);
       }
     };
-    fetchMoviesAndTheaters();
 
-    const today = new Date();
-    const next7Days: DateOption[] = [];
-    for (let i = 0; i < 7; i++) {
-      const date = new Date(today);
-      date.setDate(today.getDate() + i);
-      next7Days.push({
-        date: date.toISOString().split("T")[0],
-        display: `${date.toLocaleDateString("en-US", {
-          weekday: "long",
-        })}, ${date.toLocaleDateString("en-US")}`,
-      });
-    }
-    setDates(next7Days);
+    fetchInitialData();
   }, []);
+
+  // Modify the existing useEffect to only run when selection changes
+  useEffect(() => {
+    if (selectedDate) {
+      // Only run if selectedDate is not empty
+      handleFilter();
+    }
+  }, [selectedDate, selectedMovie, selectedTheater]);
+
+  const handleFilter = async () => {
+    try {
+      const params = {
+        title: selectedMovie || undefined,
+        searchDate: selectedDate || undefined,
+        cinema: selectedTheater || undefined,
+      };
+      console.log("Params sent to backend:", params);
+      const response = await axios.get(
+        "http://localhost:8081/api/movies/search",
+        {
+          params,
+        }
+      );
+      setFilteredMovies(response.data);
+      console.log("Filtered movies:", response.data);
+    } catch (error) {
+      console.error("Error filtering movies:", error);
+    }
+  };
 
   const handleTimeSelect = (
     theaterAddress: string,
@@ -120,16 +169,16 @@ const Showtimes: React.FC = () => {
   };
 
   const getUniqueTheaters = (movies: Movie[]) => {
-    const theaterMap = new Map<string, string>();
+    // Thay đổi cách lưu trữ theatres để chỉ lấy tên rạp độc nhất
+    const theaters = new Set<string>();
     movies.forEach((movie) => {
       movie.showtimes.forEach((showtime) => {
-        if (!theaterMap.has(showtime.theaterAddress)) {
-          theaterMap.set(showtime.theaterAddress, showtime.theatresName);
-        }
+        theaters.add(showtime.theatresName);
       });
     });
-    return Array.from(theaterMap.entries());
+    return Array.from(theaters);
   };
+
   return (
     <div className="container-showtimes">
       <div className="wrapper-showtimes">
@@ -180,124 +229,139 @@ const Showtimes: React.FC = () => {
               onChange={(e) => setSelectedTheater(e.target.value)}
             >
               <option value="">All Theater</option>
-              {getUniqueTheaters(movies).map(
-                ([theaterAddress, theatresName]) => (
-                  <option key={theaterAddress} value={theaterAddress}>
-                    {theatresName}
-                  </option>
-                )
-              )}
+              {getUniqueTheaters(movies).map((theaterName) => (
+                <option key={theaterName} value={theaterName}>
+                  {theaterName}
+                </option>
+              ))}
             </select>
           </div>
         </div>
 
-        {/* Movie Info Section */}
-        {movies.map((movie) => {
-          const groupedShowtimes = groupShowtimesByTheater(movie.showtimes);
-          return (
-            <div key={movie.id} className="movie-info-showtimes">
-              <div className="movie-main-poster-showtimes">
-                <div className="movie-poster-showtimes">
-                  <img src={movie.posterUrl} alt={movie.title} />
-                </div>
-                <div className="movie-details-showtimes">
-                  <h2 className="movie-title-showtimes">{movie.title}</h2>
-                  <ul>
-                    <li>
-                      <FaTag size={24} />
-                      <p className="text1">Genre: {movie.category.name}</p>
-                    </li>
-                    <li>
-                      <FaClock size={24} />
-                      <p className="text1">Duration: {movie.duration} min</p>
-                    </li>
-                    <li>
-                      <FaGlobe size={24} />
-                      <p className="text1">
-                        Country: {movie.productionCountry}
-                      </p>
-                    </li>
-                    <li>
-                      <FaComment size={24} />
-                      <p className="text1">Language: {movie.language}</p>
-                    </li>
-                    <li>
-                      <FaUserPlus size={24} />
-                      <p className="text1">Age Rating: {movie.ageRating}</p>
-                    </li>
-                  </ul>
-                </div>
-              </div>
+        {/* No Showtimes Message */}
+        {!loading && (!filteredMovies || filteredMovies.length === 0) && (
+          <div
+            style={{
+              textAlign: "center",
+              padding: "50px",
+              fontSize: "1.2rem",
+              color: "#666",
+              backgroundColor: "#f8f8f8",
+              borderRadius: "8px",
+              margin: "20px 0",
+            }}
+          >
+            <h3>Chưa có lịch chiếu cho thời gian này</h3>
+            <p>Vui lòng chọn ngày khác hoặc rạp khác</p>
+          </div>
+        )}
 
-              <div className="box-theater-showtimes">
-                {Object.keys(groupedShowtimes).map((theaterAddress) => (
-                  <div
-                    key={theaterAddress}
-                    className="theater-info-main-showtimes"
-                  >
-                    <div className="theater-info-showtimes">
-                      <h2 className="theater-title-showtimes">Skystar</h2>
-                      <p className="theater-details-showtimes">
-                        {
-                          groupedShowtimes[theaterAddress][
-                            Object.keys(groupedShowtimes[theaterAddress])[0]
-                          ][0].theatresName
-                        }
-                      </p>
-                      <p className="theater-details-showtimes">
-                        {theaterAddress}
-                      </p>
-                    </div>
-                    <div className="showtimes-showtimes">
-                      {Object.keys(groupedShowtimes[theaterAddress]).map(
-                        (roomName) => (
-                          <div
-                            key={roomName}
-                            className="showtime-type-showtimes"
-                          >
-                            <h5>{roomName}</h5>
-                            <ul className="time-showtimes">
-                              {groupedShowtimes[theaterAddress][roomName].map(
-                                (showtime, index) => (
-                                  <li key={showtime.id}>
-                                    <button
-                                      className={
-                                        selectedTimes[
-                                          `${theaterAddress}-${roomName}`
-                                        ] === showtime.showTime ||
-                                        (index === 0 &&
-                                          !selectedTimes[
-                                            `${theaterAddress}-${roomName}`
-                                          ])
-                                          ? "selected"
-                                          : ""
-                                      }
-                                      onClick={() =>
-                                        handleTimeSelect(
-                                          theaterAddress,
-                                          roomName,
-                                          showtime.id,
-                                          showtime.showTime
-                                        )
-                                      }
-                                    >
-                                      {showtime.showTime}
-                                    </button>
-                                  </li>
-                                )
-                              )}
-                            </ul>
-                          </div>
-                        )
-                      )}
-                    </div>
+        {/* Movie Info Section */}
+        {filteredMovies &&
+          filteredMovies.length > 0 &&
+          filteredMovies.map((movie) => {
+            const groupedShowtimes = groupShowtimesByTheater(movie.showtimes);
+            return (
+              <div key={movie.id} className="movie-info-showtimes">
+                <div className="movie-main-poster-showtimes">
+                  <div className="movie-poster-showtimes">
+                    <img src={movie.posterUrl} alt={movie.title} />
                   </div>
-                ))}
+                  <div className="movie-details-showtimes">
+                    <h2 className="movie-title-showtimes">{movie.title}</h2>
+                    <ul>
+                      <li>
+                        <FaTag size={24} />
+                        <p className="text1">Genre: {movie.category.name}</p>
+                      </li>
+                      <li>
+                        <FaClock size={24} />
+                        <p className="text1">Duration: {movie.duration} min</p>
+                      </li>
+                      <li>
+                        <FaGlobe size={24} />
+                        <p className="text1">
+                          Country: {movie.productionCountry}
+                        </p>
+                      </li>
+                      <li>
+                        <FaComment size={24} />
+                        <p className="text1">Language: {movie.language}</p>
+                      </li>
+                      <li>
+                        <FaUserPlus size={24} />
+                        <p className="text1">Age Rating: {movie.ageRating}</p>
+                      </li>
+                    </ul>
+                  </div>
+                </div>
+
+                <div className="box-theater-showtimes">
+                  {Object.keys(groupedShowtimes).map((theaterAddress) => (
+                    <div
+                      key={theaterAddress}
+                      className="theater-info-main-showtimes"
+                    >
+                      <div className="theater-info-showtimes">
+                        <h2 className="theater-title-showtimes">Skystar</h2>
+                        <p className="theater-details-showtimes">
+                          {
+                            groupedShowtimes[theaterAddress][
+                              Object.keys(groupedShowtimes[theaterAddress])[0]
+                            ][0].theatresName
+                          }
+                        </p>
+                        <p className="theater-details-showtimes">
+                          {theaterAddress}
+                        </p>
+                      </div>
+                      <div className="showtimes-showtimes">
+                        {Object.keys(groupedShowtimes[theaterAddress]).map(
+                          (roomName) => (
+                            <div
+                              key={roomName}
+                              className="showtime-type-showtimes"
+                            >
+                              <h5>{roomName}</h5>
+                              <ul className="time-showtimes">
+                                {groupedShowtimes[theaterAddress][roomName].map(
+                                  (showtime) => (
+                                    <li key={showtime.id}>
+                                      <button
+                                        className={
+                                          selectedTimes[
+                                            `${theaterAddress}-${roomName}`
+                                          ] === showtime.showTime
+                                            ? "selected"
+                                            : ""
+                                        }
+                                        onClick={() =>
+                                          handleTimeSelect(
+                                            theaterAddress,
+                                            roomName,
+                                            showtime.id,
+                                            showtime.showTime
+                                          )
+                                        }
+                                      >
+                                        {showtime.showTime}
+                                      </button>
+                                    </li>
+                                  )
+                                )}
+                              </ul>
+                            </div>
+                          )
+                        )}
+                      </div>
+                    </div>
+                  ))}
+                </div>
               </div>
-            </div>
-          );
-        })}
+            );
+          })}
       </div>
+      <NowPlayingMovies />
     </div>
   );
 };
