@@ -5,7 +5,7 @@ import "./EntertaimentOptions.css";
 const EntertaimentOptions = () => {
   return (
     <div className="box_entertaiment">
-      <h1 className="title_entertaiment">TẤT CẢ CÁC GIẢI TRÍ</h1>
+      <h1 className="title_entertaiment" style={{ fontFamily: "Anton, sans-serif" }}>TẤT CẢ CÁC GIẢI TRÍ</h1>
       <div className="content_entertaiment">
         <ul className="list_entertaiment">
           <li className="item_entertaiment">

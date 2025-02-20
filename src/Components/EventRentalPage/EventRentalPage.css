@@ -13,7 +13,8 @@
 }
 
 .header-title-event-rental {
-  font-size: 32px;
+  font-size: 40px;
+  font-family: "Anton", sans-serif;
   margin-bottom: 8px;
 }
 
@@ -53,6 +54,7 @@
 
 .event-title-event-rental {
   font-size: 24px;
+  font-family: "Anton", sans-serif;
   margin-bottom: 8px;
 }
 

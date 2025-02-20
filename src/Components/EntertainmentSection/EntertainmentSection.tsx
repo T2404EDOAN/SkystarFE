@@ -6,9 +6,9 @@ const EntertainmentSection: React.FC = () => {
     <div className="entertainment-section">
       <div className="entertainment-container">
         <div className="entertainment-title-wrapper">
-          <h2 className="entertainment-title">TẤT CẢ CÁC GIẢI TRÍ</h2>
+          <h2 className="entertainment-title" style={{ fontFamily: "Anton, sans-serif" }}>TẤT CẢ CÁC GIẢI TRÍ</h2>
           <p className="entertainment-description">
-            Ngoài hệ thống rạp chiếu phim chất lượng cao, Cinestar còn cung cấp
+            Ngoài hệ thống rạp chiếu phim chất lượng cao, SkyStar còn cung cấp
             cho bạn nhiều loại hình giải trí tuyệt vời khác.
           </p>
         </div>

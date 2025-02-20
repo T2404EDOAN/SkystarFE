@@ -1,7 +1,18 @@
 .cinema-h2 {
     color: white !important; /* Màu chữ tiêu đề */
+    font-size: 40px;
+    font-family: "Anton", sans-serif;
     text-align: center; /* Căn giữa tiêu đề */
-    margin-top: 25px !important; /*Khoảng cách trên tiêu đề*/
+    margin-top: 100px !important; /*Khoảng cách trên tiêu đề*/
+    margin-bottom: 30px; /* Khoảng cách dưới tiêu đề */
+}
+
+.cinema-title {
+    color: white !important; /* Màu chữ tiêu đề */
+    font-size: 40px;
+    font-family: "Anton", sans-serif;
+    text-align: center; /* Căn giữa tiêu đề */
+    margin-top: 40px !important; /*Khoảng cách trên tiêu đề*/
     margin-bottom: 15px; /* Khoảng cách dưới tiêu đề */
 }
   
@@ -21,6 +32,9 @@
     margin-right: -20px;
     color:white !important; /* Màu chữ cho tiêu đề và phụ đề */
 }
+.card{
+  padding: 0;
+}
 
 .cinema-form-label {
     color: white;
@@ -28,10 +42,17 @@
     box-sizing: border-box;
 }
 
+.cinema-form-but {
+    display: flex;
+    justify-content: center;
+}
+
 .cinema-submit-but {
+    display: flex;
+    justify-content: center;
     background-color: #F3EA27 !important;
     color: #000000 !important;
-    padding: 10px 15px;
+    padding: 10px 40px;
     border: none;
     border-radius: 5px;
     cursor: pointer;

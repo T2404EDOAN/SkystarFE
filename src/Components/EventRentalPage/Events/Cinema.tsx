@@ -105,8 +105,8 @@ const Cinema = () => {
       <div className="mt-5 mb-5">
         <Row gx={5}>
           <Col xs={12} lg={6} position="relative" >
-            <h2 className="cinema-h2">THUÊ RẠP TỔ CHỨC SỰ KIỆN</h2>
-            <p className="cinema-p">Sự kiện ra mắt sản phẩm, họp công ty, hội nghị khách hàng...<br />
+            <h2 className="cinema-title" style={{ fontFamily: "Anton, sans-serif" }}>THUÊ RẠP TỔ CHỨC SỰ KIỆN</h2>
+            <p className="cinema-p mb-3">Sự kiện ra mắt sản phẩm, họp công ty, hội nghị khách hàng...<br />
               Hỗ trợ sảnh rạp tổ chức đón khách, chụp hình thảm đỏ, tương tác với truyền thông tại chỗ
               Có nhiều kinh nghiệm tổ chức họp báo ra mắt phim, ra mắt MV ... SKYSTAR sẽ giúp bạn đưa sản phẩm tới công chúng gần hơn! <br />
               Liên hệ tư vấn vui lòng để thông tin ở bên dưới hoặc inbox fanpage SKYSTAR <br />
@@ -230,8 +230,10 @@ const Cinema = () => {
                 ></textarea>
               </div>
 
-              <div className="md-3 cinema-form-ct">
-                <button className="btn btn-primary cinema-submit-but" type="button" onClick={handleSubmit}>Gửi</button>
+              <div className="md-3 cinema-form-but">
+                <button className="btn btn-primary cinema-submit-but" type="button" onClick={handleSubmit} style={{ fontFamily: "Anton, sans-serif" }}>
+                  Gửi
+                </button>
               </div>
             </form>
             {/* Modal thông báo */}

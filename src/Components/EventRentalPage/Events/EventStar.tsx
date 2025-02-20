@@ -19,7 +19,7 @@ const EventStar = () => {
   return (
     <div className="box mt-5">
         <Row className="event-types">
-          <h2 className="text-center">CÁC LOẠI HÌNH CHO THUÊ</h2>
+          <h2 className="text-center" style={{ fontFamily: "Anton, sans-serif" }}>CÁC LOẠI HÌNH CHO THUÊ</h2>
         </Row>
         <Row>
           <p className="mb-5"> 
@@ -29,7 +29,7 @@ const EventStar = () => {
 
         {/* NHÀ HÁT ĐÀ LẠT OPERA HOUSE */}
         <Row>
-          <h2 className="text-center">NHÀ HÁT ĐÀ LẠT OPERA HOUSE</h2>
+          <h2 className="EventStar-h2 text-center" style={{ fontFamily: "Anton, sans-serif" }}>NHÀ HÁT ĐÀ LẠT OPERA HOUSE</h2>
           <p className="text-center mb-3">
             Sân khấu hoành tráng của nhà hát Opera, lung linh ánh đèn cho buổi hòa nhạc,<br /> vở kịch hoặc cuộc thi hoa hậu đáng nhớ tiếp theo của bạn.
           </p>
@@ -51,7 +51,7 @@ const EventStar = () => {
         </Row>   
         <Row>
           <div className="d-grid gap-2 col-2 mx-auto mb-5">
-            <button className="btn btn-primary contact-but" type="button">
+            <button className="btn btn-primary contact-but" type="button" style={{ fontFamily: "Anton, sans-serif" }}>
               <a href={`mailto:${email}`}>
                 LIÊN HỆ NGAY
               </a> 
@@ -61,7 +61,7 @@ const EventStar = () => {
 
         {/* Nhà hàng món ngon */}
         <Row>
-          <h2 className="text-center">NHÀ HÀNG MÓN NGON</h2>
+          <h2 className="EventStar-h2 text-center">NHÀ HÀNG MÓN NGON</h2>
           <p className="text-center mb-3">
           Để bữa tiệc của bạn trở nên thú vị, để những vị khách đặc biệt của bạn được phục vụ tốt nhất,<br/> Nhà hàng Món Ngon là lựa chọn không thể bỏ lỡ.
           </p>
@@ -91,7 +91,7 @@ const EventStar = () => {
         </Row>   
         <Row>
           <div className="d-grid gap-2 col-2 mx-auto mb-5">
-            <button className="btn btn-primary contact-but" type="button">
+            <button className="btn btn-primary contact-but" type="button" style={{ fontFamily: "Anton, sans-serif" }}>
               <a href={`mailto:${email}`}>
                 LIÊN HỆ NGAY
               </a> 
@@ -101,7 +101,7 @@ const EventStar = () => {
 
         {/* Trung tâm Billiards */}
         <Row>
-          <h2 className="text-center">TRUNG TÂM BILLIARDS</h2>
+          <h2 className="EventStar-h2 text-center">TRUNG TÂM BILLIARDS</h2>
           <p className="text-center mb-3">
             Trung tâm C'Billiards quy mô rộng lớn và hiện đại sẵn sàng đồng hành cũng các giải đấu Bida cho các câu lạc bộ, <br/> đội nhóm hay doanh nghiệp.
           </p>
@@ -131,7 +131,7 @@ const EventStar = () => {
         </Row>   
         <Row>
           <div className="d-grid gap-2 col-2 mx-auto mb-5">
-            <button className="btn btn-primary contact-but" type="button">
+            <button className="btn btn-primary contact-but" type="button" style={{ fontFamily: "Anton, sans-serif" }}>
               <a href={`mailto:${email}`}>
                 LIÊN HỆ NGAY
               </a> 
@@ -141,7 +141,7 @@ const EventStar = () => {
 
         {/* Khu vui chơi KidZone */}
         <Row>
-          <h2 className="text-center">KHU VUI CHƠI KIDZONE</h2>
+          <h2 className="EventStar-h2 text-center">KHU VUI CHƠI KIDZONE</h2>
           <p className="text-center mb-3">
           Để các bé có không gian vui chơi và giao lưu,<br /> C'Kidzone với không gian rộng lớn, sạch sẽ và hiện đại sẵn sàng đem đến cho các bé những kỷ niệm vui chơi thật ý nghĩa.
           </p>
@@ -171,7 +171,7 @@ const EventStar = () => {
         </Row>   
         <Row>
           <div className="d-grid gap-2 col-2 mx-auto mb-5">
-            <button className="btn btn-primary contact-but" type="button">
+            <button className="btn btn-primary contact-but" type="button" style={{ fontFamily: "Anton, sans-serif" }}>
               <a href={`mailto:${email}`}>
                 LIÊN HỆ NGAY
               </a> 
@@ -181,7 +181,7 @@ const EventStar = () => {
 
         {/* Trung tâm Bowling */}
         <Row>
-          <h2 className="text-center">TRUNG TÂM BOWLING</h2>
+          <h2 className="EventStar-h2 text-center">TRUNG TÂM BOWLING</h2>
           <p className="text-center mb-3">
           Trung tâm C'Bowling hiện đại và đẳng cấp sẵn sàng đồng hành cùng bạn trong các giải đấu chuyên nghiệp cho các câu lạc bộ, hội thao.
           </p>
@@ -211,7 +211,7 @@ const EventStar = () => {
         </Row>   
         <Row>
           <div className="d-grid gap-2 col-2 mx-auto mb-5">
-            <button className="btn btn-primary contact-but" type="button">
+            <button className="btn btn-primary contact-but" type="button" style={{ fontFamily: "Anton, sans-serif" }}>
               <a href={`mailto:${email}`}>
                 LIÊN HỆ NGAY
               </a> 

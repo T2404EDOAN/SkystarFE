@@ -2,6 +2,15 @@
     margin-top: 20px !important;
 }
 
+.EventStar-h2 {
+    color: white !important; /* Màu chữ tiêu đề */
+    font-size: 40px;
+    font-family: "Anton", sans-serif;
+    text-align: center; /* Căn giữa tiêu đề */
+    margin-top: 50px !important; /*Khoảng cách trên tiêu đề*/
+    margin-bottom: 30px; /* Khoảng cách dưới tiêu đề */
+}
+
 .carousel-control-prev,
 .carousel-control-next {
   width: 5%; /* Điều chỉnh chiều rộng của nút */

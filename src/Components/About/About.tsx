@@ -45,7 +45,7 @@ const About = () => {
           className="image"
         />
         <div className="text-overlay">
-          <h1 className="title_about">HỆ THỐNG CỤM RẠP TRÊN TOÀN QUỐC</h1>
+          <h1 className="title_about" style={{ fontFamily: "Anton, sans-serif" }}>HỆ THỐNG CỤM RẠP TRÊN TOÀN QUỐC</h1>
           <p>
             Cinestar là một trong những hệ thống rạp chiếu phim được yêu thích
             nhất tại Việt Nam, cung cấp nhiều mô hình giải trí hợp dẫn bao gồm
@@ -61,7 +61,7 @@ const About = () => {
         </div>
       </div>
       <div className="page_about">
-        <div className="title_about_page">SỨ MỆNH</div>
+        <div className="title_about_page" style={{ fontFamily: "Anton, sans-serif" }}>SỨ MỆNH</div>
         <div className="des_ab_ab">
           <div className="des_about_page">
             <div className="des_ab_num">01</div>
@@ -91,7 +91,7 @@ const About = () => {
         </Link>
       </div>
       <div className="about_page_2">
-        <div className="title_ab_1">TRỤ SỞ CỦA CHÚNG TÔI</div>
+        <div className="title_ab_1" style={{ fontFamily: "Anton, sans-serif" }}>TRỤ SỞ CỦA CHÚNG TÔI</div>
         <div className="des_ab_1">
           Các phòng chiếu được trang bị các thiết bị tiên tiến như hệ thống âm
           thanh vòm, màn hình rộng và độ phân giải cao, tạo nên hình ảnh sắc nét
@@ -108,7 +108,7 @@ const About = () => {
           </div>
 
           <div className="contact-text-overlay">
-            <h2>TRỤ SỞ | HEADQUARTER</h2>
+            <h2 style={{ fontFamily: "Anton, sans-serif" }}>TRỤ SỞ | HEADQUARTER</h2>
             <p>📍 135 Hai Bà Trưng, Phường Bến Nghé, Quận 1</p>
             <p>📧 marketing.cinestar@gmail.com</p>
             <p>📞 028 7300 7279</p>
@@ -116,7 +116,7 @@ const About = () => {
         </div>
       </div>
       <div className="about_page_3">
-        <div className="title_ab_3">HỆ THỐNG CÁC CỤM RẠP</div>
+        <div className="title_ab_3" style={{ fontFamily: "Anton, sans-serif" }}>HỆ THỐNG CÁC CỤM RẠP</div>
         <div className="des_ab_3">
           Các phòng chiếu được trang bị các thiết bị tiên tiến như hệ thống âm
           thanh vòm, màn hình rộng và độ phân giải cao, tạo nên hình ảnh sắc nét

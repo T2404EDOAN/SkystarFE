@@ -80,8 +80,50 @@ const Header: React.FC = () => {
             </Link>
           </div>
 
+<<<<<<< Updated upstream
           {/* Division 3: Search and User Actions */}
           <div className="actions-section">
+=======
+          {/* Desktop Navigation */}
+          <div className="desktop-nav desktop-nav-lg">
+            {/* Action Buttons */}
+            <div className="flex space-x-4">
+              <Link to="/payment">
+                <Button
+                  type="primary"
+                  style={{ backgroundColor: "#f3ea28", color: "black" }}
+                  className="action-button"
+                >
+                  <img
+                    src="https://cinestar.com.vn/assets/images/ic-ticket.svg"
+                    alt="ticket"
+                    className="w-5 h-5"
+                  />
+                  <span>ĐẶT VÉ NGAY</span>
+                </Button>
+              </Link>
+            </div>
+
+            {/* Popcorn Drink */}
+            <div className="flex space-x-4">
+              <Link to="/popcorn-drink">
+                <Button
+                  type="primary"
+                  style={{ backgroundColor: "#663399", color: "#F8FAFC" }}
+                  className="action-button"
+                >
+                  <img
+                    src="	https://cinestar.com.vn/assets/images/ic-cor.svg"
+                    alt="ticket"
+                    className="w-5 h-5"
+                  />
+                  <span>ĐẶT BẮP NƯỚC</span>
+                </Button>
+              </Link>
+            </div>
+
+            {/* Search Bar */}
+>>>>>>> Stashed changes
             <Input
               placeholder="Tìm phim, rạp"
               prefix={<SearchOutlined className="search-icon" />}

@@ -9,18 +9,18 @@ const Promotion: React.FC = () => {
       <div className="promotion-row">
         {/* Text Section */}
         <div className="promotion-text">
-          <h3 className="promotion-title">
+          <h3 className="promotion-title" style={{ fontFamily: "Anton, sans-serif" }}>
             C'STUDENT - 45K CHO HỌC SINH SINH VIÊN
           </h3>
           <p className="mb-3">
-            Đồng giá 45K/2D cho HSSV/GV/U22 cả tuần tại mọi cụm rạp Skystar.
+            Đồng giá 45K/2D cho HSSV/GV/U22 cả tuần tại mọi cụm rạp SkyStar.
           </p>
           <p className="mb-3">Điều kiện</p>
           <ul className="list-disc list-inside text-sm space-y-2">
-            <li>HSSV xuất trình thẻ HSSV/CCCD từ dưới 22 tuổi.</li>
-            <li>Giảng viên/giá viên xuất trình thẻ giảng viên.</li>
+            <li>- HSSV xuất trình thẻ HSSV/CCCD từ dưới 22 tuổi.</li>
+            <li>- Giảng viên/giá viên xuất trình thẻ giảng viên.</li>
           </ul>
-          <button className="promotion-button">
+          <button className="promotion-button" style={{ fontFamily: "Anton, sans-serif" }}>
             <Link to="/mua-ve">ĐẶT VÉ NGAY</Link>
           </button>
         </div>
@@ -36,14 +36,14 @@ const Promotion: React.FC = () => {
       {/* Row 2: Image Left - Text Right */}
       <div className="promotion-row reverse">
         <div className="promotion-text">
-          <h3 className="promotion-title">
+          <h3 className="promotion-title" style={{ fontFamily: "Anton, sans-serif" }}>
             C'TEN - HAPPY HOUR - 45K/ 2D MỐC 10H
           </h3>
           <p className="mb-3">
             Áp dụng giá 45K/ 2D và 55K/ 3D cho khách hàng xem phim trước 10h
             sáng và sau 10h tối.
           </p>
-          <button className="promotion-button">
+          <button className="promotion-button" style={{ fontFamily: "Anton, sans-serif" }}>
             <Link to="/mua-ve">ĐẶT VÉ NGAY</Link>
           </button>
         </div>
@@ -58,11 +58,11 @@ const Promotion: React.FC = () => {
       {/* Row 3: Text Left - Image Right */}
       <div className="promotion-row">
         <div className="promotion-text">
-          <h3 className="promotion-title">
+          <h3 className="promotion-title" style={{ fontFamily: "Anton, sans-serif" }}>
             C'MONDAY - HAPPY DAY - ĐỒNG GIÁ 45K/ 2D
           </h3>
           <p className="mb-3">Đồng giá 45K/2D, 55K/3D vào thứ 2 hàng tuần.</p>
-          <button className="promotion-button">
+          <button className="promotion-button" style={{ fontFamily: "Anton, sans-serif" }}>
             <Link to="/mua-ve">ĐẶT VÉ NGAY</Link>
           </button>
         </div>
@@ -77,14 +77,14 @@ const Promotion: React.FC = () => {
       {/* Row 4: Image Left - Text Right */}
       <div className="promotion-row reverse">
         <div className="promotion-text">
-          <h3 className="promotion-title">
+          <h3 className="promotion-title" style={{ fontFamily: "Anton, sans-serif" }}>
             C'MEMBER - HAPPY MEMBER’S DAY - GIÁ CHỈ 45K/ 2D
           </h3>
           <p className="mb-3">
-            Áp dụng giá 45K/ 2D và 55K/ 3D cho khách hàng là thành viên Skystar
+            Áp dụng giá 45K/ 2D và 55K/ 3D cho khách hàng là thành viên SkyStar
             vào ngày thứ 4 hàng tuần.
           </p>
-          <button className="promotion-button">
+          <button className="promotion-button" style={{ fontFamily: "Anton, sans-serif" }}>
             <Link to="/mua-ve">ĐẶT VÉ NGAY</Link>
           </button>
         </div>

@@ -70,7 +70,7 @@ const HoverCard = ({ place }) => {
         <p className="fs-6"><i className="bi bi-telephone"></i> {place.tel}</p>
         {hovered && <p>{place.description}</p>}
         {hovered && <div className="d-grid gap-2 col-3 mx-auto mb-5">
-            <button className="btn btn-primary contact-but" type="button">
+            <button className="btn btn-primary contact-but" type="button" style={{ fontFamily: "Anton, sans-serif" }}>
               <a href={`mailto:${email}`}>
                 LIÊN HỆ NGAY
               </a> 

@@ -29,6 +29,7 @@ import PaymentPage from "./Components/PaymentForm/PaymentPage/PaymentPage";
 import PaymentFormDetail from "./Components/PaymentForm/PaymentFormDetail";
 import Promotion from "./Components/Promotions/Promotions";
 import ScrollToTop from './components/ScrollToTop';
+import PopcornDrink from "./Components/PopcornDrink/PopcornDrink";
 
 // ...other imports
 
@@ -60,6 +61,7 @@ function App() {
             <Route path="/thue-su-kien/all" element={<EventStar />} />
             <Route path="/thue-su-kien/cinema" element={<Cinema />} />
             <Route path="/payment" element={<PaymentFormDetail />} />
+            <Route path="/popcorn-drink" element={<PopcornDrink />} />
           </Routes>
         </MainLayout>
       </BrowserRouter>

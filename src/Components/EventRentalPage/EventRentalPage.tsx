@@ -7,7 +7,7 @@ const EventRentalPage = () => {
   return (
     <div className="container-event-rental">
       <header className="header-event-rental">
-        <p className="header-title-event-rental">THUÊ SỰ KIỆN</p>
+        <h1 className="mb-4 header-title-event-rental" style={{ fontFamily: "Anton, sans-serif" }}>THUÊ SỰ KIỆN</h1>
         <p className="header-subtitle-event-rental">
           Lên kế hoạch cho một sự kiện?
         </p>
@@ -57,7 +57,7 @@ const EventRentalPage = () => {
 
         {/* Services Section */}
         <section className="services-section">
-          <h2 className="services-title">
+          <h2 className="services-title" style={{ fontFamily: "Anton, sans-serif" }}>
             CÁC DỊCH VỤ CHO THUÊ KHÁC
           </h2>
           <p className="services-subtitle">
@@ -72,7 +72,7 @@ const EventRentalPage = () => {
                 className="service-image"
               />
               <div className="service-overlay">
-                <p className="service-name">RẠP CHIẾU PHIM</p>
+                <p className="service-name" style={{ fontFamily: "Anton, sans-serif" }}>RẠP CHIẾU PHIM</p>
               </div>
               <div className="service-hover-effect" />
             </Link>
@@ -84,7 +84,7 @@ const EventRentalPage = () => {
                 className="service-image"
               />
               <div className="service-overlay">
-                <p className="service-name">NHÀ HÁT OPERA</p>
+                <p className="service-name" style={{ fontFamily: "Anton, sans-serif" }}>NHÀ HÁT OPERA</p>
               </div>
               <div className="service-hover-effect" />
             </Link>
@@ -96,7 +96,7 @@ const EventRentalPage = () => {
                 className="service-image"
               />
               <div className="service-overlay">
-                <p className="service-name">KIDZONE</p>
+                <p className="service-name" style={{ fontFamily: "Anton, sans-serif" }}>KIDZONE</p>
               </div>
               <div className="service-hover-effect" />
             </Link>
@@ -108,7 +108,7 @@ const EventRentalPage = () => {
                 className="service-image"
               />
               <div className="service-overlay">
-                <p className="service-name">BOWLING</p>
+                <p className="service-name" style={{ fontFamily: "Anton, sans-serif" }}>BOWLING</p>
               </div>
               <div className="service-hover-effect" />
             </Link>
@@ -120,7 +120,7 @@ const EventRentalPage = () => {
                 className="service-image"
               />
               <div className="service-overlay">
-                <p className="service-name">NHÀ HÀNG</p>
+                <p className="service-name" style={{ fontFamily: "Anton, sans-serif" }}>NHÀ HÀNG</p>
               </div>
               <div className="service-hover-effect" />
             </Link>
@@ -132,7 +132,7 @@ const EventRentalPage = () => {
                 className="service-image"
               />
               <div className="service-overlay">
-                <p className="service-name">BILLIARDS</p>
+                <p className="service-name" style={{ fontFamily: "Anton, sans-serif" }}>BILLIARDS</p>
               </div>
               <div className="service-hover-effect" />
             </Link>

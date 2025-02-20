@@ -251,7 +251,6 @@
 .book-ticket-text {
   position: relative;
   font-family: "Anton", sans-serif;
-  z-index: 10;
   transition: color 0.3s;
 }
 

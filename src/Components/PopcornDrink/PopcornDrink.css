@@ -1,0 +1,8 @@
+.pop-header {
+    color: white !important; /* Màu chữ tiêu đề */
+    font-size: 40px;
+    font-family: "Anton", sans-serif;
+    text-align: center; /* Căn giữa tiêu đề */
+    margin-top: 100px !important; /*Khoảng cách trên tiêu đề*/
+    margin-bottom: 30px; /* Khoảng cách dưới tiêu đề */
+}
