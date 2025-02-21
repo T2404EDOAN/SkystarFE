@@ -102,7 +102,7 @@ const NowPlayingMovies: React.FC = () => {
         const moviesData = Array.isArray(response.data)
           ? response.data
           : response.data.content || [];
-        console.log(moviesData);
+       
         const upcomingMovies = moviesData
           .filter((movie: Movie) => movie && movie.status === "Đang chiếu")
           .map((movie: Movie) => ({
@@ -112,7 +112,7 @@ const NowPlayingMovies: React.FC = () => {
 
         setMovies(upcomingMovies);
       } catch (err) {
-        console.error("Error details:", err);
+        
         if (axios.isAxiosError(err)) {
           setError(
             err.response?.data?.message ||

@@ -140,33 +140,54 @@ const MovieDetail = () => {
   };
 
   const handleSeatClick = async (seat) => {
-    if (selectedSeats.includes(seat.seatNumber)) {
+    if (selectedSeats.some(s => s.seatNumber === seat.seatNumber)) {
+      console.log('Removing seat:', seat);
       setSelectedSeats(prev => prev.filter(s => s.seatNumber !== seat.seatNumber));
       if (selectedSeats.length <= 1) {
         setShowPayment(false);
       }
       return;
     }
-
+  
     try {
       if (selectedShowtimeId) {
-        // Store both seat number and ID
-        setSelectedSeats(prev => {
-          const newSeats = [...prev, {
-            seatNumber: seat.seatNumber,
-            id: seat.id,
-            type: seat.seatType,
-            price: seat.price
-          }];
-          setShowPayment(newSeats.length > 0);
-          return newSeats;
-        });
+        const url = `http://localhost:8080/api/seats/${selectedShowtimeId}/hold`;
+        const requestData = {
+          seatId: seat.id,
+          // Add userId if user is logged in
+          // userId: currentUser?.id // Uncomment and add logic for logged in user
+        };
+  
+        console.log('API Call URL:', url);
+        console.log('Request Data:', requestData);
+  
+        const response = await axios.post(url, requestData);
+        console.log('API Response:', response.data);
+  
+        if (response.status === 200) {
+          setSelectedSeats(prev => {
+            const newSeats = [...prev, {
+              seatNumber: seat.seatNumber,
+              id: seat.id,
+              type: seat.seatType,
+              price: seat.price,
+              holdExpiration: new Date(Date.now() + 5 * 60 * 1000)
+            }];
+            setShowPayment(newSeats.length > 0);
+            return newSeats;
+          });
+        }
       }
     } catch (error) {
-      console.error('Error in handleSeatClick:', error);
+      console.error('Error details:', {
+        message: error.message,
+        response: error.response?.data,
+        status: error.response?.status
+      });
       alert('Có lỗi xảy ra khi đặt ghế. Vui lòng thử lại.');
     }
   };
+  
 
   const seatTypes = [
     { type: 'standard', label: 'Ghế thường - 75.000đ' },
@@ -226,17 +247,18 @@ const MovieDetail = () => {
     return grouped;
   };
   
-  // Update seat button rendering to handle couple seats
+
   const renderSeat = (seat) => {
     const isCouple = seat.seatType === "COUPLE";
+    const isDisabled = seat.status === 'SOLD' || seat.status === 'RESERVED';
     return (
       <button
         key={seat.id}
         className={`seat 
-          ${seat.status === 'SOLD' ? 'booked' : 'available'} 
+          ${isDisabled ? 'booked' : 'available'} 
           ${selectedSeats.some(s => s.seatNumber === seat.seatNumber) ? 'selected' : ''}
           ${isCouple ? 'couple-seat' : ''}`}
-        disabled={seat.status === 'SOLD'}
+        disabled={isDisabled}
         onClick={() => handleSeatClick(seat)}
       >
         {seat.seatNumber}

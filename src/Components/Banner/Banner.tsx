@@ -35,7 +35,7 @@ const Banner: React.FC = () => {
               alt={`Banner ${currentIndex + 1}`}
               className="banner-image"
               onLoad={() => {
-                console.log("Image loaded successfully");
+                
                 setIsLoading(false);
               }}
               onError={(e) => {

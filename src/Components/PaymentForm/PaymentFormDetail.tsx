@@ -4,6 +4,16 @@ import { useLocation, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import './PaymentFormDetail.css';
 
+interface PaymentStatusResponse {
+  paymentStatus: string;
+  theaterName: string;
+  totalAmount: number;
+  bookingNumber: string;
+  roomName: string;
+  movieTitle: string;
+  showtime: string;
+}
+
 const PaymentFormDetail = () => {
   const location = useLocation();
   const movieInfo = location.state;
@@ -32,11 +42,17 @@ const PaymentFormDetail = () => {
   const [isLoading, setIsLoading] = useState(false);
 
   // Add new state for payment status
-  const [paymentStatus, setPaymentStatus] = useState({
+  const [paymentStatus, setPaymentStatus] = useState<{
+    success: boolean;
+    orderId: string;
+    transId: string;
+    amount: string;
+    details?: PaymentStatusResponse;
+  }>({
     success: false,
     orderId: '',
     transId: '',
-    amount: ''
+    amount: '',
   });
 
   const [bookingId, setBookingId] = useState<string>('');
@@ -54,17 +70,36 @@ const PaymentFormDetail = () => {
     }
   }, [movieInfo]);
 
-  // Add effect to check URL params for payment result
+  // Sửa lại useEffect kiểm tra kết quả thanh toán
   useEffect(() => {
     const params = new URLSearchParams(window.location.search);
-    if (params.get('resultCode') === '0') {
-      setPaymentStatus({
+    const orderId = params.get('orderId');
+    const resultCode = params.get('resultCode');
+    
+    if (resultCode === '0' && orderId) {  
+      setPaymentStatus(prev => ({
+        ...prev,
         success: true,
-        orderId: params.get('orderId') || '',
+        orderId: orderId || '',
         transId: params.get('transId') || '',
         amount: params.get('amount') || ''
-      });
-      setActiveStep(3); // Move to success screen
+      }));
+
+      const checkPaymentStatus = async () => {
+        try {
+          const response = await axios.get(`http://localhost:8080/api/payments/status?orderId=${orderId}`);
+          setPaymentStatus(prev => ({
+            ...prev,
+            details: response.data
+          }));
+          setActiveStep(3);
+        } catch (error) {
+          console.error('Error checking payment status:', error);
+          alert('Không thể kiểm tra trạng thái thanh toán');
+        }
+      };
+
+      checkPaymentStatus();
     }
   }, []);
 
@@ -103,7 +138,7 @@ const PaymentFormDetail = () => {
         };
 
         const response = await axios.post(
-          'http://35.175.173.235:8080/api/bookings/create',
+          'http://localhost:8080/api/bookings/create',
           bookingData
         );
 
@@ -125,10 +160,12 @@ const PaymentFormDetail = () => {
   const handleMomoPayment = async () => {
     try {
       setIsLoading(true);
+      const returnUrl = `${window.location.origin}/payment`; // Simplified return URL
       const paymentData = {
         orderInfo: "Thanh toán vé xem phim",
         amount: movieInfo.totalPrice.toString(),
-        bookingId: bookingId // Add bookingId to payment request
+        bookingId: bookingId,
+        returnUrl: returnUrl
       };
 
       // Add console.log to show payment data
@@ -285,9 +322,23 @@ const PaymentFormDetail = () => {
               <img src="/success-icon.png" alt="Success" className="success-icon" />
               <h2>Thanh toán thành công!</h2>
               <div className="payment-details">
-                <p>Mã đơn hàng: {paymentStatus.orderId}</p>
-                <p>Mã giao dịch: {paymentStatus.transId}</p>
-                <p>Số tiền: {parseInt(paymentStatus.amount).toLocaleString('vi-VN')} VND</p>
+                {paymentStatus.details ? (
+                  <>
+                    <p>Mã đặt vé: {paymentStatus.details.bookingNumber}</p>
+                    <p>Rạp: {paymentStatus.details.theaterName}</p>
+                    <p>Phòng: {paymentStatus.details.roomName}</p>
+                    <p>Phim: {paymentStatus.details.movieTitle}</p>
+                    <p>Suất chiếu: {paymentStatus.details.showtime}</p>
+                    <p>Số tiền: {paymentStatus.details.totalAmount.toLocaleString('vi-VN')} VND</p>
+                    <p>Trạng thái: {paymentStatus.details.paymentStatus === 'PAID' ? 'Đã thanh toán' : 'Chưa thanh toán'}</p>
+                  </>
+                ) : (
+                  <>
+                    <p>Mã đơn hàng: {paymentStatus.orderId}</p>
+                    <p>Mã giao dịch: {paymentStatus.transId}</p>
+                    <p>Số tiền: {parseInt(paymentStatus.amount).toLocaleString('vi-VN')} VND</p>
+                  </>
+                )}
               </div>
               <div className="payment-actions">
                 <button 
@@ -300,64 +351,66 @@ const PaymentFormDetail = () => {
             </div>
           </div>
         )}
-        <div className="skystar-payment-summary">
-          <div className="skystar-payment-movie-info">
-            <div className="info-row movie-title-row">
-              <div className="title-hold">
-                <div className="movie-details">
-                  <span className="movie-name">{movieInfo?.title}</span>
-                  <span className="movie-genre">{movieInfo?.movieType || 'Phim'}</span>
+        {activeStep !== 3 && (
+          <div className="skystar-payment-summary">
+            <div className="skystar-payment-movie-info">
+              <div className="info-row movie-title-row">
+                <div className="title-hold">
+                  <div className="movie-details">
+                    <span className="movie-name">{movieInfo?.title}</span>
+                    <span className="movie-genre">{movieInfo?.movieType || 'Phim'}</span>
+                  </div>
+                </div>
+                <div className="hold-time">
+                  <span className="hold-timer">{Math.floor(movieInfo?.holdTimer / 60)}:
+                    {(movieInfo?.holdTimer % 60).toString().padStart(2, '0')}</span>
                 </div>
               </div>
-              <div className="hold-time">
-                <span className="hold-timer">{Math.floor(movieInfo?.holdTimer / 60)}:
-                  {(movieInfo?.holdTimer % 60).toString().padStart(2, '0')}</span>
+              
+              <div className="info-row cinema-info-row">
+                <div className="cinema-details">
+                  <span className="cinema-name">{movieInfo?.cinemaName}</span>
+                  <span className="cinema-address">{movieInfo?.cinemaAddress}</span>
+                </div>
               </div>
-            </div>
-            
-            <div className="info-row cinema-info-row">
-              <div className="cinema-details">
-                <span className="cinema-name">{movieInfo?.cinemaName}</span>
-                <span className="cinema-address">{movieInfo?.cinemaAddress}</span>
+              
+              <div className="info-row showtime-info-row">
+                <div className="showtime-details">
+                  <span className="time-label">Thời gian</span>
+                  <span className="time-value">{movieInfo?.showTime}</span>
+                </div>
               </div>
-            </div>
-            
-            <div className="info-row showtime-info-row">
-              <div className="showtime-details">
-                <span className="time-label">Thời gian</span>
-                <span className="time-value">{movieInfo?.showTime}</span>
+              
+              <div className="info-row room-info-row">
+                <div className="room-details">
+                  <span className="detail-label">Phòng chiếu</span>
+                  <span className="detail-value">{movieInfo?.roomName}</span>
+                </div>
+                <div className="ticket-count">
+                  <span className="detail-label">Số vé</span>
+                  <span className="detail-value">{movieInfo?.selectedSeats?.length}</span>
+                </div>
+                <div className="ticket-type">
+                  <span className="detail-label">Loại vé</span>
+                  <span className="detail-value">{movieInfo?.selectedSeats[0]?.seatType || 'Thường'}</span>
+                </div>
+                <div className="seat-numbers">
+                  <span className="detail-label">Số ghế</span>
+                  <span className="detail-value">
+                    {movieInfo?.selectedSeats?.map(seat => seat.seatNumber).join(', ')}
+                  </span>
+                </div>
               </div>
-            </div>
-            
-            <div className="info-row room-info-row">
-              <div className="room-details">
-                <span className="detail-label">Phòng chiếu</span>
-                <span className="detail-value">{movieInfo?.roomName}</span>
-              </div>
-              <div className="ticket-count">
-                <span className="detail-label">Số vé</span>
-                <span className="detail-value">{movieInfo?.selectedSeats?.length}</span>
-              </div>
-              <div className="ticket-type">
-                <span className="detail-label">Loại vé</span>
-                <span className="detail-value">{movieInfo?.selectedSeats[0]?.seatType || 'Thường'}</span>
-              </div>
-              <div className="seat-numbers">
-                <span className="detail-label">Số ghế</span>
-                <span className="detail-value">
-                  {movieInfo?.selectedSeats?.map(seat => seat.seatNumber).join(', ')}
+              
+              <div className="info-row total-row">
+                <span className="label">Số tiền cần thanh toán</span>
+                <span className="value">
+                  {movieInfo?.totalPrice?.toLocaleString('vi-VN')} VND
                 </span>
               </div>
             </div>
-            
-            <div className="info-row total-row">
-              <span className="label">Số tiền cần thanh toán</span>
-              <span className="value">
-                {movieInfo?.totalPrice?.toLocaleString('vi-VN')} VND
-              </span>
-            </div>
           </div>
-        </div>
+        )}
       </div>
     </div>
   );
