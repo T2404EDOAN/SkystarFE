@@ -20,30 +20,43 @@ footer {
 }
 
 .footer-logo {
-  width: 32px;
-  margin-bottom: 16px;
+  width: 170px;
+  margin-bottom: 0;
 }
 
 .footer-tagline {
   font-weight: bold;
-  font-size: 1.125rem;
-  margin-bottom: 16px;
+  font-size: 1rem;
+  margin-bottom: 0;
 }
 
 .footer-buttons {
   display: flex;
   flex-direction: row; /* Change to row */
   gap: 1rem;
-  margin-top: 1rem;
+  /* margin-top: 1rem; */
   justify-content: center; /* Center the buttons */
 }
 
 .footer-button {
+  /* position: relative;
   width: 125px;
   height: 40px;
+  font-size: 14px;
   border-radius: 8px;
   overflow: hidden;
-  font-family: 'Anton';
+  font-family: "Anton", sans-serif; */
+  font-size: 14px;
+  position: relative;
+  width: 135px;
+  height: 40px;
+  border-radius: 0.375rem;
+  overflow: hidden;
+  font-family: "Anton";
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0px 15px;
 }
 
 .footer-button-yellow {
@@ -67,15 +80,15 @@ footer {
 
 .footer-social-icons {
   display: flex;
-  gap: 1rem;
-  margin-top: auto; /* Push to bottom */
+  gap: 1.5rem;
+  margin-top: 0; /* Push to bottom */
   justify-content: center;
-  padding-top: 2rem; /* Add some spacing from buttons */
+  padding-bottom: 14px; /* Add some spacing from buttons */
 }
 
 .footer-social-icon {
-  width: 32px;
-  height: 32px;
+  width: 25px;
+  height: 25px;
   transition: color 0.3s;
 }
 
@@ -204,4 +217,8 @@ footer {
 .icon-size {
   width: 1.25rem;
   height: 1.25rem;
+}
+
+.footer-title {
+  font-family: "Anton", sans-serif;
 }

@@ -3,6 +3,38 @@
     font-size: 40px;
     font-family: "Anton", sans-serif;
     text-align: center; /* Căn giữa tiêu đề */
-    margin-top: 100px !important; /*Khoảng cách trên tiêu đề*/
+    margin-top: 60px !important; /*Khoảng cách trên tiêu đề*/
     margin-bottom: 30px; /* Khoảng cách dưới tiêu đề */
+}
+
+.pop-content {
+    color: white;
+    margin-top: 10px;
+}
+
+.pop-name {
+    font-weight: bold;
+    font-size: 22px;
+    margin: 0;
+}
+
+.pop-des {
+    font-size: 12px;
+    margin: 0;
+}
+
+.pop-price {
+    font-size: 15px;
+    margin: 0;
+}
+
+.pop-button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px;  /* Chiều rộng nút */
+    height: 20px; /* Chiều cao nút */
+    border-radius: 0; /* Đặt border-radius về 0 để tạo hình chữ nhật */
+    font-size: 15px; /* Kích thước chữ */
+    padding: 0 5px;
 }

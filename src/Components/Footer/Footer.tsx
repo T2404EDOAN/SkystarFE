@@ -57,7 +57,7 @@ const Footer: React.FC = () => {
           <div className="footer-links">
             {/* Column 1 */}
             <div className="footer-link-column">
-              <h4>TÀI KHOẢN</h4>
+              <h4 className="footer-title">TÀI KHOẢN</h4>
               <ul>
                 <li>Đăng nhâp</li>
                 <li>Đăng ký</li>
@@ -66,7 +66,7 @@ const Footer: React.FC = () => {
             </div>
             {/* Column 2 */}
             <div className="footer-link-column">
-              <h4>THUÊ SỰ KIỆN</h4>
+              <h4 className="footer-title">THUÊ SỰ KIỆN</h4>
               <ul>
                 <li>Thuê rạp</li>
                 <li>Các loại hình thuê rạp khác</li>
@@ -74,7 +74,7 @@ const Footer: React.FC = () => {
             </div>
             {/* Column 3 */}
             <div className="footer-link-column">
-              <h4>DỊCH VỤ KHÁC</h4>
+              <h4 className="footer-title">DỊCH VỤ KHÁC</h4>
               <ul>
                 <li>Nhà hàng</li>
                 <li>Kidzone</li>
@@ -87,17 +87,17 @@ const Footer: React.FC = () => {
             </div>
             {/* Column 4 */}
             <div className="footer-link-column">
-              <h4>HỆ THỐNG RẠP</h4>
+              <h4 className="footer-title">HỆ THỐNG RẠP</h4>
               <ul>
                 <li>Tất cả hệ thống rạp</li>
-                <li>Cinestar Quốc Thanh</li>
-                <li>Cinestar Hai Bà Trưng</li>
-                <li>Cinestar Sinh Viên</li>
-                <li>Cinestar Mỹ Tho</li>
-                <li>Cinestar Kiên Giang</li>
-                <li>Cinestar Kiên Giang</li>
-                <li>Cinestar Kiên Giang</li>
-                <li>Cinestar Kiên Giang</li>
+                <li>SkyStar Quốc Thanh</li>
+                <li>SkyStar Hai Bà Trưng</li>
+                <li>SkyStar Sinh Viên</li>
+                <li>SkyStar Mỹ Tho</li>
+                <li>SkyStar Kiên Giang</li>
+                <li>SkyStar Kiên Giang</li>
+                <li>SkyStar Kiên Giang</li>
+                <li>SkyStar Kiên Giang</li>
               </ul>
             </div>
           </div>
@@ -107,7 +107,7 @@ const Footer: React.FC = () => {
         <div className="footer-bottom">
           {/* Bên trái */}
           <p>
-            © 2023 Cinestar. All rights reserved.
+            © 2023 SkyStar. All rights reserved.
           </p>
 
           {/* Bên phải */}
