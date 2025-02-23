@@ -4,7 +4,18 @@
     font-family: "Anton", sans-serif;
     text-align: center; /* Căn giữa tiêu đề */
     margin-top: 60px !important; /*Khoảng cách trên tiêu đề*/
-    margin-bottom: 30px; /* Khoảng cách dưới tiêu đề */
+    margin-bottom: 60px; /* Khoảng cách dưới tiêu đề */
+}
+
+.pop-title {
+    font-family: "Anton", sans-serif;
+    font-size: 24px;
+    margin-bottom: 0.5rem;
+    margin-top: 7rem;
+}
+
+.pop-bot {
+    margin-bottom: 12rem;
 }
 
 .pop-content {
