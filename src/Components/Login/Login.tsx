@@ -37,36 +37,32 @@ const Login = () => {
 
     if (activeTab === "login") {
       try {
-        const response = await axios.get(
-          "http://35.175.173.235:8080/api/users",
+        // Clear previous errors
+        setLoginError("");
+
+        const response = await axios.post(
+          "http://35.175.173.235:8080/api/users/login",
           {
-            params: {
-              identifier,
-              password,
-            },
+            email: identifier,
+            password: password,
           }
         );
-        
-        const users = response.data;
-        const user = users.find(
-          (user) =>
-            (user.email === identifier || user.username === identifier) &&
-            user.passwordHash === password
-        );
-
-        if (user) {
-          console.log("Login successful", user);
-          login(user); // Save user data to context
-          
-          navigate("/");
-        } else {
-          setLoginError("Tài khoản hoặc mật khẩu không đúng");
-        }
+        console.log("Login successful", response.data);
+        const userData = response.data;
+        login(userData);
+        navigate("/");
       } catch (error) {
-        setLoginError("Tài khoản hoặc mật khẩu không đúng");
+        console.error("Login error:", error);
+        if (axios.isAxiosError(error)) {
+          setLoginError(
+            error.response?.data?.message ||
+              "Tài khoản hoặc mật khẩu không đúng"
+          );
+        } else {
+          setLoginError("Đăng nhập thất bại. Vui lòng thử lại.");
+        }
       }
     } else {
-      // Registration logic
       if (!validateEmail(identifier)) {
         setEmailError("Email không hợp lệ");
         return;
@@ -78,39 +74,41 @@ const Login = () => {
       }
 
       try {
-        const response = await axios.post("http://localhost:8080/api/users", {
-          username,
-          email: identifier,
-          password,
-          fullName,
-          phoneNumber,
-          citizenId: cccd,
-          dateOfBirth: dob,
-          address,
-          avatarUrl: "", // Optional field
-        });
-
-        console.log("Registration response:", response); // Log the response
-
-        if (response.status === 200) {
-          console.log("Đăng ký thành công:", response.data);
-          alert("Đăng ký thành công. Chuyển hướng đến trang đăng nhập.");
-          navigate("/login"); // Redirect to login page
-        } else {
-          setRegistrationError("Đăng ký thất bại. Vui lòng thử lại.");
-        }
-      } catch (error) {
-        console.error(
-          "Lỗi khi đăng ký:",
-          error.response?.data || error.message
+        const response = await axios.post(
+          "http://35.175.173.235:8080/api/users/register",
+          {
+            email: identifier,
+            password: password,
+            fullName: fullName,
+            phoneNumber: phoneNumber,
+            username: username,
+            citizenId: cccd,
+            dateOfBirth: dob,
+            address: address,
+          }
         );
 
-        // Display server error (if any)
-        if (error.response?.data?.error) {
-          setRegistrationError(error.response.data.error);
-        } else {
-          setRegistrationError("Đăng ký thất bại. Vui lòng thử lại.");
+        if (response.status === 200 || response.status === 201) {
+          console.log("Đăng ký thành công:", response.data);
+          alert("Đăng ký thành công! Vui lòng đăng nhập.");
+          setActiveTab("login");
+          // Reset form
+          setIdentifier("");
+          setPassword("");
+          setConfirmPassword("");
+          setFullName("");
+          setPhoneNumber("");
+          setUsername("");
+          setCccd("");
+          setDob("");
+          setAddress("");
         }
+      } catch (error) {
+        console.error("Registration error:", error);
+        setRegistrationError(
+          error.response?.data?.message ||
+            "Đăng ký thất bại. Vui lòng kiểm tra lại thông tin."
+        );
       }
     }
   };
@@ -131,7 +129,9 @@ const Login = () => {
           Đăng Nhập
         </button>
         <button
-          className={`login-tab ${activeTab === "register" ? "login-active" : ""}`}
+          className={`login-tab ${
+            activeTab === "register" ? "login-active" : ""
+          }`}
           onClick={() => setActiveTab("register")}
           id="login-up"
         >
@@ -153,7 +153,7 @@ const Login = () => {
                 <span className="login-red">*</span>
               </label>
               <input
-                type="text"
+                type="email"
                 required
                 className="login-form-input"
                 placeholder="Tài khoản, Email hoặc số điện thoại"

@@ -4,7 +4,7 @@ import { useAuth } from "../../context/AuthContext";
 import "./Header.css";
 import { Input, Button, Dropdown } from "antd";
 import { SearchOutlined, UserOutlined } from "@ant-design/icons";
-import type { MenuProps } from "antd";
+import type { MenuProps, Avatar } from "antd";
 
 const Header: React.FC = () => {
   const { isAuthenticated, user, logout } = useAuth();
@@ -52,15 +52,10 @@ const Header: React.FC = () => {
       <div className="header-container">
         <div className="header-content">
           {/* Division 1: Logo */}
-         
-            <Link to="/" className="logo-link">
-              <img 
-                src="/logo.png" 
-                alt="Logo" 
-                className="logo" 
-              />
-            </Link>
-         
+
+          <Link to="/" className="logo-link">
+            <img src="/logo.png" alt="Logo" className="logo" />
+          </Link>
 
           {/* Division 2: Book Ticket Button */}
           <div className="booking-section">
@@ -107,7 +102,15 @@ const Header: React.FC = () => {
             {isAuthenticated ? (
               <Dropdown menu={{ items: userMenuItems }} placement="bottomRight">
                 <div className="user-actions">
-                  <UserOutlined className="user-icon" />
+                  {user?.avatarUrl ? (
+                    <img
+                      src={user.avatarUrl}
+                      className="user-avatar"
+                      alt={user.fullName}
+                    />
+                  ) : (
+                    <UserOutlined className="user-icon" />
+                  )}
                   <div className="user-text">{user?.fullName}</div>
                 </div>
               </Dropdown>

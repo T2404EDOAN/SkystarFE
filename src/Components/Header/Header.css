@@ -17,7 +17,19 @@
   z-index: 10;
   /* ...existing code... */
 }
+.user-avatar {
+  width: 32px !important;
+  height: 32px !important;
+  cursor: pointer;
+  border-radius: 50%;
+  object-fit: cover;
+}
 
+.user-actions {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
 .header-container {
   margin: 0 auto;
   width: 1200px;
@@ -38,7 +50,6 @@
   justify-content: space-between;
   align-items: center;
   width: 100%;
-  
 }
 
 img {

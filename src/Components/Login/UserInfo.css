@@ -1,14 +1,17 @@
-.container {
+.container-info {
   display: flex;
   flex-direction: row-reverse;
   height: 100vh;
+  margin-top: 40px;
 }
 
 .sidebar {
-  background-color: #673AB7;
+  background-color: #673ab7;
   color: #fff;
   padding: 20px;
   width: 250px;
+  height: 450px;
+  border-radius: 25px;
 }
 
 .sidebar h2 {
@@ -22,14 +25,36 @@
 .c-friends h3 {
   margin-bottom: 10px;
 }
-
+.img11 {
+  border-radius: 50%;
+  width: 50px;
+  height: 50px;
+}
+.info-mini1 {
+  padding-left: 10px;
+  margin-bottom: 20px;
+}
+.info-mini1 span {
+  font-size: 12px;
+}
+.info-mini1 p {
+  font-size: 16px;
+  margin-bottom: 0;
+  margin-top: 2px;
+}
+.profile-mini {
+  display: flex;
+}
 .tich-diem-c-friends {
   background-color: #fff;
-  color: #673AB7;
+  color: #673ab7;
   padding: 5px 10px;
   border-radius: 20px;
 }
-
+.default-avatar-icon {
+  font-size: 45px;
+  color: #999;
+}
 .thong-tin-khach-hang h3 {
   margin-bottom: 10px;
 }
@@ -54,19 +79,49 @@
 .thong-tin-khach-hang li.active {
   background-color: rgba(255, 255, 255, 0.2);
 }
-
-
-
-.main-content h2 {
-  margin-bottom: 20px;
+.main-conten-info-user {
+  flex: 1;
+  width: 1200px;
+  margin: 0 auto;
+  position: relative;
+  overflow-x: hidden;
+  margin-top: 10px;
 }
 
+.main-conten-info-user h2 {
+  margin-bottom: 20px;
+  color: white;
+  padding-left: 20px;
+  font-weight: bold;
+}
+.info-mini-box {
+  display: flex;
+  gap: 10px;
+}
+.info-box label {
+  display: block;
+  padding-top: 20px;
+}
+.info-box input {
+  width: 425px;
+  padding: 14px;
+  border: 1px solid #ccc;
+  border-radius: 1px;
+}
 .user-info {
   display: flex;
   flex-direction: column;
   gap: 20px;
 }
-
+.user-info-section {
+  background-color: #fff;
+  width: 900px;
+  margin: 0 auto;
+  padding: 20px;
+}
+.user-info-section button {
+  margin-top: 20px;
+}
 .form-group {
   display: flex;
   align-items: center;
@@ -85,10 +140,37 @@
 }
 
 .submit-btn {
-  background-color: #673AB7;
-  color: #fff;
+  background-color: #e2e8f0;
   border: none;
   padding: 10px 20px;
   border-radius: 5px;
   cursor: pointer;
+}
+.message {
+  padding: 10px;
+  margin: 10px 0;
+  border-radius: 4px;
+  text-align: center;
+}
+
+.message.success {
+  background-color: #d4edda;
+  color: #155724;
+  border: 1px solid #c3e6cb;
+}
+
+.message.error {
+  background-color: #f8d7da;
+  color: #721c24;
+  border: 1px solid #f5c6cb;
+}
+
+.submit-btn:disabled {
+  background-color: #cccccc;
+  cursor: not-allowed;
+}
+
+.info-box input:read-only {
+  background-color: #f5f5f5;
+  cursor: not-allowed;
 }
