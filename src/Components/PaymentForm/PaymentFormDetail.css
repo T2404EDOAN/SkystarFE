@@ -14,7 +14,6 @@
 .skystar-payment-title{
     font-size: 40px;
     font-family: "Anton", sans-serif;
-    color: #ccc;
 }
 .skystar-payment-form-wrapper {
 
@@ -39,7 +38,6 @@
 
 .skystar-form-label {
   font-weight: 500;
-  color: white;
 }
 
 .skystar-form-input {
@@ -62,7 +60,6 @@
 .skystar-form-checkbox-label {
   font-size: 0.9rem;
   user-select: none;
-  color: white;
 }
 
 .skystar-form-checkbox {
@@ -105,7 +102,6 @@
   font-size: 0.9rem;
   font-family: "Anton", sans-serif;
   font-size: 20px;
-  color: white;
   
 }
 
@@ -137,7 +133,7 @@
 }
 
 .skystar-form-submit:disabled {
-  background-color: #cccccc;
+  background-color: #ccc;
   cursor: not-allowed;
 }
 
@@ -178,7 +174,6 @@
   display: flex;
   justify-content: space-between;
   margin-bottom: 0.75rem;
-  color: white;
 }
 
 .info-row:last-child {
@@ -257,7 +252,6 @@
 .movie-name {
 font-size: 24px; 
 font-family: "Anton", sans-serif;
-color: white;
 }
 
 .hold-time {
@@ -291,7 +285,6 @@ color: white;
 
 .cinema-address {
   font-size: 0.9em;
-  color: white;
 }
 
 .showtime-info-row {
@@ -316,7 +309,6 @@ color: white;
 
 .time-value {
   font-weight: 500;
-  color: white;
 }
 
 .room-info-row {
@@ -343,7 +335,6 @@ color: white;
 
 .detail-value {
   font-weight: 500;
-  color: white;
 }
 
 .movie-details {
@@ -480,14 +471,11 @@ color: white;
   cursor: pointer;
   transition: all 0.3s ease;
   box-sizing: border-box; /* Add this to include padding in width calculation */
-  transition: transform 0.2s, box-shadow 0.2s;
 }
 
 .payment-method-box:hover {
   border-color: #007bff;
   box-shadow: 0 2px 8px rgba(0,0,0,0.1);
-  transform: translateY(-2px);
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
 .payment-method-box img {
@@ -508,73 +496,106 @@ color: white;
   color: #666;
 }
 
-.payment-method-box[onClick] {
-  cursor: pointer;
+.spinner {
+  width: 50px;
+  height: 50px;
+  border: 5px solid #f3f3f3;
+  border-top: 5px solid #3498db;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+  margin: 20px auto;
 }
 
-.error-message {
-  color: #dc3545;
-  background-color: #f8d7da;
-  border: 1px solid #f5c6cb;
-  padding: 10px;
-  margin: 10px 0;
-  border-radius: 4px;
+.payment-pending-content {
   text-align: center;
+  padding: 40px;
 }
 
-.payment-success-container {
-  flex: 1;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  padding: 2rem;
+.payment-pending-content h2 {
+  color: #666;
+  margin-top: 20px;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
 }
 
 .payment-success-content {
+  background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+  border-radius: 16px;
+  padding: 40px;
   text-align: center;
-  background: #fff;
-  padding: 2rem;
-  border-radius: 8px;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
-  max-width: 500px;
-  width: 100%;
+  max-width: 600px;
+  margin: 0 auto;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
 }
 
-.success-icon {
+.payment-success-content .success-icon {
   width: 80px;
   height: 80px;
-  margin-bottom: 1rem;
+  margin-bottom: 24px;
+  animation: scaleIn 0.5s ease-out;
 }
 
 .payment-success-content h2 {
   color: #28a745;
-  margin-bottom: 1.5rem;
+  font-size: 28px;
+  font-weight: 600;
+  margin-bottom: 30px;
+  font-family: "Anton", sans-serif;
 }
 
-.payment-details {
-  text-align: left;
-  margin: 1.5rem 0;
-  padding: 1rem;
-  background: #f8f9fa;
-  border-radius: 4px;
+.payment-success-content .payment-details {
+  background: white;
+  border-radius: 12px;
+  padding: 24px;
+  margin: 20px 0;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
 }
 
-.payment-details p {
-  margin: 0.5rem 0;
-  color: #333;
+.payment-success-content .payment-details p {
+  display: flex;
+  justify-content: space-between;
+  padding: 12px 0;
+  margin: 0;
+  border-bottom: 1px solid #e9ecef;
+  color: #495057;
+  font-size: 16px;
 }
 
-.back-to-home {
-  background-color: #007bff;
-  color: white;
+.payment-success-content .payment-details p:last-child {
+  border-bottom: none;
+}
+
+.payment-success-content .back-to-home {
+  background: #FFD700;
+  color: #000;
   border: none;
-  padding: 0.75rem 1.5rem;
-  border-radius: 4px;
+  padding: 14px 32px;
+  border-radius: 8px;
+  font-size: 16px;
+  font-weight: 600;
   cursor: pointer;
-  font-weight: 500;
-  transition: background-color 0.2s;
+  transition: all 0.3s ease;
+  margin-top: 24px;
+  text-transform: uppercase;
+  letter-spacing: 1px;
 }
 
-.back-to-home:hover {
-  background-color: #0056b3;
+.payment-success-content .back-to-home:hover {
+  background: #ffc107;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(255, 215, 0, 0.3);
+}
+
+@keyframes scaleIn {
+  from {
+    transform: scale(0);
+    opacity: 0;
+  }
+  to {
+    transform: scale(1);
+    opacity: 1;
+  }
 }

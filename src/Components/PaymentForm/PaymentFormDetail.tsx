@@ -123,6 +123,10 @@ const PaymentFormDetail = () => {
       return;
     }
 
+    // Get user ID from localStorage and format it
+    const userData = localStorage.getItem('user');
+    const user = userData ? { id: JSON.parse(userData).id } : null;
+
     if (fullName && phone && email && ageVerified && termsAccepted) {
       try {
         setIsLoading(true);
@@ -134,8 +138,20 @@ const PaymentFormDetail = () => {
           showtimeId: movieInfo.showtimeId,
           totalSeats: movieInfo.selectedSeats.length,
           totalAmount: movieInfo.totalPrice,
-          seatIds: movieInfo.selectedSeats.map(seat => seat.id)
+          seatIds: movieInfo.selectedSeats.map(seat => seat.id),
+          user: user  // Changed from userId to user object
         };
+
+        // Add console.log here to see booking data with user object
+        console.log('Booking Data being sent:', {
+          bookingData,
+          movieInfo: {
+            title: movieInfo?.title,
+            showTime: movieInfo?.showTime,
+            selectedSeats: movieInfo?.selectedSeats,
+            user: user // Log user object for verification
+          }
+        });
 
         const response = await axios.post(
           'http://localhost:8080/api/bookings/create',
@@ -317,38 +333,53 @@ const PaymentFormDetail = () => {
           </div>
         )}
         {activeStep === 3 && (
-          <div className="payment-success-container">
-            <div className="payment-success-content">
-              <img src="/success-icon.png" alt="Success" className="success-icon" />
-              <h2>Thanh toán thành công!</h2>
-              <div className="payment-details">
-                {paymentStatus.details ? (
-                  <>
-                    <p>Mã đặt vé: {paymentStatus.details.bookingNumber}</p>
-                    <p>Rạp: {paymentStatus.details.theaterName}</p>
-                    <p>Phòng: {paymentStatus.details.roomName}</p>
-                    <p>Phim: {paymentStatus.details.movieTitle}</p>
-                    <p>Suất chiếu: {paymentStatus.details.showtime}</p>
-                    <p>Số tiền: {paymentStatus.details.totalAmount.toLocaleString('vi-VN')} VND</p>
-                    <p>Trạng thái: {paymentStatus.details.paymentStatus === 'PAID' ? 'Đã thanh toán' : 'Chưa thanh toán'}</p>
-                  </>
-                ) : (
-                  <>
-                    <p>Mã đơn hàng: {paymentStatus.orderId}</p>
-                    <p>Mã giao dịch: {paymentStatus.transId}</p>
-                    <p>Số tiền: {parseInt(paymentStatus.amount).toLocaleString('vi-VN')} VND</p>
-                  </>
-                )}
+          <div className="payment-status-container">
+            {!paymentStatus.details ? (
+              <div className="payment-loading-content">
+                <div className="spinner"></div>
+                <h2>Đang xử lý thanh toán...</h2>
+                <p>Vui lòng đợi trong giây lát</p>
               </div>
-              <div className="payment-actions">
+            ) : paymentStatus.details.paymentStatus === 'PENDING' ? (
+              <div className="payment-pending-content">
+                <div className="spinner"></div>
+                <h2>Đang chờ thanh toán...</h2>
+              </div>
+            ) : paymentStatus.details.paymentStatus === 'PAID' ? (
+              <div className="payment-success-content">
+                <img src="/success-icon.png" alt="Success" className="success-icon" />
+                <h2>Thanh toán thành công!</h2>
+                <div className="payment-details">
+                  <p>Mã đặt vé: {paymentStatus.details.bookingNumber}</p>
+                  <p>Rạp: {paymentStatus.details.theaterName}</p>
+                  <p>Phòng: {paymentStatus.details.roomName}</p>
+                  <p>Phim: {paymentStatus.details.movieTitle}</p>
+                  <p>Suất chiếu: {paymentStatus.details.showtime}</p>
+                  <p>Số tiền: {paymentStatus.details.totalAmount.toLocaleString('vi-VN')} VND</p>
+                  <p>Trạng thái: Đã thanh toán</p>
+                </div>
+                <div className="payment-actions">
+                  <button 
+                    onClick={() => navigate('/')} 
+                    className="back-to-home"
+                  >
+                    Về trang chủ
+                  </button>
+                </div>
+              </div>
+            ) : (
+              <div className="payment-failed-content">
+                <img src="/failed-icon.png" alt="Failed" className="failed-icon" />
+                <h2>Thanh toán thất bại</h2>
+                <p>Vui lòng thử lại sau</p>
                 <button 
-                  onClick={() => navigate('/')} 
-                  className="back-to-home"
+                  onClick={() => setActiveStep(2)} 
+                  className="try-again-button"
                 >
-                  Về trang chủ
+                  Thử lại
                 </button>
               </div>
-            </div>
+            )}
           </div>
         )}
         {activeStep !== 3 && (

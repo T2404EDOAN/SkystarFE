@@ -151,7 +151,7 @@ const MovieDetail = () => {
   
     try {
       if (selectedShowtimeId) {
-        const url = `http://localhost:8080/api/seats/${selectedShowtimeId}/hold`;
+        const url = `http://35.175.173.235:8080/api/seats/${selectedShowtimeId}/hold`;
         const requestData = {
           seatId: seat.id,
           // Add userId if user is logged in
