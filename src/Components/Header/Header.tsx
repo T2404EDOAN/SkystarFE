@@ -130,12 +130,14 @@ const Header: React.FC = () => {
           <nav className="secondary-nav-content">
             <div className="secondary-nav-item">
               {/* Dropdown Chọn Rạp */}
-              <Dropdown menu={{ items }} placement="bottom">
+              
                 <div className="dropdown-content">
+                  <Link to="/books-ticket" className="dropdown-item">
                   <UserOutlined className="dropdown-icon" />
                   <span>Chọn rạp</span>
+                  </Link>
                 </div>
-              </Dropdown>
+             
 
               <Link to="/showtimes" className="secondary-nav-link">
                 Lịch chiếu

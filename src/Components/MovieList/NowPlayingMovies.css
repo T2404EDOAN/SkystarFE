@@ -80,12 +80,13 @@
 
 .nowplaying-wrapper {
   display: flex;
-  gap: 20px; /* Khoảng cách cố định giữa các phim */
+  width: 1200px;
+  gap: 10px; 
   height: 566px;
   transform: translateX(0);
   transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1);
   will-change: transform;
-  width: calc(100% + 20px); /* Điều chỉnh width để tính cả gap */
+  width: calc(100% + 20px); 
 }
 
 .nowplaying-card {
