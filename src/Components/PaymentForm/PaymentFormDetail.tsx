@@ -87,7 +87,7 @@ const PaymentFormDetail = () => {
 
       const checkPaymentStatus = async () => {
         try {
-          const response = await axios.get(`http://localhost:8080/api/payments/status?orderId=${orderId}`);
+          const response = await axios.get(`http://35.175.173.235:8080/api/payments/status?orderId=${orderId}`);
           setPaymentStatus(prev => ({
             ...prev,
             details: response.data
@@ -154,7 +154,7 @@ const PaymentFormDetail = () => {
         });
 
         const response = await axios.post(
-          'http://localhost:8080/api/bookings/create',
+          'http://35.175.173.235:8080/api/bookings/create',
           bookingData
         );
 
@@ -195,7 +195,7 @@ const PaymentFormDetail = () => {
       });
 
       const response = await axios.post(
-        'http://localhost:8080/api/payments/momo',
+        'http://35.175.173.235:8080/api/payments/momo',
         paymentData
       );
 

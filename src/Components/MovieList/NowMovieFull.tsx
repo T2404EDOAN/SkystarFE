@@ -3,9 +3,9 @@ import { Link } from "react-router-dom";
 import Header from "../Header/Header";
 import TrailerModal from "../Trailer/TrailerModal";
 import axios from "axios";
-import './NowPlayingMovies.css';
+import './NowMovieFull.css';
 
-const NowPlayingMovies: React.FC = () => {
+const NowMovieFull: React.FC = () => {
   interface Movie {
     id: number;
     title: string;
@@ -33,42 +33,11 @@ const NowPlayingMovies: React.FC = () => {
   }
 
   const [movies, setMovies] = useState<Movie[]>([]);
-  const [currentPage, setCurrentPage] = useState(0);
-  const moviesPerPage = 4;
   const [trailerUrl, setTrailerUrl] = useState<string | null>(null);
   const [isMobile, setIsMobile] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [moviesPerRow, setMoviesPerRow] = useState(4);
-  const [isAnimating, setIsAnimating] = useState(false);
-  const [touchStart, setTouchStart] = useState(0);
-  const [touchEnd, setTouchEnd] = useState(0);
-
-  // Minimum swipe distance required (in px)
-  const minSwipeDistance = 50;
-
-  const handleTouchStart = (e: React.TouchEvent) => {
-    setTouchStart(e.touches[0].clientX);
-  };
-
-  const handleTouchMove = (e: React.TouchEvent) => {
-    setTouchEnd(e.touches[0].clientX);
-  };
-
-  const handleTouchEnd = () => {
-    const swipeDistance = touchStart - touchEnd;
-
-    if (Math.abs(swipeDistance) > 50) {
-      // Minimum swipe distance threshold
-      if (swipeDistance > 0 && currentPage < totalPages - 1) {
-        // Swiped left
-        handleNextPage();
-      } else if (swipeDistance < 0 && currentPage > 0) {
-        // Swiped right
-        handlePrevPage();
-      }
-    }
-  };
 
   const handleTrailerClick = (url: string) => {
     setTrailerUrl(url);
@@ -98,7 +67,7 @@ const NowPlayingMovies: React.FC = () => {
             },
           }
         );
-
+  
         const moviesData = Array.isArray(response.data)
           ? response.data
           : response.data.content || [];
@@ -109,10 +78,9 @@ const NowPlayingMovies: React.FC = () => {
             ...movie,
             trailerUrl: movie.trailerUrl || null,
           }));
-
+  
         setMovies(upcomingMovies);
       } catch (err) {
-        
         if (axios.isAxiosError(err)) {
           setError(
             err.response?.data?.message ||
@@ -125,25 +93,14 @@ const NowPlayingMovies: React.FC = () => {
         setIsLoading(false);
       }
     };
-
+  
     fetchMovies();
   }, []);
 
   useEffect(() => {
     const handleResize = () => {
       setIsMobile(window.innerWidth <= 768);
-      if (window.innerWidth < 640) {
-        // sm
-        setMoviesPerRow(1);
-      } else if (window.innerWidth < 768) {
-        // md
-        setMoviesPerRow(2);
-      } else if (window.innerWidth < 1024) {
-        // lg
-        setMoviesPerRow(3);
-      } else {
-        setMoviesPerRow(4);
-      }
+      setMoviesPerRow(4); // Always set to 4 movies per row
     };
 
     handleResize();
@@ -152,51 +109,18 @@ const NowPlayingMovies: React.FC = () => {
     return () => window.removeEventListener("resize", handleResize);
   }, []);
 
-  useEffect(() => {
-    setCurrentPage(0); // Reset to first page when layout changes
-  }, [moviesPerRow]);
-
-  const handleNextPage = () => {
-    const nextPage = currentPage + 1;
-    const maxPage = Math.ceil(movies.length / moviesPerPage) - 1;
-    if (nextPage <= maxPage && !isAnimating) {
-      setIsAnimating(true);
-      setCurrentPage(nextPage);
-      setTimeout(() => setIsAnimating(false), 500);
-    }
-  };
-
-  const handlePrevPage = () => {
-    if (currentPage > 0 && !isAnimating) {
-      setIsAnimating(true);
-      setCurrentPage(currentPage - 1);
-      setTimeout(() => setIsAnimating(false), 500);
-    }
-  };
-
-  const displayedMovies = movies.slice(
-    currentPage * moviesPerPage,
-    (currentPage + 1) * moviesPerPage
-  );
-
-  const totalPages = Math.ceil(movies.length / moviesPerPage);
-
-  const handleDotClick = (index: number) => {
-    setCurrentPage(index);
-  };
-
   if (isLoading) {
     return (
-      <div className="nowplaying-loading-spinner">
-        <div className="nowplaying-loading-spinner-inner"></div>
+      <div className="nowmoviefull-loading-spinner">
+        <div className="nowmoviefull-loading-spinner-inner"></div>
       </div>
     );
   }
 
   if (error) {
     return (
-      <div className="nowplaying-error-container">
-        <svg className="nowplaying-error-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+      <div className="nowmoviefull-error-container">
+        <svg className="nowmoviefull-error-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
           <path
             strokeLinecap="round"
             strokeLinejoin="round"
@@ -204,8 +128,8 @@ const NowPlayingMovies: React.FC = () => {
             d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"
           />
         </svg>
-        <p className="nowplaying-error-message">{error}</p>
-        <button onClick={() => window.location.reload()} className="nowplaying-retry-button">
+        <p className="nowmoviefull-error-message">{error}</p>
+        <button onClick={() => window.location.reload()} className="nowmoviefull-retry-button">
           Thử lại
         </button>
       </div>
@@ -213,42 +137,33 @@ const NowPlayingMovies: React.FC = () => {
   }
 
   return (
-    <div className="nowplaying-container">
+    <div className="nowmoviefull-container">
       <Header isOverlayActive={!!trailerUrl} />
-      <h2 className="nowplaying-title1" style={{ fontFamily: "Anton, sans-serif" }}>
+      <h2 className="nowmoviefull-title1" style={{ fontFamily: "Anton, sans-serif" }}>
         PHIM ĐANG CHIẾU
       </h2>
       {trailerUrl && (
         <TrailerModal trailerUrl={trailerUrl} onClose={closeTrailer} />
       )}
-      <div className="nowplaying-slider">
-        <div className="nowplaying-wrapper"
-          style={{
-            transform: `translateX(-${currentPage * 100}%)`,
-            willChange: "transform",
-            touchAction: "pan-x",
-          }}
-          onTouchStart={handleTouchStart}
-          onTouchMove={handleTouchMove}
-          onTouchEnd={handleTouchEnd}
-        >
+      <div className="nowmoviefull-slider">
+        <div className="nowmoviefull-wrapper" style={{ gridTemplateColumns: `repeat(${moviesPerRow}, 1fr)` }}>
           {movies.map((movie, index) => (
-            <div key={index} className="nowplaying-card">
+            <div key={index} className="nowmoviefull-card">
               <div className="cursor-pointer">
-                <div className="nowplaying-poster-container">
+                <div className="nowmoviefull-poster-container">
                   <img
                     src={movie.posterUrl || "/path/to/default-poster.jpg"}
                     alt={movie.title}
-                    className="nowplaying-poster"
+                    className="nowmoviefull-poster"
                   />
-                  <div className="nowplaying-overlay">
-                    <div className="nowplaying-info-container">
+                  <div className="nowmoviefull-overlay">
+                    <div className="nowmoviefull-info-container">
                       <Link to={`/movie-detail/${movie.id}`}>
-                        <h3 className="nowplaying-info-title hover:text-orange-500">{movie.title}</h3>
+                        <h3 className="nowmoviefull-info-title hover:text-orange-500">{movie.title}</h3>
                       </Link>
-                      <p className="nowplaying-info-genres">
+                      <p className="nowmoviefull-info-genres">
                         <svg
-                          className="nowplaying-info-icon"
+                          className="nowmoviefull-info-icon"
                           aria-hidden="true"
                           xmlns="http://www.w3.org/2000/svg"
                           width="24"
@@ -266,9 +181,9 @@ const NowPlayingMovies: React.FC = () => {
                         </svg>{" "}
                         {movie.genres || "Chưa cập nhật thể loại"}
                       </p>
-                      <p className="nowplaying-info-duration">
+                      <p className="nowmoviefull-info-duration">
                         <svg
-                          className="nowplaying-info-icon"
+                          className="nowmoviefull-info-icon"
                           aria-hidden="true"
                           xmlns="http://www.w3.org/2000/svg"
                           width="24"
@@ -286,9 +201,9 @@ const NowPlayingMovies: React.FC = () => {
                         </svg>
                         {movie.duration} phút
                       </p>
-                      <p className="nowplaying-info-language">
+                      <p className="nowmoviefull-info-language">
                         <svg
-                          className="nowplaying-info-icon"
+                          className="nowmoviefull-info-icon"
                           aria-hidden="true"
                           xmlns="http://www.w3.org/2000/svg"
                           width="24"
@@ -305,9 +220,9 @@ const NowPlayingMovies: React.FC = () => {
                         </svg>
                         {movie.language}
                       </p>
-                      <p className="nowplaying-info-subtitles">
+                      <p className="nowmoviefull-info-subtitles">
                         <svg
-                          className="nowplaying-info-icon"
+                          className="nowmoviefull-info-icon"
                           aria-hidden="true"
                           xmlns="http://www.w3.org/2000/svg"
                           width="24"
@@ -329,18 +244,18 @@ const NowPlayingMovies: React.FC = () => {
                   </div>
                 </div>
               </div>
-              <div className="nowplaying-title-wrapper">
+              <div className="nowmoviefull-title-wrapper">
                 <Link to={`/movie-detail/${movie.id}`}>
-                  <h3 className="nowplaying-info-title hover:text-orange-500 cursor-pointer">{movie.title}</h3>
+                  <h3 className="nowmoviefull-info-title hover:text-orange-500 cursor-pointer">{movie.title}</h3>
                 </Link>
               </div>
-              <div className="nowplaying-actions">
-                <div className="nowplaying-trailer-button" onClick={() => handleTrailerClick(movie.trailerUrl || "")}>
+              <div className="nowmoviefull-actions">
+                <div className="nowmoviefull-trailer-button" onClick={() => handleTrailerClick(movie.trailerUrl || "")}>
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
                     width="24"
                     height="24"
-                    fill="#FFA500" // Changed to orange color
+                    fill="#FFA500"
                     className="bi bi-play-circle dark:text-white mr-2"
                     viewBox="0 0 16 16"
                   >
@@ -351,87 +266,17 @@ const NowPlayingMovies: React.FC = () => {
                     Xem Trailer
                   </span>
                 </div>
-                <Link to={`/movie-detail/${movie.id}`} className="nowplaying-book-ticket-button">
-                  <span className="nowplaying-book-ticket-text">ĐẶT VÉ</span>
-                  <div className="nowplaying-button-gradient" />
+                <Link to={`/movie-detail/${movie.id}`} className="nowmoviefull-book-ticket-button">
+                  <span className="nowmoviefull-book-ticket-text">ĐẶT VÉ</span>
+                  <div className="nowmoviefull-button-gradient" />
                 </Link>
               </div>
             </div>
           ))}
         </div>
       </div>
-      <div className="nowplaying-navigation-container">
-        <button
-          onClick={handlePrevPage}
-          disabled={currentPage === 0 || isAnimating}
-          className={`nowplaying-navigation-button nowplaying-navigation-button-left ${
-            currentPage === 0 || isAnimating ? "disabled" : ""
-          }`}
-        >
-          <svg
-            className="w-6 h-6 text-white"
-            aria-hidden="true"
-            xmlns="http://www.w3.org/2000/svg"
-            width="24"
-            height="24"
-            fill="none"
-            viewBox="0 0 24 24"
-          >
-            <path
-              stroke="currentColor"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              strokeWidth="2"
-              d="m15 19-7-7 7-7"
-            />
-          </svg>
-        </button>
-        <button
-          onClick={handleNextPage}
-          disabled={(currentPage + 1) * moviesPerPage >= movies.length || isAnimating}
-          className={`nowplaying-navigation-button nowplaying-navigation-button-right ${
-            (currentPage + 1) * moviesPerPage >= movies.length || isAnimating ? "disabled" : ""
-          }`}
-        >
-          <svg
-            className="w-6 h-6 text-white"
-            aria-hidden="true"
-            xmlns="http://www.w3.org/2000/svg"
-            width="24"
-            height="24"
-            fill="none"
-            viewBox="0 0 24 24"
-          >
-            <path
-              stroke="currentColor"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              strokeWidth="2"
-              d="m9 5 7 7-7 7"
-            />
-          </svg>
-        </button>
-      </div>
-      <div className="nowplaying-pagination-dots">
-        {Array.from({ length: totalPages }).map((_, index) => (
-          <button
-            key={index}
-            onClick={() => handleDotClick(index)}
-            className={`nowplaying-pagination-dot ${currentPage === index ? "active" : ""}`}
-            aria-label={`Go to slide ${index + 1}`}
-          />
-        ))}
-      </div>
-      <button className="nowplaying-see-more-button">
-        <span className="nowplaying-see-more-text">
-          <Link to="/movie/showing" className="nowplaying-see-more-link">
-            XEM THÊM
-          </Link>
-        </span>
-        <div className="nowplaying-see-more-gradient" />
-      </button>
     </div>
   );
 };
 
-export default NowPlayingMovies;
+export default NowMovieFull;

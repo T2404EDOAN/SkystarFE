@@ -5,7 +5,7 @@ import TrailerModal from "../Trailer/TrailerModal";
 import axios from "axios";
 import './NowPlayingMovies.css';
 
-const CommingSoonMovies: React.FC = () => {
+const ComingSoonMovies: React.FC = () => {
   interface Movie {
     id: number;
     title: string;
@@ -102,9 +102,9 @@ const CommingSoonMovies: React.FC = () => {
         const moviesData = Array.isArray(response.data)
           ? response.data
           : response.data.content || [];
-        
+       
         const upcomingMovies = moviesData
-          .filter((movie: Movie) => movie && movie.status === "Đang chiếu")
+          .filter((movie: Movie) => movie && movie.status === "Sắp chiếu")
           .map((movie: Movie) => ({
             ...movie,
             trailerUrl: movie.trailerUrl || null,
@@ -112,7 +112,7 @@ const CommingSoonMovies: React.FC = () => {
 
         setMovies(upcomingMovies);
       } catch (err) {
-      
+        
         if (axios.isAxiosError(err)) {
           setError(
             err.response?.data?.message ||
@@ -187,16 +187,16 @@ const CommingSoonMovies: React.FC = () => {
 
   if (isLoading) {
     return (
-      <div className="loading-spinner">
-        <div className="loading-spinner-inner"></div>
+      <div className="nowplaying-loading-spinner">
+        <div className="nowplaying-loading-spinner-inner"></div>
       </div>
     );
   }
 
   if (error) {
     return (
-      <div className="error-container">
-        <svg className="error-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+      <div className="nowplaying-error-container">
+        <svg className="nowplaying-error-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
           <path
             strokeLinecap="round"
             strokeLinejoin="round"
@@ -204,8 +204,8 @@ const CommingSoonMovies: React.FC = () => {
             d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"
           />
         </svg>
-        <p className="error-message">{error}</p>
-        <button onClick={() => window.location.reload()} className="retry-button">
+        <p className="nowplaying-error-message">{error}</p>
+        <button onClick={() => window.location.reload()} className="nowplaying-retry-button">
           Thử lại
         </button>
       </div>
@@ -213,16 +213,16 @@ const CommingSoonMovies: React.FC = () => {
   }
 
   return (
-    <div className="movie-container">
+    <div className="nowplaying-container">
       <Header isOverlayActive={!!trailerUrl} />
-      <h2 className="movie-title" style={{ fontFamily: "Anton, sans-serif" }}>
-        PHIM SẮP CHIẾU
+      <h2 className="nowplaying-title1" style={{ fontFamily: "Anton, sans-serif" }}>
+        PHIM ĐANG CHIẾU
       </h2>
       {trailerUrl && (
         <TrailerModal trailerUrl={trailerUrl} onClose={closeTrailer} />
       )}
-      <div className="movies-slider">
-        <div className="movies-wrapper"
+      <div className="nowplaying-slider">
+        <div className="nowplaying-wrapper"
           style={{
             transform: `translateX(-${currentPage * 100}%)`,
             willChange: "transform",
@@ -233,20 +233,22 @@ const CommingSoonMovies: React.FC = () => {
           onTouchEnd={handleTouchEnd}
         >
           {movies.map((movie, index) => (
-            <div key={index} className="movie-card">
-              <Link to={`/movie-detail/${movie.id}`} className="cursor-pointer">
-                <div className="poster-container">
+            <div key={index} className="nowplaying-card">
+              <div className="cursor-pointer">
+                <div className="nowplaying-poster-container">
                   <img
                     src={movie.posterUrl || "/path/to/default-poster.jpg"}
                     alt={movie.title}
-                    className="movie-poster"
+                    className="nowplaying-poster"
                   />
-                  <div className="movie-overlay">
-                    <div className="movie-info-container">
-                      <h3 className="movie-info-title">{movie.title}</h3>
-                      <p className="movie-info-genres">
+                  <div className="nowplaying-overlay">
+                    <div className="nowplaying-info-container">
+                      <Link to={`/movie-detail/${movie.id}`}>
+                        <h3 className="nowplaying-info-title hover:text-orange-500">{movie.title}</h3>
+                      </Link>
+                      <p className="nowplaying-info-genres">
                         <svg
-                          className="movie-info-icon"
+                          className="nowplaying-info-icon"
                           aria-hidden="true"
                           xmlns="http://www.w3.org/2000/svg"
                           width="24"
@@ -264,9 +266,9 @@ const CommingSoonMovies: React.FC = () => {
                         </svg>{" "}
                         {movie.genres || "Chưa cập nhật thể loại"}
                       </p>
-                      <p className="movie-info-duration">
+                      <p className="nowplaying-info-duration">
                         <svg
-                          className="movie-info-icon"
+                          className="nowplaying-info-icon"
                           aria-hidden="true"
                           xmlns="http://www.w3.org/2000/svg"
                           width="24"
@@ -284,9 +286,9 @@ const CommingSoonMovies: React.FC = () => {
                         </svg>
                         {movie.duration} phút
                       </p>
-                      <p className="movie-info-language">
+                      <p className="nowplaying-info-language">
                         <svg
-                          className="movie-info-icon"
+                          className="nowplaying-info-icon"
                           aria-hidden="true"
                           xmlns="http://www.w3.org/2000/svg"
                           width="24"
@@ -303,9 +305,9 @@ const CommingSoonMovies: React.FC = () => {
                         </svg>
                         {movie.language}
                       </p>
-                      <p className="movie-info-subtitles">
+                      <p className="nowplaying-info-subtitles">
                         <svg
-                          className="movie-info-icon"
+                          className="nowplaying-info-icon"
                           aria-hidden="true"
                           xmlns="http://www.w3.org/2000/svg"
                           width="24"
@@ -326,41 +328,43 @@ const CommingSoonMovies: React.FC = () => {
                     </div>
                   </div>
                 </div>
-              </Link>
-              <div className="movie-title-wrapper">
-                <h3 className="movie-info-title">{movie.title}</h3>
               </div>
-              <div className="movie-actions">
-                <div className="trailer-button" onClick={() => handleTrailerClick(movie.trailerUrl || "")}>
+              <div className="nowplaying-title-wrapper">
+                <Link to={`/movie-detail/${movie.id}`}>
+                  <h3 className="nowplaying-info-title hover:text-orange-500 cursor-pointer">{movie.title}</h3>
+                </Link>
+              </div>
+              <div className="nowplaying-actions">
+                <div className="nowplaying-trailer-button" onClick={() => handleTrailerClick(movie.trailerUrl || "")}>
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
                     width="24"
                     height="24"
-                    fill="currentColor"
+                    fill="#FFA500" // Changed to orange color
                     className="bi bi-play-circle dark:text-white mr-2"
                     viewBox="0 0 16 16"
                   >
                     <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14m0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16" />
                     <path d="M6.271 5.055a.5.5 0 0 1 .52.038l3.5 2.5a.5.5 0 0 1 0 .814l-3.5 2.5A.5.5 0 0 1 6 10.5v-5a.5.5 0 0 1 .271-.445" />
                   </svg>
-                  <span style={{ marginLeft: "0.5rem" }}>
+                  <span style={{ marginLeft: "0.5rem", fontSize: "14px" }}>
                     Xem Trailer
                   </span>
                 </div>
-                <Link to={`/movie-detail/${movie.id}`} className="book-ticket-button">
-                  <span className="book-ticket-text">ĐẶT VÉ</span>
-                  <div className="button-gradient" />
+                <Link to={`/movie-detail/${movie.id}`} className="nowplaying-book-ticket-button">
+                  <span className="nowplaying-book-ticket-text">ĐẶT VÉ</span>
+                  <div className="nowplaying-button-gradient" />
                 </Link>
               </div>
             </div>
           ))}
         </div>
       </div>
-      <div className="navigation-container">
+      <div className="nowplaying-navigation-container">
         <button
           onClick={handlePrevPage}
           disabled={currentPage === 0 || isAnimating}
-          className={`navigation-button navigation-button-left ${
+          className={`nowplaying-navigation-button nowplaying-navigation-button-left ${
             currentPage === 0 || isAnimating ? "disabled" : ""
           }`}
         >
@@ -385,7 +389,7 @@ const CommingSoonMovies: React.FC = () => {
         <button
           onClick={handleNextPage}
           disabled={(currentPage + 1) * moviesPerPage >= movies.length || isAnimating}
-          className={`navigation-button navigation-button-right ${
+          className={`nowplaying-navigation-button nowplaying-navigation-button-right ${
             (currentPage + 1) * moviesPerPage >= movies.length || isAnimating ? "disabled" : ""
           }`}
         >
@@ -408,26 +412,26 @@ const CommingSoonMovies: React.FC = () => {
           </svg>
         </button>
       </div>
-      <div className="pagination-dots">
+      <div className="nowplaying-pagination-dots">
         {Array.from({ length: totalPages }).map((_, index) => (
           <button
             key={index}
             onClick={() => handleDotClick(index)}
-            className={`pagination-dot ${currentPage === index ? "active" : ""}`}
+            className={`nowplaying-pagination-dot ${currentPage === index ? "active" : ""}`}
             aria-label={`Go to slide ${index + 1}`}
           />
         ))}
       </div>
-      <button className="see-more-button">
-        <span className="see-more-text">
-          <Link to="/Nowmovies-full" className="see-more-link">
+      <button className="nowplaying-see-more-button">
+        <span className="nowplaying-see-more-text">
+          <Link to="/movie/showing" className="nowplaying-see-more-link">
             XEM THÊM
           </Link>
         </span>
-        <div className="see-more-gradient" />
+        <div className="nowplaying-see-more-gradient" />
       </button>
     </div>
   );
 };
 
-export default CommingSoonMovies;
+export default ComingSoonMovies;

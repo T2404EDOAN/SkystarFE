@@ -30,6 +30,8 @@ import PaymentFormDetail from "./Components/PaymentForm/PaymentFormDetail";
 import Promotion from "./Components/Promotions/Promotions";
 import ScrollToTop from './components/ScrollToTop';
 import PopcornDrink from "./Components/PopcornDrink/PopcornDrink";
+import NowMovieFull from "./Components/MovieList/NowMovieFull";
+import ComingMovieFull from "./Components/MovieList/ComingMovieFull";
 
 // ...other imports
 
@@ -62,6 +64,8 @@ function App() {
             <Route path="/thue-su-kien/cinema" element={<Cinema />} />
             <Route path="/payment" element={<PaymentFormDetail />} />
             <Route path="/popcorn-drink" element={<PopcornDrink />} />
+            <Route path="/movie/showing" element={<NowMovieFull/>} />
+            <Route path="/movie/comings" element={<ComingMovieFull/>} />
           </Routes>
         </MainLayout>
       </BrowserRouter>

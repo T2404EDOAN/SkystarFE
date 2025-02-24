@@ -1,0 +1,484 @@
+.nowmoviefull-container {
+    position: relative;
+    width: 100%;
+    max-width: 1200px;
+    min-height: 100vh;
+    margin: 2.5rem auto 0;
+    color: white;
+    border-radius: 0.5rem;
+}
+
+.nowmoviefull-title1 {
+    font-size: 40px;
+    margin-top: 40px;
+    margin-bottom: 40px;
+    font-family: "Anton", sans-serif;
+    text-align: center;
+}
+
+.nowmoviefull-loading-spinner {
+    width: 100%;
+    height: 50vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.nowmoviefull-loading-spinner-inner {
+    animation: spin 1s linear infinite;
+    border-radius: 50%;
+    height: 4rem;
+    width: 4rem;
+    border-top: 2px solid #f3ea28;
+    border-bottom: 2px solid #f3ea28;
+}
+
+.nowmoviefull-error-container {
+    width: 100%;
+    height: 50vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    color: white;
+}
+
+.nowmoviefull-error-icon {
+    width: 4rem;
+    height: 4rem;
+    color: #f3ea28;
+    margin-bottom: 1rem;
+}
+
+.nowmoviefull-error-message {
+    font-size: 1.25rem;
+    text-align: center;
+}
+
+.nowmoviefull-retry-button {
+    margin-top: 1rem;
+    padding: 0.75rem 1.5rem;
+    background-color: #f3ea28;
+    color: black;
+    border-radius: 0.375rem;
+    transition: opacity 0.3s;
+}
+
+.nowmoviefull-retry-button:hover {
+    opacity: 0.9;
+}
+
+.nowmoviefull-slider {
+    position: relative;
+    width: 100%;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding-bottom: 2rem;
+}
+
+.nowmoviefull-wrapper {
+    display: grid;
+    gap: 20px;
+    justify-content: flex-start;
+    width: 100%;
+    height: auto;
+    min-height: 400px;
+}
+
+.nowmoviefull-card {
+    width: 100%;
+    margin-bottom: 2rem;
+    display: flex;
+    flex-direction: column;
+}
+
+.nowmoviefull-poster-container {
+    position: relative;
+    width: 100%;
+    height: 423px;
+    cursor: pointer;
+}
+
+.nowmoviefull-poster {
+    width: 100%;
+    height: 423px;
+    object-fit: cover;
+    border-radius: 0.2rem;
+    border: 0 solid #edf2f7;
+}
+
+.nowmoviefull-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.8);
+    opacity: 0;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 1rem;
+    pointer-events: auto;
+}
+
+.nowmoviefull-card:hover .nowmoviefull-overlay {
+    opacity: 1;
+}
+
+.nowmoviefull-info-container {
+    width: 285px;
+    height: auto;
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    left: 0;
+    transform: none;
+    padding: 1rem;
+    pointer-events: auto;
+}
+
+.nowmoviefull-info-title {
+    font-size: 16px;
+    padding: 0 25px;
+    padding-top: 25px;
+    margin-bottom: 25px;
+    color: white;
+    font-weight: bold;
+    text-transform: uppercase;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    line-height: 1.4;
+    height: 45px;
+    white-space: normal;
+    text-overflow: ellipsis;
+    transition: color 0.3s ease;
+}
+
+.nowmoviefull-card:hover .nowmoviefull-info-title {
+    color: #f3ea28;
+}
+
+.nowmoviefull-info-genres,
+.nowmoviefull-info-duration,
+.nowmoviefull-info-language,
+.nowmoviefull-info-subtitles {
+    padding: 0 25px;
+    margin-bottom: 15px;
+    color: white;
+    font-size: 0.875rem;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.nowmoviefull-info-icon {
+    width: 1.25rem;
+    height: 1.25rem;
+    color: #f3ea28;
+    flex-shrink: 0;
+}
+
+.nowmoviefull-title-wrapper {
+    margin: 0.5rem 0;
+    height: 48px;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.nowmoviefull-title-wrapper .nowmoviefull-info-title {
+    font-size: 18px;
+    color: white;
+    font-weight: bold;
+    text-transform: uppercase;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    text-align: center;
+    width: 100%;
+}
+
+.nowmoviefull-actions {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: auto;
+    padding: 0.5rem 0;
+    gap: 0.5rem;
+    height: 40px;
+}
+
+.nowmoviefull-trailer-button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+}
+
+.nowmoviefull-trailer-button:hover {
+    cursor: pointer;
+}
+
+.nowmoviefull-trailer-button span {
+    position: relative;
+}
+
+.nowmoviefull-trailer-button span::after {
+    content: '';
+    position: absolute;
+    width: 100%;
+    height: 1px;
+    background-color: white;
+    left: 0;
+    bottom: -4px;
+    transform: scaleX(1);
+    transition: transform 0.3s;
+}
+
+.nowmoviefull-book-ticket-button {
+    background-color: #f3ea28;
+    color: black;
+    height: 40px;
+    width: 100%;
+    border-radius: 0.375rem;
+    overflow: hidden;
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: "Anton", sans-serif;
+}
+
+.nowmoviefull-book-ticket-text {
+    position: relative;
+    font-family: "Anton", sans-serif;
+    transition: color 0.3s;
+    z-index: 1;
+}
+
+.nowmoviefull-book-ticket-button:hover .nowmoviefull-book-ticket-text {
+    color: white !important;
+}
+
+.nowmoviefull-button-gradient {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(to right, #663399, #3366cc);
+    transform: translateX(-100%);
+    transition: transform 0.3s ease-out;
+    z-index: 0;
+}
+
+.nowmoviefull-book-ticket-button:hover .nowmoviefull-button-gradient {
+    transform: translateX(0);
+}
+
+.nowmoviefull-book-ticket-button:hover .nowmoviefull-book-ticket-text {
+    color: white;
+}
+
+.nowmoviefull-navigation-button {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 2.5rem;
+    height: 2.5rem;
+    border-radius: 9999px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: aliceblue;
+    transition: background-color 0.3s, color 0.3s;
+    z-index: 9;
+}
+
+.nowmoviefull-navigation-button-left {
+    left: -0.75rem;
+}
+
+.nowmoviefull-navigation-button-right {
+    right: -0.75rem;
+}
+
+.nowmoviefull-navigation-button.disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+.nowmoviefull-navigation-button:hover:not(.disabled) {
+    background-color: #f3ea28;
+    color: black;
+}
+
+.nowmoviefull-pagination-dots {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 4px;
+    margin-top: 20px;
+    padding: 10px 0;
+}
+
+.nowmoviefull-pagination-dot {
+    width: 15px;
+    height: 15px;
+    padding: 0;
+    border: none;
+    border-radius: 50%;
+    background-color: rgba(255, 255, 255, 0.3);
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    cursor: pointer;
+}
+
+.nowmoviefull-pagination-dot.active {
+    background-color: #f3ea28;
+    transform: scale(1.2);
+    box-shadow: 0 0 10px rgba(243, 234, 40, 0.4);
+}
+
+.nowmoviefull-pagination-dot:not(.active):hover {
+    background-color: rgba(255, 255, 255, 0.5);
+    transform: scale(1.1);
+}
+
+.nowmoviefull-see-more-button {
+    position: relative;
+    border: 1px solid #f3ea28;
+    color: #f3ea28;
+    width: 100%;
+    max-width: 234px;
+    height: 40px;
+    margin-top: 1rem;
+    margin-left: auto;
+    margin-right: auto;
+    border-radius: 0.375rem;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: "Anton", sans-serif;
+    background: transparent;
+}
+
+.nowmoviefull-see-more-link {
+    color: #f3ea28;
+    position: relative;
+    z-index: 1;
+    transition: color 0.3s;
+}
+
+.nowmoviefull-see-more-text {
+    position: relative;
+    transition: color 0.3s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    background: transparent;
+    z-index: 1;
+}
+
+.nowmoviefull-see-more-button:hover .nowmoviefull-see-more-text {
+    color: white !important;
+}
+
+.nowmoviefull-see-more-button:hover .nowmoviefull-see-more-link {
+    color: white !important;
+}
+
+.nowmoviefull-see-more-gradient {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(to right, rgba(255, 109, 0, 0.9), rgba(255, 193, 7, 0.9));
+    transform: translateX(-100%);
+    transition: transform 0.3s ease-out;
+    backdrop-filter: blur(5px);
+    z-index: 0;
+}
+
+.nowmoviefull-see-more-button:hover .nowmoviefull-see-more-gradient {
+    transform: translateX(0);
+}
+
+.nowmoviefull-see-more-button:hover .nowmoviefull-see-more-text {
+    color: white;
+}
+
+.nowmoviefull-navigation-container {
+    display: none;
+    position: absolute;
+    inset-y: 0;
+    left: 0;
+    right: 0;
+    align-items: center;
+    height: 50%;
+    top: 15%;
+}
+
+.nowmoviefull-arrow-icon {
+    width: 24px;
+    height: 24px;
+    fill: white;
+}
+
+.nowmoviefull-navigation-icon {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 2rem;
+    height: 2rem;
+    color: white;
+    cursor: pointer;
+    transition: color 0.3s;
+}
+
+.nowmoviefull-navigation-icon-left {
+    left: 1rem;
+}
+
+.nowmoviefull-navigation-icon-right {
+    right: 1rem;
+}
+
+.nowmoviefull-navigation-icon.disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+.nowmoviefull-navigation-icon:hover:not(.disabled) {
+    color: #f3ea28;
+}
+
+@keyframes spin {
+    from {
+        transform: rotate(0deg);
+    }
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+@media (min-width: 768px) {
+    .nowmoviefull-container {
+        height: auto;
+        min-height: 787px;
+        margin-top: 5rem;
+    }
+
+    .nowmoviefull-title {
+        font-size: 40px;
+    }
+
+    .nowmoviefull-book-ticket-button {
+        width: 150px;
+    }
+}
