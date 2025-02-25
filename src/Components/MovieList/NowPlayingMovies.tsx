@@ -233,7 +233,7 @@ const NowPlayingMovies: React.FC = () => {
           onTouchEnd={handleTouchEnd}
         >
           {movies.map((movie, index) => (
-            <div key={index} className="nowplaying-card">
+            <div key={index} className="nowplaying-card" onClick={() => window.location.href = `/movie-detail/${movie.id}`}>
               <div className="cursor-pointer">
                 <div className="nowplaying-poster-container">
                   <img
@@ -244,7 +244,7 @@ const NowPlayingMovies: React.FC = () => {
                   <div className="nowplaying-overlay">
                     <div className="nowplaying-info-container">
                       <Link to={`/movie-detail/${movie.id}`}>
-                        <h3 className="nowplaying-info-title hover:text-orange-500">{movie.title}</h3>
+                        <h3 className="nowplaying-info-title1 hover:text-white">{movie.title}</h3>
                       </Link>
                       <p className="nowplaying-info-genres">
                         <svg
@@ -335,7 +335,7 @@ const NowPlayingMovies: React.FC = () => {
                 </Link>
               </div>
               <div className="nowplaying-actions">
-                <div className="nowplaying-trailer-button" onClick={() => handleTrailerClick(movie.trailerUrl || "")}>
+                <div className="nowplaying-trailer-button" onClick={(e) => { e.stopPropagation(); handleTrailerClick(movie.trailerUrl || ""); }}>
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
                     width="24"
@@ -351,7 +351,7 @@ const NowPlayingMovies: React.FC = () => {
                     Xem Trailer
                   </span>
                 </div>
-                <Link to={`/movie-detail/${movie.id}`} className="nowplaying-book-ticket-button">
+                <Link to={`/movie-detail/${movie.id}`} className="nowplaying-book-ticket-button" onClick={(e) => e.stopPropagation()}>
                   <span className="nowplaying-book-ticket-text">ĐẶT VÉ</span>
                   <div className="nowplaying-button-gradient" />
                 </Link>

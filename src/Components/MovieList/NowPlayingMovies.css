@@ -163,9 +163,25 @@
   text-overflow: ellipsis; 
   transition: color 0.3s ease;
 }
+.nowplaying-info-title1 {
+  font-size: 16px;
+  padding: 0 25px; 
+  padding-top: 25px;
+  margin-bottom: 25px; 
+  color: white;
+  font-weight: 700;
+  text-transform: uppercase;
+  display: -webkit-box;
+  overflow: hidden;
+  line-height: 1.4; 
+  height: 45px; 
+  white-space: normal; 
+  text-overflow: ellipsis; 
+  transition: color 0.3s ease;
+}
 
 .nowplaying-card:hover .nowplaying-info-title {
-  color: #f3ea28; /* Màu vàng khi hover */
+  color: #f3ea28;
 }
 
 .nowplaying-info-genres,
@@ -212,13 +228,13 @@
 
 .nowplaying-actions {
   display: flex;
-  flex-direction: row; /* Đổi thành row để trailer và đặt vé nằm ngang */
+  flex-direction: row; 
   justify-content: space-between;
   align-items: center;
-  margin-top: auto; /* Đẩy xuống dưới cùng trong flex container */
+  margin-top: auto; 
   padding: 0.5rem 0;
   gap: 0.5rem;
-  height: 40px; /* Chiều cao cho phần actions */
+  height: 40px; 
 }
 
 .nowplaying-trailer-button {
@@ -320,8 +336,8 @@ color: aliceblue;
 }
 
 .nowplaying-navigation-button:hover:not(.disabled) {
-  background-color: #f3ea28; /* Change background color to yellow on hover */
-  color: black; /* Change text color to black on hover */
+  background-color: #f3ea28; 
+  color: black; 
 }
 
 .nowplaying-pagination-dots {
