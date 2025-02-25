@@ -5,6 +5,7 @@ import './MovieDetail.css';
 import TrailerModal from '../Trailer/TrailerModal';
 import PaymentTicketForm from '../PaymentForm/PaymentTicketForm';
 import { createPortal } from 'react-dom';
+import PopcornDrink from '../PopcornDrink/PopcornDrink'; // Add this import
 
 const MovieDetail = () => {
   const { movieId } = useParams();
@@ -444,49 +445,54 @@ const MovieDetail = () => {
         </div>
 
         {selectedTime && availableSeats.length > 0 && (
-          <div className="seats-section" ref={seatsRef}>  {/* Add ref here */}
-            <h2 className="cinema-list-title text-center">
-              CHỌN GHẾ - {selectedCinema?.showtimes.find(s => s.time === selectedTime)?.roomName.toUpperCase()}
-            </h2>
+          <>
+            <div className="seats-section" ref={seatsRef}>  {/* Add ref here */}
+              <h2 className="cinema-list-title text-center">
+                CHỌN GHẾ - {selectedCinema?.showtimes.find(s => s.time === selectedTime)?.roomName.toUpperCase()}
+              </h2>
 
-            <div className="screen-container">
-              <div className="screen-wrapper">
-                <img src="https://cinestar.com.vn/assets/images/img-screen.png" alt="Màn hình" className="screen-img" />
-                <div className="screen-text">Màn hình</div>
+              <div className="screen-container">
+                <div className="screen-wrapper">
+                  <img src="https://cinestar.com.vn/assets/images/img-screen.png" alt="Màn hình" className="screen-img" />
+                  <div className="screen-text">Màn hình</div>
+                </div>
+              </div>
+
+              <div className="seat-map">
+                {Object.entries(groupSeatsByRow(availableSeats))
+                  .sort(([rowA], [rowB]) => {
+                    // Ensure COUPLE row is always last
+                    if (rowA === "COUPLE") return 1;
+                    if (rowB === "COUPLE") return -1;
+                    return rowA.localeCompare(rowB);
+                  })
+                  .map(([row, seats]) => (
+                    <div key={row} className="seat-row">
+                      <div className="row-label">{row === "COUPLE" ? "Đôi" : row}</div>
+                      {seats
+                        .sort((a, b) => {
+                          const numA = parseInt(a.seatNumber.slice(1));
+                          const numB = parseInt(b.seatNumber.slice(1));
+                          return numA - numB;
+                        })
+                        .map(renderSeat)}
+                    </div>
+                ))}
+              </div>
+
+              <div className="seat-types">
+                {seatTypes.map((type) => (
+                  <div key={type.type} className="seat-type">
+                    <div className={`seat-example ${type.type}`}></div>
+                    <span className="seat-label">{type.label}</span>
+                  </div>
+                ))}
               </div>
             </div>
 
-            <div className="seat-map">
-              {Object.entries(groupSeatsByRow(availableSeats))
-                .sort(([rowA], [rowB]) => {
-                  // Ensure COUPLE row is always last
-                  if (rowA === "COUPLE") return 1;
-                  if (rowB === "COUPLE") return -1;
-                  return rowA.localeCompare(rowB);
-                })
-                .map(([row, seats]) => (
-                  <div key={row} className="seat-row">
-                    <div className="row-label">{row === "COUPLE" ? "Đôi" : row}</div>
-                    {seats
-                      .sort((a, b) => {
-                        const numA = parseInt(a.seatNumber.slice(1));
-                        const numB = parseInt(b.seatNumber.slice(1));
-                        return numA - numB;
-                      })
-                      .map(renderSeat)}
-                  </div>
-              ))}
-            </div>
-
-            <div className="seat-types">
-              {seatTypes.map((type) => (
-                <div key={type.type} className="seat-type">
-                  <div className={`seat-example ${type.type}`}></div>
-                  <span className="seat-label">{type.label}</span>
-                </div>
-              ))}
-            </div>
-          </div>
+            {/* Add PopcornDrink component here */}
+            <PopcornDrink />
+          </>
         )}
       </div>
 
