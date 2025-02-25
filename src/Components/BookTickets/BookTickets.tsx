@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faTheaterMasks,
@@ -6,10 +6,11 @@ import {
   faFlag,
   faTicketAlt,
 } from "@fortawesome/free-solid-svg-icons";
+import axios from "axios";
 import { Tabs } from "antd"; // Import Tabs from antd
 
 import "./BookTickets.css"; // Import the new CSS file
-
+import { useAuth } from "../../context/AuthContext";
 interface TabProps {
   cinema?: {
     name: string;
@@ -19,14 +20,18 @@ interface TabProps {
 
 const { TabPane } = Tabs;
 
-const BookTickets: React.FC<TabProps> = ({
-  cinema = {
-    name: "CINESTAR HUẾ",
-    address: "25 Hai Bà Trưng, Vĩnh Ninh, Thành phố Huế, Thừa Thiên Huế",
-  },
-}) => {
-  const [activeTab, setActiveTab] = useState("dangChieu"); // Mặc định tab đang chiếu
-
+const BookTickets: React.FC = () => {
+  const { selectedTheater } = useAuth();
+  const [activeTab, setActiveTab] = useState("dangChieu");
+  const [loading, setLoading] = useState(true);
+  const [filteredMovies, setFilteredMovies] = useState([]);
+  const [dates, setDates] = useState<DateOption[]>([]);
+  const [selectedDate, setSelectedDate] = useState("");
+  useEffect(() => {
+    if (selectedTheater) {
+      console.log("Current theater in BookTickets:", selectedTheater);
+    }
+  }, [selectedTheater]);
   const tabs = [
     { id: "dangChieu", label: "PHIM ĐANG CHIẾU" },
     { id: "sapChieu", label: "PHIM SẮP CHIẾU" },
@@ -39,6 +44,136 @@ const BookTickets: React.FC<TabProps> = ({
       [key: string]: string[];
     };
   }
+  useEffect(() => {
+    initializeData();
+  }, [selectedTheater]);
+
+  const initializeData = async () => {
+    try {
+      setLoading(true);
+
+      // Log selected theater
+      console.log("Selected theater:", selectedTheater.name);
+
+      // Tạo mảng ngày cho 7 ngày tới
+      const today = new Date();
+      const next7Days: DateOption[] = [];
+
+      for (let i = 0; i < 7; i++) {
+        const date = new Date(today);
+        date.setDate(today.getDate() + i);
+        next7Days.push({
+          date: date.toISOString().split("T")[0],
+          display: `${date.toLocaleDateString("vi-VN", {
+            weekday: "long",
+          })}, ${date.toLocaleDateString("vi-VN")}`,
+        });
+      }
+      setDates(next7Days);
+      const ciname1 = selectedTheater.name;
+      // Log dates array
+      console.log("Available dates:", next7Days);
+
+      // Set ngày mặc định và lọc phim ban đầu
+      const defaultDate = today.toISOString().split("T")[0];
+      console.log("Default selected date:", defaultDate);
+
+      setSelectedDate(defaultDate);
+
+      // Gọi API với params mặc định
+      const params = {
+        title: "",
+        searchDate: defaultDate,
+        cinema: ciname1 || "",
+      };
+      console.log("Initial search params:", params);
+
+      const response = await axios.get(
+        "http://localhost:8081/api/movies/search",
+        { params }
+      );
+      console.log("API response:", response.data);
+
+      // Lọc phim theo tab dựa vào ngày
+      filterMoviesByDateAndTab(response.data, defaultDate, "dangChieu");
+    } catch (error) {
+      console.error("Error initializing data:", error);
+      message.error("Có lỗi xảy ra khi tải dữ liệu");
+    } finally {
+      setLoading(false);
+    }
+  };
+  const filterMoviesByDateAndTab = (
+    movies: any[],
+    date: string,
+    tab: string
+  ) => {
+    console.log("Filtering movies with params:", { movies, date, tab });
+
+    const today = new Date().toISOString().split("T")[0];
+    console.log("Today's date:", today);
+
+    const selectedDateObj = new Date(date);
+    const todayObj = new Date(today);
+
+    let filtered = movies;
+
+    // Lọc theo tab
+    if (tab === "dangChieu") {
+      // Chỉ hiện phim có ngày chiếu là today
+      filtered = movies.filter((movie) => {
+        const movieDate = new Date(date).toISOString().split("T")[0];
+        const isShowing = movieDate === today;
+        console.log("Movie date check:", { movieDate, isShowing });
+        return isShowing;
+      });
+    } else if (tab === "sapChieu") {
+      // Chỉ hiện phim có ngày chiếu từ 6 ngày sau trở đi
+      const sixDaysLater = new Date(todayObj);
+      sixDaysLater.setDate(todayObj.getDate() + 6);
+      console.log("Six days later:", sixDaysLater);
+
+      filtered = movies.filter((movie) => {
+        const movieDate = new Date(date);
+        const isComingSoon = movieDate >= sixDaysLater;
+        console.log("Coming soon check:", { movieDate, isComingSoon });
+        return isComingSoon;
+      });
+    }
+
+    console.log("Filtered movies result:", filtered);
+    setFilteredMovies(filtered);
+  };
+  const handleDateChange = async (date: string) => {
+    console.log("Date changed to:", date);
+    try {
+      setLoading(true);
+      setSelectedDate(date);
+
+      const params = {
+        title: "",
+        searchDate: date,
+        cinema: selectedTheater.name || "",
+      };
+      console.log("Search params for date change:", params);
+
+      const response = await axios.get(
+        "http://localhost:8081/api/movies/search",
+        { params }
+      );
+      console.log("Date change API response:", response.data);
+
+      filterMoviesByDateAndTab(response.data, date, activeTab);
+    } catch (error) {
+      console.error("Error filtering by date:", error);
+    } finally {
+      setLoading(false);
+    }
+  };
+  const handleTabChange = (key: string) => {
+    setActiveTab(key);
+    filterMoviesByDateAndTab(filteredMovies, selectedDate, key);
+  };
 
   const moviesNowShowing = [
     {
@@ -218,7 +353,7 @@ const BookTickets: React.FC<TabProps> = ({
         {/* Phần thông tin bên phải */}
         <div className="header-info">
           <div className="header-info-content">
-            <h1 className="header-title">{cinema.name}</h1>
+            <h1 className="header-title">{selectedTheater.name}</h1>
             <div className="header-address">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -240,7 +375,7 @@ const BookTickets: React.FC<TabProps> = ({
                   d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"
                 />
               </svg>
-              <span>{cinema.address}</span>
+              <span>{selectedTheater.address}</span>
             </div>
           </div>
         </div>
@@ -367,7 +502,9 @@ const BookTickets: React.FC<TabProps> = ({
                         d="M16 12h4m-2 2v-4M4 18v-1a3 3 0 0 1 3-3h4a3 3 0 0 1 3 3v1a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1Zm8-10a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z"
                       />
                     </svg>
-                    <p className="movie-description-text">{movie.description}</p>
+                    <p className="movie-description-text">
+                      {movie.description}
+                    </p>
                   </p>
                   {movie.schedule.map((sched, idx) => (
                     <div key={idx} className="movie-schedule">
@@ -513,7 +650,9 @@ const BookTickets: React.FC<TabProps> = ({
                         d="M16 12h4m-2 2v-4M4 18v-1a3 3 0 0 1 3-3h4a3 3 0 0 1 3 3v1a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1Zm8-10a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z"
                       />
                     </svg>
-                    <p className="movie-description-text">{movie.description}</p>
+                    <p className="movie-description-text">
+                      {movie.description}
+                    </p>
                   </p>
                   {movie.schedule.length === 0 ? (
                     <div className="movie-schedule-empty">
@@ -540,34 +679,27 @@ const BookTickets: React.FC<TabProps> = ({
                     </div>
                   ) : (
                     movie.schedule.map((sched, idx) => (
-                      <div
-                        key={idx}
-                        className="movie-schedule"
-                      >
-                        <h4 className="movie-schedule-date">
-                          {sched.date}
-                        </h4>
+                      <div key={idx} className="movie-schedule">
+                        <h4 className="movie-schedule-date">{sched.date}</h4>
 
-                        {Object.entries(sched.sessions).map(
-                          ([type, times]) => (
-                            <div key={type} className="movie-schedule-session">
-                              <h5 className="movie-schedule-session-type">
-                                {type}
-                              </h5>
+                        {Object.entries(sched.sessions).map(([type, times]) => (
+                          <div key={type} className="movie-schedule-session">
+                            <h5 className="movie-schedule-session-type">
+                              {type}
+                            </h5>
 
-                              <div className="movie-schedule-session-times">
-                                {times.map((time, index) => (
-                                  <span
-                                    key={index}
-                                    className="movie-schedule-session-time"
-                                  >
-                                    {time}
-                                  </span>
-                                ))}
-                              </div>
+                            <div className="movie-schedule-session-times">
+                              {times.map((time, index) => (
+                                <span
+                                  key={index}
+                                  className="movie-schedule-session-time"
+                                >
+                                  {time}
+                                </span>
+                              ))}
                             </div>
-                          )
-                        )}
+                          </div>
+                        ))}
                       </div>
                     ))
                   )}
@@ -575,8 +707,6 @@ const BookTickets: React.FC<TabProps> = ({
               </div>
             ))}
           </div>
-
-     
         </TabPane>
         <TabPane tab="SUẤT CHIẾU ĐẶC BIỆT" key="dacBiet">
           <div>

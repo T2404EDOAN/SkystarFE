@@ -24,7 +24,12 @@
   border-radius: 50%;
   object-fit: cover;
 }
-
+.choose-theater-text:hover {
+  color: #f3ea28 !important;
+}
+.theater-name:hover {
+  color: #f3ea28 !important;
+}
 .user-actions {
   display: flex;
   align-items: center;

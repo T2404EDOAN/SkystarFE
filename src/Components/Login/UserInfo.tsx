@@ -2,7 +2,6 @@ import React, { useState } from "react";
 import axios from "axios";
 import { useAuth } from "../../context/AuthContext";
 import { useNavigate } from "react-router-dom";
-import { UserOutlined } from "@ant-design/icons";
 import "./UserInfo.css";
 
 interface UserFormData {
@@ -67,8 +66,8 @@ const UserInfo: React.FC = () => {
     setMessage({ type: "", content: "" });
 
     try {
-      const response = await axios.put(
-        `http://35.175.173.235:8080/api/users/${user.id}`,
+      const response = await axios.post(
+        `http://localhost:8081/api/users/${user.id}`,
         userFormData
       );
       console.log(response.data);
@@ -102,23 +101,11 @@ const UserInfo: React.FC = () => {
 
     setLoading(true);
     try {
-      const verifyResponse = await axios.get(
-        `http://35.175.173.235:8080/api/users/${user.id}`
-      );
-
-      if (verifyResponse.data.password !== passwordFormData.currentPassword) {
-        setMessage({
-          type: "error",
-          content: "Mật khẩu cũ không chính xác!",
-        });
-        setLoading(false);
-        return;
-      }
       const response = await axios.put(
-        `http://35.175.173.235:8080/api/users/${user.id}`,
+        `http://localhost:8081/api/users/${user.id}/change-password`,
         {
-          ...verifyResponse.data,
-          password: passwordFormData.newPassword,
+          currentPassword: passwordFormData.currentPassword,
+          newPassword: passwordFormData.newPassword,
         }
       );
 
@@ -127,21 +114,22 @@ const UserInfo: React.FC = () => {
           type: "success",
           content: "Đổi mật khẩu thành công!",
         });
+        setPasswordFormData({
+          currentPassword: "",
+          newPassword: "",
+          confirmPassword: "",
+        });
       }
     } catch (error) {
-      console.error("Password change error:", error);
-      setMessage({
-        type: "error",
-        content: "Đổi mật khẩu thất bại!",
-      });
+      if (axios.isAxiosError(error)) {
+        setMessage({
+          type: "error",
+          content: error.response?.data?.message || "Đổi mật khẩu thất bại!",
+        });
+      }
     } finally {
       setLoading(false);
     }
-    setPasswordFormData({
-      currentPassword: "",
-      newPassword: "",
-      confirmPassword: "",
-    });
   };
   const renderTabContent = () => {
     switch (activeTab) {
@@ -157,12 +145,13 @@ const UserInfo: React.FC = () => {
               )}
               <div className="info-mini-box">
                 <div className="info-box">
-                  <label htmlFor="fullName">Họ và tên</label>
+                  <label htmlFor="fullname">Họ và tên</label>
                   <input
                     type="text"
-                    id="fullName"
+                    id="fullname"
                     value={userFormData.fullName}
                     onChange={handleUserInfoChange}
+                    required
                   />
                 </div>
                 <div className="info-box">
@@ -172,6 +161,7 @@ const UserInfo: React.FC = () => {
                     id="dateOfBirth"
                     value={userFormData.dateOfBirth}
                     onChange={handleUserInfoChange}
+                    required
                   />
                 </div>
               </div>
@@ -183,6 +173,7 @@ const UserInfo: React.FC = () => {
                     id="phoneNumber"
                     value={userFormData.phoneNumber}
                     onChange={handleUserInfoChange}
+                    required
                   />
                 </div>
                 <div className="info-box">
@@ -192,6 +183,7 @@ const UserInfo: React.FC = () => {
                     id="email"
                     value={userFormData.email}
                     onChange={handleUserInfoChange}
+                    required
                   />
                 </div>
               </div>
@@ -209,7 +201,6 @@ const UserInfo: React.FC = () => {
                   name="currentPassword"
                   value={passwordFormData.currentPassword}
                   onChange={handlePasswordChange}
-                  placeholder="Nhập mật khẩu cũ"
                   required
                 />
               </div>
@@ -220,7 +211,6 @@ const UserInfo: React.FC = () => {
                   name="newPassword"
                   value={passwordFormData.newPassword}
                   onChange={handlePasswordChange}
-                  placeholder="Nhập mật khẩu mới"
                   required
                 />
               </div>
@@ -233,7 +223,6 @@ const UserInfo: React.FC = () => {
                   name="confirmPassword"
                   value={passwordFormData.confirmPassword}
                   onChange={handlePasswordChange}
-                  placeholder="Nhập lại mật khẩu mới"
                   required
                 />
               </div>
@@ -264,25 +253,15 @@ const UserInfo: React.FC = () => {
       </div>
       <div className="sidebar">
         <div className="profile">
-          <div className="profile-mini">
-            <div className="info-img1">
-              {user.avatarUrl ? (
-                <img
-                  className="img11"
-                  src={user.avatarUrl}
-                  alt={user.fullName}
-                />
-              ) : (
-                <UserOutlined className="default-avatar-icon" />
-              )}
-            </div>
-            <div className="info-mini1">
-              <p>{user.fullName}</p>
-              <span>Thay đổi ảnh đại diện</span>
+          <h2>{user.fullName}</h2>
+          <div className="c-friends">
+            <h3>C'Friends</h3>
+            <div className="tich-diem-c-friends">
+              <span>0/10K</span>
             </div>
           </div>
-
           <div className="thong-tin-khach-hang">
+            <h3>Thông tin khách hàng</h3>
             <ul>
               <li
                 className={activeTab === "personal" ? "active" : ""}

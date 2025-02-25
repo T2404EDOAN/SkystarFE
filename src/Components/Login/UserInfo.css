@@ -118,6 +118,7 @@
   width: 900px;
   margin: 0 auto;
   padding: 20px;
+  color: black;
 }
 .user-info-section button {
   margin-top: 20px;
@@ -138,7 +139,6 @@
   border: 1px solid #ccc;
   border-radius: 5px;
 }
-
 .submit-btn {
   background-color: #e2e8f0;
   border: none;
@@ -173,4 +173,46 @@
 .info-box input:read-only {
   background-color: #f5f5f5;
   cursor: not-allowed;
+}
+
+/* duoi */
+.history-box {
+  width: 900px;
+  padding-left: 20px;
+}
+#table-history {
+  border-radius: 0 !important;
+}
+.dashboard-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px;
+  padding: 16px;
+}
+
+.dashboard-card {
+  background: #f8f9fa;
+  padding: 20px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  text-align: center;
+  flex: 1;
+  min-width: 80px;
+  max-width: 150px;
+  height: 130px;
+}
+
+.dashboard-icon {
+  font-size: 32px;
+  color: #007bff;
+  margin-bottom: 10px;
+}
+
+.dashboard-title {
+  font-size: 14px;
+  color: #555;
+}
+
+.dashboard-value {
+  font-size: 18px;
+  font-weight: bold;
 }

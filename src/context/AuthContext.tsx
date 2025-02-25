@@ -7,12 +7,18 @@ interface User {
   phoneNumber?: string;
   dateOfBirth?: string;
 }
+interface Theater {
+  name: string;
+  address: string;
+}
 interface AuthContextType {
   isAuthenticated: boolean;
   user: User | null;
   login: (userData: User) => void;
   logout: () => void;
   updateUser: (userData: User) => void;
+  setSelectedTheater: (theater: Theater) => void;
+  clearSelectedTheater: () => void;
 }
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
@@ -22,12 +28,17 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
 }) => {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [user, setUser] = useState<User | null>(null);
+  const [selectedTheater, setSelectedTheater] = useState<Theater | null>(null);
 
   useEffect(() => {
     const userData = localStorage.getItem("user");
+    const theaterData = localStorage.getItem("selectedTheater");
     if (userData) {
       setUser(JSON.parse(userData));
       setIsAuthenticated(true);
+    }
+    if (theaterData) {
+      setSelectedTheater(JSON.parse(theaterData));
     }
   }, []);
 
@@ -48,15 +59,27 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
     setUser(userData);
     localStorage.setItem("user", JSON.stringify(userData));
   };
+  const handleSetSelectedTheater = (theater: Theater) => {
+    setSelectedTheater(theater);
+    localStorage.setItem("selectedTheater", JSON.stringify(theater));
+    console.log("Theater selected:", theater);
+  };
 
+  const handleClearSelectedTheater = () => {
+    setSelectedTheater(null);
+    localStorage.removeItem("selectedTheater");
+  };
   return (
     <AuthContext.Provider
       value={{
         isAuthenticated,
         user,
+        selectedTheater,
         login,
         logout,
         updateUser,
+        setSelectedTheater: handleSetSelectedTheater,
+        clearSelectedTheater: handleClearSelectedTheater,
       }}
     >
       {children}
