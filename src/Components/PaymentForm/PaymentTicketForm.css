@@ -8,7 +8,10 @@
   color: white;
   border-top: 1px solid rgba(248, 250, 252, 0.5);
   border-color: #4b5563;
-  height: 131px;
+  height: auto;  /* Change from fixed height to auto */
+  min-height: 131px;  /* Set minimum height to previous fixed height */
+  max-height: 250px;  /* Add maximum height if needed */
+  overflow-y: auto;  /* Add scrolling if content exceeds max height */
   z-index: 999; /* Ensure it stays on top of other content */
   box-shadow: 0 -4px 6px -1px rgba(0, 0, 0, 0.1);
 }
@@ -40,7 +43,7 @@
 }
 
 .showtime-info {
-  font-size: 0.875rem;
+  font-size: 16px;
   color: #f8fafc;
   margin-top: 8px;
   font-size: 15px;
@@ -76,6 +79,7 @@
   align-items: center;
   justify-content: center;
   font-family: "Anton", sans-serif;
+  border: none;
 }
 
 .book-button-text {
@@ -138,7 +142,7 @@
 
 .cinema-info, .showtime-info {
   margin: 10px 0;
-  font-size: 15px;
+  font-size: 16px;
   color: #f8fafc;
 }
 
@@ -168,4 +172,23 @@
 .total-price span.price-amount {
   font-size: 24px;
   font-weight: bold;
+}
+
+.selected-products {
+  margin: 10px 0;
+  padding: 10px 0;
+  border-top: 1px solid #ddd;
+  border-bottom: 1px solid #ddd;
+}
+
+.selected-products-list {
+  padding: 5px 0;
+
+  
+}
+
+.product-item {
+  display: flex;
+  justify-content: space-between;
+  font-size: 16px;
 }

@@ -68,7 +68,7 @@ const Showtimes: React.FC = () => {
     const fetchInitialData = async () => {
       try {
         const response = await axios.get(
-          "http://35.175.173.235:8080/api/movies"
+          "http://localhost:8080/api/movies"
         );
         const data = response.data;
         setMovies(data.content);

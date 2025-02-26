@@ -7,7 +7,7 @@ import 'bootstrap-icons/font/bootstrap-icons.css';
 import "./PopcornDrink.css";
 import banner from "../PopcornDrink/ImagesPop/bannerPop.jpg";
 
-const PopcornDrink = () => {
+const PopcornDrink = ({ onSelectionChange }) => {
     const [products, setProducts] = useState([]);
     const [quantities, setQuantities] = useState({});
     const [loading, setLoading] = useState(true);
@@ -50,17 +50,43 @@ const PopcornDrink = () => {
     };
 
     const increaseQuantity = (id) => {
-        setQuantities(prev => ({
-            ...prev,
-            [id]: (prev[id] || 0) + 1
-        }));
+        setQuantities(prev => {
+            const newQuantities = {
+                ...prev,
+                [id]: (prev[id] || 0) + 1
+            };
+            // Call the callback with updated selection
+            const selectedProducts = products.filter(p => newQuantities[p.id] > 0)
+                .map(p => ({
+                    id: p.id,
+                    name: p.name,
+                    quantity: newQuantities[p.id],
+                    price: p.basePrice,
+                    category: p.category.name
+                }));
+            onSelectionChange(selectedProducts);
+            return newQuantities;
+        });
     };
 
     const decreaseQuantity = (id) => {
-        setQuantities(prev => ({
-            ...prev,
-            [id]: Math.max((prev[id] || 0) - 1, 0)
-        }));
+        setQuantities(prev => {
+            const newQuantities = {
+                ...prev,
+                [id]: Math.max((prev[id] || 0) - 1, 0)
+            };
+            // Call the callback with updated selection
+            const selectedProducts = products.filter(p => newQuantities[p.id] > 0)
+                .map(p => ({
+                    id: p.id,
+                    name: p.name,
+                    quantity: newQuantities[p.id],
+                    price: p.basePrice,
+                    category: p.category.name
+                }));
+            onSelectionChange(selectedProducts);
+            return newQuantities;
+        });
     };
 
     const getCategoryName = (categoryCode) => {

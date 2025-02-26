@@ -24,6 +24,13 @@ interface PaymentFormProps {
     selectedSeats: string[];
   }) => void;
   totalPrice: number;
+  selectedProducts: Array<{
+    id: number;
+    name: string;
+    quantity: number;
+    price: number;
+    category: string;
+  }>;
 }
 
 const PaymentTicketForm: React.FC<PaymentFormProps> = (props) => {
@@ -61,7 +68,7 @@ const PaymentTicketForm: React.FC<PaymentFormProps> = (props) => {
     const checkSeatsStatus = async () => {
       try {
         const response = await axios.get(
-          `http://35.175.173.235:8080/api/seats/${props.showtimeId}/check-seats`
+          `http://localhost:8080/api/seats/${props.showtimeId}/check-seats`
         );
         const unavailableSeats = response.data;
         
@@ -95,7 +102,10 @@ const PaymentTicketForm: React.FC<PaymentFormProps> = (props) => {
   };
 
   const calculateTotalPrice = () => {
-    return props.selectedSeats.reduce((total, seat) => total + seat.price, 0);
+    const seatTotal = props.selectedSeats.reduce((total, seat) => total + seat.price, 0);
+    const productTotal = props.selectedProducts.reduce((total, product) => 
+      total + (product.price * product.quantity), 0);
+    return seatTotal + productTotal;
   };
 
   const handleProceedToPayment = () => {
@@ -132,6 +142,18 @@ const PaymentTicketForm: React.FC<PaymentFormProps> = (props) => {
                 <span className="divider">|</span>
                 <span>{props.showTime}</span>
               </div>
+              
+              {/* Add product items here */}
+              {props.selectedProducts.length > 0 && (
+                <div className="selected-products-list">
+                  {props.selectedProducts.map(product => (
+                   
+                      <span>{product.name} x{product.quantity}</span>
+                      
+                   
+                  ))}
+                </div>
+              )}
             </div>
           </div>
         </div>
@@ -143,6 +165,7 @@ const PaymentTicketForm: React.FC<PaymentFormProps> = (props) => {
             <div className="countdown-timer">
               Thời gian giữ ghế: {formatTime(timeRemaining)}
             </div>
+            
             <div className="total-price">
               <span>Tạm tính</span>
               <span className="price-amount">{calculateTotalPrice().toLocaleString('vi-VN')} VNĐ</span>

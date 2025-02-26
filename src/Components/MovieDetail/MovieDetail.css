@@ -1,33 +1,34 @@
 .movie-detail-container {
     width: 1200px;
     margin: 0 auto;
-  
     color: white;
-    padding: 1rem;
+    margin-top: 20px;
 }
 
-.movie-header {
+.movie-detail-header {
     display: flex;
-    gap: 1.5rem;
+    
 }
 
-.movie-poster {
+.movie-detail-poster {
     width: 484px;
     height: 729px;
     object-fit: cover;
-    border-radius: 0.5rem;
+    border-radius: 0.2rem;
+    flex-shrink: 0;
 }
 
-.movie-info {
+.movie-detail-info {
     flex: 1;
+    padding: 0 1rem;
 }
 
-.movie-title {
-  font-family: "Anton", sans-serif;
+.movie-detail-title {
+    font-family: "Anton", sans-serif;
     font-size: 40px;
 }
 
-.info-list {
+.movie-detail-info-list {
     color: white;
     font-size: 1rem;
     display: flex;
@@ -37,65 +38,58 @@
     list-style: none;
 }
 
-.info-item {
+.movie-detail-info-item {
     display: flex;
     align-items: center;
 }
 
-.info-icon {
+.movie-detail-info-icon {
     width: 1.5rem;
     height: 1.5rem;
     margin-right: 0.5rem;
 }
 
-.info-icon.yellow-icon {
+.movie-detail-info-icon.movie-detail-yellow-icon {
     color: #f3ea28;
     fill: #f3ea28;
 }
-
-.section-title {
+.movie-detail-section-title1{
     font-family: "Anton", sans-serif;
     font-size: 24px;
-    margin-bottom: 0.5rem;
-    margin-top: 1.5rem;
-}
-
-.trailer-button {
-    margin-top: 1.5rem;
-    padding: 0.5rem 1.5rem;
-    background-color: rgb(239, 68, 68);
-    border-radius: 0.25rem;
-    color: white;
-    font-weight: 500;
-    box-shadow: 0 1px 3px rgba(0,0,0,0.1);
-    cursor: pointer;
-    transition: all 0.3s ease;
-}
-
-.trailer-button:hover {
-    background-color: rgb(220, 38, 38);
-    transform: scale(1.05);
-}
-
-.icon-yellow {
-    color: #f3ea28;
-}
-
-.showtimes-section {
+    margin-bottom: 1rem;
     margin-top: 2rem;
-    padding-top: 2rem;
+}
+
+.movie-detail-section-title {
+    font-family: "Anton", sans-serif;
+    font-size: 40px;
+    margin-bottom: 1.5rem;
+    margin-top: 1.5rem;
+}
+
+.movie-detail-trailer-button {
+    display: flex;
+    justify-content: flex-start;
+    position: relative;
+    font-size: 20px;
+    margin-top: 40px;
+}
+
+
+.movie-detail-showtimes-section {
+    margin-top: 2rem;
 
     text-align: center;
 }
 
-.dates-container {
+.movie-detail-dates-container {
     display: flex;
     gap: 1.5rem;
     margin-top: 1rem;
     justify-content: center;
 }
 
-.date-box {
+.movie-detail-date-box {
     width: 100px;
     height: 100px;
     border: 1px solid #f3ea28;
@@ -109,60 +103,68 @@
     gap: 8px;
 }
 
-.date-box:hover, .date-box.active {
-    background: transparent;
+.movie-detail-date-box:hover, .movie-detail-date-box.active {
+    background: #f3ea28; /* Change background to yellow */
     transform: scale(1.05);
 }
 
-.weekday {
+.movie-detail-date-box.active .movie-detail-date,
+.movie-detail-date-box.active .movie-detail-weekday {
+    color: #663383; 
+}
+
+.movie-detail-weekday {
     font-size: 1.2rem;
     font-weight: bold;
     color: #f3ea28;
 }
 
-.date {
-    font-size: 1rem;
+.movie-detail-date {
+    font-size: 1.3rem;
     font-family: "Anton", sans-serif;
     color: #f3ea28;
 }
 
-.cinemas-list {
+.movie-detail-cinemas-list {
     margin-top: 2rem;
     display: flex;
     flex-direction: column;
     gap: 1.5rem;
     text-align: left;
+    align-items: center; /* Center items horizontally */
 }
 
-.cinema-item {
+.movie-detail-cinema-item {
     padding: 1.5rem;
     background-color: #639;
     border-radius: 3px;
+    width: 800px; /* Set width to 800px */
 }
 
-.cinema-info {
-  display: flex;
-  flex-direction: column;
-  margin-bottom: 16px;
+.movie-detail-cinema-info {
+    display: flex;
+    flex-direction: column;
 }
 
-.cinema-name {
+.movie-detail-cinema-name {
     font-size: 24px;
     color: #f3ea28;
+    margin-bottom: 20px;
 }
 
-.cinema-address {
+.movie-detail-cinema-address {
     font-size: 16px;
+    margin-bottom: 20px;
 }
 
-.showtime-buttons {
+.movie-detail-showtime-buttons {
     display: flex;
     gap: 1rem;
     flex-wrap: wrap;
-    margin-top: 1rem;
+    margin-top: 0.5rem;
 }
 
-.time-btn {
+.movie-detail-time-btn {
     padding: 0.5rem 1rem;
     border: .5px solid #f8fafc;
     border-radius: 4px;
@@ -178,112 +180,120 @@
     -webkit-tap-highlight-color: transparent;
     -webkit-focus-ring-color: transparent;
 }
-
-.time-btn:hover,
-.time-btn:focus,
-.time-btn.selected {
+.movie-detail-trailer-text{
+    margin-left: 0.5rem;
+    font-size: 20px;
+    display: flex;
+    align-items: center;
+}
+.movie-detail-time-btn:hover,
+.movie-detail-time-btn:focus,
+.movie-detail-time-btn.selected {
     color: #f3ea28;
     border-color: #f3ea28;
     transform: scale(1.05);
     outline: none;
 }
 
-.time-btn:focus {
+.movie-detail-time-btn:focus {
     outline: none !important;
     box-shadow: none !important;
 }
 
-.cinema-list-title {
+.movie-detail-cinema-list-title {
     font-family: "Anton", sans-serif;
     font-size: 40px;
     margin: 2.5rem 0;
-    text-align: left;
+    text-align: left; /* Center text horizontally */
+    width: 800px; /* Match width with movie-detail-cinema-item */
+    margin-left: auto; /* Center align */
+    margin-right: auto; /* Center align */
 }
 
-.seats-section {
+.movie-detail-seats-section {
     margin-top: 3rem;
     padding-top: 2rem;
 }
 
-.seat-types {
+.movie-detail-seat-types {
     display: flex;
     gap: 2rem;
     justify-content: center;
     margin: 2rem 0;
-    flex-wrap: wrap; /* Allow wrapping on smaller screens */
+    flex-wrap: wrap;
     padding: 0 1rem;
 }
 
-.seat-type {
+.movie-detail-seat-type {
     display: flex;
     align-items: center;
     gap: 1rem;
 }
 
-.seat-example {
-  width: 40px;  /* Match seat button width */
-  height: 29px; /* Match seat button height */
-  border-radius: 6px;
-  border: 1px solid #f8fafc;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 14px;
-  font-family: "Anton", sans-serif;
+.movie-detail-seat-example {
+    width: 40px;
+    height: 29px;
+    border-radius: 6px;
+    border: 1px solid #f8fafc;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 14px;
+    font-family: "Anton", sans-serif;
 }
 
-.seat-example.standard {
-  background-color: #f8fafc;
-  color: #639;
+.movie-detail-seat-example.standard {
+    background-color: #f8fafc;
+    color: #639;
 }
 
-.seat-example.couple {
-  width: 80px !important;
-  background-color: #f8fafc;
-  color: #639;
-  clip-path: polygon(
-    0 0, 
-    45% 0, 
-    50% 15%, 
-    55% 0, 
-    100% 0, 
-    100% 100%, 
-    55% 100%, 
-    50% 85%, 
-    45% 100%, 
-    0 100%
-  );
+.movie-detail-seat-example.couple {
+    width: 80px !important;
+    background-color: #f8fafc;
+    color: #639;
+    clip-path: polygon(
+        0 0, 
+        45% 0, 
+        50% 15%, 
+        55% 0, 
+        100% 0, 
+        100% 100%, 
+        55% 100%, 
+        50% 85%, 
+        45% 100%, 
+        0 100%
+    );
 }
 
-.seat-example.selected {
-  background-color: #f3ea28;
-  color: #639;
-  border-color: transparent;
+.movie-detail-seat-example.selected {
+    background-color: #f3ea28;
+    color: #639;
+    border-color: transparent;
 }
 
-.seat-example.booked {
-  background-color: #4a4a4a;
-  color: #666;
-  border-color: #666;
+.movie-detail-seat-example.booked {
+    background-color: #4a4a4a;
+    color: #666;
+    border-color: #666;
 }
 
-.screen-container {
+.movie-detail-screen-container {
     margin: 4rem 0;
     text-align: center;
 }
 
-.screen-img {
+.movie-detail-screen-img {
     max-width: 100%;
     height: auto;
     transform: perspective(400px) rotateX(-5deg);
 }
 
-.screen-wrapper {
+.movie-detail-screen-wrapper {
     position: relative;
     display: inline-block;
 }
 
-.screen-text {
+.movie-detail-screen-text {
     position: absolute;
     top: 50%;
     left: 50%;
@@ -295,139 +305,136 @@
     text-shadow: 0 2px 4px rgba(0,0,0,0.5);
 }
 
-.seat-map {
+.movie-detail-seat-map {
     display: flex;
     flex-direction: column;
-    gap: 1rem;  /* Increased from 0.8rem */
+    gap: 1rem;
     align-items: center;
     margin: 2rem 0;
-    padding: 0 2rem; /* Add horizontal padding */
-    width: 100%; /* Add full width */
+    padding: 0 2rem;
+    width: 100%;
 }
 
-.seat-row {
+.movie-detail-seat-row {
     display: flex;
-    gap: 1rem;  /* Increased from 0.8rem */
+    gap: 1rem;
     align-items: center;
-    width: 100%; /* Add full width */
-    justify-content: flex-start; /* Align to the left */
+    width: 100%;
+    justify-content: flex-start;
 }
 
-.row-label {
-    width: 40px;  /* Increased width */
+.movie-detail-row-label {
+    width: 40px;
     font-weight: bold;
-    text-align: right; /* Right align the text */
-    font-size: 1.1rem; /* Larger font */
-    margin-right: 1.5rem; /* Add more space after label */
-    flex-shrink: 0; /* Prevent label from shrinking */
+    text-align: right;
+    font-size: 1.1rem;
+    margin-right: 1.5rem;
+    flex-shrink: 0;
 }
 
-.seat {
-    width: 40px;  /* Changed from 45px */
-    height: 29px;  /* Changed from 45px */
-    border-radius: 6px;  /* Increased from 4px for more rounded corners */
+.movie-detail-seat {
+    width: 40px;
+    height: 29px;
+    border-radius: 6px;
     border: 1px solid #f8fafc;
-    background: white;  /* Changed from transparent */
-    color: #639;  /* Changed from #f8fafc */
+    background: white;
+    color: #639;
     cursor: pointer;
-    transition: all 0.05s ease-out; /* Giảm thời gian transition xuống rất thấp */
-    will-change: transform, background-color; /* Tối ưu hóa cho animation */
-    font-size: 14px;  /* Updated font size */
-    font-family: "Anton", sans-serif;  /* Updated font family */
-    /* Add flexbox properties to center text */
+    transition: all 0.05s ease-out;
+    will-change: transform, background-color;
+    font-size: 14px;
+    font-family: "Anton", sans-serif;
     display: flex;
     align-items: center;
     justify-content: center;
-    -webkit-tap-highlight-color: transparent; /* Loại bỏ highlight khi tap trên mobile */
-    user-select: none; /* Prevent text selection */
+    -webkit-tap-highlight-color: transparent;
+    user-select: none;
     outline: none !important;
     -webkit-tap-highlight-color: transparent;
     -webkit-focus-ring-color: transparent;
 }
 
-.seat:active {
-    transition: none; /* Bỏ transition khi click */
-    transform: scale(0.95); /* Thêm hiệu ứng click */
+.movie-detail-seat:active {
+    transition: none;
+    transform: scale(0.95);
 }
 
-.seat.available:hover {
+.movie-detail-seat.available:hover {
     transform: scale(1.1);
     color: #639;
     background: white;
 }
 
-/* Thêm style mới để giữ màu cho ghế đã chọn khi hover */
-.seat.selected:hover {
-    background: #f3ea28 !important; /* Giữ màu vàng */
+.movie-detail-seat.selected:hover {
+    background: #f3ea28 !important;
     color: #639 !important;
     border-color: transparent !important;
 }
 
-.seat:focus {
+.movie-detail-seat:focus {
     outline: none !important;
     box-shadow: none !important;
 }
 
-.seat.selected {
-    transition: none; /* Bỏ transition khi selected */
+.movie-detail-seat.selected {
+    transition: none;
     border-color: transparent;
     color: #639;
-    background: #f3ea28; /* Yellow color */
-    transform: scale(1.1); /* Slightly larger when selected */
+    background: #f3ea28;
+    transform: scale(1.1);
 }
 
-.seat.booked {
+.movie-detail-seat.booked {
     background: #4a4a4a;
     border-color: #666;
     cursor: not-allowed;
     color: #666;
 }
 
-.seat.couple {
+.movie-detail-seat.couple {
     background: #e91e63;
     border-color: #ff4081;
     color: white;
 }
 
-.couple-seat {
-  width: 80px !important;
-  background-color: #f8fafc;
-  position: relative;
-
-  clip-path: polygon(
-    0 0, 
-    45% 0, 
-    50% 15%, 
-    55% 0, 
-    100% 0, 
-    100% 100%, 
-    55% 100%, 
-    50% 85%, 
-    45% 100%, 
-    0 100%
-  );
+.movie-detail-couple-seat {
+    width: 80px !important;
+    background-color: #f8fafc;
+    position: relative;
+    clip-path: polygon(
+        0 0, 
+        45% 0, 
+        50% 15%, 
+        55% 0, 
+        100% 0, 
+        100% 100%, 
+        55% 100%, 
+        50% 85%, 
+        45% 100%, 
+        0 100%
+    );
 }
 
-.couple-seat.selected {
-  background-color: #f3ea28;
+.movie-detail-couple-seat.selected {
+    background-color: #f3ea28;
 }
 
-.couple-seat.booked {
-  background-color: #4a4a4a;
+.movie-detail-couple-seat.booked {
+    background-color: #4a4a4a;
 }
 
-.no-showtimes {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  min-height: 200px;
-  font-size: 1.5rem;
-  color: #f8fafc;
-  text-align: center;
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  border-radius: 8px;
-  margin: 2rem 0;
-  font-family: "Anton", sans-serif;
+.movie-detail-no-showtimes {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 200px;
+    font-size: 1.5rem;
+    color: #f8fafc;
+    text-align: center;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 8px;
+    margin: 2rem 0;
+    font-family: "Anton", sans-serif;
 }
 
 .text-center {

@@ -90,7 +90,7 @@ const NowPlayingMovies: React.FC = () => {
         setIsLoading(true);
         setError(null);
         const response = await axios.get(
-          "http://35.175.173.235:8080/api/movies",
+          "http://localhost:8080/api/movies",
           {
             headers: {
               Accept: "application/json",

@@ -26,8 +26,12 @@ const MovieDetail = () => {
     vip: 90000
   });
   const seatsRef = useRef(null);  // Add this line after other state declarations
+  const [selectedProducts, setSelectedProducts] = useState([]);
 
-  // Get next 5 days from today
+  const handleProductSelectionChange = (products) => {
+    setSelectedProducts(products);
+  };
+
   const getNext5Days = (showtimes) => {
     if (!showtimes || showtimes.length === 0) return [];
     
@@ -37,8 +41,8 @@ const MovieDetail = () => {
       .slice(0, 5)
       .map(date => ({
         date,
-        formattedDate: new Date(date).toLocaleDateString('vi-VN'),
-        weekday: new Date(date).toLocaleDateString('vi-VN', { weekday: 'short' })
+        formattedDate: new Date(date).toLocaleDateString('vi-VN', { day: '2-digit', month: '2-digit' }), // Show only day and month
+        weekday: new Date(date).toLocaleDateString('vi-VN', { weekday: 'long' }) // Show full weekday name
       }));
   };
 
@@ -81,7 +85,7 @@ const MovieDetail = () => {
   useEffect(() => {
     const fetchMovieDetail = async () => {
       try {
-        const response = await axios.get(`http://35.175.173.235:8080/api/movies/${movieId}`);
+        const response = await axios.get(`http://localhost:8080/api/movies/${movieId}`);
         setMovieData(response.data);
         const grouped = groupShowtimesByDate(response.data.showtimes);
         setGroupedShowtimes(grouped);
@@ -106,7 +110,7 @@ const MovieDetail = () => {
 
   const fetchSeats = async (showtimeId) => {
     try {
-      const response = await axios.get(`http://35.175.173.235:8080/api/showtimes/${showtimeId}/seats`);
+      const response = await axios.get(`http://localhost:8080/api/showtimes/${showtimeId}/seats`);
       setAvailableSeats(response.data.content);
     } catch (error) {
       console.error('Error fetching seats:', error);
@@ -152,7 +156,7 @@ const MovieDetail = () => {
   
     try {
       if (selectedShowtimeId) {
-        const url = `http://35.175.173.235:8080/api/seats/${selectedShowtimeId}/hold`;
+        const url = `http://localhost:8080/api/seats/${selectedShowtimeId}/hold`;
         const requestData = {
           seatId: seat.id,
           // Add userId if user is logged in
@@ -291,34 +295,34 @@ const MovieDetail = () => {
           />
         )}
 
-        <div className="movie-header">
+        <div className="movie-detail-header">
           <img 
             src={movieData.posterUrl} 
             alt={movieData.title} 
-            className="movie-poster" 
+            className="movie-detail-poster" 
           />
-          <div className="movie-info">
-            <h1 className="movie-title">{movieData.title}</h1>
-            <ul className="info-list">
-              <li className="info-item">
+          <div className="movie-detail-info">
+            <h1 className="movie-detail-title">{movieData.title}</h1>
+            <ul className="movie-detail-info-list">
+              <li className="movie-detail-info-item">
                 <img
                   src="https://cinestar.com.vn/assets/images/icon-tag.svg"
                   alt="Age Restriction"
-                  className="info-icon"
+                  className="movie-detail-info-icon"
                 />
                 {movieData.category.name}
               </li>
-              <li className="info-item">
+              <li className="movie-detail-info-item">
                 <img
                   src="https://cinestar.com.vn/assets/images/icon-clock.svg"
                   alt="Duration"
-                  className="info-icon"
+                  className="movie-detail-info-icon"
                 />
                 {movieData.duration} phút
               </li>
-              <li className="info-item">
+              <li className="movie-detail-info-item">
                 <svg
-                  className="info-icon yellow-icon"
+                  className="movie-detail-info-icon movie-detail-yellow-icon"
                   aria-hidden="true"
                   xmlns="http://www.w3.org/2000/svg"
                   width="24"
@@ -334,9 +338,9 @@ const MovieDetail = () => {
                 </svg>
                 {movieData.productionCountry}
               </li>
-              <li className="info-item">
+              <li className="movie-detail-info-item">
                 <svg
-                  className="info-icon yellow-icon"
+                  className="movie-detail-info-icon movie-detail-yellow-icon"
                   aria-hidden="true"
                   xmlns="http://www.w3.org/2000/svg"
                   width="24"
@@ -354,9 +358,9 @@ const MovieDetail = () => {
                 </svg>
                 {movieData.language}
               </li>
-              <li className="info-item">
+              <li className="movie-detail-info-item">
                 <svg
-                  className="info-icon yellow-icon"
+                  className="movie-detail-info-icon movie-detail-yellow-icon"
                   aria-hidden="true"
                   xmlns="http://www.w3.org/2000/svg"
                   width="24"
@@ -376,64 +380,79 @@ const MovieDetail = () => {
               </li>
             </ul>
             <div>
-              <h2 className="section-title">Mô Tả</h2>
+              <h3 className="movie-detail-section-title1">Mô Tả</h3>
               <p>Đạo diễn: {movieData.director}<br />
                  Diễn viên: {movieData.cast}</p>
             </div>
             <div>
-              <h2 className="section-title">Nội Dung Phim</h2>
+              <h3 className="movie-detail-section-title1">Nội Dung Phim</h3>
               <p>{movieData.description}</p>
             </div>
-            <button 
-              className="trailer-button"
+            <div 
+              className="movie-detail-trailer-button"
               onClick={handleTrailerClick}
             >
+              <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="40"
+                    height="40"
+                    fill="#FFA500" 
+                    className="bi bi-play-circle dark:text-white mr-2"
+                    viewBox="0 0 16 16"
+                  >
+                    <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14m0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16" />
+                    <path d="M6.271 5.055a.5.5 0 0 1 .52.038l3.5 2.5a.5.5 0 0 1 0 .814l-3.5 2.5A.5.5 0 0 1 6 10.5v-5a.5.5 0 0 1 .271-.445" />
+                  </svg>
+                  <span className="movie-detail-trailer-text">
               Xem Trailer
-            </button>
+              </span>
+            </div>
           </div>
         </div>
 
-        <div className="showtimes-section">
-          <h2 className="section-title">Lịch Chiếu</h2>
+        <div className="movie-detail-showtimes-section">
+          {movieData.showtimes && movieData.showtimes.length > 0 && (
+            <h2 className="movie-detail-section-title">Lịch Chiếu</h2>
+          )}
           
           {(!movieData.showtimes || movieData.showtimes.length === 0) ? (
-            <div className="no-showtimes">
+            <div className="movie-detail-no-showtimes">
               <p>Không có lịch chiếu</p>
             </div>
           ) : (
             <>
-              <div className="dates-container">
+              <div className="movie-detail-dates-container">
                 {availableDates.map((dateInfo) => (
                   <div 
                     key={dateInfo.date}
-                    className={`date-box ${selectedDate === dateInfo.date ? 'active' : ''}`}
+                    className={`movie-detail-date-box ${selectedDate === dateInfo.date ? 'active' : ''}`}
                     onClick={() => setSelectedDate(dateInfo.date)}
                   >
-                    <span className="date">{dateInfo.formattedDate}</span>
-                    <span className="weekday">{dateInfo.weekday}</span>
+                    <span className="movie-detail-date">{dateInfo.formattedDate}</span>
+                    <span className="movie-detail-weekday">{dateInfo.weekday}</span>
                   </div>
                 ))}
               </div>
 
-              <h2 className="cinema-list-title">DANH SÁCH RẠP</h2>
-              <div className="cinemas-list">
+              <h2 className="movie-detail-cinema-list-title">DANH SÁCH RẠP</h2>
+              <div className="movie-detail-cinemas-list">
                 {selectedDate && groupedShowtimes[selectedDate] && 
                   Object.values(groupedShowtimes[selectedDate]).map((cinema: any) => (
-                    <div key={cinema.name} className="cinema-item">
-                      <div className="cinema-info">
-                        <h3 className="cinema-name">{cinema.name}</h3>
-                        <div className="cinema-address">{cinema.address}</div>
+                    <div key={cinema.name} className="movie-detail-cinema-item">
+                      <div className="movie-detail-cinema-info">
+                        <h3 className="movie-detail-cinema-name">{cinema.name}</h3>
+                        <div className="movie-detail-cinema-address">{cinema.address}</div>
                       </div>
-                      <div className="showtime-buttons">
+                      <div className="movie-detail-showtime-buttons">
                         {cinema.showtimes.map((show, index) => (
                           <button 
                             key={index} 
-                            className={`time-btn ${
+                            className={`movie-detail-time-btn ${
                               selectedTime === show.time && selectedCinema?.name === cinema.name ? 'selected' : ''
                             }`}
                             onClick={() => handleTimeSelection(cinema, show.time, show.id)}
                           >
-                            <span className="time">{show.time}</span>
+                            <span className="movie-detail-time">{show.time}</span>
                           </button>
                         ))}
                       </div>
@@ -446,29 +465,28 @@ const MovieDetail = () => {
 
         {selectedTime && availableSeats.length > 0 && (
           <>
-            <div className="seats-section" ref={seatsRef}>  {/* Add ref here */}
-              <h2 className="cinema-list-title text-center">
+            <div className="movie-detail-seats-section" ref={seatsRef}>
+              <h2 className="movie-detail-cinema-list-title text-center">
                 CHỌN GHẾ - {selectedCinema?.showtimes.find(s => s.time === selectedTime)?.roomName.toUpperCase()}
               </h2>
 
-              <div className="screen-container">
-                <div className="screen-wrapper">
-                  <img src="https://cinestar.com.vn/assets/images/img-screen.png" alt="Màn hình" className="screen-img" />
-                  <div className="screen-text">Màn hình</div>
+              <div className="movie-detail-screen-container">
+                <div className="movie-detail-screen-wrapper">
+                  <img src="https://cinestar.com.vn/assets/images/img-screen.png" alt="Màn hình" className="movie-detail-screen-img" />
+                  <div className="movie-detail-screen-text">Màn hình</div>
                 </div>
               </div>
 
-              <div className="seat-map">
+              <div className="movie-detail-seat-map">
                 {Object.entries(groupSeatsByRow(availableSeats))
                   .sort(([rowA], [rowB]) => {
-                    // Ensure COUPLE row is always last
                     if (rowA === "COUPLE") return 1;
                     if (rowB === "COUPLE") return -1;
                     return rowA.localeCompare(rowB);
                   })
                   .map(([row, seats]) => (
-                    <div key={row} className="seat-row">
-                      <div className="row-label">{row === "COUPLE" ? "Đôi" : row}</div>
+                    <div key={row} className="movie-detail-seat-row">
+                      <div className="movie-detail-row-label">{row === "COUPLE" ? "Đôi" : row}</div>
                       {seats
                         .sort((a, b) => {
                           const numA = parseInt(a.seatNumber.slice(1));
@@ -480,18 +498,17 @@ const MovieDetail = () => {
                 ))}
               </div>
 
-              <div className="seat-types">
+              <div className="movie-detail-seat-types">
                 {seatTypes.map((type) => (
-                  <div key={type.type} className="seat-type">
-                    <div className={`seat-example ${type.type}`}></div>
-                    <span className="seat-label">{type.label}</span>
+                  <div key={type.type} className="movie-detail-seat-type">
+                    <div className={`movie-detail-seat-example ${type.type}`}></div>
+                    <span className="movie-detail-seat-label">{type.label}</span>
                   </div>
                 ))}
               </div>
             </div>
 
-            {/* Add PopcornDrink component here */}
-            <PopcornDrink />
+            <PopcornDrink onSelectionChange={handleProductSelectionChange} />
           </>
         )}
       </div>
@@ -504,12 +521,14 @@ const MovieDetail = () => {
           cinemaAddress={selectedCinema?.address || ''}
           showTime={`${selectedTime} - ${selectedDate}`}
           selectedSeats={selectedSeats}
-          showtimeId={selectedShowtimeId} // Ensure it's passed as is
+          showtimeId={selectedShowtimeId}
           totalPrice={calculateTotalPrice()}
+          selectedProducts={selectedProducts}
           onConfirm={(movieInfo) => {
             console.log('Payment confirmed:', {
               ...movieInfo,
-              showtimeId: selectedShowtimeId // Log to verify
+              showtimeId: selectedShowtimeId,
+              products: selectedProducts
             });
           }}
         />,
