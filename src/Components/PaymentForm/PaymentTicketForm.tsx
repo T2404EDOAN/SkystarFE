@@ -68,7 +68,7 @@ const PaymentTicketForm: React.FC<PaymentFormProps> = (props) => {
     const checkSeatsStatus = async () => {
       try {
         const response = await axios.get(
-          `http://localhost:8080/api/seats/${props.showtimeId}/check-seats`
+          `http://18.205.19.89:8080/api/seats/${props.showtimeId}/check-seats`
         );
         const unavailableSeats = response.data;
         

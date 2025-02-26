@@ -85,7 +85,7 @@ const MovieDetail = () => {
   useEffect(() => {
     const fetchMovieDetail = async () => {
       try {
-        const response = await axios.get(`http://localhost:8080/api/movies/${movieId}`);
+        const response = await axios.get(`http://18.205.19.89:8080/api/movies/${movieId}`);
         setMovieData(response.data);
         const grouped = groupShowtimesByDate(response.data.showtimes);
         setGroupedShowtimes(grouped);
@@ -110,7 +110,7 @@ const MovieDetail = () => {
 
   const fetchSeats = async (showtimeId) => {
     try {
-      const response = await axios.get(`http://localhost:8080/api/showtimes/${showtimeId}/seats`);
+      const response = await axios.get(`http://18.205.19.89:8080/api/showtimes/${showtimeId}/seats`);
       setAvailableSeats(response.data.content);
     } catch (error) {
       console.error('Error fetching seats:', error);
@@ -156,7 +156,7 @@ const MovieDetail = () => {
   
     try {
       if (selectedShowtimeId) {
-        const url = `http://localhost:8080/api/seats/${selectedShowtimeId}/hold`;
+        const url = `http://18.205.19.89:8080/api/seats/${selectedShowtimeId}/hold`;
         const requestData = {
           seatId: seat.id,
           // Add userId if user is logged in
@@ -302,6 +302,7 @@ const MovieDetail = () => {
             className="movie-detail-poster" 
           />
           <div className="movie-detail-info">
+            <div>
             <h1 className="movie-detail-title">{movieData.title}</h1>
             <ul className="movie-detail-info-list">
               <li className="movie-detail-info-item">
@@ -379,6 +380,7 @@ const MovieDetail = () => {
                 {movieData.ageRating}
               </li>
             </ul>
+            </div>
             <div>
               <h3 className="movie-detail-section-title1">Mô Tả</h3>
               <p>Đạo diễn: {movieData.director}<br />
@@ -392,19 +394,17 @@ const MovieDetail = () => {
               className="movie-detail-trailer-button"
               onClick={handleTrailerClick}
             >
-              <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    width="40"
-                    height="40"
-                    fill="#FFA500" 
-                    className="bi bi-play-circle dark:text-white mr-2"
-                    viewBox="0 0 16 16"
-                  >
-                    <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14m0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16" />
-                    <path d="M6.271 5.055a.5.5 0 0 1 .52.038l3.5 2.5a.5.5 0 0 1 0 .814l-3.5 2.5A.5.5 0 0 1 6 10.5v-5a.5.5 0 0 1 .271-.445" />
-                  </svg>
-                  <span className="movie-detail-trailer-text">
-              Xem Trailer
+              <div className="trailer-icon-circle">
+                <img
+                  src="https://cinestar.com.vn/assets/images/ic-play-circle-red.svg"
+                  alt="Play Trailer"
+                  width="40"
+                  height="40"
+                  className="mr-2"
+                />
+              </div>
+              <span className="movie-detail-trailer-text">
+                Xem Trailer
               </span>
             </div>
           </div>

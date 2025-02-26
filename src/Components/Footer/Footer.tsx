@@ -1,7 +1,7 @@
 import React from "react";
 import { FaYoutube, FaFacebook, FaTiktok, FaWhatsapp } from "react-icons/fa";
 import { Link } from "react-router";
-import "./Footer.css";
+import "./FooterStyles.css"; // Updated import statement
 
 const Footer: React.FC = () => {
   return (
@@ -18,7 +18,7 @@ const Footer: React.FC = () => {
             />
             <p className="footer-tagline">BE HAPPY, BE A STAR</p>
             <div className="footer-buttons">
-              <button className="footer-button footer-button-yellow">
+              <div className="footer-button footer-button-yellow">
                 <Link
                   to="/mua-ve"
                   className="footer-button-link"
@@ -30,8 +30,8 @@ const Footer: React.FC = () => {
                   />
                   <span>ĐẶT VÉ NGAY</span>
                 </Link>
-              </button>
-              <button className="footer-button footer-button-purple">
+              </div>
+              <div className="footer-button footer-button-purple">
                 <Link
                   to="/bap-nuoc"
                   className="footer-button-link"
@@ -43,7 +43,7 @@ const Footer: React.FC = () => {
                   />
                   <span>ĐẶT BẮP NƯỚC</span>
                 </Link>
-              </button>
+              </div>
             </div>
             <div className="footer-social-icons">
               <FaYoutube className="footer-social-icon" />

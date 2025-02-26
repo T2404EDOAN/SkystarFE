@@ -90,7 +90,7 @@ const NowPlayingMovies: React.FC = () => {
         setIsLoading(true);
         setError(null);
         const response = await axios.get(
-          "http://localhost:8080/api/movies",
+          "http://18.205.19.89:8080/api/movies",
           {
             headers: {
               Accept: "application/json",
@@ -336,17 +336,15 @@ const NowPlayingMovies: React.FC = () => {
               </div>
               <div className="nowplaying-actions">
                 <div className="nowplaying-trailer-button" onClick={(e) => { e.stopPropagation(); handleTrailerClick(movie.trailerUrl || ""); }}>
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    width="24"
-                    height="24"
-                    fill="#FFA500" // Changed to orange color
-                    className="bi bi-play-circle dark:text-white mr-2"
-                    viewBox="0 0 16 16"
-                  >
-                    <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14m0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16" />
-                    <path d="M6.271 5.055a.5.5 0 0 1 .52.038l3.5 2.5a.5.5 0 0 1 0 .814l-3.5 2.5A.5.5 0 0 1 6 10.5v-5a.5.5 0 0 1 .271-.445" />
-                  </svg>
+                  <div className="nowplaying-trailer-icon-circle">
+                    <img
+                      src="https://cinestar.com.vn/assets/images/ic-play-circle-red.svg"
+                      alt="Play Trailer"
+                      width="23"
+                      height="23"
+                      className="mr-2"
+                    />
+                  </div>
                   <span style={{ marginLeft: "0.5rem", fontSize: "14px" }}>
                     Xem Trailer
                   </span>

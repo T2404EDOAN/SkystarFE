@@ -90,7 +90,7 @@ const ComingSoonMovies: React.FC = () => {
         setIsLoading(true);
         setError(null);
         const response = await axios.get(
-          "http://localhost:8080/api/movies",
+          "http://18.205.19.89:8080/api/movies",
           {
             headers: {
               Accept: "application/json",
