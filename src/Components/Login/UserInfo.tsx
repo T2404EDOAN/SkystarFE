@@ -2,6 +2,8 @@ import React, { useState } from "react";
 import axios from "axios";
 import { useAuth } from "../../context/AuthContext";
 import { useNavigate } from "react-router-dom";
+import { Space, Table, Tag } from "antd";
+import { UserOutlined } from "@ant-design/icons";
 import "./UserInfo.css";
 
 interface UserFormData {
@@ -16,6 +18,29 @@ interface PasswordFormData {
   newPassword: string;
   confirmPassword: string;
 }
+interface DataType {
+  key: React.Key;
+  firstName: string;
+  lastName: string;
+  age: number;
+  address: string;
+  tags: string[];
+}
+interface Showtime {
+  id: number;
+  movieName: string;
+  theatresName: string;
+  theaterAddress: string;
+}
+
+interface BookingHistory {
+  id: number;
+  bookingNumber: string;
+  showtime: Showtime;
+  totalAmount: number;
+  bookingDate: string;
+  createdAt: string;
+}
 
 const UserInfo: React.FC = () => {
   const { user, isAuthenticated, updateUser } = useAuth();
@@ -23,7 +48,7 @@ const UserInfo: React.FC = () => {
   const [activeTab, setActiveTab] = useState("personal");
   const [message, setMessage] = useState({ type: "", content: "" });
   const [loading, setLoading] = useState(false);
-
+  const { Column, ColumnGroup } = Table;
   const [userFormData, setUserFormData] = useState<UserFormData>({
     fullName: user?.fullName || "",
     dateOfBirth: user?.dateOfBirth || "",
@@ -36,7 +61,8 @@ const UserInfo: React.FC = () => {
     newPassword: "",
     confirmPassword: "",
   });
-
+  const [bookingHistory, setBookingHistory] = useState<BookingHistory[]>([]);
+  const [loadingHistory, setLoadingHistory] = useState(false);
   React.useEffect(() => {
     if (!isAuthenticated) {
       navigate("/login");
@@ -66,19 +92,35 @@ const UserInfo: React.FC = () => {
     setMessage({ type: "", content: "" });
 
     try {
-      const response = await axios.post(
+      const response = await axios.put(
         `http://localhost:8081/api/users/${user.id}`,
         userFormData
       );
-      console.log(response.data);
-      if (response.data.success) {
+
+      console.log("Update response:", response.data);
+
+      if (response.status === 200) {
+        // Cập nhật thông tin trong context
+        updateUser({
+          ...user,
+          ...userFormData,
+        });
+
+        // Cập nhật form data với thông tin mới
+        setUserFormData({
+          fullName: userFormData.fullName,
+          dateOfBirth: userFormData.dateOfBirth,
+          phoneNumber: userFormData.phoneNumber,
+          email: userFormData.email,
+        });
+
         setMessage({
           type: "success",
           content: "Cập nhật thông tin thành công!",
         });
-        updateUser(response.data.user);
       }
     } catch (error) {
+      console.error("Update error:", error);
       if (axios.isAxiosError(error)) {
         setMessage({
           type: "error",
@@ -91,6 +133,8 @@ const UserInfo: React.FC = () => {
   };
   const handlePasswordSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+
+    // Kiểm tra mật khẩu mới khớp không
     if (passwordFormData.newPassword !== passwordFormData.confirmPassword) {
       setMessage({
         type: "error",
@@ -101,19 +145,37 @@ const UserInfo: React.FC = () => {
 
     setLoading(true);
     try {
+      // Verify mật khẩu cũ
+      const verifyResponse = await axios.get(
+        `http://localhost:8081/api/users/${user.id}`
+      );
+
+      // Kiểm tra mật khẩu cũ
+      if (verifyResponse.data.password !== passwordFormData.currentPassword) {
+        setMessage({
+          type: "error",
+          content: "Mật khẩu cũ không chính xác!",
+        });
+        return; // Return luôn khi sai mật khẩu cũ
+      }
+
+      // Thay đổi mật khẩu
       const response = await axios.put(
-        `http://localhost:8081/api/users/${user.id}/change-password`,
+        `http://localhost:8081/api/users/${user.id}`,
         {
-          currentPassword: passwordFormData.currentPassword,
-          newPassword: passwordFormData.newPassword,
+          ...verifyResponse.data,
+          password: passwordFormData.newPassword,
         }
       );
 
-      if (response.data.success) {
+      // Kiểm tra kết quả và reset form
+      if (response.status === 200) {
         setMessage({
           type: "success",
           content: "Đổi mật khẩu thành công!",
         });
+
+        // Reset form ngay sau khi thành công
         setPasswordFormData({
           currentPassword: "",
           newPassword: "",
@@ -121,16 +183,60 @@ const UserInfo: React.FC = () => {
         });
       }
     } catch (error) {
-      if (axios.isAxiosError(error)) {
-        setMessage({
-          type: "error",
-          content: error.response?.data?.message || "Đổi mật khẩu thất bại!",
-        });
-      }
+      console.error("Password change error:", error);
+      setMessage({
+        type: "error",
+        content: "Đổi mật khẩu thất bại!",
+      });
     } finally {
       setLoading(false);
     }
   };
+
+  const fetchBookingHistory = async () => {
+    setLoadingHistory(true);
+    try {
+      const response = await axios.get(
+        `http://localhost:8081/api/bookings/${user.id}`
+      );
+      setBookingHistory(response.data);
+    } catch (error) {
+      console.error("Error fetching booking history:", error);
+    } finally {
+      setLoadingHistory(false);
+    }
+  };
+  React.useEffect(() => {
+    if (activeTab === "history") {
+      fetchBookingHistory();
+    }
+  }, [activeTab]);
+  const data: DataType[] = [
+    {
+      key: "1",
+      firstName: "John",
+      lastName: "Brown",
+      age: 32,
+      address: "New York No. 1 Lake Park",
+      tags: ["nice", "developer"],
+    },
+    {
+      key: "2",
+      firstName: "Jim",
+      lastName: "Green",
+      age: 42,
+      address: "London No. 1 Lake Park",
+      tags: ["loser"],
+    },
+    {
+      key: "3",
+      firstName: "Joe",
+      lastName: "Black",
+      age: 32,
+      address: "Sydney No. 1 Lake Park",
+      tags: ["cool", "teacher"],
+    },
+  ];
   const renderTabContent = () => {
     switch (activeTab) {
       case "personal":
@@ -145,13 +251,12 @@ const UserInfo: React.FC = () => {
               )}
               <div className="info-mini-box">
                 <div className="info-box">
-                  <label htmlFor="fullname">Họ và tên</label>
+                  <label htmlFor="fullName">Họ và tên</label>
                   <input
                     type="text"
-                    id="fullname"
+                    id="fullName"
                     value={userFormData.fullName}
                     onChange={handleUserInfoChange}
-                    required
                   />
                 </div>
                 <div className="info-box">
@@ -161,7 +266,6 @@ const UserInfo: React.FC = () => {
                     id="dateOfBirth"
                     value={userFormData.dateOfBirth}
                     onChange={handleUserInfoChange}
-                    required
                   />
                 </div>
               </div>
@@ -173,7 +277,6 @@ const UserInfo: React.FC = () => {
                     id="phoneNumber"
                     value={userFormData.phoneNumber}
                     onChange={handleUserInfoChange}
-                    required
                   />
                 </div>
                 <div className="info-box">
@@ -183,7 +286,6 @@ const UserInfo: React.FC = () => {
                     id="email"
                     value={userFormData.email}
                     onChange={handleUserInfoChange}
-                    required
                   />
                 </div>
               </div>
@@ -201,6 +303,7 @@ const UserInfo: React.FC = () => {
                   name="currentPassword"
                   value={passwordFormData.currentPassword}
                   onChange={handlePasswordChange}
+                  placeholder="Nhập mật khẩu cũ"
                   required
                 />
               </div>
@@ -211,6 +314,7 @@ const UserInfo: React.FC = () => {
                   name="newPassword"
                   value={passwordFormData.newPassword}
                   onChange={handlePasswordChange}
+                  placeholder="Nhập mật khẩu mới"
                   required
                 />
               </div>
@@ -223,6 +327,7 @@ const UserInfo: React.FC = () => {
                   name="confirmPassword"
                   value={passwordFormData.confirmPassword}
                   onChange={handlePasswordChange}
+                  placeholder="Nhập lại mật khẩu mới"
                   required
                 />
               </div>
@@ -235,7 +340,44 @@ const UserInfo: React.FC = () => {
       case "member":
         return <div>Thông tin thành viên Cinestar</div>;
       case "history":
-        return <div>Lịch sử mua hàng của bạn</div>;
+        return (
+          <div className="user-info-section1">
+            <Table<BookingHistory>
+              dataSource={bookingHistory}
+              pagination={false}
+              loading={loadingHistory}
+              rowKey="id"
+            >
+              <Column
+                title="Mã Sản Phẩm"
+                dataIndex="bookingNumber"
+                key="bookingNumber"
+              />
+              <Column
+                title="Tên Phim"
+                dataIndex={["showtime", "movieName"]}
+                key="movieName"
+              />
+              <Column
+                title="Ngày Đặt"
+                dataIndex="bookingDate"
+                key="bookingDate"
+                render={(date) => new Date(date).toLocaleDateString("vi-VN")}
+              />
+              <Column
+                title="Địa chỉ"
+                dataIndex={["showtime", "theaterAddress"]}
+                key="theaterAddress"
+              />
+              <Column
+                title="Tổng tiền"
+                dataIndex="totalAmount"
+                key="totalAmount"
+                render={(amount) => `${amount.toLocaleString("vi-VN")} đ`}
+              />
+            </Table>
+          </div>
+        );
       default:
         return null;
     }
@@ -253,7 +395,23 @@ const UserInfo: React.FC = () => {
       </div>
       <div className="sidebar">
         <div className="profile">
-          <h2>{user.fullName}</h2>
+          <div className="profile-mini">
+            <div className="info-img1">
+              {user.avatarUrl ? (
+                <img
+                  className="img11"
+                  src={user.avatarUrl}
+                  alt={user.fullName}
+                />
+              ) : (
+                <UserOutlined className="default-avatar-icon" />
+              )}
+            </div>
+            <div className="info-mini1">
+              <p>{user.fullName}</p>
+              <span>Thay đổi ảnh đại diện</span>
+            </div>
+          </div>
           <div className="c-friends">
             <h3>C'Friends</h3>
             <div className="tich-diem-c-friends">

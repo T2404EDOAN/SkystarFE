@@ -22,7 +22,20 @@ const Login = () => {
   const [phoneNumber, setPhoneNumber] = useState("");
   const [username, setUsername] = useState("");
   const [address, setAddress] = useState("");
+  const [rememberPassword, setRememberPassword] = useState(false);
   const navigate = useNavigate(); // Initialize navigate
+
+  // Kiểm tra local storage khi component mount
+  React.useEffect(() => {
+    const savedCredentials = localStorage.getItem("userCredentials");
+    if (savedCredentials) {
+      const { identifier: savedIdentifier, password: savedPassword } =
+        JSON.parse(savedCredentials);
+      setIdentifier(savedIdentifier);
+      setPassword(savedPassword);
+      setRememberPassword(true);
+    }
+  }, []);
 
   const togglePasswordVisibility = () => {
     setPasswordVisible(!passwordVisible);
@@ -41,12 +54,24 @@ const Login = () => {
         setLoginError("");
 
         const response = await axios.post(
-          "http://35.175.173.235:8080/api/users/login",
+          "http://localhost:8081/api/users/login",
           {
             email: identifier,
             password: password,
           }
         );
+
+        // Nếu đăng nhập thành công và checkbox được chọn
+        if (response.data && rememberPassword) {
+          localStorage.setItem(
+            "userCredentials",
+            JSON.stringify({ identifier, password })
+          );
+        } else if (!rememberPassword) {
+          // Xóa thông tin đăng nhập nếu không check
+          localStorage.removeItem("userCredentials");
+        }
+
         console.log("Login successful", response.data);
         const userData = response.data;
         login(userData);
@@ -75,7 +100,7 @@ const Login = () => {
 
       try {
         const response = await axios.post(
-          "http://35.175.173.235:8080/api/users/register",
+          "http://localhost:8081/api/users/register",
           {
             email: identifier,
             password: password,
@@ -199,7 +224,12 @@ const Login = () => {
             </div>
             <div className="login-form-group">
               <label className="login-remember-me">
-                <input type="checkbox" className="login-form-checkbox" />
+                <input
+                  type="checkbox"
+                  className="login-form-checkbox"
+                  checked={rememberPassword}
+                  onChange={(e) => setRememberPassword(e.target.checked)}
+                />
                 <span className="login-space">Lưu mật khẩu đăng nhập</span>
               </label>
             </div>
