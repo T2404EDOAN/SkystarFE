@@ -4,22 +4,22 @@ import "./PromotionSection.css"; // Import the new CSS file
 const promotions = [
   {
     image:
-      "https://cinestar.com.vn/_next/image/?url=https%3A%2F%2Fapi-website.cinestar.com.vn%2Fmedia%2FMageINIC%2Fbannerslider%2Fmonday_1_.webp&w=1920&q=75",
+      "https://skystarimages.s3.us-east-1.amazonaws.com/products/45kt2.JPEG",
     title: "Ngày Thành Viên - Thứ 4 45K",
   },
   {
     image:
-      "https://cinestar.com.vn/_next/image/?url=https%3A%2F%2Fapi-website.cinestar.com.vn%2Fmedia%2FMageINIC%2Fbannerslider%2Fkm-m-2.webp&w=1920&q=75",
+      "https://skystarimages.s3.us-east-1.amazonaws.com/products/45kHSSV.jpeg",
     title: "Học Sinh, Sinh Viên 45K",
   },
   {
     image:
-      "https://cinestar.com.vn/_next/image/?url=https%3A%2F%2Fapi-website.cinestar.com.vn%2Fmedia%2FMageINIC%2Fbannerslider%2Fkm-m-3.webp&w=1920&q=75",
+      "https://skystarimages.s3.us-east-1.amazonaws.com/products/45k10h.JPEG",
     title: "Trước 10h - Đồng Giá 45K",
   },
   {
     image:
-      "https://cinestar.com.vn/_next/image/?url=https%3A%2F%2Fapi-website.cinestar.com.vn%2Fmedia%2FMageINIC%2Fbannerslider%2Fkm-m-1.webp&w=1920&q=75",
+      "https://skystarimages.s3.us-east-1.amazonaws.com/products/45kwed.JPEG",
     title: "Sau 10h Tối - Đồng Giá 45K",
   },
 ];

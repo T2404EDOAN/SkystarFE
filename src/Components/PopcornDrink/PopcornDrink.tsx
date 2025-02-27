@@ -2,7 +2,7 @@ import React, { useState, useEffect }  from "react";
 import { Link } from "react-router-dom";
 import {  Row, Col, Button } from "react-bootstrap";
 import 'bootstrap/dist/css/bootstrap.min.css';
-import 'bootstrap/dist/js/bootstrap.bundle.min.js'; 
+
 import 'bootstrap-icons/font/bootstrap-icons.css';
 import "./PopcornDrink.css";
 import banner from "../PopcornDrink/ImagesPop/bannerPop.jpg";

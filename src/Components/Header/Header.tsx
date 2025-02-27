@@ -170,10 +170,10 @@ const Header: React.FC = () => {
                 </div>
               </Dropdown>
             ) : (
-              <Link to="/Login" className="user-actions">
+             <div>
                 <UserOutlined className="user-icon" />
                 <div className="user-text">Đăng nhập</div>
-              </Link>
+              </div>
             )}
           </div>
         </div>

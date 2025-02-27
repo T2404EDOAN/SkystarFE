@@ -51,7 +51,7 @@
 }
 
 .showtime-info span:not(:last-child) {
-  margin-right: 0.5rem;
+ 
 }
 
 .vertical-divider {
@@ -141,7 +141,7 @@
 }
 
 .cinema-info, .showtime-info {
-  margin: 10px 0;
+  margin-top: 10px;
   font-size: 16px;
   color: #f8fafc;
 }

@@ -245,6 +245,18 @@
     font-family: "Anton", sans-serif;
 }
 
+button.seat.available, button.seat.booked {
+    width: 40px;
+    height: 29px;
+    border-radius: 6px;
+    
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 14px;
+    font-family: "Anton", sans-serif;
+}
+
 .movie-detail-seat-example.standard {
     background-color: #f8fafc;
     color: #639;
@@ -278,6 +290,7 @@
     background-color: #4a4a4a;
     color: #666;
     border-color: #666;
+    
 }
 
 .movie-detail-screen-container {
@@ -383,8 +396,14 @@
     transition: none;
     border-color: transparent;
     color: #639;
-    background: #f3ea28;
+    background: #f3ea28; 
     transform: scale(1.1);
+}
+
+button.seat.selected {
+    background-color: #f3ea28 !important; 
+    color: #639 !important;
+    border-color: transparent !important;
 }
 
 .movie-detail-seat.booked {
@@ -451,6 +470,5 @@
   width: 50px;
   height: 50px;
   border-radius: 50%;
- 
   border: 1px solid white; 
 }

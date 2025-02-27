@@ -15,7 +15,7 @@
   overflow-x: hidden;
 }
 body{
-   color: white;
+   color: white !important;
 }
 @media (min-width: 1200px) {
   .main-content {

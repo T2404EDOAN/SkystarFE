@@ -38,7 +38,7 @@ const PaymentFormDetail = () => {
   const [email, setEmail] = useState("");
   const [ageVerified, setAgeVerified] = useState(false);
   const [termsAccepted, setTermsAccepted] = useState(false);
-  const [activeStep, setActiveStep] = useState(1); // Add this for tracking active step
+  const [activeStep, setActiveStep] = useState(1); 
   const [isLoading, setIsLoading] = useState(false);
 
   // Add new state for payment status
@@ -139,17 +139,16 @@ const PaymentFormDetail = () => {
           totalSeats: movieInfo.selectedSeats.length,
           totalAmount: movieInfo.totalPrice,
           seatIds: movieInfo.selectedSeats.map(seat => seat.id),
-          user: user  // Changed from userId to user object
+          user: user  
         };
 
-        // Add console.log here to see booking data with user object
         console.log('Booking Data being sent:', {
           bookingData,
           movieInfo: {
             title: movieInfo?.title,
             showTime: movieInfo?.showTime,
             selectedSeats: movieInfo?.selectedSeats,
-            user: user // Log user object for verification
+            user: user 
           }
         });
 
@@ -357,6 +356,14 @@ const PaymentFormDetail = () => {
                   <p>Suất chiếu: {paymentStatus.details.showtime}</p>
                   <p>Số tiền: {paymentStatus.details.totalAmount.toLocaleString('vi-VN')} VND</p>
                   <p>Trạng thái: Đã thanh toán</p>
+                  {movieInfo.selectedProducts && movieInfo.selectedProducts.length > 0 && (
+                    <div className="selected-products-list">
+                      <h3>Sản phẩm đã chọn:</h3>
+                      {movieInfo.selectedProducts.map((product, index) => (
+                        <p key={index}>{product.name} x {product.quantity}</p>
+                      ))}
+                    </div>
+                  )}
                 </div>
                 <div className="payment-actions">
                   <button 
@@ -387,7 +394,7 @@ const PaymentFormDetail = () => {
             <div className="skystar-payment-movie-info">
               <div className="info-row movie-title-row">
                 <div className="title-hold">
-                  <div className="movie-details">
+                  <div className="payment-movie-details">
                     <span className="movie-name">{movieInfo?.title}</span>
                     <span className="movie-genre">{movieInfo?.movieType || 'Phim'}</span>
                   </div>
@@ -432,6 +439,20 @@ const PaymentFormDetail = () => {
                   </span>
                 </div>
               </div>
+
+              <div className="info-row concession-info-row">
+                <div className="concession-details">
+                  <span className="detail-label">Bắp nước:</span>
+                  <span className="detail-value">
+                    {movieInfo?.selectedProducts && movieInfo.selectedProducts.map((product, index) => (
+                      <span key={index}>
+                        {product.name} x {product.quantity}
+                        {index < movieInfo.selectedProducts.length - 1 ? ', ' : ''}
+                      </span>
+                    ))}
+                  </span>
+                </div>
+              </div>
               
               <div className="info-row total-row">
                 <span className="label">Số tiền cần thanh toán</span>
@@ -440,6 +461,7 @@ const PaymentFormDetail = () => {
                 </span>
               </div>
             </div>
+            
           </div>
         )}
       </div>

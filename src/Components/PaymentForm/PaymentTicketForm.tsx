@@ -109,7 +109,6 @@ const PaymentTicketForm: React.FC<PaymentFormProps> = (props) => {
   };
 
   const handleProceedToPayment = () => {
- 
     navigate('/payment', {
       state: {
         title: props.title,
@@ -121,6 +120,7 @@ const PaymentTicketForm: React.FC<PaymentFormProps> = (props) => {
         totalPrice: calculateTotalPrice(),
         movieType: "Hành động",
         showtimeId: props.showtimeId,
+        selectedProducts: props.selectedProducts 
       }
     });
   };
@@ -148,7 +148,7 @@ const PaymentTicketForm: React.FC<PaymentFormProps> = (props) => {
                 <div className="selected-products-list">
                   {props.selectedProducts.map(product => (
                    
-                      <span>{product.name} x{product.quantity}</span>
+                      <span>{product.name} x {product.quantity}</span>
                       
                    
                   ))}
@@ -177,7 +177,7 @@ const PaymentTicketForm: React.FC<PaymentFormProps> = (props) => {
           >
             <div className="button-gradient"></div>
             <span className="book-button-text">
-              Đặt vé
+              ĐẶT VÉ
             </span>
           </button>
         </div>

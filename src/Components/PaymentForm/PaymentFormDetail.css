@@ -173,7 +173,7 @@
 .info-row {
   display: flex;
   justify-content: space-between;
-  margin-bottom: 0.75rem;
+  
 }
 
 .info-row:last-child {
@@ -239,8 +239,8 @@
   display: flex;
   justify-content: space-between;
   align-items: flex-start;
-  margin-bottom: 1rem;
-  padding-bottom: 0.5rem;
+  margin-bottom: 0.5rem;
+  
 }
 
 .title-hold {
@@ -268,8 +268,8 @@ font-family: "Anton", sans-serif;
 
 .cinema-info-row {
   align-items: flex-start;
-  margin-bottom: 1rem;
-  padding-bottom: 0.5rem;
+  margin-bottom: 0.5rem;
+
 }
 
 .cinema-details {
@@ -279,18 +279,17 @@ font-family: "Anton", sans-serif;
 }
 
 .cinema-name {
-  font-weight: 500;
+  font-size: 20px;
   margin-bottom: 4px;
 }
 
 .cinema-address {
-  font-size: 0.9em;
+  font-size:16px;
 }
 
 .showtime-info-row {
   align-items: flex-start;
-  margin-bottom: 1.5rem;
-  padding-bottom: 0.5rem;
+  margin-bottom: 1rem;
 }
 
 .showtime-details {
@@ -301,22 +300,43 @@ font-family: "Anton", sans-serif;
 }
 
 .time-label {
-  font-size: 0.9em;
+  font-size:16px;
  
   color: #FFD700;
   margin-bottom: 4px;
 }
 
 .time-value {
-  font-weight: 500;
+  font-size: 20px;
 }
 
 .room-info-row {
   display: grid;
-  grid-template-columns: repeat(4, 1fr);
+  grid-template-columns: repeat(4, 1fr); /* Trở lại 4 cột */
   gap: 1rem;
-  margin-bottom: 1.5rem;
-  padding-bottom: 0.5rem;
+  margin-bottom: 0.5rem;
+ 
+}
+
+.concession-info-row {
+  margin-top: 0.5rem;
+
+  
+}
+
+.concession-details {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.concession-details .detail-label {
+  min-width: 100px;
+}
+
+.concession-details .detail-value {
+  color: #fff;
+  flex: 1;
 }
 
 .room-details,
@@ -328,16 +348,22 @@ font-family: "Anton", sans-serif;
   gap: 4px;
 }
 
+.ticket-type .detail-value {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
 .detail-label {
-  font-size: 0.9em;
+  font-size: 16px;
  color: #FFD700;
 }
 
 .detail-value {
-  font-weight: 500;
+  font-size: 20px;
 }
 
-.movie-details {
+.payment-movie-details {
   display: flex;
   flex-direction: column;
   gap: 4px;
@@ -599,3 +625,20 @@ font-family: "Anton", sans-serif;
     opacity: 1;
   }
 }
+
+.selected-products-info {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-top: 10px;
+}
+
+.selected-products-info .detail-value {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: inline-block;
+  color: #fff;
+}
+
+
