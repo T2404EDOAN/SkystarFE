@@ -29,7 +29,7 @@ const NowPlayingMovies: React.FC = () => {
     rating: number;
     ratingCount: number | null;
     status: string;
-    genres: [];
+    genres: Array<{ id: number; name: string }>;  // Update this line
   }
 
   const [movies, setMovies] = useState<Movie[]>([]);
@@ -98,7 +98,7 @@ const NowPlayingMovies: React.FC = () => {
             },
           }
         );
-
+console.log(response.data);
         const moviesData = Array.isArray(response.data)
           ? response.data
           : response.data.content || [];
@@ -264,7 +264,7 @@ const NowPlayingMovies: React.FC = () => {
                             d="M15.583 8.445h.01M10.86 19.71l-6.573-6.63a.993.993 0 0 1 0-1.4l7.329-7.394A.98.98 0 0 1 12.31 4l5.734.007A1.968 1.968 0 0 1 20 5.983v5.5a.992.992 0 0 1-.316.727l-7.44 7.5a.974.974 0 0 1-1.384.001Z"
                           />
                         </svg>{" "}
-                        {movie.genres || "Chưa cập nhật thể loại"}
+                        {movie.genres ? movie.genres.map(genre => genre.name).join(', ') : "Chưa cập nhật thể loại"}
                       </p>
                       <p className="nowplaying-info-duration">
                         <svg

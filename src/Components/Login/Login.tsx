@@ -54,7 +54,7 @@ const Login = () => {
         setLoginError("");
 
         const response = await axios.post(
-          "http://18.205.19.89:8081/api/users/login",
+          "http://18.205.19.89:8080/api/users/login",
           {
             email: identifier,
             password: password,
@@ -100,7 +100,7 @@ const Login = () => {
 
       try {
         const response = await axios.post(
-          "http://18.205.19.89:8081/api/users/register",
+          "http://18.205.19.89:8080/api/users/register",
           {
             email: identifier,
             password: password,

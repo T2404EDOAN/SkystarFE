@@ -89,7 +89,7 @@ const BookTickets: React.FC = () => {
       console.log("Initial search params:", params);
 
       const response = await axios.get(
-        "http://18.205.19.89:8081/api/movies/search",
+        "http://18.205.19.89:8080/api/movies/search",
         { params }
       );
       console.log("API response:", response.data);
@@ -158,7 +158,7 @@ const BookTickets: React.FC = () => {
       console.log("Search params for date change:", params);
 
       const response = await axios.get(
-        "http://18.205.19.89:8081/api/movies/search",
+        "http://18.205.19.89:8080/api/movies/search",
         { params }
       );
       console.log("Date change API response:", response.data);

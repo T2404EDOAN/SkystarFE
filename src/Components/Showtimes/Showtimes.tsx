@@ -99,7 +99,7 @@ const Showtimes: React.FC = () => {
           cinema: "",
         };
         const filterResponse = await axios.get(
-          "http://18.205.19.89:8081/api/movies/search",
+          "http://18.205.19.89:8080/api/movies/search",
           { params }
         );
         setFilteredMovies(filterResponse.data);
@@ -131,7 +131,7 @@ const Showtimes: React.FC = () => {
       };
       console.log("Params sent to backend:", params);
       const response = await axios.get(
-        "http://18.205.19.89:8081/api/movies/search",
+        "http://18.205.19.89:8080/api/movies/search",
         {
           params,
         }
