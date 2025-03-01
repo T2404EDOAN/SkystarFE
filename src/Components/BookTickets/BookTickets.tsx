@@ -25,154 +25,73 @@ const BookTickets: React.FC = () => {
   const [activeTab, setActiveTab] = useState("dangChieu");
   const [loading, setLoading] = useState(true);
   const [filteredMovies, setFilteredMovies] = useState([]);
-  const [dates, setDates] = useState<DateOption[]>([]);
-  const [selectedDate, setSelectedDate] = useState("");
-  useEffect(() => {
-    if (selectedTheater) {
-      console.log("Current theater in BookTickets:", selectedTheater);
-    }
-  }, [selectedTheater]);
-  const tabs = [
-    { id: "dangChieu", label: "PHIM ĐANG CHIẾU" },
-    { id: "sapChieu", label: "PHIM SẮP CHIẾU" },
-    { id: "dacBiet", label: "SUẤT CHIẾU ĐẶC BIỆT" },
-    { id: "bangGia", label: "BẢNG GIÁ VÉ" },
-  ];
-  interface Schedule {
-    date: string;
-    sessions: {
-      [key: string]: string[];
+  const [lastFetchParams, setLastFetchParams] = useState({
+    theaterId: null,
+    status: null,
+  });
+
+  const getStatusFromTab = (tabKey: string) => {
+    const statusMap = {
+      dangChieu: "NOW_SHOWING",
+      sapChieu: "COMING_SOON",
+      dacBiet: "SPECIAL",
     };
-  }
-  useEffect(() => {
-    initializeData();
-  }, [selectedTheater]);
-
-  const initializeData = async () => {
-    try {
-      setLoading(true);
-
-      // Log selected theater
-      console.log("Selected theater:", selectedTheater.name);
-
-      // Tạo mảng ngày cho 7 ngày tới
-      const today = new Date();
-      const next7Days: DateOption[] = [];
-
-      for (let i = 0; i < 7; i++) {
-        const date = new Date(today);
-        date.setDate(today.getDate() + i);
-        next7Days.push({
-          date: date.toISOString().split("T")[0],
-          display: `${date.toLocaleDateString("vi-VN", {
-            weekday: "long",
-          })}, ${date.toLocaleDateString("vi-VN")}`,
-        });
-      }
-      setDates(next7Days);
-      const ciname1 = selectedTheater.name;
-      // Log dates array
-      console.log("Available dates:", next7Days);
-
-      // Set ngày mặc định và lọc phim ban đầu
-      const defaultDate = today.toISOString().split("T")[0];
-      console.log("Default selected date:", defaultDate);
-
-      setSelectedDate(defaultDate);
-
-      // Gọi API với params mặc định
-      const params = {
-        title: "",
-        searchDate: defaultDate,
-        cinema: ciname1 || "",
-      };
-      console.log("Initial search params:", params);
-
-      const response = await axios.get(
-        "http://18.205.19.89:8080/api/movies/search",
-        { params }
-      );
-      console.log("API response:", response.data);
-
-      // Lọc phim theo tab dựa vào ngày
-      filterMoviesByDateAndTab(response.data, defaultDate, "dangChieu");
-    } catch (error) {
-      console.error("Error initializing data:", error);
-      message.error("Có lỗi xảy ra khi tải dữ liệu");
-    } finally {
-      setLoading(false);
-    }
+    return statusMap[tabKey] || "NOW_SHOWING";
   };
-  const filterMoviesByDateAndTab = (
-    movies: any[],
-    date: string,
-    tab: string
+
+  const fetchMoviesByTheaterAndStatus = async (
+    theater: Theater,
+    status: string
   ) => {
-    console.log("Filtering movies with params:", { movies, date, tab });
+    // Log để debug
+    console.log("Theater object:", theater);
+    console.log("Theater ID:", theater?.id);
 
-    const today = new Date().toISOString().split("T")[0];
-    console.log("Today's date:", today);
-
-    const selectedDateObj = new Date(date);
-    const todayObj = new Date(today);
-
-    let filtered = movies;
-
-    // Lọc theo tab
-    if (tab === "dangChieu") {
-      // Chỉ hiện phim có ngày chiếu là today
-      filtered = movies.filter((movie) => {
-        const movieDate = new Date(date).toISOString().split("T")[0];
-        const isShowing = movieDate === today;
-        console.log("Movie date check:", { movieDate, isShowing });
-        return isShowing;
-      });
-    } else if (tab === "sapChieu") {
-      // Chỉ hiện phim có ngày chiếu từ 6 ngày sau trở đi
-      const sixDaysLater = new Date(todayObj);
-      sixDaysLater.setDate(todayObj.getDate() + 6);
-      console.log("Six days later:", sixDaysLater);
-
-      filtered = movies.filter((movie) => {
-        const movieDate = new Date(date);
-        const isComingSoon = movieDate >= sixDaysLater;
-        console.log("Coming soon check:", { movieDate, isComingSoon });
-        return isComingSoon;
-      });
+    if (!theater?.id) {
+      console.error("No theater ID available");
+      return;
     }
 
-    console.log("Filtered movies result:", filtered);
-    setFilteredMovies(filtered);
-  };
-  const handleDateChange = async (date: string) => {
-    console.log("Date changed to:", date);
     try {
       setLoading(true);
-      setSelectedDate(date);
-
       const params = {
-        title: "",
-        searchDate: date,
-        cinema: selectedTheater.name || "",
+        theaterId: theater.id,
+        status: status,
       };
-      console.log("Search params for date change:", params);
+
+      console.log("Request params:", params);
 
       const response = await axios.get(
-        "http://18.205.19.89:8080/api/movies/search",
-        { params }
+        "http://localhost:8081/api/movies/filter",
+        {
+          params,
+        }
       );
-      console.log("Date change API response:", response.data);
-
-      filterMoviesByDateAndTab(response.data, date, activeTab);
+      console.log("API Response:", response.data);
+      setFilteredMovies(response.data);
     } catch (error) {
-      console.error("Error filtering by date:", error);
+      console.error("Fetch error:", error);
+      setFilteredMovies([]);
     } finally {
       setLoading(false);
     }
   };
+
+  useEffect(() => {
+    if (selectedTheater?.id) {
+      const status = getStatusFromTab(activeTab);
+      console.log("Selected theater:", selectedTheater);
+      console.log("Theater ID:", selectedTheater.id);
+      console.log("Status:", status);
+
+      fetchMoviesByTheaterAndStatus(selectedTheater, status);
+    } else {
+      console.log("No theater selected or missing ID");
+    }
+  }, [selectedTheater, activeTab]);
+
   const handleTabChange = (key: string) => {
     setActiveTab(key);
-    filterMoviesByDateAndTab(filteredMovies, selectedDate, key);
   };
 
   const moviesNowShowing = [
@@ -336,6 +255,27 @@ const BookTickets: React.FC = () => {
       schedule: [],
     },
   ];
+  const groupShowtimesByDate = (showtimes: any[]) => {
+    return showtimes.reduce((acc, showtime) => {
+      const date = new Date(showtime.showDate).toLocaleDateString("vi-VN", {
+        weekday: "long",
+        year: "numeric",
+        month: "numeric",
+        day: "numeric",
+      });
+
+      if (!acc[date]) {
+        acc[date] = [];
+      }
+
+      acc[date].push(showtime);
+
+      // Sắp xếp theo thời gian
+      acc[date].sort((a, b) => a.showTime.localeCompare(b.showTime));
+
+      return acc;
+    }, {});
+  };
 
   return (
     <div className="book-tickets-container">
@@ -390,12 +330,12 @@ const BookTickets: React.FC = () => {
         <TabPane tab="PHIM ĐANG CHIẾU" key="dangChieu">
           <div className="tab-title">PHIM ĐANG CHIẾU</div>
           <div className="movie-grid">
-            {moviesNowShowing.map((movie) => (
+            {filteredMovies.map((movie) => (
               <div key={movie.id} className="movie-card">
                 {/* Cột bên trái: Ảnh */}
                 <div className="movie-poster">
                   <img
-                    src={movie.poster}
+                    src={movie.posterUrl}
                     alt={movie.title}
                     className="movie-poster-img"
                   />
@@ -423,7 +363,7 @@ const BookTickets: React.FC = () => {
                           d="M15.583 8.445h.01M10.86 19.71l-6.573-6.63a.993.993 0 0 1 0-1.4l7.329-7.394A.98.98 0 0 1 12.31 4l5.734.007A1.968 1.968 0 0 1 20 5.983v5.5a.992.992 0 0 1-.316.727l-7.44 7.5a.974.974 0 0 1-1.384.001Z"
                         />
                       </svg>
-                      {movie.genres.join(", ")}
+                      {movie.genres.map((genre) => genre.name).join(", ")}
                     </p>
                     <p className="movie-detail-item">
                       <svg
@@ -461,7 +401,7 @@ const BookTickets: React.FC = () => {
                           d="M4.37 7.657c2.063.528 2.396 2.806 3.202 3.87 1.07 1.413 2.075 1.228 3.192 2.644 1.805 2.289 1.312 5.705 1.312 6.705M20 15h-1a4 4 0 0 0-4 4v1M8.587 3.992c0 .822.112 1.886 1.515 2.58 1.402.693 2.918.351 2.918 2.334 0 .276 0 2.008 1.972 2.008 2.026.031 2.026-1.678 2.026-2.008 0-.65.527-.9 1.177-.9H20M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"
                         />
                       </svg>
-                      {movie.country}
+                      {movie.productionCountry}
                     </p>
                     <p className="movie-detail-item">
                       <svg
@@ -481,7 +421,7 @@ const BookTickets: React.FC = () => {
                           d="M7 9h5m3 0h2M7 12h2m3 0h5M5 5h14a1 1 0 0 1 1 1v9a1 1 0 0 1-1 1h-6.616a1 1 0 0 0-.67.257l-2.88 2.592A.5.5 0 0 1 8 18.477V17a1 1 0 0 0-1-1H5a1 1 0 0 1-1-1V6a1 1 0 0 1 1-1Z"
                         />
                       </svg>
-                      {movie.country}
+                      {movie.language}
                     </p>
                   </div>
                   <p className="movie-description">
@@ -506,30 +446,32 @@ const BookTickets: React.FC = () => {
                       {movie.description}
                     </p>
                   </p>
-                  {movie.schedule.map((sched, idx) => (
-                    <div key={idx} className="movie-schedule">
-                      <h4 className="movie-schedule-date">{sched.date}</h4>
-
-                      {Object.entries(sched.sessions).map(([type, times]) => (
-                        <div key={type} className="movie-schedule-session">
-                          <h5 className="movie-schedule-session-type">
-                            {type}
-                          </h5>
-
-                          <div className="movie-schedule-session-times">
-                            {times.map((time, index) => (
-                              <span
-                                key={index}
-                                className="movie-schedule-session-time"
-                              >
-                                {time}
-                              </span>
-                            ))}
+                  {movie.showtimes && movie.showtimes.length > 0 ? (
+                    <div className="movie-schedules">
+                      {Object.entries(
+                        groupShowtimesByDate(movie.showtimes)
+                      ).map(([date, showtimes]) => (
+                        <div key={date} className="movie-schedule">
+                          <h4 className="movie-schedule-date">{date}</h4>
+                          <div className="movie-schedule-session">
+                            <div className="movie-schedule-session-times">
+                              {showtimes.map((showtime) => (
+                                <span
+                                  key={showtime.id}
+                                  className="movie-schedule-session-time"
+                                  onClick={() => handleSelectShowtime(showtime)}
+                                >
+                                  {showtime.showTime}
+                                </span>
+                              ))}
+                            </div>
                           </div>
                         </div>
                       ))}
                     </div>
-                  ))}
+                  ) : (
+                    <div className="no-showtimes">Chưa có lịch chiếu</div>
+                  )}
                 </div>
               </div>
             ))}
@@ -538,12 +480,12 @@ const BookTickets: React.FC = () => {
         <TabPane tab="PHIM SẮP CHIẾU" key="sapChieu">
           <div className="tab-title">PHIM SẮP CHIẾU</div>
           <div className="movie-grid">
-            {moviesComingSoon.map((movie) => (
+            {filteredMovies.map((movie) => (
               <div key={movie.id} className="movie-card">
                 {/* Cột bên trái: Ảnh */}
                 <div className="movie-poster">
                   <img
-                    src={movie.poster}
+                    src={movie.posterUrl}
                     alt={movie.title}
                     className="movie-poster-img"
                   />
@@ -571,7 +513,7 @@ const BookTickets: React.FC = () => {
                           d="M15.583 8.445h.01M10.86 19.71l-6.573-6.63a.993.993 0 0 1 0-1.4l7.329-7.394A.98.98 0 0 1 12.31 4l5.734.007A1.968 1.968 0 0 1 20 5.983v5.5a.992.992 0 0 1-.316.727l-7.44 7.5a.974.974 0 0 1-1.384.001Z"
                         />
                       </svg>
-                      {movie.genres.join(", ")}
+                      {movie.genres.map((genre) => genre.name).join(", ")}
                     </p>
                     <p className="movie-detail-item">
                       <svg
@@ -609,7 +551,7 @@ const BookTickets: React.FC = () => {
                           d="M4.37 7.657c2.063.528 2.396 2.806 3.202 3.87 1.07 1.413 2.075 1.228 3.192 2.644 1.805 2.289 1.312 5.705 1.312 6.705M20 15h-1a4 4 0 0 0-4 4v1M8.587 3.992c0 .822.112 1.886 1.515 2.58 1.402.693 2.918.351 2.918 2.334 0 .276 0 2.008 1.972 2.008 2.026.031 2.026-1.678 2.026-2.008 0-.65.527-.9 1.177-.9H20M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"
                         />
                       </svg>
-                      {movie.country}
+                      {movie.productionCountry}
                     </p>
                     <p className="movie-detail-item">
                       <svg
@@ -629,7 +571,7 @@ const BookTickets: React.FC = () => {
                           d="M7 9h5m3 0h2M7 12h2m3 0h5M5 5h14a1 1 0 0 1 1 1v9a1 1 0 0 1-1 1h-6.616a1 1 0 0 0-.67.257l-2.88 2.592A.5.5 0 0 1 8 18.477V17a1 1 0 0 0-1-1H5a1 1 0 0 1-1-1V6a1 1 0 0 1 1-1Z"
                         />
                       </svg>
-                      {movie.country}
+                      {movie.language}
                     </p>
                   </div>
                   <p className="movie-description">
@@ -654,54 +596,31 @@ const BookTickets: React.FC = () => {
                       {movie.description}
                     </p>
                   </p>
-                  {movie.schedule.length === 0 ? (
-                    <div className="movie-schedule-empty">
-                      <p className="movie-schedule-empty-text">
-                        <svg
-                          className="movie-schedule-empty-icon"
-                          aria-hidden="true"
-                          xmlns="http://www.w3.org/2000/svg"
-                          width="24"
-                          height="24"
-                          fill="none"
-                          viewBox="0 0 24 24"
-                        >
-                          <path
-                            stroke="currentColor"
-                            strokeLinecap="round"
-                            strokeLinejoin="round"
-                            strokeWidth="2"
-                            d="M19 4H5a1 1 0 0 0-1 1v14a1 1 0 0 0 1 1h14a1 1 0 0 0 1-1V5a1 1 0 0 0-1-1Zm0 0-4 4m5 0H4m1 0 4-4m1 4 4-4m-4 7v6l4-3-4-3Z"
-                          />
-                        </svg>
-                        <p className="pl-2">Chưa có suất chiếu</p>
-                      </p>
-                    </div>
-                  ) : (
-                    movie.schedule.map((sched, idx) => (
-                      <div key={idx} className="movie-schedule">
-                        <h4 className="movie-schedule-date">{sched.date}</h4>
-
-                        {Object.entries(sched.sessions).map(([type, times]) => (
-                          <div key={type} className="movie-schedule-session">
-                            <h5 className="movie-schedule-session-type">
-                              {type}
-                            </h5>
-
+                  {movie.showtimes && movie.showtimes.length > 0 ? (
+                    <div className="movie-schedules">
+                      {Object.entries(
+                        groupShowtimesByDate(movie.showtimes)
+                      ).map(([date, showtimes]) => (
+                        <div key={date} className="movie-schedule">
+                          <h4 className="movie-schedule-date">{date}</h4>
+                          <div className="movie-schedule-session">
                             <div className="movie-schedule-session-times">
-                              {times.map((time, index) => (
+                              {showtimes.map((showtime) => (
                                 <span
-                                  key={index}
+                                  key={showtime.id}
                                   className="movie-schedule-session-time"
+                                  onClick={() => handleSelectShowtime(showtime)}
                                 >
-                                  {time}
+                                  {showtime.showTime}
                                 </span>
                               ))}
                             </div>
                           </div>
-                        ))}
-                      </div>
-                    ))
+                        </div>
+                      ))}
+                    </div>
+                  ) : (
+                    <div className="no-showtimes">Chưa có lịch chiếu</div>
                   )}
                 </div>
               </div>

@@ -8,6 +8,7 @@ interface User {
   dateOfBirth?: string;
 }
 interface Theater {
+  id: number;
   name: string;
   address: string;
 }

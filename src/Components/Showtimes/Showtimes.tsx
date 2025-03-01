@@ -67,9 +67,7 @@ const Showtimes: React.FC = () => {
   useEffect(() => {
     const fetchInitialData = async () => {
       try {
-        const response = await axios.get(
-          "http://18.205.19.89:8080/api/movies"
-        );
+        const response = await axios.get("http://18.205.19.89:8080/api/movies");
         const data = response.data;
         setMovies(data.content);
 
@@ -245,8 +243,8 @@ const Showtimes: React.FC = () => {
               textAlign: "center",
               padding: "50px",
               fontSize: "1.2rem",
-              color: "#666",
-              backgroundColor: "#f8f8f8",
+              color: "white",
+              border: "1px solid #ddd",
               borderRadius: "8px",
               margin: "20px 0",
             }}

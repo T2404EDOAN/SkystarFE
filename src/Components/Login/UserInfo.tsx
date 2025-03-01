@@ -197,7 +197,7 @@ const UserInfo: React.FC = () => {
     setLoadingHistory(true);
     try {
       const response = await axios.get(
-        `http://18.205.19.89:8080/api/bookings/${user.id}`
+        `http://localhost:8081/api/bookings/${user.id}`
       );
       setBookingHistory(response.data);
     } catch (error) {
@@ -211,32 +211,7 @@ const UserInfo: React.FC = () => {
       fetchBookingHistory();
     }
   }, [activeTab]);
-  const data: DataType[] = [
-    {
-      key: "1",
-      firstName: "John",
-      lastName: "Brown",
-      age: 32,
-      address: "New York No. 1 Lake Park",
-      tags: ["nice", "developer"],
-    },
-    {
-      key: "2",
-      firstName: "Jim",
-      lastName: "Green",
-      age: 42,
-      address: "London No. 1 Lake Park",
-      tags: ["loser"],
-    },
-    {
-      key: "3",
-      firstName: "Joe",
-      lastName: "Black",
-      age: 32,
-      address: "Sydney No. 1 Lake Park",
-      tags: ["cool", "teacher"],
-    },
-  ];
+
   const renderTabContent = () => {
     switch (activeTab) {
       case "personal":

@@ -6,16 +6,24 @@ import { Input, Button, Dropdown, Menu, Typography, Row, Col } from "antd";
 import { SearchOutlined, UserOutlined, DownOutlined } from "@ant-design/icons";
 import type { MenuProps, Avatar } from "antd";
 import axios from "axios";
+
 interface Movie {
   id: number;
   title: string;
   showtimes: {
     id: number;
+    theatresId: number;
     theatresName: string;
     theaterAddress: string;
     // ... other showtime properties
   }[];
   // ... other movie properties
+}
+
+interface Theater {
+  id: number;
+  name: string;
+  address: string;
 }
 
 const Header: React.FC = () => {
@@ -34,9 +42,9 @@ const Header: React.FC = () => {
     navigate("/user-info");
   };
   const handleTheaterSelect = (theater: Theater) => {
-    console.log("Selecting theater:", theater);
+    console.log("Selected theater:", theater);
     setSelectedTheater(theater);
-    navigate(`/books-ticket/${encodeURIComponent(theater.name)}`);
+    navigate("/books-ticket");
   };
   // Hàm chia thành nhóm 3 item
   const chunkArray = (arr, size) => {
@@ -47,27 +55,26 @@ const Header: React.FC = () => {
       []
     );
   };
-  const [theaters, setTheaters] = useState<{ name: string; address: string }[]>(
-    []
-  );
+  const [theaters, setTheaters] = useState<Theater[]>([]);
 
   useEffect(() => {
     const fetchMoviesAndTheaters = async () => {
       try {
         setLoading(true);
         const response = await axios.get<{ content: Movie[] }>(
-          "http://18.205.19.89:8080/api/movies"
+          "http://localhost:8081/api/movies"
         );
 
         // Extract unique theaters from movies' showtimes
         const uniqueTheaters = response.data.content.reduce(
-          (acc: { name: string; address: string }[], movie) => {
+          (acc: Theater[], movie) => {
             movie.showtimes?.forEach((showtime) => {
               const exists = acc.some(
-                (theater) => theater.name === showtime.theatresName
+                (theater) => theater.id === showtime.theatresId
               );
               if (!exists && showtime.theatresName) {
                 acc.push({
+                  id: showtime.theatresId,
                   name: showtime.theatresName,
                   address: showtime.theaterAddress,
                 });
@@ -77,7 +84,7 @@ const Header: React.FC = () => {
           },
           []
         );
-
+        console.log("Fetched theaters:", uniqueTheaters);
         setTheaters(uniqueTheaters);
       } catch (err) {
         console.error("Error fetching theaters:", err);
@@ -170,10 +177,10 @@ const Header: React.FC = () => {
                 </div>
               </Dropdown>
             ) : (
-             <div>
+              <Link to="/Login" className="user-actions">
                 <UserOutlined className="user-icon" />
                 <div className="user-text">Đăng nhập</div>
-              </div>
+              </Link>
             )}
           </div>
         </div>
