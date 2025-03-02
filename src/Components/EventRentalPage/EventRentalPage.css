@@ -1,79 +1,74 @@
-.container-event-rental {
+.container-event-rental-page {
   width: 100%;
   max-width: 1200px;
   margin: 0 auto;
-  
-  padding: 0 16px;
 }
 
-.header-event-rental {
+.header-event-rental-page {
   text-align: center;
   padding: 24px 0;
   color: white;
 }
 
-.header-title-event-rental {
+.header-title-event-rental-page {
   font-size: 40px;
   font-family: "Anton", sans-serif;
   margin-bottom: 8px;
 }
 
-.header-subtitle-event-rental {
+.header-subtitle-event-rental-page {
   font-size: 20px;
   margin-bottom: 8px;
 }
 
-.header-text-event-rental {
+.header-text-event-rental-page {
   font-size: 16px;
   padding: 0 16px;
 }
 
-.main-content-event-rental {
+.main-content-event-rental-page {
   display: flex;
   flex-direction: column;
-  gap: 24px;
   padding: 24px 0;
 }
 
-.event-section {
+.event-section-event-rental-page {
   display: flex;
   flex-direction: row;
   align-items: center;
-  gap: 16px;
+  gap: 70px;
 }
 
-.event-section.reverse {
+.event-section-event-rental-page.reverse {
   flex-direction: row-reverse;
 }
 
-.event-text-event-rental {
+.event-text-event-rental-page {
   width: 50%;
-  color: white;
-  padding: 16px;
 }
 
-.event-title-event-rental {
+.event-title-event-rental-page {
   font-size: 24px;
   font-family: "Anton", sans-serif;
   margin-bottom: 8px;
 }
 
-.event-description {
+.event-description-event-rental-page {
   font-size: 16px;
   margin-bottom: 8px;
 }
 
-.event-info {
+.event-info-event-rental-page {
   font-size: 14px;
   margin-bottom: 4px;
 }
 
-.event-phone {
+.event-phone-event-rental-page {
   font-size: 18px;
   font-weight: bold;
 }
 
-.contact-button-event-rental {
+.contact-button-event-rental-page {
   background-color: #f3ea28;
   color: black;
   height: 40px;
@@ -87,14 +82,14 @@
   font-family: "Anton", sans-serif;
 }
 
-.contact-button-event-rental span {
+.contact-button-event-rental-page span {
   position: relative;
   z-index: 10;
   transition: color 0.3s;
 }
 
-.contact-button-event-rental::before {
-  content: '';
+.contact-button-event-rental-page::before {
+  content: "";
   position: absolute;
   inset: 0;
   background: linear-gradient(to right, #663399, #3366cc);
@@ -102,16 +97,32 @@
   transition: transform 0.3s ease-out;
 }
 
-.contact-button-event-rental:hover::before {
+.contact-button-event-rental-page:hover::before {
   transform: translateX(0);
 }
 
-.contact-button-event-rental:hover span {
+.contact-button-event-rental-page:hover span {
   color: white;
 }
 
-.event-image {
+.event-image-event-rental-page {
   width: 600px;
   height: 395px;
   object-fit: cover;
+}
+
+.voucher-banner-event-rental-page {
+  width: 100%;
+  padding-bottom: 50px;
+}
+
+@media (min-width: 768px) {
+  .voucher-banner-event-rental-page {
+    padding-bottom: 100px;
+  }
+}
+
+.voucher-banner-event-rental-page img {
+  width: 100%;
+  height: auto;
 }

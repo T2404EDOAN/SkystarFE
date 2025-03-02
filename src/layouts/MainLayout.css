@@ -14,11 +14,6 @@
   position: relative;
   overflow-x: hidden;
 }
-body{
-   color: white !important;
-}
-@media (min-width: 1200px) {
-  .main-content {
-    padding: 0; /* bỏ padding khi màn hình đủ rộng */
-  }
+body {
+  color: white !important;
 }

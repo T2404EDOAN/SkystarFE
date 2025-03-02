@@ -194,7 +194,7 @@ const Header: React.FC = () => {
               {/* Dropdown Chọn Rạp */}
 
               <div className="dropdown-content">
-                <Link to="/books-ticket" className="dropdown-item">
+                <Link to="/books-ticket" className="dropdown-item1">
                   <Dropdown
                     overlay={
                       <Menu
