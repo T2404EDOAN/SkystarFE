@@ -11,18 +11,11 @@ const Footer: React.FC = () => {
         <div className="main-container">
           {/* Logo và phần tagline */}
           <div className="logo-section">
-            <img
-              src="/logo.png"
-              alt="Cinestar Logo"
-              className="footer-logo"
-            />
+            <img src="/logo.png" alt="Cinestar Logo" className="footer-logo" />
             <p className="footer-tagline">BE HAPPY, BE A STAR</p>
             <div className="footer-buttons">
               <div className="footer-button footer-button-yellow">
-                <Link
-                  to="/mua-ve"
-                  className="footer-button-link"
-                >
+                <Link to="/mua-ve" className="footer-button-link">
                   <img
                     src="https://cinestar.com.vn/assets/images/ic-ticket.svg"
                     alt="ticket"
@@ -32,10 +25,7 @@ const Footer: React.FC = () => {
                 </Link>
               </div>
               <div className="footer-button footer-button-purple">
-                <Link
-                  to="/bap-nuoc"
-                  className="footer-button-link"
-                >
+                <Link to="/bap-nuoc" className="footer-button-link">
                   <img
                     src="https://cinestar.com.vn/assets/images/ic-cor.svg"
                     alt="popcorn"
@@ -59,17 +49,27 @@ const Footer: React.FC = () => {
             <div className="footer-link-column">
               <h4 className="footer-title">TÀI KHOẢN</h4>
               <ul>
-                <li>Đăng nhâp</li>
-                <li>Đăng ký</li>
-                <li>Membership</li>
+                <li className="footer-link1">
+                  <Link to="/login">Đăng nhâp</Link> <br />
+                </li>
+                <li className="footer-link1">
+                  <Link to="/login">Đăng ký</Link>
+                </li>
               </ul>
             </div>
             {/* Column 2 */}
             <div className="footer-link-column">
               <h4 className="footer-title">THUÊ SỰ KIỆN</h4>
               <ul>
-                <li>Thuê rạp</li>
-                <li>Các loại hình thuê rạp khác</li>
+                <li>
+                  <Link to="/thue-su-kien/cinema">Thuê rạp</Link>
+                  <br />
+                </li>
+                <li>
+                  <Link to="/thue-su-kien/all">
+                    Các loại hình thuê rạp khác
+                  </Link>
+                </li>
               </ul>
             </div>
             {/* Column 3 */}
@@ -105,36 +105,26 @@ const Footer: React.FC = () => {
 
         {/* Footer Bottom */}
         <div className="footer-bottom">
-          {/* Bên trái */}
-          <p>
-            © 2023 SkyStar. All rights reserved.
-          </p>
-
-          {/* Bên phải */}
-          <div className="footer-bottom-links">
-            <a
-              href="#"
-              className="footer-bottom-link"
-            >
-              Chính sách bảo mật
-            </a>
-            <a
-              href="#"
-              className="footer-bottom-link"
-            >
-              Tin điện ảnh
-            </a>
-            <a href="#" className="footer-bottom-link">
-              Hỏi và đáp
-            </a>
+          <div>
+            <p>© 2023 SkyStar. All rights reserved.</p>
+          </div>
+          <div>
+            <div className="footer-bottom-links">
+              <a href="#" className="footer-bottom-link">
+                Chính sách bảo mật
+              </a>
+              <a href="#" className="footer-bottom-link">
+                Tin điện ảnh
+              </a>
+              <a href="#" className="footer-bottom-link">
+                Hỏi và đáp
+              </a>
+            </div>
           </div>
         </div>
 
         <div className="footer-company-info">
-          <img
-            src="/path/to/verified-icon.png"
-            alt="Đã thông báo"
-          />
+          {/* <img src="/path/to/verified-icon.png" alt="Đã thông báo" /> */}
           <p>
             CÔNG TY CỔ PHẦN GIẢI TRÍ PHÁT HÀNH PHIM – RẠP CHIẾU PHIM NGÔI SAO
           </p>
@@ -142,10 +132,10 @@ const Footer: React.FC = () => {
             ĐỊA CHỈ: 135 Hai Bà Trưng, Bến Nghé Ward, District 1, Ho Chi Minh
             City
           </p>
-          <p>
+          {/* <p>
             GIẤY CNĐKKD SỐ: 0329247444, ĐĂNG KÝ LẦN ĐẦU NGÀY 18/04/2004, ĐĂNG KÝ
             THAY ĐỔI LẦN THỨ 2 NGÀY 15/09/2004, CẤP BỞI SỞ KH&ĐT TPHCM
-          </p>
+          </p> */}
         </div>
       </div>
     </footer>
