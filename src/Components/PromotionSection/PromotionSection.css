@@ -1,11 +1,12 @@
-.promotion-section {
+.promo-section {
   width: 100%;
   max-width: 1200px;
   margin: 0 auto;
-  padding: 16px 16px 32px;
+  margin-bottom: 40px;
+
 }
 
-.promotion-title {
+.promo-title {
   color: white;
   font-size: 28px;
   text-align: left;
@@ -14,37 +15,37 @@
 }
 
 @media (min-width: 640px) {
-  .promotion-title {
+  .promo-title {
     font-size: 34px;
     margin-bottom: 40px;
   }
 }
 
-.slider-container {
+.promo-slider-container {
   width: 100%;
   margin: 0 auto;
   overflow: hidden;
 }
 
-.slider {
+.promo-slider {
   display: flex;
   gap: 16px;
   transition: transform 0.5s cubic-bezier(0.4, 0.0, 0.2, 1);
 }
 
 @media (min-width: 640px) {
-  .slider {
+  .promo-slider {
     gap: 24px;
   }
 }
 
 @media (min-width: 1024px) {
-  .slider {
+  .promo-slider {
     gap: 32px;
   }
 }
 
-.slide {
+.promo-slide {
   min-width: 300px;
   height: 160px;
   flex-shrink: 0;
@@ -53,20 +54,20 @@
 }
 
 @media (min-width: 640px) {
-  .slide {
+  .promo-slide {
     min-width: 320px;
     height: 180px;
   }
 }
 
 @media (min-width: 1024px) {
-  .slide {
+  .promo-slide {
     min-width: 378px;
     height: 212px;
   }
 }
 
-.nav-button {
+.promo-nav-button {
   position: absolute;
   top: 50%;
   transform: translateY(-50%);
@@ -82,102 +83,76 @@
   transition: background-color 0.3s;
 }
 
-.nav-button:hover {
+.promo-nav-button:hover {
   background-color: rgba(0, 0, 0, 0.7);
 }
 
-.nav-button.disabled {
+.promo-nav-button.disabled {
   opacity: 0.5;
   cursor: not-allowed;
 }
 
-.left-button {
+.promo-left-button {
   left: -16px;
 }
 
-.right-button {
+.promo-right-button {
   right: -16px;
 }
 
 @media (min-width: 640px) {
-  .nav-button {
+  .promo-nav-button {
     width: 40px;
     height: 40px;
   }
 
-  .left-button {
+  .promo-left-button {
     left: -32px;
   }
 
-  .right-button {
+  .promo-right-button {
     right: -32px;
   }
 }
 
 @media (min-width: 1024px) {
-  .left-button {
+  .promo-left-button {
     left: -48px;
   }
 
-  .right-button {
+  .promo-right-button {
     right: -48px;
   }
 }
 
-.nav-icon {
+.promo-nav-icon {
   width: 24px;
   height: 24px;
 }
 
-.dots-navigation {
-  display: flex;
-  justify-content: center;
-  gap: 8px;
-  margin-top: 16px;
-}
-
-.dot {
-  width: 12px;
-  height: 12px;
-  border-radius: 50%;
-  background-color: gray;
-  border: 2px solid white; /* Add a border to make it more visually appealing */
-  transition: background-color 0.3s, transform 0.3s;
-}
-
-.dot.active {
-  background-color: #f3ea28;
-  transform: scale(1.2);
-}
-
-@media (min-width: 640px) {
-  .dot {
-    width: 12px; /* Ensure width and height are equal */
-    height: 12px; /* Ensure width and height are equal */
-  }
-}
-
-.dots-container {
+.promo-dots-container {
   display: flex;
   justify-content: center;
   gap: 8px;
   margin-top: 20px;
 }
 
-.dot {
+.promo-dot {
   width: 8px;
   height: 8px;
   border-radius: 50%;
   background-color: #ccc;
   cursor: pointer;
   transition: background-color 0.3s ease;
+  border: 2px solid white;
 }
 
-.dot.active {
-  background-color: #f3ea28
+.promo-dot.active {
+  background-color: #f3ea28;
+  transform: scale(1.2);
 }
 
-.all-promotions-button {
+.promo-all-button {
   display: flex;
   justify-content: center;
   align-items: center;
@@ -196,20 +171,19 @@
   position: relative;
   cursor: pointer;
   transition: color 0.3s;
-  font-family: "Anton", sans-serif;
 }
 
-.all-promotions-button:hover .button-text {
+.promo-all-button:hover .promo-button-text {
   color: white;
 }
 
-.button-text {
+.promo-button-text {
   position: relative;
   display: block;
   text-align: center;
 }
 
-.button-bg {
+.promo-button-bg {
   position: absolute;
   top: 0;
   left: 0;
@@ -220,12 +194,12 @@
   transition: transform 0.3s;
 }
 
-.all-promotions-button:hover .button-bg {
+.promo-all-button:hover .promo-button-bg {
   transform: translateX(0);
 }
 
 @media (min-width: 640px) {
-  .all-promotions-button {
+  .promo-all-button {
     width: 200px;
     height: 40px;
     font-size: 16px;
@@ -234,7 +208,7 @@
 }
 
 @media (min-width: 1024px) {
-  .all-promotions-button {
+  .promo-all-button {
     width: 236px;
   }
 }
