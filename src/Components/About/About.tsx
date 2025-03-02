@@ -132,7 +132,7 @@ const About = () => {
           <div className="main_right">
             <div className="container1">
               {data.map((item, index) => (
-                <div className="card" key={index}>
+                <div className="card1" key={index}>
                   <h2>{item.title}</h2>
                   <ul>
                     {item.address && (
@@ -148,7 +148,7 @@ const About = () => {
                     )}
                     {item.email && (
                       <li>
-                        <a href={`mailto:${item.email}`}>📧 {item.email}</a>
+                        <a href={`mailto:${item.email}`}>📧 {item.email}</a><br/><br/>
                       </li>
                     )}
                     {item.phone && (

@@ -20,7 +20,7 @@ footer {
 }
 
 .footer-logo {
-  width: 170px;
+height: 130px;
   margin-bottom: 0;
 }
 
@@ -58,7 +58,13 @@ footer {
   gap: 0.5rem;
   padding: 0px 15px;
 }
-
+.gg-app{
+  display: flex;
+  justify-content: center;
+}
+.gg-app img{
+height: 100px;
+}
 .footer-button-yellow {
   background-color: #f3ea28;
   color: black;
@@ -155,7 +161,7 @@ footer {
 }
 
 .footer-company-info img {
-  width: 48px;
+  width: 110px;
   margin-bottom: 8px;
 }
 
