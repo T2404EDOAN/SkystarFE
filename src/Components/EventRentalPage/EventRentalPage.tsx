@@ -5,46 +5,44 @@ import "./EventRentalServices.css";
 
 const EventRentalPage = () => {
   return (
-    <div className="container-event-rental-page">
-      <header className="header-event-rental-page">
+    <div className="container-event-rental">
+      <header className="header-event-rental">
         <h1
-          className="mb-4 header-title-event-rental-page"
+          className="mb-4 header-title-event-rental"
           style={{ fontFamily: "Anton, sans-serif" }}
         >
           THUÊ SỰ KIỆN
         </h1>
-        <p className="header-subtitle-event-rental-page">
+        <p className="header-subtitle-event-rental">
           Lên kế hoạch cho một sự kiện?
         </p>
-        <p className="header-text-event-rental-page">
+        <p className="header-text-event-rental">
           Chúng tôi có nhiều lựa chọn để giúp sự kiện của bạn trở nên khó quên.
         </p>
       </header>
 
-      <main className="main-content-event-rental-page">
+      <main className="main-content-event-rental">
         {["first", "second", "third"].map((section, index) => (
           <div
             key={section}
-            className={`event-section-event-rental-page ${
-              index % 2 === 1 ? "reverse" : ""
-            }`}
+            className={`event-section ${index % 2 === 1 ? "reverse" : ""}`}
           >
-            <div className="event-text-event-rental-page">
-              <h2 className="event-title-event-rental-page">
+            <div className="event-text-event-rental">
+              <h2 className="event-title-event-rental">
                 {index === 0 && "Fanclub, Cầu hôn, Sinh nhật"}
                 {index === 1 &&
                   "Ra Mắt Chương Trình, Họp Hội Bộ, Music Video, Ra Mắt Phim"}
                 {index === 2 && "Sự Kiện Đặc Biệt"}
               </h2>
-              <p className="event-description-event-rental-page">
+              <p className="event-description">
                 Skystar Skymas kỳ vọng sẽ đứng đồng sau làm sân khấu để tôn vinh
                 câu chuyện của doanh nghiệp bạn.
               </p>
-              <p className="event-info-event-rental-page">
+              <p className="event-info">
                 Để biết thêm thông tin về việc thuê, vui lòng gọi:
               </p>
-              <p className="event-phone-event-rental-page">0342556642</p>
-              <button className="contact-button-event-rental-page">
+              <p className="event-phone">0342556642</p>
+              <button className="contact-button-event-rental">
                 <span>LIÊN HỆ NGAY</span>
               </button>
             </div>
@@ -57,7 +55,7 @@ const EventRentalPage = () => {
                   : "https://api-website.cinestar.com.vn/media/.renditions/wysiwyg/CMSPage/to-chuc-su-kien/noi-bo.png"
               }
               alt="Event Image"
-              className="event-image-event-rental-page"
+              className="event-image"
             />
           </div>
         ))}
@@ -180,7 +178,7 @@ const EventRentalPage = () => {
         </section>
 
         {/* Voucher Banner */}
-        <div className="voucher-banner-event-rental-page">
+        <div className="w-full px-4 pb-[50px] md:pb-[100px]">
           <img
             src="https://api-website.cinestar.com.vn/media/wysiwyg/CMSPage/to-chuc-su-kien/web_banner_voucher_1216x350px.jpg"
             alt="Voucher Banner"

@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useAuth } from "../../context/AuthContext";
 import "./Header.css";
@@ -32,7 +32,8 @@ const Header: React.FC = () => {
   const [loading, setLoading] = useState(false);
   const [cinemas, setCinemas] = useState<Cinema[]>([]);
   const [error, setError] = useState<string | null>(null);
-
+  const [showSearch, setShowSearch] = useState(false);
+  const inputRef = useRef(null);
   const handleLogout = () => {
     logout();
     navigate("/");
@@ -108,19 +109,24 @@ const Header: React.FC = () => {
       onClick: handleLogout,
     },
   ];
+  const handleClickOutside = (event) => {
+    if (inputRef.current && !inputRef.current.contains(event.target)) {
+      setShowSearch(false);
+    }
+  };
 
+  useEffect(() => {
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => document.removeEventListener("mousedown", handleClickOutside);
+  }, []);
   return (
     <header className="header">
       <div className="header-container">
         <div className="header-content">
-          {/* Division 1: Logo */}
-
-          <Link to="/" className="logo-link">
-            <img src="/logo.png" alt="Logo" className="logo" />
-          </Link>
-
-          {/* Division 2: Book Ticket Button */}
           <div className="booking-section">
+            <Link to="/" className="logo-link">
+              <img src="/logo.png" alt="Logo" className="logo" />
+            </Link>
             <Link to="/payment">
               <Button
                 type="primary"
@@ -135,16 +141,12 @@ const Header: React.FC = () => {
                 <span>ĐẶT VÉ NGAY</span>
               </Button>
             </Link>
-          </div>
-
-          {/* Division 3: Search and User Actions */}
-          <div className="actions-section">
-            {/* Popcorn Drink Button */}
             <Link to="/popcorn-drink">
               <Button
                 type="primary"
                 style={{ backgroundColor: "#663399", color: "#F8FAFC" }}
                 className="action-button"
+                id="popcorn-drink"
               >
                 <img
                   src="https://cinestar.com.vn/assets/images/ic-cor.svg"
@@ -154,13 +156,37 @@ const Header: React.FC = () => {
                 <span>ĐẶT BẮP NƯỚC</span>
               </Button>
             </Link>
-
-            {/* Search Bar */}
+          </div>
+          <div className="actions-section">
             <Input
               placeholder="Tìm phim, rạp"
               prefix={<SearchOutlined className="search-icon" />}
               className="search-bar"
             />
+            <div id="search1">
+              <Button
+                icon={<SearchOutlined />}
+                shape="circle"
+                onClick={() => setShowSearch(true)}
+              />
+              {showSearch && (
+                <div
+                  ref={inputRef}
+                  style={{
+                    position: "fixed",
+                    left: 0,
+                    right: 0,
+                    top: "70px", // Adjust this value based on your header height
+                    background: "rgba(0,0,0,0.1)",
+                    padding: "15px",
+                    boxShadow: "0px 4px 6px rgba(0,0,0,0.1)",
+                  }}
+                  id="search2"
+                >
+                  <Input placeholder="Tìm kiếm..." autoFocus />
+                </div>
+              )}
+            </div>
             {isAuthenticated ? (
               <Dropdown menu={{ items: userMenuItems }} placement="bottomRight">
                 <div className="user-actions">
@@ -191,8 +217,6 @@ const Header: React.FC = () => {
         <div className="secondary-nav-container">
           <nav className="secondary-nav-content">
             <div className="secondary-nav-item">
-              {/* Dropdown Chọn Rạp */}
-
               <div className="dropdown-content">
                 <Link to="/books-ticket" className="dropdown-item1">
                   <Dropdown
@@ -262,7 +286,7 @@ const Header: React.FC = () => {
               <Link to="/entertaiment" className="secondary-nav-link">
                 Tất cả các giải trí
               </Link>
-              <Link to="/about" className="secondary-nav-link">
+              <Link to="/about" className="secondary-nav-link" id="about11">
                 Giới thiệu
               </Link>
             </div>

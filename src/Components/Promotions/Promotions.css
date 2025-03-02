@@ -1,53 +1,28 @@
-/* Promotion.css */
 .promotion-container {
   max-width: 1200px;
   margin: 0 auto;
-  padding: 24px 16px;
+  padding-top: 25px;
   display: flex;
   flex-direction: column;
-  gap: 50px;
+  gap: 70px;
+  padding-bottom: 25px;
 }
 .promotion-image {
-  width: 631px;
+  width: 639px;
 }
-.promotion-text {
-  width: 537px;
+#promotion-text-ten {
   padding-left: 20px;
 }
-@media (min-width: 768px) {
-  .promotion-container {
-    gap: 100px;
-  }
-}
-
 .promotion-row {
   display: flex;
-  flex-direction: column;
   overflow: hidden;
   color: white;
 }
 
-@media (min-width: 768px) {
-  .promotion-row {
-    flex-direction: row;
-    height: 359px;
-  }
-
-  .promotion-row.reverse {
-    flex-direction: row-reverse;
-  }
-}
-
 .promotion-text {
-  width: 100%;
+  width: 569px;
   display: flex;
   flex-direction: column;
-}
-
-@media (min-width: 768px) {
-  .promotion-text {
-    width: 537px;
-  }
 }
 
 .promotion-title {
@@ -55,12 +30,6 @@
   margin-bottom: 16px;
   font-family: "Anton, sans-serif";
   letter-spacing: -0.02em;
-}
-
-@media (min-width: 768px) {
-  .promotion-title {
-    font-size: 1.5rem;
-  }
 }
 
 .promotion-button {
@@ -105,29 +74,81 @@
 .promotion-button:hover::after {
   transform: translateX(0);
 }
+@media screen and (max-width: 1024px) {
+  .promotion-container {
+    max-width: 1024px;
+    gap: 50px;
+    margin: 0;
+    padding: 25px;
+  }
 
-.promotion-image {
-  flex: 1;
-  position: relative;
-  margin-top: 16px;
-}
+  .promotion-row {
+    display: flex;
+  }
 
-@media (min-width: 768px) {
+  .promotion-text {
+    width: 440px;
+    display: flex;
+    flex-direction: column;
+  }
+
   .promotion-image {
-    margin-top: 0;
+    width: 524px;
   }
 }
+@media screen and (max-width: 768px) {
+  .promotion-container {
+    max-width: 768px;
+    gap: 40px;
+    padding: 15px;
+  }
 
-.promotion-image img {
-  width: 100%;
-  height: auto;
-  object-fit: contain;
-  object-position: center;
+  .promotion-row {
+    display: flex;
+    justify-content: space-between;
+  }
+
+  .promotion-text {
+    width: 325px;
+    padding: 0 15px;
+  }
+
+  .promotion-image {
+    width: 388px;
+  }
+  #promotion-text-ten {
+    padding-left: 15px;
+  }
 }
+@media screen and (max-width: 486px) {
+  .promotion-container {
+    max-width: 486px;
+    gap: 40px;
+    padding: 15px;
+  }
 
-@media (min-width: 768px) {
-  .promotion-image img {
-    height: 100%;
-    object-position: top;
+  .promotion-row {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .promotion-text {
+    width: 456px;
+    padding-top: 40px;
+  }
+
+  .promotion-image {
+    width: 456px;
+  }
+  #promotion-text-ten {
+    padding-left: 15px;
+  }
+  .promotion-button {
+    width: 100%;
+    max-width: 100%;
+  }
+  #promotion-row-first {
+    display: flex;
+    flex-direction: column-reverse;
   }
 }
