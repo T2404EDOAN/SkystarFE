@@ -73,15 +73,13 @@ const PromotionSection: React.FC = () => {
   };
 
   return (
-    <div className="promotion-section">
-      {/* Tiêu đề */}
-      <h2 className="promotion-title">KHUYẾN MÃI</h2>
+    <div className="promo-section">
+      <h2 className="promo-title">KHUYẾN MÃI</h2>
 
-      {/* Phần slider */}
       <div className="relative">
-        <div className="slider-container">
+        <div className="promo-slider-container">
           <div
-            className="slider"
+            className="promo-slider"
             style={{
               transform: `translateX(-${
                 currentIndex * (slideWidth + gapWidth)
@@ -91,17 +89,16 @@ const PromotionSection: React.FC = () => {
             {promotions.map((promotion, index) => (
               <div
                 key={index}
-                className="slide"
+                className="promo-slide"
                 style={{ backgroundImage: `url(${promotion.image})` }}
               />
             ))}
           </div>
         </div>
 
-        {/* Nút chuyển trái/phải */}
         <button
           onClick={handlePrev}
-          className={`nav-button left-button ${
+          className={`promo-nav-button promo-left-button ${
             currentIndex === 0 ? "disabled" : ""
           }`}
           disabled={currentIndex === 0}
@@ -126,10 +123,8 @@ const PromotionSection: React.FC = () => {
         </button>
         <button
           onClick={handleNext}
-          className={`nav-button right-button ${
-            currentIndex === promotions.length - itemsPerPage
-              ? "disabled"
-              : ""
+          className={`promo-nav-button promo-right-button ${
+            currentIndex === promotions.length - itemsPerPage ? "disabled" : ""
           }`}
           disabled={currentIndex === promotions.length - itemsPerPage}
         >
@@ -152,22 +147,19 @@ const PromotionSection: React.FC = () => {
           </svg>
         </button>
 
-        {/* Dots navigation */}
-        <div className="dots-container">
+        <div className="promo-dots-container">
           {Array.from({ length: promotions.length - itemsPerPage + 1 }).map((_, index) => (
             <div
               key={index}
-              className={`dot ${currentIndex === index ? 'active' : ''}`}
+              className={`promo-dot ${currentIndex === index ? 'active' : ''}`}
               onClick={() => handleDotClick(index)}
             />
           ))}
         </div>
       </div>
 
-      {/* Nút Tất Cả Ưu Đãi */}
-      <button className="all-promotions-button">
-        <span className="button-text">TẤT CẢ ƯU ĐÃI</span>
-      
+      <button className="promo-all-button">
+        <span className="promo-button-text">TẤT CẢ ƯU ĐÃI</span>
       </button>
     </div>
   );
