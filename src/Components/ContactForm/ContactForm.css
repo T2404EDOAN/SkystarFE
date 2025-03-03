@@ -12,6 +12,7 @@
   display: flex;
   flex-direction: column;
   justify-content: space-between; /* Add this line */
+  height: 800px;
 }
 
 .contact-title {
@@ -87,9 +88,22 @@
   overflow: hidden;
 }
 
+.contact-left-column {
+  padding: 40px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.contact-right-column {
+  padding: 40px;
+  background-color: #3366cc;
+  border-radius: 0.5rem;
+}
+
 .form-title {
   font-family: 'Anton', sans-serif;
-  font-size: 1.25rem;
+  font-size: 24px;
   color: white;
   margin-bottom: 1rem;
 }
@@ -97,14 +111,14 @@
 .contact-info {
   margin-top: 1rem;
   color: white;
-  margin-bottom: 1rem;
+  margin-bottom: 2rem;
   font-size: 0.875rem;
 }
 
 .form-input, .form-textarea {
   width: 100%;
   padding: 0.75rem; 
-  margin-bottom: 1rem;
+  margin-bottom: 2rem;  /* Changed from 1rem to 1.5rem for more spacing */
   background-color: white;
   color: #1f2937;
   border: 1px solid #d1d5db; 
@@ -148,7 +162,8 @@
 }
 
 .submit-button:hover .button-text {
-  color: white;
+  color: #ffffff;  /* Changed from white to #ffffff for consistency */
+  z-index: 1;     /* Add z-index to ensure text stays above the background */
 }
 
 .submit-button:hover .button-background {

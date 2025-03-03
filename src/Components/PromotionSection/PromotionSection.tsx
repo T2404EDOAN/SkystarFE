@@ -75,89 +75,88 @@ const PromotionSection: React.FC = () => {
   return (
     <div className="promo-section">
       <h2 className="promo-title">KHUYẾN MÃI</h2>
-
-      <div className="relative">
-        <div className="promo-slider-container">
-          <div
-            className="promo-slider"
-            style={{
-              transform: `translateX(-${
-                currentIndex * (slideWidth + gapWidth)
-              }px)`,
-            }}
-          >
-            {promotions.map((promotion, index) => (
-              <div
-                key={index}
-                className="promo-slide"
-                style={{ backgroundImage: `url(${promotion.image})` }}
-              />
-            ))}
-          </div>
-        </div>
-
-        <button
-          onClick={handlePrev}
-          className={`promo-nav-button promo-left-button ${
-            currentIndex === 0 ? "disabled" : ""
-          }`}
-          disabled={currentIndex === 0}
+      
+      <button
+        onClick={handlePrev}
+        className={`promo-nav-button promo-left-button ${
+          currentIndex === 0 ? "disabled" : ""
+        }`}
+        disabled={currentIndex === 0}
+      >
+        <svg
+          className="nav-icon"
+          aria-hidden="true"
+          xmlns="http://www.w3.org/2000/svg"
+          width="24"
+          height="24"
+          fill="none"
+          viewBox="0 0 24 24"
         >
-          <svg
-            className="nav-icon"
-            aria-hidden="true"
-            xmlns="http://www.w3.org/2000/svg"
-            width="24"
-            height="24"
-            fill="none"
-            viewBox="0 0 24 24"
-          >
-            <path
-              stroke="currentColor"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              strokeWidth="2"
-              d="m15 19-7-7 7-7"
-            />
-          </svg>
-        </button>
-        <button
-          onClick={handleNext}
-          className={`promo-nav-button promo-right-button ${
-            currentIndex === promotions.length - itemsPerPage ? "disabled" : ""
-          }`}
-          disabled={currentIndex === promotions.length - itemsPerPage}
-        >
-          <svg
-            className="nav-icon"
-            aria-hidden="true"
-            xmlns="http://www.w3.org/2000/svg"
-            width="24"
-            height="24"
-            fill="none"
-            viewBox="0 0 24 24"
-          >
-            <path
-              stroke="currentColor"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              strokeWidth="2"
-              d="m9 5 7 7-7 7"
-            />
-          </svg>
-        </button>
+          <path
+            stroke="currentColor"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            strokeWidth="2"
+            d="m15 19-7-7 7-7"
+          />
+        </svg>
+      </button>
 
-        <div className="promo-dots-container">
-          {Array.from({ length: promotions.length - itemsPerPage + 1 }).map((_, index) => (
+      <div className="promo-slider-container">
+        <div
+          className="promo-slider"
+          style={{
+            transform: `translateX(-${
+              currentIndex * (slideWidth + gapWidth)
+            }px)`,
+          }}
+        >
+          {promotions.map((promotion, index) => (
             <div
               key={index}
-              className={`promo-dot ${currentIndex === index ? 'active' : ''}`}
-              onClick={() => handleDotClick(index)}
+              className="promo-slide"
+              style={{ backgroundImage: `url(${promotion.image})` }}
             />
           ))}
         </div>
       </div>
 
+      <button
+        onClick={handleNext}
+        className={`promo-nav-button promo-right-button ${
+          currentIndex === promotions.length - itemsPerPage ? "disabled" : ""
+        }`}
+        disabled={currentIndex === promotions.length - itemsPerPage}
+      >
+        <svg
+          className="nav-icon"
+          aria-hidden="true"
+          xmlns="http://www.w3.org/2000/svg"
+          width="24"
+          height="24"
+          fill="none"
+          viewBox="0 0 24 24"
+        >
+          <path
+            stroke="currentColor"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            strokeWidth="2"
+            d="m9 5 7 7-7 7"
+          />
+        </svg>
+      </button>
+      
+      <div className="promo-dots-container">
+        {Array.from({ length: promotions.length - itemsPerPage + 1 }).map((_, index) => (
+          <div
+            key={index}
+            className={`promo-dot ${currentIndex === index ? 'active' : ''}`}
+            onClick={() => handleDotClick(index)}
+          />
+        ))}
+      </div>
+      
       <button className="promo-all-button">
         <span className="promo-button-text">TẤT CẢ ƯU ĐÃI</span>
       </button>

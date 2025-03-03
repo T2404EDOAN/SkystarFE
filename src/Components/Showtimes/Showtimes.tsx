@@ -67,7 +67,7 @@ const Showtimes: React.FC = () => {
   useEffect(() => {
     const fetchInitialData = async () => {
       try {
-        const response = await axios.get("http://localhost:8081/api/movies");
+        const response = await axios.get("http://localhost:8080/api/movies");
         const data = response.data;
         setMovies(data.content);
 
@@ -97,7 +97,7 @@ const Showtimes: React.FC = () => {
           cinema: "",
         };
         const filterResponse = await axios.get(
-          "http://localhost:8081/api/movies/search",
+          "http://localhost:8080/api/movies/search",
           { params }
         );
         setFilteredMovies(filterResponse.data);
@@ -129,7 +129,7 @@ const Showtimes: React.FC = () => {
       };
       console.log("Params sent to backend:", params);
       const response = await axios.get(
-        "http://localhost:8081/api/movies/search",
+        "http://localhost:8080/api/movies/search",
         {
           params,
         }

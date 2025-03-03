@@ -1,13 +1,12 @@
 .banner-container {
     display: flex;
     justify-content: center;
-    margin-top: 20px; /* Thêm margin-top để dịch xuống */
-    height: 410px; /* Cố định chiều cao */
+    margin-top: 20px;
+    height: 410px;
     width: 100%;
     margin-bottom: 40px;
-    overflow: hidden;
-    opacity: 1; /* Đặt opacity mặc định là 1 */
     position: relative;
+    /* Xóa overflow: hidden */
 }
 
 .banner-container.active {
@@ -28,25 +27,33 @@
 .banner-content {
     position: relative;
     width: 100%;
- 
-    height: 410px; /* Điều chỉnh theo container */
-    overflow: hidden;
+    height: 410px;
     border-radius: 5px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    /* Xóa overflow: hidden */
 }
 
 .banner-image-container {
     position: relative;
-    height: 410px; /* Điều chỉnh theo container */
-    overflow: hidden;
+    height: 410px;
+    /* Xóa overflow: hidden */
 }
 
 .banner-image {
     width: 100%;
     height: 100%;
     object-fit: cover;
-    transition: opacity 500ms;
-    display: block; /* Thêm display block */
+    transition: all 1.2s cubic-bezier(0.4, 0, 0.2, 1); /* Timing function mượt mà hơn và thời gian dài hơn */
+    display: block;
+    opacity: 0;
+    transform: scale(1.08) translateX(2%); /* Thêm effect trượt ngang nhẹ */
+    filter: brightness(0.8);
+}
+
+.banner-image.active {
+    opacity: 1;
+    transform: scale(1) translateX(0); /* Reset transform */
+    filter: brightness(1);
 }
 
 .banner-overlay {
@@ -61,7 +68,7 @@
     align-items: center;
     color: white;
     text-align: center;
-    background: rgba(0, 0, 0, 0.5); /* Lớp phủ đen mờ */
+    background: rgba(0, 0, 0, 0.5);
 }
 
 .banner-overlay h1 {
@@ -79,32 +86,38 @@
     position: absolute;
     top: 50%;
     transform: translateY(-50%);
-    width: 40px;
-    height: 40px;
+    width: 50px;  /* Tăng kích thước */
+    height: 50px; /* Tăng kích thước */
     border-radius: 50%;
     display: flex;
     align-items: center;
     justify-content: center;
     color: white;
-    transition: all 200ms;
-    backdrop-filter: blur(4px);
+    transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+    border: none;
+    cursor: pointer;
+    z-index: 1000;
+    background: transparent; /* Xóa nền */
 }
 
 .nav-button:hover {
-    background-color: rgba(0, 0, 0, 0.5);
+    transform: translateY(-50%) scale(1.15);
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .prev-button {
-    left: -50px;
+    left: -60px; /* Điều chỉnh vị trí */
 }
 
 .next-button {
-    right: -50px;
+    right: -60px; /* Điều chỉnh vị trí */
 }
 
 .nav-icon {
-    width: 24px;
-    height: 24px;
+    width: 40px;
+    height: 40px;
+    stroke: #ffffff;
+    stroke-width: 1.5; 
 }
 
 .indicators {
@@ -117,44 +130,23 @@
 }
 
 .indicator {
-    width: 8px;
-    height: 8px;
+    width: 16px;
+    height: 16px;
     border-radius: 50%;
     background-color: rgba(255, 255, 255, 0.5);
-    transition: all 300ms;
+    transition: all 0.3s ease;
+    cursor: pointer;
+    border: 2px solid transparent;
 }
 
 .indicator:hover {
-    background-color: rgba(255, 255, 255, 0.75);
+   
+    transform: scale(1.1);
 }
 
 .indicator-active {
     background-color: #f3ea28;
-}
-
-.banner-container {
-    width: 100%;
-    position: relative;
-    overflow: hidden;
-}
-
-.banner-wrapper {
-    width: 100%;
-}
-
-.banner-content {
-    position: relative;
-}
-
-.banner-image-container {
-    width: 100%;
-    height: 410px; /* Điều chỉnh chiều cao phù hợp */
-}
-
-.banner-image {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
+ 
 }
 
 .error-message {

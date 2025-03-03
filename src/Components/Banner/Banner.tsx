@@ -1,4 +1,4 @@
-import React, { useState, useCallback } from "react"; // Xóa useEffect
+import React, { useState, useCallback } from "react";
 import "./Banner.css";
 
 const Banner: React.FC = () => {
@@ -6,10 +6,9 @@ const Banner: React.FC = () => {
   const [imageError, setImageError] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
   
-  // Sử dụng đường dẫn tuyệt đối từ public folder
   const banners = [
-    "https://api-website.cinestar.com.vn/media/MageINIC/bannerslider/1215wx365h_3_.jpg",
-    "https://api-website.cinestar.com.vn/media/MageINIC/bannerslider/web_1215x365_1_.jpg"
+    "https://api-website.cinestar.com.vn/media/MageINIC/bannerslider/nha-gia-tien.jpg",
+    "https://api-website.cinestar.com.vn/media/MageINIC/bannerslider/2400wx720h.jpg"
   ];
 
   const handlePrevClick = useCallback(() => {
@@ -25,7 +24,7 @@ const Banner: React.FC = () => {
   }, [banners.length]);
 
   return (
-    <div className="banner-container active"> {/* Thêm class active */}
+    <div className="banner-container active">
       <div className="banner-wrapper">
         <div className="banner-content">
           <div className="banner-image-container">
@@ -33,9 +32,8 @@ const Banner: React.FC = () => {
             <img
               src={banners[currentIndex]}
               alt={`Banner ${currentIndex + 1}`}
-              className="banner-image"
+              className={`banner-image ${!isLoading ? 'active' : ''}`}
               onLoad={() => {
-                
                 setIsLoading(false);
               }}
               onError={(e) => {
@@ -48,6 +46,7 @@ const Banner: React.FC = () => {
             {imageError && <div className="error-message">Unable to load banner image</div>}
           </div>
 
+          {/* Left Arrow Button */}
           <button
             onClick={handlePrevClick}
             className="nav-button prev-button"
@@ -58,6 +57,7 @@ const Banner: React.FC = () => {
               fill="none"
               stroke="currentColor"
               viewBox="0 0 24 24"
+              xmlns="http://www.w3.org/2000/svg"
             >
               <path
                 strokeLinecap="round"
@@ -68,6 +68,7 @@ const Banner: React.FC = () => {
             </svg>
           </button>
 
+          {/* Right Arrow Button */}
           <button
             onClick={handleNextClick}
             className="nav-button next-button"
@@ -78,6 +79,7 @@ const Banner: React.FC = () => {
               fill="none"
               stroke="currentColor"
               viewBox="0 0 24 24"
+              xmlns="http://www.w3.org/2000/svg"
             >
               <path
                 strokeLinecap="round"

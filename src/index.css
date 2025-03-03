@@ -16,7 +16,7 @@ body {
   font-weight: 400;
   color-scheme: light dark;
   color: rgba(255, 255, 255, 0.87) !important;
-  background-color: #f0f0f0 !important; /* Nền web sáng hơn */
+  background-color: #f0f0f0 !important; 
   font-synthesis: none;
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
@@ -25,7 +25,6 @@ body {
   overflow-x: hidden;
   scroll-behavior: auto !important;
   position: relative;
-  z-index: 1; /* Đảm bảo body có z-index cao hơn */
 }
 
 button {

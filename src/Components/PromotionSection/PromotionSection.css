@@ -1,7 +1,7 @@
 .promo-section {
   width: 100%;
   margin-bottom: 40px;
-
+  position: relative; /* Thêm position relative */
 }
 
 .promo-title {
@@ -37,6 +37,7 @@
   width: 100%;
   margin: 0 auto;
   overflow: hidden;
+  position: relative; /* Thêm position relative */
 }
 
 .promo-slider {
@@ -107,22 +108,23 @@
 
 .promo-nav-button {
   position: absolute;
-  top: 50%;
+  top: 45%; /* Điều chỉnh vị trí dọc */
   transform: translateY(-50%);
-  width: 32px;
-  height: 32px;
+  background-color: transparent; /* Bỏ background */
+  border: none;
+  width: 50px; /* Tăng kích thước */
+  height: 50px; /* Tăng kích thước */
+  border-radius: 50%;
+  cursor: pointer;
   display: flex;
   align-items: center;
   justify-content: center;
-  background-color: rgba(0, 0, 0, 0.5);
-  border-radius: 50%;
-  color: white;
-  cursor: pointer;
-  transition: background-color 0.3s;
+  z-index: 10;
+  transition: all 0.3s ease;
 }
 
 .promo-nav-button:hover {
-  background-color: rgba(0, 0, 0, 0.7);
+  background-color: transparent;
 }
 
 .promo-nav-button.disabled {
@@ -131,66 +133,17 @@
 }
 
 .promo-left-button {
-  left: -16px;
+  left: -60px; 
 }
 
 .promo-right-button {
-  right: -16px;
+  right: -60px; 
 }
 
-@media (min-width: 640px) {
-  .promo-nav-button {
-    width: 40px;
-    height: 40px;
-  }
-
-  .promo-left-button {
-    left: -32px;
-  }
-
-  .promo-right-button {
-    right: -32px;
-  }
-}
-
-@media (min-width: 1024px) {
-  .promo-left-button {
-    left: -48px;
-  }
-
-  .promo-right-button {
-    right: -48px;
-  }
-}
-
-@media (max-width: 1023px) {
-  .promo-nav-button {
-    width: 40px;
-    height: 40px;
-  }
-
-  .promo-left-button {
-    left: -32px;
-  }
-
-  .promo-right-button {
-    right: -32px;
-  }
-}
-
-@media (max-width: 639px) {
-  .promo-nav-button {
-    width: 32px;
-    height: 32px;
-  }
-
-  .promo-left-button {
-    left: -16px;
-  }
-
-  .promo-right-button {
-    right: -16px;
-  }
+.nav-icon {
+  width: 32px; 
+  height: 32px;
+  color: white; 
 }
 
 .promo-nav-icon {

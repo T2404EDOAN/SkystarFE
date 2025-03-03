@@ -73,7 +73,7 @@ const Header: React.FC = () => {
       try {
         setLoading(true);
         const response = await axios.get<{ content: Movie[] }>(
-          "http://localhost:8081/api/movies"
+          "http://localhost:8080/api/movies"
         );
 
         // Extract unique theaters from movies' showtimes

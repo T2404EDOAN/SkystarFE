@@ -17,14 +17,34 @@ interface PaymentStatusResponse {
 const PaymentFormDetail = () => {
   const location = useLocation();
   const movieInfo = location.state;
+  const navigate = useNavigate();
+  const [timeRemaining, setTimeRemaining] = useState(movieInfo?.timeRemaining || 0);
 
-  // Add console.log to debug
-  useEffect(() => {}, [movieInfo]);
+  // Add timer effect
+  useEffect(() => {
+    if (timeRemaining <= 0) {
+      navigate(-1);
+      return;
+    }
 
-  useEffect(() => {}, [movieInfo]);
+    const timerId = setInterval(() => {
+      setTimeRemaining((prevTime) => {
+        if (prevTime <= 1) {
+          navigate(-1);
+          return 0;
+        }
+        return prevTime - 1;
+      });
+    }, 1000);
 
-  // Add debug log at the top of component
-  useEffect(() => {}, [movieInfo]);
+    return () => clearInterval(timerId);
+  }, [timeRemaining, navigate]);
+
+  const formatTime = (seconds: number): string => {
+    const minutes = Math.floor(seconds / 60);
+    const remainingSeconds = seconds % 60;
+    return `${minutes}:${remainingSeconds.toString().padStart(2, '0')}`;
+  };
 
   const [fullName, setFullName] = useState("");
   const [phone, setPhone] = useState("");
@@ -49,8 +69,6 @@ const PaymentFormDetail = () => {
   });
 
   const [bookingId, setBookingId] = useState<string>("");
-
-  const navigate = useNavigate();
 
   useEffect(() => {
     if (movieInfo?.holdTimer) {
@@ -81,7 +99,7 @@ const PaymentFormDetail = () => {
       const checkPaymentStatus = async () => {
         try {
           const response = await axios.get(
-            `http://localhost:8081/api/payments/status?orderId=${orderId}`
+            `http://localhost:8080/api/payments/status?orderId=${orderId}`
           );
           setPaymentStatus((prev) => ({
             ...prev,
@@ -148,7 +166,7 @@ const PaymentFormDetail = () => {
         });
 
         const response = await axios.post(
-          "http://localhost:8081/api/bookings/create",
+          "http://localhost:8080/api/bookings/create",
           bookingData
         );
 
@@ -189,7 +207,7 @@ const PaymentFormDetail = () => {
       });
 
       const response = await axios.post(
-        "http://localhost:8081/api/payments/momo",
+        "http://localhost:8080/api/payments/momo",
         paymentData
       );
 
@@ -436,8 +454,7 @@ const PaymentFormDetail = () => {
                 </div>
                 <div className="hold-time">
                   <span className="hold-timer">
-                    {Math.floor(movieInfo?.holdTimer / 60)}:
-                    {(movieInfo?.holdTimer % 60).toString().padStart(2, "0")}
+                    {formatTime(timeRemaining)}
                   </span>
                 </div>
               </div>

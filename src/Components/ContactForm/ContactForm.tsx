@@ -34,12 +34,12 @@ const ContactForm = () => {
           </div>
         </div>
         {/* Right Column */}
-        <div className="contact-right-column contact-right-background" style={{ flex: 1 }}>
-          <h2 className="form-title">THÔNG TIN LIÊN HỆ</h2>
+        <div className="contact-right-column" style={{ flex: 1 }}>
+          <h3 className="form-title">THÔNG TIN LIÊN HỆ</h3>
           <div className="contact-info">
-            <p className="mb-2">📧 marketing.skystar@gmail.com</p>
+            <p className="mb-2">📧 cinemaskystar@gmail.com</p>
             <p className="mb-2">📞 034 2556 642</p>
-            <p>📍 48A Tôn Thất Thuyết, Cầu Giấy, Hà Nội</p>
+            <p>📍 Yên Hoà, Cầu Giấy, Hà Nội</p>
           </div>
           <form className="space-y-4">
             <div>

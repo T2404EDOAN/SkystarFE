@@ -1,7 +1,9 @@
 .box_entertaiment {
-  
   width: 100%;
- 
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
 }
 
 .title_entertaiment {
