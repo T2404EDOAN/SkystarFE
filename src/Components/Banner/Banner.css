@@ -16,7 +16,6 @@
 
 .banner-wrapper {
     width: 100%;
-    max-width: 1200px;
     padding: 0 16px;
 }
 
@@ -29,7 +28,7 @@
 .banner-content {
     position: relative;
     width: 100%;
-    max-width: 1200px;
+ 
     height: 410px; /* Điều chỉnh theo container */
     overflow: hidden;
     border-radius: 5px;

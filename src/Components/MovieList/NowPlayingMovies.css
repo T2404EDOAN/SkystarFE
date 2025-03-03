@@ -1,8 +1,6 @@
 .nowplaying-container {
   position: relative;
   width: 100%;
- width: 1200px;
-  height: auto;
   margin: 2.5rem auto 0;
   color: white;
   border-radius: 0.5rem;
@@ -72,8 +70,6 @@
   position: relative;
   overflow: hidden;
   width: 100%;
-  max-width: 1200px;
-  margin: 0 auto; 
 
 }
 

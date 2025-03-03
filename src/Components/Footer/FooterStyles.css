@@ -1,22 +1,22 @@
 footer {
   background: linear-gradient(106deg, #663399, #3366cc 102.69%);
   color: white;
-  width: 100vw; /* Changed from 100% to 100vw */
+  width: 100vw; 
   min-height: 650px;
   margin-top: auto;
-  position: relative; /* Added */
-  left: 50%; /* Added */
-  right: 50%; /* Added */
-  margin-left: -50vw; /* Added */
-  margin-right: -50vw; /* Added */
+  position: relative; 
+  left: 50%; 
+  right: 50%; 
+  margin-left: -50vw; 
+  margin-right: -50vw;
 }
 
 .footer-container {
-  max-width: 1200px; /* Changed from 1224px to match body width */
+  max-width: 1200px; 
   margin: 0 auto;
   padding: 60px 16px 24px;
   width: 100%;
-  box-sizing: border-box; /* Added */
+  box-sizing: border-box; 
 }
 
 .footer-logo {
@@ -35,7 +35,7 @@ height: 130px;
   flex-direction: row; /* Change to row */
   gap: 1rem;
   /* margin-top: 1rem; */
-  justify-content: center; /* Center the buttons */
+  justify-content: center; 
 }
 
 .footer-button {

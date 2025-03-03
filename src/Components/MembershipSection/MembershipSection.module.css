@@ -15,9 +15,8 @@
 }
 
 .innerContainer {
-    max-width: 1200px;
-    margin: 0 auto;
-    width: 95%;
+  
+    width: 100%;
     background-color: transparent;
     position: relative;
     display: flex;

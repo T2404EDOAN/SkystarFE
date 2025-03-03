@@ -18,7 +18,7 @@ const ContactForm = () => {
                   className="social-image"
                 />
               </div>
-              <div className="social-text">Facebook</div>
+              <div className="social-textfb">Facebook</div>
             </div>
             {/* Zalo */}
             <div className="contact-social-item">
@@ -34,7 +34,7 @@ const ContactForm = () => {
           </div>
         </div>
         {/* Right Column */}
-        <div className="contact-right-column" style={{ flex: 1 }}>
+        <div className="contact-right-column contact-right-background" style={{ flex: 1 }}>
           <h2 className="form-title">THÔNG TIN LIÊN HỆ</h2>
           <div className="contact-info">
             <p className="mb-2">📧 marketing.skystar@gmail.com</p>

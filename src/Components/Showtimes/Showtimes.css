@@ -2,10 +2,6 @@
   min-height: 100vh;
 }
 
-.wrapper-showtimes {
-  max-width: 1200px;
-  margin: 0 auto;
-}
 
 .header-selection-showtimes {
   display: flex;

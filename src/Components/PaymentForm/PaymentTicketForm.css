@@ -8,11 +8,10 @@
   color: white;
   border-top: 1px solid rgba(248, 250, 252, 0.5);
   border-color: #4b5563;
-  height: auto;  /* Change from fixed height to auto */
-  min-height: 131px;  /* Set minimum height to previous fixed height */
-  max-height: 250px;  /* Add maximum height if needed */
-  overflow-y: auto;  /* Add scrolling if content exceeds max height */
-  z-index: 999; /* Ensure it stays on top of other content */
+  height: auto; 
+  min-height: 131px;  
+  max-height: 250px;  
+  overflow-y: auto; 
   box-shadow: 0 -4px 6px -1px rgba(0, 0, 0, 0.1);
 }
 .movie-title-pay{

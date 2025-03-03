@@ -1,6 +1,4 @@
 .promotion-container {
-  max-width: 1200px;
-  margin: 0 auto;
   padding-top: 25px;
   display: flex;
   flex-direction: column;
