@@ -21,6 +21,20 @@
   }
 }
 
+@media (max-width: 1023px) {
+  .promo-title {
+    font-size: 28px;
+    margin-bottom: 24px;
+  }
+}
+
+@media (max-width: 639px) {
+  .promo-title {
+    font-size: 24px;
+    margin-bottom: 20px;
+  }
+}
+
 .promo-slider-container {
   width: 100%;
   margin: 0 auto;
@@ -45,6 +59,18 @@
   }
 }
 
+@media (max-width: 1023px) {
+  .promo-slider {
+    gap: 24px;
+  }
+}
+
+@media (max-width: 639px) {
+  .promo-slider {
+    gap: 16px;
+  }
+}
+
 .promo-slide {
   min-width: 300px;
   height: 160px;
@@ -64,6 +90,20 @@
   .promo-slide {
     min-width: 378px;
     height: 212px;
+  }
+}
+
+@media (max-width: 1023px) {
+  .promo-slide {
+    min-width: 320px;
+    height: 180px;
+  }
+}
+
+@media (max-width: 639px) {
+  .promo-slide {
+    min-width: 300px;
+    height: 160px;
   }
 }
 
@@ -122,6 +162,36 @@
 
   .promo-right-button {
     right: -48px;
+  }
+}
+
+@media (max-width: 1023px) {
+  .promo-nav-button {
+    width: 40px;
+    height: 40px;
+  }
+
+  .promo-left-button {
+    left: -32px;
+  }
+
+  .promo-right-button {
+    right: -32px;
+  }
+}
+
+@media (max-width: 639px) {
+  .promo-nav-button {
+    width: 32px;
+    height: 32px;
+  }
+
+  .promo-left-button {
+    left: -16px;
+  }
+
+  .promo-right-button {
+    right: -16px;
   }
 }
 
@@ -210,5 +280,23 @@
 @media (min-width: 1024px) {
   .promo-all-button {
     width: 236px;
+  }
+}
+
+@media (max-width: 1023px) {
+  .promo-all-button {
+    width: 200px;
+    height: 40px;
+    font-size: 16px;
+    line-height: 40px;
+  }
+}
+
+@media (max-width: 639px) {
+  .promo-all-button {
+    width: 180px;
+    height: 36px;
+    font-size: 14px;
+    line-height: 36px;
   }
 }

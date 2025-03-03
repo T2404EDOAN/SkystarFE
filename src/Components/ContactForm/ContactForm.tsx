@@ -6,10 +6,9 @@ const ContactForm = () => {
     <div className="contact-container">
       <div className="contact-wrapper">
         {/* Left Column */}
-        <div className="flex-1 mb-8 md:mb-0" style={{ flex: 1 }}>
-          <div className="flex flex-col justify-center items-center text-center">
+        <div className="contact-left-column" style={{ flex: 1 }}>
+          <div className="contact-left-content">
             <h2 className="contact-title">LIÊN HỆ VỚI CHÚNG TÔI</h2>
-
             {/* Facebook */}
             <div className="contact-social-item">
               <div className="social-image-container">
@@ -21,7 +20,6 @@ const ContactForm = () => {
               </div>
               <div className="social-text">Facebook</div>
             </div>
-
             {/* Zalo */}
             <div className="contact-social-item">
               <div className="social-text">Zalo</div>
@@ -35,9 +33,8 @@ const ContactForm = () => {
             </div>
           </div>
         </div>
-
         {/* Right Column */}
-        <div className="contact-form" style={{ flex: 1 }}>
+        <div className="contact-right-column" style={{ flex: 1 }}>
           <h2 className="form-title">THÔNG TIN LIÊN HỆ</h2>
           <div className="contact-info">
             <p className="mb-2">📧 marketing.skystar@gmail.com</p>

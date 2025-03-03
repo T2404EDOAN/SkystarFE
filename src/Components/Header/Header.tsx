@@ -6,6 +6,9 @@ import { Input, Button, Dropdown, Menu, Typography, Row, Col } from "antd";
 import { SearchOutlined, UserOutlined, DownOutlined } from "@ant-design/icons";
 import type { MenuProps, Avatar } from "antd";
 import axios from "axios";
+import { useMediaQuery } from "react-responsive";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faBars } from "@fortawesome/free-solid-svg-icons";
 
 interface Movie {
   id: number;
@@ -34,6 +37,13 @@ const Header: React.FC = () => {
   const [error, setError] = useState<string | null>(null);
   const [showSearch, setShowSearch] = useState(false);
   const inputRef = useRef(null);
+  const isTabletOrMobile = useMediaQuery({ query: "(max-width: 1224px)" });
+  const [menuOpen, setMenuOpen] = useState(false);
+
+  const toggleMenu = () => {
+    setMenuOpen(!menuOpen);
+  };
+
   const handleLogout = () => {
     logout();
     navigate("/");
@@ -121,48 +131,61 @@ const Header: React.FC = () => {
   }, []);
   return (
     <header className="header">
-      <div className="header-container">
+      <div className={`header-container ${isTabletOrMobile ? "mobile" : ""}`}>
         <div className="header-content">
           <div className="booking-section">
             <Link to="/" className="logo-link">
               <img src="/logo.png" alt="Logo" className="logo" />
             </Link>
-            <Link to="/payment">
-              <Button
-                type="primary"
-                style={{ backgroundColor: "#f3ea28", color: "black" }}
-                className="action-button"
-              >
-                <img
-                  src="https://cinestar.com.vn/assets/images/ic-ticket.svg"
-                  alt="ticket"
-                  className="w-5 h-5"
-                />
-                <span>ĐẶT VÉ NGAY</span>
-              </Button>
-            </Link>
-            <Link to="/popcorn-drink">
-              <Button
-                type="primary"
-                style={{ backgroundColor: "#663399", color: "#F8FAFC" }}
-                className="action-button"
-                id="popcorn-drink"
-              >
-                <img
-                  src="https://cinestar.com.vn/assets/images/ic-cor.svg"
-                  alt="ticket"
-                  className="w-5 h-5"
-                />
-                <span>ĐẶT BẮP NƯỚC</span>
-              </Button>
-            </Link>
+            {isTabletOrMobile && (
+              <FontAwesomeIcon
+                icon={faBars}
+                className="menu-icon"
+                onClick={toggleMenu}
+              />
+            )}
+            {!isTabletOrMobile && (
+              <>
+                <Link to="/payment">
+                  <Button
+                    type="primary"
+                    style={{ backgroundColor: "#f3ea28", color: "black" }}
+                    className="action-button"
+                  >
+                    <img
+                      src="https://cinestar.com.vn/assets/images/ic-ticket.svg"
+                      alt="ticket"
+                      className="w-5 h-5"
+                    />
+                    <span>ĐẶT VÉ NGAY</span>
+                  </Button>
+                </Link>
+                <Link to="/popcorn-drink">
+                  <Button
+                    type="primary"
+                    style={{ backgroundColor: "#663399", color: "#F8FAFC" }}
+                    className="action-button"
+                    id="popcorn-drink"
+                  >
+                    <img
+                      src="https://cinestar.com.vn/assets/images/ic-cor.svg"
+                      alt="ticket"
+                      className="w-5 h-5"
+                    />
+                    <span>ĐẶT BẮP NƯỚC</span>
+                  </Button>
+                </Link>
+              </>
+            )}
           </div>
           <div className="actions-section">
-            <Input
-              placeholder="Tìm phim, rạp"
-              prefix={<SearchOutlined className="search-icon" />}
-              className="search-bar"
-            />
+            {!isTabletOrMobile && (
+              <Input
+                placeholder="Tìm phim, rạp"
+                prefix={<SearchOutlined className="search-icon" />}
+                className="search-bar"
+              />
+            )}
             <div id="search1">
               <Button
                 icon={<SearchOutlined />}
@@ -213,86 +236,115 @@ const Header: React.FC = () => {
       </div>
 
       {/* Secondary Navigation - Desktop Only */}
-      <div className="secondary-nav secondary-nav-lg">
-        <div className="secondary-nav-container">
-          <nav className="secondary-nav-content">
-            <div className="secondary-nav-item">
-              <div className="dropdown-content">
-                <Link to="/books-ticket" className="dropdown-item1">
-                  <Dropdown
-                    overlay={
-                      <Menu
-                        style={{
-                          width: 1200,
-                          background: "#0d0d1f",
-                          color: "white",
-                          padding: "10px",
-                        }}
-                      >
-                        <Row gutter={16}>
-                          {chunkArray(theaters, 3).map((group, index) => (
-                            <Col key={index} span={8}>
-                              {group.map((theater, idx) => (
-                                <Menu.Item
-                                  key={`${index}-${idx}`}
-                                  style={{ background: "transparent" }}
-                                >
-                                  <Typography.Text
-                                    style={{
-                                      color: "white",
-                                      cursor: "pointer",
-                                    }}
-                                    onClick={() => handleTheaterSelect(theater)}
+      {!isTabletOrMobile && (
+        <div className="secondary-nav secondary-nav-lg">
+          <div className="secondary-nav-container">
+            <nav className="secondary-nav-content">
+              <div className="secondary-nav-item">
+                <div className="dropdown-content">
+                  <Link to="/books-ticket" className="dropdown-item1">
+                    <Dropdown
+                      overlay={
+                        <Menu
+                          style={{
+                            width: 1200,
+                            background: "#0d0d1f",
+                            color: "white",
+                            padding: "10px",
+                          }}
+                        >
+                          <Row gutter={16}>
+                            {chunkArray(theaters, 3).map((group, index) => (
+                              <Col key={index} span={8}>
+                                {group.map((theater, idx) => (
+                                  <Menu.Item
+                                    key={`${index}-${idx}`}
+                                    style={{ background: "transparent" }}
                                   >
-                                    <div className="theater-menu-item">
-                                      <div className="theater-name">
-                                        {theater.name}
+                                    <Typography.Text
+                                      style={{
+                                        color: "white",
+                                        cursor: "pointer",
+                                      }}
+                                      onClick={() =>
+                                        handleTheaterSelect(theater)
+                                      }
+                                    >
+                                      <div className="theater-menu-item">
+                                        <div className="theater-name">
+                                          {theater.name}
+                                        </div>
                                       </div>
-                                    </div>
-                                  </Typography.Text>
-                                </Menu.Item>
-                              ))}
-                            </Col>
-                          ))}
-                        </Row>
-                      </Menu>
-                    }
-                  >
-                    <Typography.Text
-                      style={{
-                        color: "white",
-                        cursor: "pointer",
-                        fontSize: 16,
-                      }}
-                      className="choose-theater-text"
+                                    </Typography.Text>
+                                  </Menu.Item>
+                                ))}
+                              </Col>
+                            ))}
+                          </Row>
+                        </Menu>
+                      }
                     >
-                      Chọn rạp
-                    </Typography.Text>
-                  </Dropdown>
+                      <Typography.Text
+                        style={{
+                          color: "white",
+                          cursor: "pointer",
+                          fontSize: 16,
+                        }}
+                        className="choose-theater-text"
+                      >
+                        Chọn rạp
+                      </Typography.Text>
+                    </Dropdown>
+                  </Link>
+                </div>
+
+                <Link to="/showtimes" className="secondary-nav-link">
+                  Lịch chiếu
                 </Link>
               </div>
-
-              <Link to="/showtimes" className="secondary-nav-link">
-                Lịch chiếu
-              </Link>
-            </div>
-            <div className="secondary-nav-item">
-              <Link to="/promotions" className="secondary-nav-link">
-                Khuyến mãi
-              </Link>
-              <Link to="/thue-su-kien" className="secondary-nav-link">
-                Thuê sự kiện
-              </Link>
-              <Link to="/entertaiment" className="secondary-nav-link">
-                Tất cả các giải trí
-              </Link>
-              <Link to="/about" className="secondary-nav-link" id="about11">
-                Giới thiệu
-              </Link>
-            </div>
-          </nav>
+              <div className="secondary-nav-item">
+                <Link to="/promotions" className="secondary-nav-link">
+                  Khuyến mãi
+                </Link>
+                <Link to="/thue-su-kien" className="secondary-nav-link">
+                  Thuê sự kiện
+                </Link>
+                <Link to="/entertaiment" className="secondary-nav-link">
+                  Tất cả các giải trí
+                </Link>
+                <Link to="/about" className="secondary-nav-link" id="about11">
+                  Giới thiệu
+                </Link>
+              </div>
+            </nav>
+          </div>
         </div>
-      </div>
+      )}
+      {isTabletOrMobile && (
+        <div className={`mobile-menu ${menuOpen ? "open" : ""}`}>
+          <Link to="/payment" onClick={toggleMenu}>
+            ĐẶT VÉ NGAY
+          </Link>
+          <Link to="/popcorn-drink" onClick={toggleMenu}>
+            ĐẶT BẮP NƯỚC
+          </Link>
+          <Link to="/showtimes" onClick={toggleMenu}>
+            Lịch chiếu
+          </Link>
+          <Link to="/promotions" onClick={toggleMenu}>
+            Khuyến mãi
+          </Link>
+          <Link to="/thue-su-kien" onClick={toggleMenu}>
+            Thuê sự kiện
+          </Link>
+          <Link to="/entertaiment" onClick={toggleMenu}>
+            Tất cả các giải trí
+          </Link>
+          <Link to="/about" onClick={toggleMenu}>
+            Giới thiệu
+          </Link>
+        </div>
+      )}
     </header>
   );
 };
