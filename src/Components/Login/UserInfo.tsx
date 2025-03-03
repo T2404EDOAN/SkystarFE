@@ -93,7 +93,7 @@ const UserInfo: React.FC = () => {
 
     try {
       const response = await axios.put(
-        `http://18.205.19.89:8080/api/users/${user.id}`,
+        `http://localhost:8081/api/users/${user.id}`,
         userFormData
       );
 
@@ -147,7 +147,7 @@ const UserInfo: React.FC = () => {
     try {
       // Verify mật khẩu cũ
       const verifyResponse = await axios.get(
-        `http://18.205.19.89:8080/api/users/${user.id}`
+        `http://localhost:8081/api/users/${user.id}`
       );
 
       // Kiểm tra mật khẩu cũ
@@ -161,7 +161,7 @@ const UserInfo: React.FC = () => {
 
       // Thay đổi mật khẩu
       const response = await axios.put(
-        `http://18.205.19.89:8080/api/users/${user.id}`,
+        `http://localhost:8081/api/users/${user.id}`,
         {
           ...verifyResponse.data,
           password: passwordFormData.newPassword,

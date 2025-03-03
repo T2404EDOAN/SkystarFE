@@ -116,13 +116,62 @@
   padding-bottom: 50px;
 }
 
-@media (min-width: 768px) {
-  .voucher-banner-event-rental-page {
-    padding-bottom: 100px;
-  }
+.services-section {
+  padding: 2rem 0;
+  color: white;
+  padding-bottom: 50px;
 }
-
+.services-subtitle {
+  margin-bottom: 1.5rem;
+}
+.services-grid {
+  display: grid;
+  grid-template-columns: repeat(1, 1fr);
+  gap: 1rem;
+}
 .voucher-banner-event-rental-page img {
   width: 100%;
   height: auto;
+}
+.service-card {
+  position: relative;
+  overflow: hidden;
+}
+
+.service-image {
+  width: 100%;
+  height: 200px;
+  object-fit: cover;
+
+  transition: transform 0.5s;
+}
+.service-card:hover .service-image {
+  transform: scale(1.1);
+}
+
+.service-overlay {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  background: linear-gradient(to top, black, transparent);
+  padding: 1rem;
+}
+
+.service-name {
+  text-align: center;
+}
+
+.service-hover-effect {
+  position: absolute;
+  inset: 0;
+  background-color: white;
+  opacity: 0;
+  transform: translateX(-100%);
+  transition: transform 0.5s ease-in-out;
+  pointer-events: none;
+}
+
+.service-card:hover .service-hover-effect {
+  opacity: 0.2;
+  transform: translateX(100%);
 }

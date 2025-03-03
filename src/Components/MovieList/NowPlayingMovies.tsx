@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import Header from "../Header/Header";
 import TrailerModal from "../Trailer/TrailerModal";
 import axios from "axios";
-import './NowPlayingMovies.css';
+import "./NowPlayingMovies.css";
 
 const NowPlayingMovies: React.FC = () => {
   interface Movie {
@@ -29,7 +29,7 @@ const NowPlayingMovies: React.FC = () => {
     rating: number;
     ratingCount: number | null;
     status: string;
-    genres: Array<{ id: number; name: string }>;  // Update this line
+    genres: Array<{ id: number; name: string }>; // Update this line
   }
 
   const [movies, setMovies] = useState<Movie[]>([]);
@@ -89,20 +89,17 @@ const NowPlayingMovies: React.FC = () => {
       try {
         setIsLoading(true);
         setError(null);
-        const response = await axios.get(
-          "http://18.205.19.89:8080/api/movies",
-          {
-            headers: {
-              Accept: "application/json",
-              "Content-Type": "application/json",
-            },
-          }
-        );
-console.log(response.data);
+        const response = await axios.get("http://localhost:8081/api/movies", {
+          headers: {
+            Accept: "application/json",
+            "Content-Type": "application/json",
+          },
+        });
+        console.log(response.data);
         const moviesData = Array.isArray(response.data)
           ? response.data
           : response.data.content || [];
-       
+
         const upcomingMovies = moviesData
           .filter((movie: Movie) => movie && movie.status === "Đang chiếu")
           .map((movie: Movie) => ({
@@ -112,7 +109,6 @@ console.log(response.data);
 
         setMovies(upcomingMovies);
       } catch (err) {
-        
         if (axios.isAxiosError(err)) {
           setError(
             err.response?.data?.message ||
@@ -196,7 +192,12 @@ console.log(response.data);
   if (error) {
     return (
       <div className="nowplaying-error-container">
-        <svg className="nowplaying-error-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <svg
+          className="nowplaying-error-icon"
+          fill="none"
+          stroke="currentColor"
+          viewBox="0 0 24 24"
+        >
           <path
             strokeLinecap="round"
             strokeLinejoin="round"
@@ -205,7 +206,10 @@ console.log(response.data);
           />
         </svg>
         <p className="nowplaying-error-message">{error}</p>
-        <button onClick={() => window.location.reload()} className="nowplaying-retry-button">
+        <button
+          onClick={() => window.location.reload()}
+          className="nowplaying-retry-button"
+        >
           Thử lại
         </button>
       </div>
@@ -215,14 +219,18 @@ console.log(response.data);
   return (
     <div className="nowplaying-container">
       <Header isOverlayActive={!!trailerUrl} />
-      <h2 className="nowplaying-title1" style={{ fontFamily: "Anton, sans-serif" }}>
+      <h2
+        className="nowplaying-title1"
+        style={{ fontFamily: "Anton, sans-serif" }}
+      >
         PHIM ĐANG CHIẾU
       </h2>
       {trailerUrl && (
         <TrailerModal trailerUrl={trailerUrl} onClose={closeTrailer} />
       )}
       <div className="nowplaying-slider">
-        <div className="nowplaying-wrapper"
+        <div
+          className="nowplaying-wrapper"
           style={{
             transform: `translateX(-${currentPage * 100}%)`,
             willChange: "transform",
@@ -233,7 +241,13 @@ console.log(response.data);
           onTouchEnd={handleTouchEnd}
         >
           {movies.map((movie, index) => (
-            <div key={index} className="nowplaying-card" onClick={() => window.location.href = `/movie-detail/${movie.id}`}>
+            <div
+              key={index}
+              className="nowplaying-card"
+              onClick={() =>
+                (window.location.href = `/movie-detail/${movie.id}`)
+              }
+            >
               <div className="cursor-pointer">
                 <div className="nowplaying-poster-container">
                   <img
@@ -244,7 +258,9 @@ console.log(response.data);
                   <div className="nowplaying-overlay">
                     <div className="nowplaying-info-container">
                       <Link to={`/movie-detail/${movie.id}`}>
-                        <h3 className="nowplaying-info-title1 hover:text-white">{movie.title}</h3>
+                        <h3 className="nowplaying-info-title1 hover:text-white">
+                          {movie.title}
+                        </h3>
                       </Link>
                       <p className="nowplaying-info-genres">
                         <svg
@@ -264,7 +280,9 @@ console.log(response.data);
                             d="M15.583 8.445h.01M10.86 19.71l-6.573-6.63a.993.993 0 0 1 0-1.4l7.329-7.394A.98.98 0 0 1 12.31 4l5.734.007A1.968 1.968 0 0 1 20 5.983v5.5a.992.992 0 0 1-.316.727l-7.44 7.5a.974.974 0 0 1-1.384.001Z"
                           />
                         </svg>{" "}
-                        {movie.genres ? movie.genres.map(genre => genre.name).join(', ') : "Chưa cập nhật thể loại"}
+                        {movie.genres
+                          ? movie.genres.map((genre) => genre.name).join(", ")
+                          : "Chưa cập nhật thể loại"}
                       </p>
                       <p className="nowplaying-info-duration">
                         <svg
@@ -331,11 +349,19 @@ console.log(response.data);
               </div>
               <div className="nowplaying-title-wrapper">
                 <Link to={`/movie-detail/${movie.id}`}>
-                  <h3 className="nowplaying-info-title hover:text-orange-500 cursor-pointer">{movie.title}</h3>
+                  <h3 className="nowplaying-info-title hover:text-orange-500 cursor-pointer">
+                    {movie.title}
+                  </h3>
                 </Link>
               </div>
               <div className="nowplaying-actions">
-                <div className="nowplaying-trailer-button" onClick={(e) => { e.stopPropagation(); handleTrailerClick(movie.trailerUrl || ""); }}>
+                <div
+                  className="nowplaying-trailer-button"
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    handleTrailerClick(movie.trailerUrl || "");
+                  }}
+                >
                   <div className="nowplaying-trailer-icon-circle">
                     <img
                       src="https://cinestar.com.vn/assets/images/ic-play-circle-red.svg"
@@ -349,7 +375,11 @@ console.log(response.data);
                     Xem Trailer
                   </span>
                 </div>
-                <Link to={`/movie-detail/${movie.id}`} className="nowplaying-book-ticket-button" onClick={(e) => e.stopPropagation()}>
+                <Link
+                  to={`/movie-detail/${movie.id}`}
+                  className="nowplaying-book-ticket-button"
+                  onClick={(e) => e.stopPropagation()}
+                >
                   <span className="nowplaying-book-ticket-text">ĐẶT VÉ</span>
                   <div className="nowplaying-button-gradient" />
                 </Link>
@@ -386,9 +416,13 @@ console.log(response.data);
         </button>
         <button
           onClick={handleNextPage}
-          disabled={(currentPage + 1) * moviesPerPage >= movies.length || isAnimating}
+          disabled={
+            (currentPage + 1) * moviesPerPage >= movies.length || isAnimating
+          }
           className={`nowplaying-navigation-button nowplaying-navigation-button-right ${
-            (currentPage + 1) * moviesPerPage >= movies.length || isAnimating ? "disabled" : ""
+            (currentPage + 1) * moviesPerPage >= movies.length || isAnimating
+              ? "disabled"
+              : ""
           }`}
         >
           <svg
@@ -415,7 +449,9 @@ console.log(response.data);
           <button
             key={index}
             onClick={() => handleDotClick(index)}
-            className={`nowplaying-pagination-dot ${currentPage === index ? "active" : ""}`}
+            className={`nowplaying-pagination-dot ${
+              currentPage === index ? "active" : ""
+            }`}
             aria-label={`Go to slide ${index + 1}`}
           />
         ))}

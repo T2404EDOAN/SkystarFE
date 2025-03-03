@@ -1,7 +1,7 @@
 import { Link, useNavigate } from "react-router-dom";
-import { useState, useEffect } from 'react';
-import axios from 'axios';
-import './PaymentTicketForm.css';
+import { useState, useEffect } from "react";
+import axios from "axios";
+import "./PaymentTicketForm.css";
 
 interface PaymentFormProps {
   title: string;
@@ -13,7 +13,7 @@ interface PaymentFormProps {
     seatNumber: string;
     seatType: string;
     price: number;
-    holdExpiration: Date;  // Added this field
+    holdExpiration: Date; // Added this field
   }>;
   showtimeId: number;
   onConfirm: (movieInfo: {
@@ -42,12 +42,17 @@ const PaymentTicketForm: React.FC<PaymentFormProps> = (props) => {
 
     // Find the earliest expiration time among all selected seats
     const earliestExpiration = Math.min(
-      ...props.selectedSeats.map(seat => new Date(seat.holdExpiration).getTime())
+      ...props.selectedSeats.map((seat) =>
+        new Date(seat.holdExpiration).getTime()
+      )
     );
 
     const updateTimer = () => {
       const now = Date.now();
-      const remaining = Math.max(0, Math.floor((earliestExpiration - now) / 1000));
+      const remaining = Math.max(
+        0,
+        Math.floor((earliestExpiration - now) / 1000)
+      );
       setTimeRemaining(remaining);
 
       if (remaining === 0) {
@@ -68,29 +73,31 @@ const PaymentTicketForm: React.FC<PaymentFormProps> = (props) => {
     const checkSeatsStatus = async () => {
       try {
         const response = await axios.get(
-          `http://18.205.19.89:8080/api/seats/${props.showtimeId}/check-seats`
+          `http://localhost:8081/api/seats/${props.showtimeId}/check-seats`
         );
         const unavailableSeats = response.data;
-        
+
         // Check if any of our selected seats are no longer available
-        const hasUnavailableSeats = props.selectedSeats.some(selectedSeat =>
-          unavailableSeats.some(unavailableSeat => unavailableSeat.id === selectedSeat.id)
+        const hasUnavailableSeats = props.selectedSeats.some((selectedSeat) =>
+          unavailableSeats.some(
+            (unavailableSeat) => unavailableSeat.id === selectedSeat.id
+          )
         );
-        
+
         if (hasUnavailableSeats) {
-          alert('Một số ghế đã không còn khả dụng. Vui lòng chọn ghế khác.');
+          alert("Một số ghế đã không còn khả dụng. Vui lòng chọn ghế khác.");
           navigate(-1);
         }
       } catch (error) {
-        console.error('Error checking seats status:', error);
+        console.error("Error checking seats status:", error);
       }
     };
 
     const intervalId = setInterval(checkSeatsStatus, 5 * 60 * 1000); // 5 minutes
-    
+
     // Run initial check
     checkSeatsStatus();
-    
+
     // Cleanup
     return () => clearInterval(intervalId);
   }, [props.showtimeId, props.selectedSeats, navigate]);
@@ -98,18 +105,23 @@ const PaymentTicketForm: React.FC<PaymentFormProps> = (props) => {
   const formatTime = (seconds: number): string => {
     const minutes = Math.floor(seconds / 60);
     const remainingSeconds = seconds % 60;
-    return `${minutes}:${remainingSeconds.toString().padStart(2, '0')}`;
+    return `${minutes}:${remainingSeconds.toString().padStart(2, "0")}`;
   };
 
   const calculateTotalPrice = () => {
-    const seatTotal = props.selectedSeats.reduce((total, seat) => total + seat.price, 0);
-    const productTotal = props.selectedProducts.reduce((total, product) => 
-      total + (product.price * product.quantity), 0);
+    const seatTotal = props.selectedSeats.reduce(
+      (total, seat) => total + seat.price,
+      0
+    );
+    const productTotal = props.selectedProducts.reduce(
+      (total, product) => total + product.price * product.quantity,
+      0
+    );
     return seatTotal + productTotal;
   };
 
   const handleProceedToPayment = () => {
-    navigate('/payment', {
+    navigate("/payment", {
       state: {
         title: props.title,
         roomName: props.roomName,
@@ -120,8 +132,8 @@ const PaymentTicketForm: React.FC<PaymentFormProps> = (props) => {
         totalPrice: calculateTotalPrice(),
         movieType: "Hành động",
         showtimeId: props.showtimeId,
-        selectedProducts: props.selectedProducts 
-      }
+        selectedProducts: props.selectedProducts,
+      },
     });
   };
 
@@ -133,24 +145,29 @@ const PaymentTicketForm: React.FC<PaymentFormProps> = (props) => {
             <h1 className="movie-title-pay">{props.title}</h1>
             <div>
               <div className="cinema-info">
-                {`${props.cinemaName} | ${props.selectedSeats[0]?.seatType || 'Standard'}`}
+                {`${props.cinemaName} | ${
+                  props.selectedSeats[0]?.seatType || "Standard"
+                }`}
               </div>
               <div className="showtime-info">
                 <span>{props.roomName}</span>
                 <span className="divider">|</span>
-                <span>{props.selectedSeats.map(seat => seat.seatNumber).join(", ")}</span>
+                <span>
+                  {props.selectedSeats
+                    .map((seat) => seat.seatNumber)
+                    .join(", ")}
+                </span>
                 <span className="divider">|</span>
                 <span>{props.showTime}</span>
               </div>
-              
+
               {/* Add product items here */}
               {props.selectedProducts.length > 0 && (
                 <div className="selected-products-list">
-                  {props.selectedProducts.map(product => (
-                   
-                      <span>{product.name} x {product.quantity}</span>
-                      
-                   
+                  {props.selectedProducts.map((product) => (
+                    <span>
+                      {product.name} x {product.quantity}
+                    </span>
                   ))}
                 </div>
               )}
@@ -165,20 +182,17 @@ const PaymentTicketForm: React.FC<PaymentFormProps> = (props) => {
             <div className="countdown-timer">
               Thời gian giữ ghế: {formatTime(timeRemaining)}
             </div>
-            
+
             <div className="total-price">
               <span>Tạm tính</span>
-              <span className="price-amount">{calculateTotalPrice().toLocaleString('vi-VN')} VNĐ</span>
+              <span className="price-amount">
+                {calculateTotalPrice().toLocaleString("vi-VN")} VNĐ
+              </span>
             </div>
           </div>
-          <button
-            onClick={handleProceedToPayment}
-            className="book-button"
-          >
+          <button onClick={handleProceedToPayment} className="book-button">
             <div className="button-gradient"></div>
-            <span className="book-button-text">
-              ĐẶT VÉ
-            </span>
+            <span className="book-button-text">ĐẶT VÉ</span>
           </button>
         </div>
       </div>

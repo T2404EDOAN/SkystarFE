@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import Header from "../Header/Header";
 import TrailerModal from "../Trailer/TrailerModal";
 import axios from "axios";
-import './NowPlayingMovies.css';
+import "./NowPlayingMovies.css";
 
 const ComingSoonMovies: React.FC = () => {
   interface Movie {
@@ -29,7 +29,7 @@ const ComingSoonMovies: React.FC = () => {
     rating: number;
     ratingCount: number | null;
     status: string;
-    genres: Array<{ id: number; name: string }>;  // Update this line
+    genres: Array<{ id: number; name: string }>; // Update this line
   }
 
   const [movies, setMovies] = useState<Movie[]>([]);
@@ -89,20 +89,17 @@ const ComingSoonMovies: React.FC = () => {
       try {
         setIsLoading(true);
         setError(null);
-        const response = await axios.get(
-          "http://18.205.19.89:8080/api/movies",
-          {
-            headers: {
-              Accept: "application/json",
-              "Content-Type": "application/json",
-            },
-          }
-        );
+        const response = await axios.get("http://localhost:8081/api/movies", {
+          headers: {
+            Accept: "application/json",
+            "Content-Type": "application/json",
+          },
+        });
 
         const moviesData = Array.isArray(response.data)
           ? response.data
           : response.data.content || [];
-       
+
         const upcomingMovies = moviesData
           .filter((movie: Movie) => movie && movie.status === "Sắp chiếu")
           .map((movie: Movie) => ({
@@ -112,7 +109,6 @@ const ComingSoonMovies: React.FC = () => {
 
         setMovies(upcomingMovies);
       } catch (err) {
-        
         if (axios.isAxiosError(err)) {
           setError(
             err.response?.data?.message ||
@@ -196,7 +192,12 @@ const ComingSoonMovies: React.FC = () => {
   if (error) {
     return (
       <div className="nowplaying-error-container">
-        <svg className="nowplaying-error-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <svg
+          className="nowplaying-error-icon"
+          fill="none"
+          stroke="currentColor"
+          viewBox="0 0 24 24"
+        >
           <path
             strokeLinecap="round"
             strokeLinejoin="round"
@@ -205,7 +206,10 @@ const ComingSoonMovies: React.FC = () => {
           />
         </svg>
         <p className="nowplaying-error-message">{error}</p>
-        <button onClick={() => window.location.reload()} className="nowplaying-retry-button">
+        <button
+          onClick={() => window.location.reload()}
+          className="nowplaying-retry-button"
+        >
           Thử lại
         </button>
       </div>
@@ -215,14 +219,18 @@ const ComingSoonMovies: React.FC = () => {
   return (
     <div className="nowplaying-container">
       <Header isOverlayActive={!!trailerUrl} />
-      <h2 className="nowplaying-title1" style={{ fontFamily: "Anton, sans-serif" }}>
+      <h2
+        className="nowplaying-title1"
+        style={{ fontFamily: "Anton, sans-serif" }}
+      >
         PHIM ĐANG CHIẾU
       </h2>
       {trailerUrl && (
         <TrailerModal trailerUrl={trailerUrl} onClose={closeTrailer} />
       )}
       <div className="nowplaying-slider">
-        <div className="nowplaying-wrapper"
+        <div
+          className="nowplaying-wrapper"
           style={{
             transform: `translateX(-${currentPage * 100}%)`,
             willChange: "transform",
@@ -244,7 +252,9 @@ const ComingSoonMovies: React.FC = () => {
                   <div className="nowplaying-overlay">
                     <div className="nowplaying-info-container">
                       <Link to={`/movie-detail/${movie.id}`}>
-                        <h3 className="nowplaying-info-title hover:text-orange-500">{movie.title}</h3>
+                        <h3 className="nowplaying-info-title hover:text-orange-500">
+                          {movie.title}
+                        </h3>
                       </Link>
                       <p className="nowplaying-info-genres">
                         <svg
@@ -264,7 +274,9 @@ const ComingSoonMovies: React.FC = () => {
                             d="M15.583 8.445h.01M10.86 19.71l-6.573-6.63a.993.993 0 0 1 0-1.4l7.329-7.394A.98.98 0 0 1 12.31 4l5.734.007A1.968 1.968 0 0 1 20 5.983v5.5a.992.992 0 0 1-.316.727l-7.44 7.5a.974.974 0 0 1-1.384.001Z"
                           />
                         </svg>{" "}
-                        {movie.genres ? movie.genres.map(genre => genre.name).join(', ') : "Chưa cập nhật thể loại"}
+                        {movie.genres
+                          ? movie.genres.map((genre) => genre.name).join(", ")
+                          : "Chưa cập nhật thể loại"}
                       </p>
                       <p className="nowplaying-info-duration">
                         <svg
@@ -331,11 +343,16 @@ const ComingSoonMovies: React.FC = () => {
               </div>
               <div className="nowplaying-title-wrapper">
                 <Link to={`/movie-detail/${movie.id}`}>
-                  <h3 className="nowplaying-info-title hover:text-orange-500 cursor-pointer">{movie.title}</h3>
+                  <h3 className="nowplaying-info-title hover:text-orange-500 cursor-pointer">
+                    {movie.title}
+                  </h3>
                 </Link>
               </div>
               <div className="nowplaying-actions">
-                <div className="nowplaying-trailer-button" onClick={() => handleTrailerClick(movie.trailerUrl || "")}>
+                <div
+                  className="nowplaying-trailer-button"
+                  onClick={() => handleTrailerClick(movie.trailerUrl || "")}
+                >
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
                     width="24"
@@ -351,7 +368,10 @@ const ComingSoonMovies: React.FC = () => {
                     Xem Trailer
                   </span>
                 </div>
-                <Link to={`/movie-detail/${movie.id}`} className="nowplaying-book-ticket-button">
+                <Link
+                  to={`/movie-detail/${movie.id}`}
+                  className="nowplaying-book-ticket-button"
+                >
                   <span className="nowplaying-book-ticket-text">ĐẶT VÉ</span>
                   <div className="nowplaying-button-gradient" />
                 </Link>
@@ -388,9 +408,13 @@ const ComingSoonMovies: React.FC = () => {
         </button>
         <button
           onClick={handleNextPage}
-          disabled={(currentPage + 1) * moviesPerPage >= movies.length || isAnimating}
+          disabled={
+            (currentPage + 1) * moviesPerPage >= movies.length || isAnimating
+          }
           className={`nowplaying-navigation-button nowplaying-navigation-button-right ${
-            (currentPage + 1) * moviesPerPage >= movies.length || isAnimating ? "disabled" : ""
+            (currentPage + 1) * moviesPerPage >= movies.length || isAnimating
+              ? "disabled"
+              : ""
           }`}
         >
           <svg
@@ -417,7 +441,9 @@ const ComingSoonMovies: React.FC = () => {
           <button
             key={index}
             onClick={() => handleDotClick(index)}
-            className={`nowplaying-pagination-dot ${currentPage === index ? "active" : ""}`}
+            className={`nowplaying-pagination-dot ${
+              currentPage === index ? "active" : ""
+            }`}
             aria-label={`Go to slide ${index + 1}`}
           />
         ))}

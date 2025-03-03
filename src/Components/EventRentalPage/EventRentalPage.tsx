@@ -1,7 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import "./EventRentalPage.css";
-import "./EventRentalServices.css";
 
 const EventRentalPage = () => {
   return (

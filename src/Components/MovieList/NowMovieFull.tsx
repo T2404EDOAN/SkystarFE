@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import Header from "../Header/Header";
 import TrailerModal from "../Trailer/TrailerModal";
 import axios from "axios";
-import './NowMovieFull.css';
+import "./NowMovieFull.css";
 
 const NowMovieFull: React.FC = () => {
   interface Movie {
@@ -58,27 +58,24 @@ const NowMovieFull: React.FC = () => {
       try {
         setIsLoading(true);
         setError(null);
-        const response = await axios.get(
-          "http://18.205.19.89:8080/api/movies",
-          {
-            headers: {
-              Accept: "application/json",
-              "Content-Type": "application/json",
-            },
-          }
-        );
-  
+        const response = await axios.get("http://localhost:8081/api/movies", {
+          headers: {
+            Accept: "application/json",
+            "Content-Type": "application/json",
+          },
+        });
+
         const moviesData = Array.isArray(response.data)
           ? response.data
           : response.data.content || [];
-       
+
         const upcomingMovies = moviesData
           .filter((movie: Movie) => movie && movie.status === "Đang chiếu")
           .map((movie: Movie) => ({
             ...movie,
             trailerUrl: movie.trailerUrl || null,
           }));
-  
+
         setMovies(upcomingMovies);
       } catch (err) {
         if (axios.isAxiosError(err)) {
@@ -93,7 +90,7 @@ const NowMovieFull: React.FC = () => {
         setIsLoading(false);
       }
     };
-  
+
     fetchMovies();
   }, []);
 
@@ -120,7 +117,12 @@ const NowMovieFull: React.FC = () => {
   if (error) {
     return (
       <div className="nowmoviefull-error-container">
-        <svg className="nowmoviefull-error-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <svg
+          className="nowmoviefull-error-icon"
+          fill="none"
+          stroke="currentColor"
+          viewBox="0 0 24 24"
+        >
           <path
             strokeLinecap="round"
             strokeLinejoin="round"
@@ -129,7 +131,10 @@ const NowMovieFull: React.FC = () => {
           />
         </svg>
         <p className="nowmoviefull-error-message">{error}</p>
-        <button onClick={() => window.location.reload()} className="nowmoviefull-retry-button">
+        <button
+          onClick={() => window.location.reload()}
+          className="nowmoviefull-retry-button"
+        >
           Thử lại
         </button>
       </div>
@@ -139,14 +144,20 @@ const NowMovieFull: React.FC = () => {
   return (
     <div className="nowmoviefull-container">
       <Header isOverlayActive={!!trailerUrl} />
-      <h2 className="nowmoviefull-title1" style={{ fontFamily: "Anton, sans-serif" }}>
+      <h2
+        className="nowmoviefull-title1"
+        style={{ fontFamily: "Anton, sans-serif" }}
+      >
         PHIM ĐANG CHIẾU
       </h2>
       {trailerUrl && (
         <TrailerModal trailerUrl={trailerUrl} onClose={closeTrailer} />
       )}
       <div className="nowmoviefull-slider">
-        <div className="nowmoviefull-wrapper" style={{ gridTemplateColumns: `repeat(${moviesPerRow}, 1fr)` }}>
+        <div
+          className="nowmoviefull-wrapper"
+          style={{ gridTemplateColumns: `repeat(${moviesPerRow}, 1fr)` }}
+        >
           {movies.map((movie, index) => (
             <div key={index} className="nowmoviefull-card">
               <div className="cursor-pointer">
@@ -159,7 +170,9 @@ const NowMovieFull: React.FC = () => {
                   <div className="nowmoviefull-overlay">
                     <div className="nowmoviefull-info-container">
                       <Link to={`/movie-detail/${movie.id}`}>
-                        <h3 className="nowmoviefull-info-title hover:text-orange-500">{movie.title}</h3>
+                        <h3 className="nowmoviefull-info-title hover:text-orange-500">
+                          {movie.title}
+                        </h3>
                       </Link>
                       <p className="nowmoviefull-info-genres">
                         <svg
@@ -246,11 +259,16 @@ const NowMovieFull: React.FC = () => {
               </div>
               <div className="nowmoviefull-title-wrapper">
                 <Link to={`/movie-detail/${movie.id}`}>
-                  <h3 className="nowmoviefull-info-title hover:text-orange-500 cursor-pointer">{movie.title}</h3>
+                  <h3 className="nowmoviefull-info-title hover:text-orange-500 cursor-pointer">
+                    {movie.title}
+                  </h3>
                 </Link>
               </div>
               <div className="nowmoviefull-actions">
-                <div className="nowmoviefull-trailer-button" onClick={() => handleTrailerClick(movie.trailerUrl || "")}>
+                <div
+                  className="nowmoviefull-trailer-button"
+                  onClick={() => handleTrailerClick(movie.trailerUrl || "")}
+                >
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
                     width="24"
@@ -266,7 +284,10 @@ const NowMovieFull: React.FC = () => {
                     Xem Trailer
                   </span>
                 </div>
-                <Link to={`/movie-detail/${movie.id}`} className="nowmoviefull-book-ticket-button">
+                <Link
+                  to={`/movie-detail/${movie.id}`}
+                  className="nowmoviefull-book-ticket-button"
+                >
                   <span className="nowmoviefull-book-ticket-text">ĐẶT VÉ</span>
                   <div className="nowmoviefull-button-gradient" />
                 </Link>
