@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Input } from "antd";
+import { Input, Modal } from "antd";  // Add Modal to imports
 import { useLocation, useNavigate } from "react-router-dom";
 import axios from "axios";
 import "./PaymentFormDetail.css";
@@ -69,6 +69,22 @@ const PaymentFormDetail = () => {
   });
 
   const [bookingId, setBookingId] = useState<string>("");
+
+  const [isVoucherModalVisible, setIsVoucherModalVisible] = useState(false);
+  const [selectedVoucher, setSelectedVoucher] = useState<string | null>(null);
+
+  const showVoucherModal = () => {
+    setIsVoucherModalVisible(true);
+  };
+
+  const handleVoucherCancel = () => {
+    setIsVoucherModalVisible(false);
+  };
+
+  const handleVoucherSelect = (voucherId: string) => {
+    setSelectedVoucher(voucherId);
+    setIsVoucherModalVisible(false);
+  };
 
   useEffect(() => {
     if (movieInfo?.holdTimer) {
@@ -348,7 +364,10 @@ const PaymentFormDetail = () => {
                 onClick={handleMomoPayment}
                 style={{ cursor: "pointer" }}
               >
-                <img src="/momo-logo.png" alt="Momo" />
+                <img 
+                  src="https://cinestar.com.vn/assets/images/img-momo.png" 
+                  alt="Momo" 
+                />
                 <p>Thanh toán qua ví Momo</p>
               </div>
               <div className="payment-method-box">
@@ -359,7 +378,51 @@ const PaymentFormDetail = () => {
                 <img src="/vnpay-logo.png" alt="VNPay" />
                 <p>Thanh toán qua VNPay</p>
               </div>
+              <div className="payment-method-box voucher-box" onClick={showVoucherModal}>
+                <i className="fas fa-ticket-alt voucher-icon"></i>
+                <p>Chọn Voucher{selectedVoucher && " (Đã chọn)"}</p>
+              </div>
             </div>
+            <Modal
+              title="Áp dụng ưu đãi"
+              open={isVoucherModalVisible}
+              onCancel={handleVoucherCancel}
+              footer={
+                <div className="voucher-modal-footer">
+                  <button 
+                    className="voucher-continue-btn"
+                    onClick={handleVoucherCancel}
+                    disabled={!selectedVoucher}
+                  >
+                    {selectedVoucher ? 'Tiếp tục' : 'Vui lòng chọn ưu đãi'}
+                  </button>
+                </div>
+              }
+            >
+              <div className="voucher-list">
+                <div className="voucher-item" onClick={() => handleVoucherSelect("VOUCHER1")}>
+                  <div className="voucher-info">
+                    <h3>C'Ten: 45k phim 2d</h3>
+                    <p>Xem phim trước 10h sáng và sau 10h tối</p>
+               
+                  </div>
+                </div>
+                <div className="voucher-item" onClick={() => handleVoucherSelect("VOUCHER2")}>
+                  <div className="voucher-info">
+                    <h3>C'Member: 45k phim 2d</h3>
+                    <p>Thành viên Cinestar vào ngày thứ 4 hàng tuần</p>
+             
+                  </div>
+                </div>
+                <div className="voucher-item" onClick={() => handleVoucherSelect("VOUCHER3")}>
+                  <div className="voucher-info">
+                    <h3>C'Monday: 45k phim 2d</h3>
+                    <p>Các suất chiếu vào ngày thứ 2 hàng tuần</p>
+                 
+                  </div>
+                </div>
+              </div>
+            </Modal>
             <div className="payment-actions">
               <button onClick={handleBack} className="skystar-form-back">
                 Quay lại

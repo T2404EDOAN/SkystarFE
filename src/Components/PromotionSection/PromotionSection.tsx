@@ -158,7 +158,7 @@ const PromotionSection: React.FC = () => {
       </div>
       
       <button className="promo-all-button">
-        <span className="promo-button-text">TẤT CẢ ƯU ĐÃI</span>
+        <a>TẤT CẢ ƯU ĐÃI</a>
       </button>
     </div>
   );
