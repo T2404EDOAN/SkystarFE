@@ -1,121 +1,34 @@
-.container-event-rental-page {
-  width: 100%;
-  max-width: 1200px;
-  margin: 0 auto;
+.container-event-rental {
+  padding-bottom: 50px;
 }
-
-.header-event-rental-page {
+.header-event-rental {
   text-align: center;
-  padding: 24px 0;
-  color: white;
-}
-
-.header-title-event-rental-page {
-  font-size: 40px;
-  font-family: "Anton", sans-serif;
-  margin-bottom: 8px;
-}
-
-.header-subtitle-event-rental-page {
-  font-size: 20px;
-  margin-bottom: 8px;
-}
-
-.header-text-event-rental-page {
-  font-size: 16px;
-  padding: 0 16px;
-}
-
-.main-content-event-rental-page {
   display: flex;
   flex-direction: column;
-  padding: 24px 0;
-}
-
-.event-section-event-rental-page {
-  display: flex;
-  flex-direction: row;
   align-items: center;
-  gap: 70px;
+  justify-content: center;
+  margin-top: 30px;
 }
-
-.event-section-event-rental-page.reverse {
+#event-section1 {
+  display: flex;
+  align-items: center;
+}
+.event-text-event-rental {
+  width: 600px;
+}
+.event-section:nth-child(2) {
   flex-direction: row-reverse;
 }
 
-.event-text-event-rental-page {
-  width: 50%;
+.event-section:nth-child(2n + 1) {
+  flex-direction: row;
 }
-
-.event-title-event-rental-page {
-  font-size: 24px;
-  font-family: "Anton", sans-serif;
-  margin-bottom: 8px;
+.event-section:nth-child(2) .event-text-event-rental {
+  padding-left: 50px;
 }
-
-.event-description-event-rental-page {
-  font-size: 16px;
-  margin-bottom: 8px;
-}
-
-.event-info-event-rental-page {
-  font-size: 14px;
-  margin-bottom: 4px;
-}
-
-.event-phone-event-rental-page {
-  font-size: 18px;
-  font-weight: bold;
-}
-
-.contact-button-event-rental-page {
-  background-color: #f3ea28;
-  color: black;
-  height: 40px;
-  width: 150px;
-  border-radius: 0.375rem;
-  overflow: hidden;
-  position: relative;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-family: "Anton", sans-serif;
-}
-
-.contact-button-event-rental-page span {
-  position: relative;
-  z-index: 10;
-  transition: color 0.3s;
-}
-
-.contact-button-event-rental-page::before {
-  content: "";
-  position: absolute;
-  inset: 0;
-  background: linear-gradient(to right, #663399, #3366cc);
-  transform: translateX(-100%);
-  transition: transform 0.3s ease-out;
-}
-
-.contact-button-event-rental-page:hover::before {
-  transform: translateX(0);
-}
-
-.contact-button-event-rental-page:hover span {
-  color: white;
-}
-
-.event-image-event-rental-page {
+.event-image {
   width: 600px;
-  height: 395px;
-  object-fit: cover;
 }
-
-.voucher-banner-event-rental-page {
-  width: 100%;
-  padding-bottom: 50px;
-}
-
 .services-section {
   padding: 2rem 0;
   color: white;
@@ -126,24 +39,23 @@
 }
 .services-grid {
   display: grid;
-  grid-template-columns: repeat(1, 1fr);
-  gap: 1rem;
-}
-.voucher-banner-event-rental-page img {
-  width: 100%;
-  height: auto;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 20px;
+  padding: 20px;
+  justify-content: center;
 }
 .service-card {
   position: relative;
   overflow: hidden;
+  border-radius: 10px;
+  transition: transform 0.3s ease-in-out;
 }
 
 .service-image {
   width: 100%;
   height: 200px;
   object-fit: cover;
-
-  transition: transform 0.5s;
+  border-radius: 10px;
 }
 .service-card:hover .service-image {
   transform: scale(1.1);
@@ -153,25 +65,63 @@
   position: absolute;
   bottom: 0;
   width: 100%;
-  background: linear-gradient(to top, black, transparent);
-  padding: 1rem;
+  background: rgba(0, 0, 0, 0.7);
+  text-align: center;
+  padding: 10px 0;
+  border-bottom-left-radius: 10px;
+  border-bottom-right-radius: 10px;
 }
 
 .service-name {
-  text-align: center;
+  color: white;
+  font-size: 18px;
+  font-weight: bold;
+  margin: 0;
 }
 
 .service-hover-effect {
   position: absolute;
-  inset: 0;
-  background-color: white;
-  opacity: 0;
-  transform: translateX(-100%);
-  transition: transform 0.5s ease-in-out;
-  pointer-events: none;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0);
+  transition: background 0.3s ease-in-out;
 }
 
 .service-card:hover .service-hover-effect {
   opacity: 0.2;
   transform: translateX(100%);
+  background: rgba(0, 0, 0, 0.3);
+}
+.event-text-event-rental span {
+  font-size: 40px;
+  font-weight: 900;
+}
+@media screen and (max-width: 1024px) {
+  .event-text-event-rental span {
+    font-size: 25px;
+    font-weight: 800;
+  }
+  .event-text-event-rental,
+  .event-image {
+    width: 497px;
+  }
+
+  .services-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+@media screen and (max-width: 768px) {
+  .event-text-event-rental span {
+    font-size: 18px;
+    font-weight: 800;
+  }
+  .event-text-event-rental p {
+    font-size: 16px;
+  }
+  .event-text-event-rental,
+  .event-image {
+    width: 369px;
+  }
 }
