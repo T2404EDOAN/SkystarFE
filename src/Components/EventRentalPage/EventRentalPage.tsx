@@ -55,10 +55,10 @@ const EventRentalPage = () => {
               <img
                 src={
                   index === 0
-                    ? "https://api-website.cinestar.com.vn/media/.renditions/wysiwyg/CMSPage/to-chuc-su-kien/fanclub.png"
+                    ? "https://skystarimages.s3.us-east-1.amazonaws.com/event/event1.jpg"
                     : index === 1
-                    ? "https://api-website.cinestar.com.vn/media/.renditions/wysiwyg/CMSPage/to-chuc-su-kien/chuong-trinh.png"
-                    : "https://api-website.cinestar.com.vn/media/.renditions/wysiwyg/CMSPage/to-chuc-su-kien/noi-bo.png"
+                    ? "https://skystarimages.s3.us-east-1.amazonaws.com/products/meeting.JPG"
+                    : "https://skystarimages.s3.us-east-1.amazonaws.com/event/event2.JPG"
                 }
                 alt="Event Image"
                 className="event-image"
@@ -82,7 +82,7 @@ const EventRentalPage = () => {
           <div className="services-grid">
             <Link to="/thue-su-kien/cinema" className="service-card">
               <img
-                src="https://api-website.cinestar.com.vn/media/.renditions/wysiwyg/CMSPage/to-chuc-su-kien/rap-chieu-phim.png"
+                src="https://skystarimages.s3.us-east-1.amazonaws.com/event/event3.png"
                 alt="Rạp chiếu phim"
                 className="service-image"
               />
@@ -99,7 +99,7 @@ const EventRentalPage = () => {
 
             <Link to="/thue-su-kien/all" className="service-card">
               <img
-                src="https://api-website.cinestar.com.vn/media/.renditions/wysiwyg/CMSPage/to-chuc-su-kien/rap-chieu-phim.png"
+                src="https://skystarimages.s3.us-east-1.amazonaws.com/event/ope.jpg"
                 alt="Nhà hát opera"
                 className="service-image"
               />
@@ -116,7 +116,7 @@ const EventRentalPage = () => {
 
             <Link to="/thue-su-kien/all" className="service-card">
               <img
-                src="https://api-website.cinestar.com.vn/media/.renditions/wysiwyg/CMSPage/to-chuc-su-kien/kid-zone.png"
+                src="https://skystarimages.s3.us-east-1.amazonaws.com/event/event4.png"
                 alt="Kidzone"
                 className="service-image"
               />
@@ -133,7 +133,7 @@ const EventRentalPage = () => {
 
             <Link to="/thue-su-kien/all" className="service-card">
               <img
-                src="https://api-website.cinestar.com.vn/media/.renditions/wysiwyg/CMSPage/to-chuc-su-kien/bowling.png"
+                src="https://skystarimages.s3.us-east-1.amazonaws.com/event/event5.png"
                 alt="Bowling"
                 className="service-image"
               />
@@ -150,7 +150,7 @@ const EventRentalPage = () => {
 
             <Link to="/thue-su-kien/all" className="service-card">
               <img
-                src="https://api-website.cinestar.com.vn/media/.renditions/wysiwyg/CMSPage/to-chuc-su-kien/nhahang.png"
+                src="https://skystarimages.s3.us-east-1.amazonaws.com/event/event6.png"
                 alt="Nhà hàng"
                 className="service-image"
               />
@@ -167,7 +167,7 @@ const EventRentalPage = () => {
 
             <Link to="/thue-su-kien/all" className="service-card">
               <img
-                src="https://api-website.cinestar.com.vn/media/.renditions/wysiwyg/CMSPage/to-chuc-su-kien/bida.png"
+                src="https://skystarimages.s3.us-east-1.amazonaws.com/event/billiardslink.JPEG"
                 alt="Billiards"
                 className="service-image"
               />
