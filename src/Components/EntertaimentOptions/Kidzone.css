@@ -61,3 +61,57 @@ a {
   color: white;
   float: left;
 }
+@media (max-width: 768px) {
+  .des_ab_1, .des_ab_3 {
+    width: 100%;
+    max-width: 768px;
+  }
+  .contact-text-overlay {
+    top: 55%;
+    left: 35%;
+    width: 60%;
+  }
+  .card1 {
+    width: 100%;
+  }
+  .main_left img {
+    width: 100%;
+  }
+  .img_main img{
+width: 100%;
+object-fit: contain;
+margin: 0;
+height: 400px;
+  }
+  .description{
+  width: 100%;
+  max-width: 728px;
+  }
+}
+@media (max-width: 1024px) {
+  .des_ab_1, .des_ab_3 {
+    width: 100%;
+    max-width: 1024px;
+  }
+  .contact-text-overlay {
+    top: 55%;
+    left: 35%;
+    width: 60%;
+  }
+  .card1 {
+    width: 100%;
+  }
+  .main_left img {
+    width: 100%;
+  }
+  .img_main img{
+width: 100%;
+object-fit: contain;
+margin: 0;
+height: 400px;
+  }
+  .description{
+  width: 100%;
+  max-width: 905px;
+  }
+}

@@ -37,3 +37,52 @@
 ul {
   list-style-type: none;
 }
+@media (max-width: 1024px) {
+  .des_ab_1, .des_ab_3 {
+    max-width: 768px;
+    width: 100%;
+    margin: 0 auto;
+
+  }
+  .contact-text-overlay {
+    top: 55%;
+    left: 35%;
+    width: 60%;
+  }
+  .img_entertaiment{
+    width: 100%;
+    max-width: 1024px;
+    object-fit: contain;
+    padding: 0;
+    margin-top: -40px;
+  }
+  .card1 {
+    width: 100%;
+  }
+  .main_left img {
+    width: 100%;
+  }
+}
+@media (max-width: 768px) {
+  .des_ab_1, .des_ab_3 {
+    width: 90%;
+  }
+  .contact-text-overlay {
+    top: 55%;
+    left: 35%;
+    width: 60%;
+  }
+  .img_entertaiment{
+    width: 100%;
+    max-width: 1024px;
+    object-fit: contain;
+    padding: 0;
+    margin-top: -70px;
+  }
+  .card1 {
+    width: 100%;
+  }
+  .main_left img {
+    width: 100%;
+  }
+}
