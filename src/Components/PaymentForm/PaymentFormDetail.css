@@ -190,7 +190,15 @@
 
 .total-row .label,
 .total-row .value {
-  font-size: 1.1em;
+  font-size: 26px;
+  color: #ffffff;
+  font-weight: 600;
+}
+
+.total-row .value {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
 }
 
 .skystar-payment-total {
@@ -284,7 +292,7 @@ font-family: "Anton", sans-serif;
 }
 
 .cinema-address {
-  font-size:16px;
+  font-size:14px;
 }
 
 .showtime-info-row {
@@ -515,6 +523,20 @@ font-family: "Anton", sans-serif;
 .payment-method-box:hover {
   border-color: #007bff;
   box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+  background-color: #ffffff;
+}
+
+.payment-method-box:hover p {
+  color: #000000;
+}
+
+/* Override voucher box specific hover styles */
+.payment-method-box.voucher-box:hover {
+  background-color: #0056b3;
+}
+
+.payment-method-box.voucher-box:hover p {
+  color: #ffffff;
 }
 
 .payment-method-box img {
@@ -531,8 +553,8 @@ font-family: "Anton", sans-serif;
 
 .payment-method-box p {
   margin: 5px 0 0;
-  font-size: 14px;
-  color: #666;
+  font-size: 16px;
+
 }
 
 .payment-method-box.voucher-box {
@@ -575,41 +597,45 @@ font-family: "Anton", sans-serif;
 }
 
 .voucher-item {
-  border: 1px solid #ddd;
+  border: 2px solid #e0e0e0;
   border-radius: 8px;
   padding: 16px;
+  margin-bottom: 12px;
   cursor: pointer;
-  transition: all 0.3s ease;
   position: relative;
-  background: linear-gradient(135deg, #fff 0%, #f8f9fa 100%);
+  transition: all 0.3s ease;
 }
 
-.voucher-item:hover {
-  border-color: #007bff;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+.voucher-item:hover:not(.disabled) {
+  border-color: #1890ff;
+  background-color: #f0f9ff;
 }
 
-.voucher-info {
-  display: flex;
-  flex-direction: column;
-  gap: 4px;
+.voucher-item.selected {
+  border-color: #1890ff;
+  background-color: #e6f7ff;
 }
 
-.voucher-info h3 {
-  margin: 0;
-  color: #007bff;
+.voucher-item.selected::after {
+  content: '✓';
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  color: #1890ff;
   font-size: 18px;
+  font-weight: bold;
 }
 
-.voucher-info p {
-  margin: 0;
-  color: #666;
-  font-size: 14px;
+.voucher-item.disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+  background-color: #f5f5f5;
 }
 
-.voucher-expiry {
+.voucher-error {
+  color: #ff4d4f;
   font-size: 12px;
-  color: #999;
+  margin-top: 4px;
 }
 
 .spinner {
@@ -793,6 +819,28 @@ font-family: "Anton", sans-serif;
   color: #dc3545;
   font-size: 12px;
   margin-top: 4px;
+}
+
+.original-price {
+  margin-bottom: 4px;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+}
+
+.original-price span {
+  font-size: 18px;
+  color: #999;
+}
+
+.original-price span:last-child {
+  color: #28a745;
+}
+
+.total-row .value span:last-child {
+  font-size: 20px;
+  color: #ffffff;
+  font-weight: bold;
 }
 
 

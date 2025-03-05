@@ -14,6 +14,12 @@ interface PaymentStatusResponse {
   showtime: string;
 }
 
+// Add this type before the component
+interface Voucher {
+  id: string;
+  name: string;
+}
+
 const PaymentFormDetail = () => {
   const location = useLocation();
   const movieInfo = location.state;
@@ -71,7 +77,7 @@ const PaymentFormDetail = () => {
   const [bookingId, setBookingId] = useState<string>("");
 
   const [isVoucherModalVisible, setIsVoucherModalVisible] = useState(false);
-  const [selectedVoucher, setSelectedVoucher] = useState<string | null>(null);
+  const [selectedVoucher, setSelectedVoucher] = useState<Voucher | null>(null);
 
   const showVoucherModal = () => {
     setIsVoucherModalVisible(true);
@@ -79,10 +85,23 @@ const PaymentFormDetail = () => {
 
   const handleVoucherCancel = () => {
     setIsVoucherModalVisible(false);
+    setSelectedVoucher(null);
+    setFinalPrice(movieInfo?.totalPrice || 0);
   };
 
-  const handleVoucherSelect = (voucherId: string) => {
-    setSelectedVoucher(voucherId);
+  // Add new state for discounted price
+  const [finalPrice, setFinalPrice] = useState(movieInfo?.totalPrice || 0);
+
+  // Update handleVoucherSelect to calculate discounted price
+  const handleVoucherSelect = (voucherId: string, voucherName: string) => {
+    setSelectedVoucher({ id: voucherId, name: voucherName });
+    // Calculate 50% discount
+    const discountedPrice = (movieInfo?.totalPrice || 0) * 0.5;
+    setFinalPrice(discountedPrice);
+  };
+
+  // Add new function to handle continue button click
+  const handleVoucherContinue = () => {
     setIsVoucherModalVisible(false);
   };
 
@@ -234,7 +253,7 @@ const PaymentFormDetail = () => {
       const returnUrl = `${window.location.origin}/payment`; // Simplified return URL
       const paymentData = {
         orderInfo: "Thanh toán vé xem phim",
-        amount: movieInfo.totalPrice.toString(),
+        amount: finalPrice.toString(), // Use finalPrice instead of totalPrice
         bookingId: bookingId,
         returnUrl: returnUrl,
       };
@@ -411,7 +430,7 @@ const PaymentFormDetail = () => {
                   alt="Voucher" 
                   className="voucher-icon"
                 />
-                <p>Chọn hoặc nhập mã giảm giá</p>
+                <p>{selectedVoucher ? `Voucher đã chọn: ${selectedVoucher.name}` : 'Chọn hoặc nhập mã giảm giá'}</p>
               </div>
             </div>
             <Modal
@@ -422,7 +441,7 @@ const PaymentFormDetail = () => {
                 <div className="voucher-modal-footer">
                   <button 
                     className="voucher-continue-btn"
-                    onClick={handleVoucherCancel}
+                    onClick={handleVoucherContinue}
                     disabled={!selectedVoucher}
                   >
                     {selectedVoucher ? 'Tiếp tục' : 'Vui lòng chọn ưu đãi'}
@@ -432,8 +451,8 @@ const PaymentFormDetail = () => {
             >
               <div className="voucher-list">
                 <div 
-                  className={`voucher-item ${userAge && userAge < 22 ? '' : 'disabled'}`}
-                  onClick={() => userAge && userAge < 22 && handleVoucherSelect("VOUCHER1")}
+                  className={`voucher-item ${userAge && userAge < 22 ? '' : 'disabled'} ${selectedVoucher?.id === "VOUCHER1" ? 'selected' : ''}`}
+                  onClick={() => userAge && userAge < 22 && handleVoucherSelect("VOUCHER1", "C'Ten: 45k phim 2d")}
                 >
                   <div className="voucher-info">
                     <h3>C'Ten: 45k phim 2d</h3>
@@ -444,8 +463,8 @@ const PaymentFormDetail = () => {
                   </div>
                 </div>
                 <div 
-                  className={`voucher-item ${isWednesday ? '' : 'disabled'}`}
-                  onClick={() => isWednesday && handleVoucherSelect("VOUCHER2")}
+                  className={`voucher-item ${isWednesday ? '' : 'disabled'} ${selectedVoucher?.id === "VOUCHER2" ? 'selected' : ''}`}
+                  onClick={() => isWednesday && handleVoucherSelect("VOUCHER2", "C'Member: 45k phim 2d")}
                 >
                   <div className="voucher-info">
                     <h3>C'Member: 45k phim 2d</h3>
@@ -617,11 +636,22 @@ const PaymentFormDetail = () => {
               </div>
 
               <div className="info-row total-row">
-                <span className="label">Số tiền cần thanh toán</span>
-                <span className="value">
-                  {movieInfo?.totalPrice?.toLocaleString("vi-VN")} VND
-                </span>
+                <span className="label">SỐ TIỀN THANH TOÁN</span>
+                <div className="value">
+                  {selectedVoucher && (
+                    <div className="original-price">
+                      <span style={{ textDecoration: 'line-through', color: '#999', fontSize: '0.9em' }}>
+                        {movieInfo?.totalPrice?.toLocaleString("vi-VN")} VND
+                      </span>
+                      <span style={{ color: '#28a745', marginLeft: '8px' }}>-50%</span>
+                    </div>
+                  )}
+                  <span style={{ color: selectedVoucher ? '#e71a0f' : 'inherit', fontWeight: 'bold' }}>
+                    {finalPrice.toLocaleString("vi-VN")} VND
+                  </span>
+                </div>
               </div>
+
             </div>
           </div>
         )}
