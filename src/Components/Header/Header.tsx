@@ -1,9 +1,9 @@
 import React, { useState, useEffect, useRef } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useNavigate, useLocation } from "react-router-dom";
 import { useAuth } from "../../context/AuthContext";
 import "./Header.css";
 import { Input, Button, Dropdown, Menu, Typography, Row, Col } from "antd";
-import { SearchOutlined, UserOutlined, DownOutlined } from "@ant-design/icons";
+import { SearchOutlined, DownOutlined } from "@ant-design/icons";
 import type { MenuProps, Avatar } from "antd";
 import axios from "axios";
 import { useMediaQuery } from "react-responsive";
@@ -32,6 +32,7 @@ interface Theater {
 const Header: React.FC = () => {
   const { isAuthenticated, user, logout, setSelectedTheater } = useAuth();
   const navigate = useNavigate();
+  const location = useLocation();
   const [loading, setLoading] = useState(false);
   const [cinemas, setCinemas] = useState<Cinema[]>([]);
   const [error, setError] = useState<string | null>(null);
@@ -129,6 +130,11 @@ const Header: React.FC = () => {
     document.addEventListener("mousedown", handleClickOutside);
     return () => document.removeEventListener("mousedown", handleClickOutside);
   }, []);
+
+  const isActive = (path: string) => {
+    return location.pathname === path;
+  };
+
   return (
     <header className="header">
       <div className={`header-container ${isTabletOrMobile ? "mobile" : ""}`}>
@@ -206,14 +212,22 @@ const Header: React.FC = () => {
                       alt={user.fullName}
                     />
                   ) : (
-                    <UserOutlined className="user-icon" />
+                    <img 
+                      src="https://cinestar.com.vn/assets/images/ic-header-auth.svg"
+                      alt="user"
+                      className="user-icon"
+                    />
                   )}
                   <div className="user-text">{user?.fullName}</div>
                 </div>
               </Dropdown>
             ) : (
               <Link to="/Login" className="user-actions">
-                <UserOutlined className="user-icon" />
+                <img 
+                  src="https://cinestar.com.vn/assets/images/ic-header-auth.svg"
+                  alt="user"
+                  className="user-icon"
+                />
                 <div className="user-text">Đăng nhập</div>
               </Link>
             )}
@@ -228,7 +242,7 @@ const Header: React.FC = () => {
             <nav className="secondary-nav-content">
               <div className="secondary-nav-item">
                 <div className="dropdown-content">
-                  <Link to="/books-ticket" className="dropdown-item1">
+                  <Link to="/books-ticket" className={`dropdown-item1 ${isActive('/books-ticket') ? 'active' : ''}`}>
                     <Dropdown
                       overlay={
                         <Menu
@@ -272,7 +286,7 @@ const Header: React.FC = () => {
                     >
                       <Typography.Text
                         style={{
-                          color: "white",
+                          color: isActive('/books-ticket') ? '#f3ea28' : 'white',
                           cursor: "pointer",
                           fontSize: 16,
                         }}
@@ -284,21 +298,37 @@ const Header: React.FC = () => {
                   </Link>
                 </div>
 
-                <Link to="/showtimes" className="secondary-nav-link">
+                <Link 
+                  to="/showtimes" 
+                  className={`secondary-nav-link ${isActive('/showtimes') ? 'active' : ''}`}
+                >
                   Lịch chiếu
                 </Link>
               </div>
               <div className="secondary-nav-item">
-                <Link to="/promotions" className="secondary-nav-link">
+                <Link 
+                  to="/promotions" 
+                  className={`secondary-nav-link ${isActive('/promotions') ? 'active' : ''}`}
+                >
                   Khuyến mãi
                 </Link>
-                <Link to="/thue-su-kien" className="secondary-nav-link">
+                <Link 
+                  to="/thue-su-kien" 
+                  className={`secondary-nav-link ${isActive('/thue-su-kien') ? 'active' : ''}`}
+                >
                   Thuê sự kiện
                 </Link>
-                <Link to="/entertaiment" className="secondary-nav-link">
+                <Link 
+                  to="/entertaiment" 
+                  className={`secondary-nav-link ${isActive('/entertaiment') ? 'active' : ''}`}
+                >
                   Tất cả các giải trí
                 </Link>
-                <Link to="/about" className="secondary-nav-link" id="about11">
+                <Link 
+                  to="/about" 
+                  className={`secondary-nav-link ${isActive('/about') ? 'active' : ''}`} 
+                  id="about11"
+                >
                   Giới thiệu
                 </Link>
               </div>
