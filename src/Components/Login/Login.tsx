@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Link, useNavigate } from "react-router-dom"; // Correct import for Link and useNavigate
+import { data, Link, useNavigate } from "react-router-dom"; // Correct import for Link and useNavigate
 import { FaRegEye, FaEyeSlash } from "react-icons/fa6";
 import axios from "axios";
 import { useAuth } from "../../context/AuthContext";
@@ -74,6 +74,7 @@ const Login = () => {
 
         console.log("Login successful", response.data);
         const userData = response.data;
+      
         login(userData);
         navigate("/");
       } catch (error) {

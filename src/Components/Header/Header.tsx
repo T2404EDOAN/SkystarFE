@@ -160,21 +160,7 @@ const Header: React.FC = () => {
                     <span>ĐẶT VÉ NGAY</span>
                   </Button>
                 </Link>
-                <Link to="/popcorn-drink">
-                  <Button
-                    type="primary"
-                    style={{ backgroundColor: "#663399", color: "#F8FAFC" }}
-                    className="action-button"
-                    id="popcorn-drink"
-                  >
-                    <img
-                      src="https://cinestar.com.vn/assets/images/ic-cor.svg"
-                      alt="ticket"
-                      className="w-5 h-5"
-                    />
-                    <span>ĐẶT BẮP NƯỚC</span>
-                  </Button>
-                </Link>
+                
               </>
             )}
           </div>

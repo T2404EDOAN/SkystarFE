@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Input } from "antd";
+import { Input, Modal } from "antd";  // Add Modal to imports
 import { useLocation, useNavigate } from "react-router-dom";
 import axios from "axios";
 import "./PaymentFormDetail.css";
@@ -69,6 +69,49 @@ const PaymentFormDetail = () => {
   });
 
   const [bookingId, setBookingId] = useState<string>("");
+
+  const [isVoucherModalVisible, setIsVoucherModalVisible] = useState(false);
+  const [selectedVoucher, setSelectedVoucher] = useState<string | null>(null);
+
+  const showVoucherModal = () => {
+    setIsVoucherModalVisible(true);
+  };
+
+  const handleVoucherCancel = () => {
+    setIsVoucherModalVisible(false);
+  };
+
+  const handleVoucherSelect = (voucherId: string) => {
+    setSelectedVoucher(voucherId);
+    setIsVoucherModalVisible(false);
+  };
+
+  const [userAge, setUserAge] = useState<number | null>(null);
+  const [isWednesday, setIsWednesday] = useState(false);
+
+  // Add this useEffect to check user age and current day
+  useEffect(() => {
+    // Check if it's Wednesday
+    const today = new Date();
+    setIsWednesday(today.getDay() === 3); // 3 represents Wednesday (0 is Sunday)
+
+    // Calculate user age
+    const userData = localStorage.getItem("user");
+    if (userData) {
+      const { dateOfBirth } = JSON.parse(userData);
+      if (dateOfBirth) {
+        const birthDate = new Date(dateOfBirth);
+        const age = today.getFullYear() - birthDate.getFullYear();
+        const monthDiff = today.getMonth() - birthDate.getMonth();
+        
+        if (monthDiff < 0 || (monthDiff === 0 && today.getDate() < birthDate.getDate())) {
+          setUserAge(age - 1);
+        } else {
+          setUserAge(age);
+        }
+      }
+    }
+  }, []);
 
   useEffect(() => {
     if (movieInfo?.holdTimer) {
@@ -348,7 +391,10 @@ const PaymentFormDetail = () => {
                 onClick={handleMomoPayment}
                 style={{ cursor: "pointer" }}
               >
-                <img src="/momo-logo.png" alt="Momo" />
+                <img 
+                  src="https://cinestar.com.vn/assets/images/img-momo.png" 
+                  alt="Momo" 
+                />
                 <p>Thanh toán qua ví Momo</p>
               </div>
               <div className="payment-method-box">
@@ -359,7 +405,58 @@ const PaymentFormDetail = () => {
                 <img src="/vnpay-logo.png" alt="VNPay" />
                 <p>Thanh toán qua VNPay</p>
               </div>
+              <div className="payment-method-box voucher-box" onClick={showVoucherModal}>
+                <img 
+                  src="https://cinestar.com.vn/assets/images/icon-tag.svg" 
+                  alt="Voucher" 
+                  className="voucher-icon"
+                />
+                <p>Chọn hoặc nhập mã giảm giá</p>
+              </div>
             </div>
+            <Modal
+              title="Áp dụng ưu đãi"
+              open={isVoucherModalVisible}
+              onCancel={handleVoucherCancel}
+              footer={
+                <div className="voucher-modal-footer">
+                  <button 
+                    className="voucher-continue-btn"
+                    onClick={handleVoucherCancel}
+                    disabled={!selectedVoucher}
+                  >
+                    {selectedVoucher ? 'Tiếp tục' : 'Vui lòng chọn ưu đãi'}
+                  </button>
+                </div>
+              }
+            >
+              <div className="voucher-list">
+                <div 
+                  className={`voucher-item ${userAge && userAge < 22 ? '' : 'disabled'}`}
+                  onClick={() => userAge && userAge < 22 && handleVoucherSelect("VOUCHER1")}
+                >
+                  <div className="voucher-info">
+                    <h3>C'Ten: 45k phim 2d</h3>
+                    <p>Xem phim trước 10h sáng và sau 10h tối</p>
+                    {userAge && userAge >= 22 && (
+                      <p className="voucher-error">Chỉ áp dụng cho khách hàng dưới 22 tuổi</p>
+                    )}
+                  </div>
+                </div>
+                <div 
+                  className={`voucher-item ${isWednesday ? '' : 'disabled'}`}
+                  onClick={() => isWednesday && handleVoucherSelect("VOUCHER2")}
+                >
+                  <div className="voucher-info">
+                    <h3>C'Member: 45k phim 2d</h3>
+                    <p>Thành viên Cinestar vào ngày thứ 4 hàng tuần</p>
+                    {!isWednesday && (
+                      <p className="voucher-error">Chỉ áp dụng vào thứ 4</p>
+                    )}
+                  </div>
+                </div>
+              </div>
+            </Modal>
             <div className="payment-actions">
               <button onClick={handleBack} className="skystar-form-back">
                 Quay lại

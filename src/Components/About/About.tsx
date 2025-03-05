@@ -133,7 +133,7 @@ const About = () => {
             <div className="container1">
               {data.map((item, index) => (
                 <div className="card1" key={index}>
-                  <h2>{item.title}</h2>
+                  <span className="text-des-112">{item.title}</span>
                   <ul>
                     {item.address && (
                       <li>
