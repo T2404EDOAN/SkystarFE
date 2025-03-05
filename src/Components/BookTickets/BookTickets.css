@@ -1,5 +1,4 @@
 .book-tickets-container {
-
 }
 
 .header-section {
@@ -156,6 +155,8 @@
   font-size: 0.875rem;
   color: white;
   margin-bottom: 0.5rem;
+  min-width: 100px;
+  float: left;
 }
 
 .movie-detail-icon {
@@ -262,7 +263,6 @@
   border-bottom: none !important;
 }
 .img1-1 {
-  
   height: 650px;
   object-fit: cover;
 }
@@ -316,4 +316,11 @@
   font-size: 18px !important; /* Tăng cỡ chữ */
   font-weight: 900 !important; /* Làm đậm chữ */
   padding: 0 15px; /* Thêm padding ngang */
+}
+
+.no-movies-message {
+  text-align: center;
+  color: white;
+  font-size: 1.25rem;
+  margin-top: 2rem;
 }

@@ -73,7 +73,7 @@ const Header: React.FC = () => {
       try {
         setLoading(true);
         const response = await axios.get<{ content: Movie[] }>(
-          "http://localhost:8080/api/movies"
+          "http://localhost:8081/api/movies"
         );
 
         // Extract unique theaters from movies' showtimes
@@ -199,7 +199,7 @@ const Header: React.FC = () => {
                     position: "fixed",
                     left: 0,
                     right: 0,
-                    top: "70px", // Adjust this value based on your header height
+                    top: "70px",
                     background: "rgba(0,0,0,0.1)",
                     padding: "15px",
                     boxShadow: "0px 4px 6px rgba(0,0,0,0.1)",
