@@ -63,7 +63,7 @@ height: 130px;
   justify-content: center;
 }
 .gg-app img{
-height: 100px;
+height: 150px;
 }
 .footer-button-yellow {
   background-color: #f3ea28;
@@ -160,16 +160,16 @@ height: 100px;
 
 .footer-company-info {
   text-align: center;
-  padding: 0 16px;
+  padding: 0 15px;
 }
 
 .footer-company-info img {
-  width: 110px;
-  margin-bottom: 8px;
+  width: 150px;
+  margin-bottom: 35px;
 }
 
 .footer-company-info p {
-  margin-bottom: 8px;
+  margin-bottom: 0;
 }
 .footer-link1 {
   display: block;

@@ -187,7 +187,7 @@ const EventRentalPage = () => {
         {/* Voucher Banner */}
         <div className="w-full px-4 pb-[50px] md:pb-[100px]">
           <img
-            src="https://api-website.cinestar.com.vn/media/wysiwyg/CMSPage/to-chuc-su-kien/web_banner_voucher_1216x350px.jpg"
+            src="https://skystarimages.s3.us-east-1.amazonaws.com/event/bannerEvent.jpg"
             alt="Voucher Banner"
             className="w-full h-auto rounded-lg"
           />
