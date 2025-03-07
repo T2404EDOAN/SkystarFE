@@ -29,6 +29,12 @@ interface Theater {
   address: string;
 }
 
+interface SearchResult {
+  id: number;
+  title: string;
+  posterUrl?: string;
+}
+
 const Header: React.FC = () => {
   const { isAuthenticated, user, logout, setSelectedTheater } = useAuth();
   const navigate = useNavigate();
@@ -40,6 +46,11 @@ const Header: React.FC = () => {
   const inputRef = useRef(null);
   const isTabletOrMobile = useMediaQuery({ query: "(max-width: 1224px)" });
   const [menuOpen, setMenuOpen] = useState(false);
+  const [searchTerm, setSearchTerm] = useState("");
+  const [searchResults, setSearchResults] = useState<SearchResult[]>([]);
+  const [selectedDate, setSelectedDate] = useState<string>();
+  const [selectedTheaterForSearch, setSelectedTheaterForSearch] =
+    useState<Theater>();
 
   const toggleMenu = () => {
     setMenuOpen(!menuOpen);
@@ -135,6 +146,45 @@ const Header: React.FC = () => {
     return location.pathname === path;
   };
 
+  const handleSearch = async (value: string) => {
+    setSearchTerm(value);
+    if (value.trim()) {
+      const searchQuery = new URLSearchParams();
+
+      // Kiểm tra giá trị có khớp với tên rạp không
+      const isTheaterSearch = theaters.some(
+        (theater) =>
+          theater.name.toLowerCase().includes(value.toLowerCase()) ||
+          theater.address.toLowerCase().includes(value.toLowerCase())
+      );
+
+      // Nếu khớp với tên rạp, search theo rạp
+      if (isTheaterSearch) {
+        searchQuery.append("cinemaName", value.trim());
+      } else {
+        // Ngược lại search theo tên phim
+        searchQuery.append("movieTitle", value.trim());
+      }
+
+      navigate(`/search?${searchQuery.toString()}`);
+      setShowSearch(false);
+      setSearchTerm("");
+    }
+  };
+
+  const searchBox = (
+    <div className="search-container">
+      <Input
+        placeholder="Nhập tên phim hoặc tên rạp để tìm kiếm"
+        value={searchTerm}
+        onChange={(e) => setSearchTerm(e.target.value)}
+        onPressEnter={(e) => handleSearch(searchTerm)}
+        prefix={<SearchOutlined className="search-icon" />}
+        className="search-bar"
+      />
+    </div>
+  );
+
   return (
     <header className="header">
       <div className={`header-container ${isTabletOrMobile ? "mobile" : ""}`}>
@@ -166,18 +216,11 @@ const Header: React.FC = () => {
                     <span>ĐẶT VÉ NGAY</span>
                   </Button>
                 </Link>
-                
               </>
             )}
           </div>
           <div className="actions-section">
-            {!isTabletOrMobile && (
-              <Input
-                placeholder="Tìm phim, rạp"
-                prefix={<SearchOutlined className="search-icon" />}
-                className="search-bar"
-              />
-            )}
+            {!isTabletOrMobile && searchBox}
             <div id="search1">
               <Button
                 icon={<SearchOutlined />}
@@ -192,13 +235,14 @@ const Header: React.FC = () => {
                     left: 0,
                     right: 0,
                     top: "70px",
-                    background: "rgba(0,0,0,0.1)",
+                    background: "rgba(0,0,0,0.8)",
                     padding: "15px",
                     boxShadow: "0px 4px 6px rgba(0,0,0,0.1)",
+                    zIndex: 1000,
                   }}
                   id="search2"
                 >
-                  <Input placeholder="Tìm kiếm..." autoFocus />
+                  {searchBox}
                 </div>
               )}
             </div>
@@ -212,7 +256,7 @@ const Header: React.FC = () => {
                       alt={user.fullName}
                     />
                   ) : (
-                    <img 
+                    <img
                       src="https://cinestar.com.vn/assets/images/ic-header-auth.svg"
                       alt="user"
                       className="user-icon"
@@ -223,7 +267,7 @@ const Header: React.FC = () => {
               </Dropdown>
             ) : (
               <Link to="/Login" className="user-actions">
-                <img 
+                <img
                   src="https://cinestar.com.vn/assets/images/ic-header-auth.svg"
                   alt="user"
                   className="user-icon"
@@ -242,7 +286,12 @@ const Header: React.FC = () => {
             <nav className="secondary-nav-content">
               <div className="secondary-nav-item">
                 <div className="dropdown-content">
-                  <Link to="/books-ticket" className={`dropdown-item1 ${isActive('/books-ticket') ? 'active' : ''}`}>
+                  <Link
+                    to="/books-ticket"
+                    className={`dropdown-item1 ${
+                      isActive("/books-ticket") ? "active" : ""
+                    }`}
+                  >
                     <Dropdown
                       overlay={
                         <Menu
@@ -286,7 +335,9 @@ const Header: React.FC = () => {
                     >
                       <Typography.Text
                         style={{
-                          color: isActive('/books-ticket') ? '#f3ea28' : 'white',
+                          color: isActive("/books-ticket")
+                            ? "#f3ea28"
+                            : "white",
                           cursor: "pointer",
                           fontSize: 16,
                         }}
@@ -298,35 +349,45 @@ const Header: React.FC = () => {
                   </Link>
                 </div>
 
-                <Link 
-                  to="/showtimes" 
-                  className={`secondary-nav-link ${isActive('/showtimes') ? 'active' : ''}`}
+                <Link
+                  to="/showtimes"
+                  className={`secondary-nav-link ${
+                    isActive("/showtimes") ? "active" : ""
+                  }`}
                 >
                   Lịch chiếu
                 </Link>
               </div>
               <div className="secondary-nav-item">
-                <Link 
-                  to="/promotions" 
-                  className={`secondary-nav-link ${isActive('/promotions') ? 'active' : ''}`}
+                <Link
+                  to="/promotions"
+                  className={`secondary-nav-link ${
+                    isActive("/promotions") ? "active" : ""
+                  }`}
                 >
                   Khuyến mãi
                 </Link>
-                <Link 
-                  to="/thue-su-kien" 
-                  className={`secondary-nav-link ${isActive('/thue-su-kien') ? 'active' : ''}`}
+                <Link
+                  to="/thue-su-kien"
+                  className={`secondary-nav-link ${
+                    isActive("/thue-su-kien") ? "active" : ""
+                  }`}
                 >
                   Thuê sự kiện
                 </Link>
-                <Link 
-                  to="/entertaiment" 
-                  className={`secondary-nav-link ${isActive('/entertaiment') ? 'active' : ''}`}
+                <Link
+                  to="/entertaiment"
+                  className={`secondary-nav-link ${
+                    isActive("/entertaiment") ? "active" : ""
+                  }`}
                 >
                   Tất cả các giải trí
                 </Link>
-                <Link 
-                  to="/about" 
-                  className={`secondary-nav-link ${isActive('/about') ? 'active' : ''}`} 
+                <Link
+                  to="/about"
+                  className={`secondary-nav-link ${
+                    isActive("/about") ? "active" : ""
+                  }`}
                   id="about11"
                 >
                   Giới thiệu

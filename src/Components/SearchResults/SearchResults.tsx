@@ -1,229 +1,157 @@
 import React, { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
-import Header from "../Header/Header";
-import TrailerModal from "../Trailer/TrailerModal";
+import { useLocation } from "react-router-dom";
 import axios from "axios";
-import "./NowPlayingMovies.css";
+import { Card, Row, Col, Empty } from "antd";
+import TrailerModal from "../Trailer/TrailerModal";
+import "./SearchResults.css";
+import { Link } from "react-router-dom";
 
-const ComingSoonMovies: React.FC = () => {
-  interface Movie {
+interface Movie {
+  id: number;
+  title: string;
+  originalTitle: string | null;
+  trailerUrl: string;
+  posterUrl: string;
+  backdropUrl: string;
+  duration: number;
+  description: string;
+  category: {
     id: number;
-    title: string;
-    originalTitle: string;
-    trailerUrl: string | null;
-    posterUrl: string | null;
-    duration: number;
-    description: string | null;
-    shortDescription: string | null;
-    categoryId: number | null;
-    categoryName: string | null;
-    director: string | null;
-    cast: string | null;
-    productionCompany: string | null;
-    productionCountry: string | null;
-    releaseDate: string | null;
-    endDate: string | null;
-    ageRating: string | null;
-    language: string | null;
-    subtitles: string | null;
-    rating: number;
-    ratingCount: number | null;
-    status: string;
-    genres: Array<{ id: number; name: string }>; // Update this line
-  }
+    name: string;
+  };
+  director: string;
+  productionCompany: string;
+  ageRating: string;
+  language: string;
+  subtitles: string;
+  status: string;
+  genres: {
+    id: number;
+    name: string;
+  }[];
+  showtimes: {
+    id: number;
+    theatresName: string;
+    theaterAddress: string;
+    showDate: string;
+    showTime: string;
+    roomName: string;
+  }[];
+}
 
-  const [movies, setMovies] = useState<Movie[]>([]);
+const SearchResults: React.FC = () => {
+  const location = useLocation();
+  const [results, setResults] = useState<Movie[]>([]);
+  const searchParams = new URLSearchParams(location.search);
+  const movieTitle = searchParams.get("movieTitle");
+  const cinemaName = searchParams.get("cinemaName");
   const [currentPage, setCurrentPage] = useState(0);
-  const moviesPerPage = 4;
-  const [trailerUrl, setTrailerUrl] = useState<string | null>(null);
-  const [isMobile, setIsMobile] = useState(false);
-  const [isLoading, setIsLoading] = useState(true);
-  const [error, setError] = useState<string | null>(null);
-  const [moviesPerRow, setMoviesPerRow] = useState(4);
+  const [trailerUrl, setTrailerUrl] = useState("");
   const [isAnimating, setIsAnimating] = useState(false);
-  const [touchStart, setTouchStart] = useState(0);
-  const [touchEnd, setTouchEnd] = useState(0);
-
-  // Minimum swipe distance required (in px)
-  const minSwipeDistance = 50;
-
-  const handleTouchStart = (e: React.TouchEvent) => {
-    setTouchStart(e.touches[0].clientX);
-  };
-
-  const handleTouchMove = (e: React.TouchEvent) => {
-    setTouchEnd(e.touches[0].clientX);
-  };
-
-  const handleTouchEnd = () => {
-    const swipeDistance = touchStart - touchEnd;
-
-    if (Math.abs(swipeDistance) > 50) {
-      // Minimum swipe distance threshold
-      if (swipeDistance > 0 && currentPage < totalPages - 1) {
-        // Swiped left
-        handleNextPage();
-      } else if (swipeDistance < 0 && currentPage > 0) {
-        // Swiped right
-        handlePrevPage();
-      }
-    }
-  };
+  const moviesPerPage = 4;
+  const totalPages = Math.ceil(results.length / moviesPerPage);
 
   const handleTrailerClick = (url: string) => {
     setTrailerUrl(url);
   };
 
   const closeTrailer = () => {
-    setTrailerUrl(null);
+    setTrailerUrl("");
   };
-
-  const handleClickOutside = (event: React.MouseEvent<HTMLDivElement>) => {
-    if (event.target === event.currentTarget) {
-      closeTrailer();
-    }
-  };
-
-  useEffect(() => {
-    const fetchMovies = async () => {
-      try {
-        setIsLoading(true);
-        setError(null);
-        const response = await axios.get("http://skystar.io.vn/api/movies", {
-          headers: {
-            Accept: "application/json",
-            "Content-Type": "application/json",
-          },
-        });
-
-        const moviesData = Array.isArray(response.data)
-          ? response.data
-          : response.data.content || [];
-
-        const upcomingMovies = moviesData
-          .filter((movie: Movie) => movie && movie.status === "Sắp chiếu")
-          .map((movie: Movie) => ({
-            ...movie,
-            trailerUrl: movie.trailerUrl || null,
-          }));
-
-        setMovies(upcomingMovies);
-      } catch (err) {
-        if (axios.isAxiosError(err)) {
-          setError(
-            err.response?.data?.message ||
-              "Không thể kết nối đến máy chủ. Vui lòng thử lại sau."
-          );
-        } else {
-          setError("Đã xảy ra lỗi. Vui lòng thử lại sau.");
-        }
-      } finally {
-        setIsLoading(false);
-      }
-    };
-
-    fetchMovies();
-  }, []);
-
-  useEffect(() => {
-    const handleResize = () => {
-      setIsMobile(window.innerWidth <= 768);
-      if (window.innerWidth < 640) {
-        // sm
-        setMoviesPerRow(1);
-      } else if (window.innerWidth < 768) {
-        // md
-        setMoviesPerRow(2);
-      } else if (window.innerWidth < 1024) {
-        // lg
-        setMoviesPerRow(3);
-      } else {
-        setMoviesPerRow(4);
-      }
-    };
-
-    handleResize();
-    window.addEventListener("resize", handleResize);
-
-    return () => window.removeEventListener("resize", handleResize);
-  }, []);
-
-  useEffect(() => {
-    setCurrentPage(0); // Reset to first page when layout changes
-  }, [moviesPerRow]);
 
   const handleNextPage = () => {
-    const nextPage = currentPage + 1;
-    const maxPage = Math.ceil(movies.length / moviesPerPage) - 1;
-    if (nextPage <= maxPage && !isAnimating) {
-      setIsAnimating(true);
-      setCurrentPage(nextPage);
-      setTimeout(() => setIsAnimating(false), 500);
+    if (currentPage < totalPages - 1) {
+      setCurrentPage((prev) => prev + 1);
     }
   };
 
   const handlePrevPage = () => {
-    if (currentPage > 0 && !isAnimating) {
-      setIsAnimating(true);
-      setCurrentPage(currentPage - 1);
-      setTimeout(() => setIsAnimating(false), 500);
+    if (currentPage > 0) {
+      setCurrentPage((prev) => prev - 1);
     }
   };
-
-  const displayedMovies = movies.slice(
-    currentPage * moviesPerPage,
-    (currentPage + 1) * moviesPerPage
-  );
-
-  const totalPages = Math.ceil(movies.length / moviesPerPage);
 
   const handleDotClick = (index: number) => {
     setCurrentPage(index);
   };
 
-  if (isLoading) {
-    return (
-      <div className="nowplaying-loading-spinner">
-        <div className="nowplaying-loading-spinner-inner"></div>
-      </div>
-    );
-  }
+  const handleTouchStart = (e: React.TouchEvent) => {
+    // Add touch handling logic here if needed
+  };
 
-  if (error) {
-    return (
-      <div className="nowplaying-error-container">
-        <svg
-          className="nowplaying-error-icon"
-          fill="none"
-          stroke="currentColor"
-          viewBox="0 0 24 24"
-        >
-          <path
-            strokeLinecap="round"
-            strokeLinejoin="round"
-            strokeWidth={2}
-            d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"
-          />
-        </svg>
-        <p className="nowplaying-error-message">{error}</p>
-        <button
-          onClick={() => window.location.reload()}
-          className="nowplaying-retry-button"
-        >
-          Thử lại
-        </button>
-      </div>
-    );
-  }
+  const handleTouchMove = (e: React.TouchEvent) => {
+    // Add touch handling logic here if needed
+  };
+
+  const handleTouchEnd = () => {
+    // Add touch handling logic here if needed
+  };
+
+  useEffect(() => {
+    const fetchResults = async () => {
+      try {
+        if (!movieTitle?.trim() && !cinemaName?.trim()) {
+          setResults([]);
+          return;
+        }
+
+        const params = {
+          title: movieTitle?.trim(),
+          cinema: cinemaName?.trim(),
+        };
+
+        console.log("Search params:", params);
+        const response = await axios.get(
+          "http://localhost:8081/api/movies/search",
+          {
+            params,
+          }
+        );
+
+        const movies = response.data.content || response.data;
+        const filteredMovies = movies.filter((movie) => {
+          // Nếu có tên phim, tìm theo tên phim
+          if (movieTitle) {
+            return movie.title.toLowerCase().includes(movieTitle.toLowerCase());
+          }
+
+          // Nếu có tên rạp, tìm theo rạp
+          if (cinemaName) {
+            return movie.showtimes?.some(
+              (showtime) =>
+                showtime.theatresName
+                  .toLowerCase()
+                  .includes(cinemaName.toLowerCase()) ||
+                showtime.theaterAddress
+                  .toLowerCase()
+                  .includes(cinemaName.toLowerCase())
+            );
+          }
+
+          return false;
+        });
+
+        console.log("API Response:", response.data);
+        console.log("Filtered movies:", filteredMovies);
+
+        setResults(filteredMovies);
+      } catch (error) {
+        console.error("Error searching movies:", error);
+        setResults([]);
+      }
+    };
+
+    fetchResults();
+  }, [movieTitle, cinemaName]);
 
   return (
     <div className="nowplaying-container">
-      <Header isOverlayActive={!!trailerUrl} />
+      {/* <Header isOverlayActive={!!trailerUrl} /> */}
       <h2
         className="nowplaying-title1"
         style={{ fontFamily: "Anton, sans-serif" }}
       >
-        PHIM ĐANG CHIẾU
+        KẾT QUẢ TÌM KIẾM
       </h2>
       {trailerUrl && (
         <TrailerModal trailerUrl={trailerUrl} onClose={closeTrailer} />
@@ -240,8 +168,14 @@ const ComingSoonMovies: React.FC = () => {
           onTouchMove={handleTouchMove}
           onTouchEnd={handleTouchEnd}
         >
-          {movies.map((movie, index) => (
-            <div key={index} className="nowplaying-card">
+          {results.map((movie, index) => (
+            <div
+              key={index}
+              className="nowplaying-card"
+              onClick={() =>
+                (window.location.href = `/movie-detail/${movie.id}`)
+              }
+            >
               <div className="cursor-pointer">
                 <div className="nowplaying-poster-container">
                   <img
@@ -252,7 +186,7 @@ const ComingSoonMovies: React.FC = () => {
                   <div className="nowplaying-overlay">
                     <div className="nowplaying-info-container">
                       <Link to={`/movie-detail/${movie.id}`}>
-                        <h3 className="nowplaying-info-title hover:text-orange-500">
+                        <h3 className="nowplaying-info-title1 hover:text-white">
                           {movie.title}
                         </h3>
                       </Link>
@@ -351,19 +285,20 @@ const ComingSoonMovies: React.FC = () => {
               <div className="nowplaying-actions">
                 <div
                   className="nowplaying-trailer-button"
-                  onClick={() => handleTrailerClick(movie.trailerUrl || "")}
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    handleTrailerClick(movie.trailerUrl || "");
+                  }}
                 >
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    width="24"
-                    height="24"
-                    fill="#FFA500" // Changed to orange color
-                    className="bi bi-play-circle dark:text-white mr-2"
-                    viewBox="0 0 16 16"
-                  >
-                    <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14m0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16" />
-                    <path d="M6.271 5.055a.5.5 0 0 1 .52.038l3.5 2.5a.5.5 0 0 1 0 .814l-3.5 2.5A.5.5 0 0 1 6 10.5v-5a.5.5 0 0 1 .271-.445" />
-                  </svg>
+                  <div className="nowplaying-trailer-icon-circle">
+                    <img
+                      src="https://cinestar.com.vn/assets/images/ic-play-circle-red.svg"
+                      alt="Play Trailer"
+                      width="23"
+                      height="23"
+                      className="mr-2"
+                    />
+                  </div>
                   <span style={{ marginLeft: "0.5rem", fontSize: "14px" }}>
                     Xem Trailer
                   </span>
@@ -371,6 +306,7 @@ const ComingSoonMovies: React.FC = () => {
                 <Link
                   to={`/movie-detail/${movie.id}`}
                   className="nowplaying-book-ticket-button"
+                  onClick={(e) => e.stopPropagation()}
                 >
                   <span className="nowplaying-book-ticket-text">ĐẶT VÉ</span>
                   <div className="nowplaying-button-gradient" />
@@ -409,10 +345,10 @@ const ComingSoonMovies: React.FC = () => {
         <button
           onClick={handleNextPage}
           disabled={
-            (currentPage + 1) * moviesPerPage >= movies.length || isAnimating
+            (currentPage + 1) * moviesPerPage >= results.length || isAnimating
           }
           className={`nowplaying-navigation-button nowplaying-navigation-button-right ${
-            (currentPage + 1) * moviesPerPage >= movies.length || isAnimating
+            (currentPage + 1) * moviesPerPage >= results.length || isAnimating
               ? "disabled"
               : ""
           }`}
@@ -448,16 +384,8 @@ const ComingSoonMovies: React.FC = () => {
           />
         ))}
       </div>
-      <button className="nowplaying-see-more-button">
-        <span className="nowplaying-see-more-text">
-          <Link to="/movie/showing" className="nowplaying-see-more-link">
-            XEM THÊM
-          </Link>
-        </span>
-        <div className="nowplaying-see-more-gradient" />
-      </button>
     </div>
   );
 };
 
-export default ComingSoonMovies;
+export default SearchResults;

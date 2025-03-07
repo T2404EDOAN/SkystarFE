@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Input, Modal } from "antd";  // Add Modal to imports
+import { Input, Modal } from "antd"; // Add Modal to imports
 import { useLocation, useNavigate } from "react-router-dom";
 import axios from "axios";
 import "./PaymentFormDetail.css";
@@ -24,7 +24,9 @@ const PaymentFormDetail = () => {
   const location = useLocation();
   const movieInfo = location.state;
   const navigate = useNavigate();
-  const [timeRemaining, setTimeRemaining] = useState(movieInfo?.timeRemaining || 0);
+  const [timeRemaining, setTimeRemaining] = useState(
+    movieInfo?.timeRemaining || 0
+  );
 
   // Add timer effect
   useEffect(() => {
@@ -49,7 +51,7 @@ const PaymentFormDetail = () => {
   const formatTime = (seconds: number): string => {
     const minutes = Math.floor(seconds / 60);
     const remainingSeconds = seconds % 60;
-    return `${minutes}:${remainingSeconds.toString().padStart(2, '0')}`;
+    return `${minutes}:${remainingSeconds.toString().padStart(2, "0")}`;
   };
 
   const [fullName, setFullName] = useState("");
@@ -122,8 +124,11 @@ const PaymentFormDetail = () => {
         const birthDate = new Date(dateOfBirth);
         const age = today.getFullYear() - birthDate.getFullYear();
         const monthDiff = today.getMonth() - birthDate.getMonth();
-        
-        if (monthDiff < 0 || (monthDiff === 0 && today.getDate() < birthDate.getDate())) {
+
+        if (
+          monthDiff < 0 ||
+          (monthDiff === 0 && today.getDate() < birthDate.getDate())
+        ) {
           setUserAge(age - 1);
         } else {
           setUserAge(age);
@@ -161,7 +166,7 @@ const PaymentFormDetail = () => {
       const checkPaymentStatus = async () => {
         try {
           const response = await axios.get(
-            `http://localhost:8080/api/payments/status?orderId=${orderId}`
+            `http://skystar.io.vn/api/payments/status?orderId=${orderId}`
           );
           setPaymentStatus((prev) => ({
             ...prev,
@@ -228,7 +233,7 @@ const PaymentFormDetail = () => {
         });
 
         const response = await axios.post(
-          "http://localhost:8080/api/bookings/create",
+          "http://skystar.io.vn/api/bookings/create",
           bookingData
         );
 
@@ -269,7 +274,7 @@ const PaymentFormDetail = () => {
       });
 
       const response = await axios.post(
-        "http://localhost:8080/api/payments/momo",
+        "http://skystar.io.vn/api/payments/momo",
         paymentData
       );
 
@@ -410,9 +415,9 @@ const PaymentFormDetail = () => {
                 onClick={handleMomoPayment}
                 style={{ cursor: "pointer" }}
               >
-                <img 
-                  src="https://cinestar.com.vn/assets/images/img-momo.png" 
-                  alt="Momo" 
+                <img
+                  src="https://cinestar.com.vn/assets/images/img-momo.png"
+                  alt="Momo"
                 />
                 <p>Thanh toán qua ví Momo</p>
               </div>
@@ -424,13 +429,20 @@ const PaymentFormDetail = () => {
                 <img src="/vnpay-logo.png" alt="VNPay" />
                 <p>Thanh toán qua VNPay</p>
               </div>
-              <div className="payment-method-box voucher-box" onClick={showVoucherModal}>
-                <img 
-                  src="https://cinestar.com.vn/assets/images/icon-tag.svg" 
-                  alt="Voucher" 
+              <div
+                className="payment-method-box voucher-box"
+                onClick={showVoucherModal}
+              >
+                <img
+                  src="https://cinestar.com.vn/assets/images/icon-tag.svg"
+                  alt="Voucher"
                   className="voucher-icon"
                 />
-                <p>{selectedVoucher ? `Voucher đã chọn: ${selectedVoucher.name}` : 'Chọn hoặc nhập mã giảm giá'}</p>
+                <p>
+                  {selectedVoucher
+                    ? `Voucher đã chọn: ${selectedVoucher.name}`
+                    : "Chọn hoặc nhập mã giảm giá"}
+                </p>
               </div>
             </div>
             <Modal
@@ -439,32 +451,45 @@ const PaymentFormDetail = () => {
               onCancel={handleVoucherCancel}
               footer={
                 <div className="voucher-modal-footer">
-                  <button 
+                  <button
                     className="voucher-continue-btn"
                     onClick={handleVoucherContinue}
                     disabled={!selectedVoucher}
                   >
-                    {selectedVoucher ? 'Tiếp tục' : 'Vui lòng chọn ưu đãi'}
+                    {selectedVoucher ? "Tiếp tục" : "Vui lòng chọn ưu đãi"}
                   </button>
                 </div>
               }
             >
               <div className="voucher-list">
-                <div 
-                  className={`voucher-item ${userAge && userAge < 22 ? '' : 'disabled'} ${selectedVoucher?.id === "VOUCHER1" ? 'selected' : ''}`}
-                  onClick={() => userAge && userAge < 22 && handleVoucherSelect("VOUCHER1", "C'Ten: 45k phim 2d")}
+                <div
+                  className={`voucher-item ${
+                    userAge && userAge < 22 ? "" : "disabled"
+                  } ${selectedVoucher?.id === "VOUCHER1" ? "selected" : ""}`}
+                  onClick={() =>
+                    userAge &&
+                    userAge < 22 &&
+                    handleVoucherSelect("VOUCHER1", "C'Ten: 45k phim 2d")
+                  }
                 >
                   <div className="voucher-info">
                     <h3>C'Ten: 45k phim 2d</h3>
                     <p>Xem phim trước 10h sáng và sau 10h tối</p>
                     {userAge && userAge >= 22 && (
-                      <p className="voucher-error">Chỉ áp dụng cho khách hàng dưới 22 tuổi</p>
+                      <p className="voucher-error">
+                        Chỉ áp dụng cho khách hàng dưới 22 tuổi
+                      </p>
                     )}
                   </div>
                 </div>
-                <div 
-                  className={`voucher-item ${isWednesday ? '' : 'disabled'} ${selectedVoucher?.id === "VOUCHER2" ? 'selected' : ''}`}
-                  onClick={() => isWednesday && handleVoucherSelect("VOUCHER2", "C'Member: 45k phim 2d")}
+                <div
+                  className={`voucher-item ${isWednesday ? "" : "disabled"} ${
+                    selectedVoucher?.id === "VOUCHER2" ? "selected" : ""
+                  }`}
+                  onClick={() =>
+                    isWednesday &&
+                    handleVoucherSelect("VOUCHER2", "C'Member: 45k phim 2d")
+                  }
                 >
                   <div className="voucher-info">
                     <h3>C'Member: 45k phim 2d</h3>
@@ -640,18 +665,30 @@ const PaymentFormDetail = () => {
                 <div className="value">
                   {selectedVoucher && (
                     <div className="original-price">
-                      <span style={{ textDecoration: 'line-through', color: '#999', fontSize: '0.9em' }}>
+                      <span
+                        style={{
+                          textDecoration: "line-through",
+                          color: "#999",
+                          fontSize: "0.9em",
+                        }}
+                      >
                         {movieInfo?.totalPrice?.toLocaleString("vi-VN")} VND
                       </span>
-                      <span style={{ color: '#28a745', marginLeft: '8px' }}>-50%</span>
+                      <span style={{ color: "#28a745", marginLeft: "8px" }}>
+                        -50%
+                      </span>
                     </div>
                   )}
-                  <span style={{ color: selectedVoucher ? '#e71a0f' : 'inherit', fontWeight: 'bold' }}>
+                  <span
+                    style={{
+                      color: selectedVoucher ? "#e71a0f" : "inherit",
+                      fontWeight: "bold",
+                    }}
+                  >
                     {finalPrice.toLocaleString("vi-VN")} VND
                   </span>
                 </div>
               </div>
-
             </div>
           </div>
         )}

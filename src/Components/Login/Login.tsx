@@ -54,7 +54,7 @@ const Login = () => {
         setLoginError("");
 
         const response = await axios.post(
-          "http://localhost:8081/api/users/login",
+          "http://skystar.io.vn/api/users/login",
           {
             email: identifier,
             password: password,
@@ -74,7 +74,7 @@ const Login = () => {
 
         console.log("Login successful", response.data);
         const userData = response.data;
-      
+
         login(userData);
         navigate("/");
       } catch (error) {
@@ -101,7 +101,7 @@ const Login = () => {
 
       try {
         const response = await axios.post(
-          "http://localhost:8081/api/users/register",
+          "http://skystar.io.vn/api/users/register",
           {
             email: identifier,
             password: password,

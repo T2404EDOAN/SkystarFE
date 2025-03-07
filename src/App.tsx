@@ -28,12 +28,12 @@ import Cinema from "./Components/EventRentalPage/Events/Cinema";
 import PaymentPage from "./Components/PaymentForm/PaymentPage/PaymentPage";
 import PaymentFormDetail from "./Components/PaymentForm/PaymentFormDetail";
 import Promotion from "./Components/Promotions/Promotions";
-import ScrollToTop from './components/ScrollToTop';
+import ScrollToTop from "./components/ScrollToTop";
 import PopcornDrink from "./Components/PopcornDrink/PopcornDrink";
 import NowMovieFull from "./Components/MovieList/NowMovieFull";
 import ComingMovieFull from "./Components/MovieList/ComingMovieFull";
 import BookTickets from "./Components/BookTickets/BookTickets";
-
+import SearchResults from "./Components/SearchResults/SearchResults";
 // ...other imports
 
 function App() {
@@ -65,9 +65,10 @@ function App() {
             <Route path="/thue-su-kien/cinema" element={<Cinema />} />
             <Route path="/payment" element={<PaymentFormDetail />} />
             <Route path="/popcorn-drink" element={<PopcornDrink />} />
-            <Route path="/movie/showing" element={<NowMovieFull/>} />
-            <Route path="/movie/comings" element={<ComingMovieFull/>} />
+            <Route path="/movie/showing" element={<NowMovieFull />} />
+            <Route path="/movie/comings" element={<ComingMovieFull />} />
             <Route path="/books-ticket" element={<BookTickets />} />
+            <Route path="/search" element={<SearchResults />} />
           </Routes>
         </MainLayout>
       </BrowserRouter>

@@ -67,7 +67,7 @@ const Showtimes: React.FC = () => {
   useEffect(() => {
     const fetchInitialData = async () => {
       try {
-        const response = await axios.get("http://localhost:8080/api/movies");
+        const response = await axios.get("http://skystar.io.vn/api/movies");
         const data = response.data;
         setMovies(data.content);
 
@@ -97,7 +97,7 @@ const Showtimes: React.FC = () => {
           cinema: "",
         };
         const filterResponse = await axios.get(
-          "http://localhost:8080/api/movies/search",
+          "http://localhost:8081/api/movies/search",
           { params }
         );
         setFilteredMovies(filterResponse.data);
@@ -122,14 +122,19 @@ const Showtimes: React.FC = () => {
 
   const handleFilter = async () => {
     try {
+      // Find the selected movie's title if a movie is selected
+      const selectedMovieTitle = selectedMovie
+        ? movies.find((m) => m.id.toString() === selectedMovie)?.title || ""
+        : "";
+
       const params = {
-        title: selectedMovie || undefined,
+        title: selectedMovieTitle,
         searchDate: selectedDate || undefined,
         cinema: selectedTheater || undefined,
       };
       console.log("Params sent to backend:", params);
       const response = await axios.get(
-        "http://localhost:8080/api/movies/search",
+        "http://localhost:8081/api/movies/search",
         {
           params,
         }

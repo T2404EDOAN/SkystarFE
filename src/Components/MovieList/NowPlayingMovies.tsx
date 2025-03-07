@@ -29,7 +29,7 @@ const NowPlayingMovies: React.FC = () => {
     rating: number;
     ratingCount: number | null;
     status: string;
-    genres: Array<{ id: number; name: string }>; // Update this line
+    genres: Array<{ id: number; name: string }>;
   }
 
   const [movies, setMovies] = useState<Movie[]>([]);
@@ -89,7 +89,7 @@ const NowPlayingMovies: React.FC = () => {
       try {
         setIsLoading(true);
         setError(null);
-        const response = await axios.get("http://localhost:8080/api/movies", {
+        const response = await axios.get("http://skystar.io.vn/api/movies", {
           headers: {
             Accept: "application/json",
             "Content-Type": "application/json",
@@ -223,7 +223,7 @@ const NowPlayingMovies: React.FC = () => {
         className="nowplaying-title1"
         style={{ fontFamily: "Anton, sans-serif" }}
       >
-        PHIM ĐANG CHIẾU
+        PHIM SẮP CHIẾU
       </h2>
       {trailerUrl && (
         <TrailerModal trailerUrl={trailerUrl} onClose={closeTrailer} />

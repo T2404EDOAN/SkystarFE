@@ -91,7 +91,7 @@ const MovieDetail = () => {
     const fetchMovieDetail = async () => {
       try {
         const response = await axios.get(
-          `http://localhost:8080/api/movies/${movieId}`
+          `http://skystar.io.vn/api/movies/${movieId}`
         );
         setMovieData(response.data);
         const grouped = groupShowtimesByDate(response.data.showtimes);
@@ -118,7 +118,7 @@ const MovieDetail = () => {
   const fetchSeats = async (showtimeId) => {
     try {
       const response = await axios.get(
-        `http://localhost:8080/api/showtimes/${showtimeId}/seats`
+        `http://skystar.io.vn/api/showtimes/${showtimeId}/seats`
       );
       setAvailableSeats(response.data.content);
     } catch (error) {
@@ -167,7 +167,7 @@ const MovieDetail = () => {
 
     try {
       if (selectedShowtimeId) {
-        const url = `http://localhost:8080/api/seats/${selectedShowtimeId}/hold`;
+        const url = `http://skystar.io.vn/api/seats/${selectedShowtimeId}/hold`;
         const requestData = {
           seatId: seat.id,
           // Add userId if user is logged in
