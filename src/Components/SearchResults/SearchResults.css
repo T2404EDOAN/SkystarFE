@@ -224,10 +224,8 @@
   flex-direction: row;
   justify-content: space-between;
   align-items: center;
-  margin-top: auto;
   padding: 0.5rem 0;
-  gap: 0.5rem;
-  height: 40px;
+  gap: 10px;
 }
 
 .nowplaying-trailer-button {
@@ -495,18 +493,94 @@
     transform: rotate(360deg);
   }
 }
-
-@media (min-width: 768px) {
-  .nowplaying-container {
-    height: 787px;
-    margin-top: 5rem;
+@media (max-width: 1024px) {
+  .nowplaying-wrapper {
+    /* Giảm chiều cao */
+    gap: 10px; /* Giảm khoảng cách */
   }
 
-  .nowplaying-title {
-    font-size: 40px;
+  .nowplaying-card {
+    width: calc((100% - 30px) / 3); /* Hiển thị 3 cột */
+  }
+
+  .nowplaying-poster-container {
+    max-height: 400px;
+    height: 100%;
+  }
+  .nowplaying-actions {
+    margin-top: 10px;
+  }
+  .nowplaying-poster {
+    max-height: 400px;
+    height: 100%;
+  }
+  .nowplaying-info-container {
+    width: 250px;
+    padding: 0.75rem;
+  }
+  .nowplaying-overlay {
+    max-height: 350px;
+    height: 100%;
+  }
+  .nowplaying-info-title {
+    font-size: 14px;
+    height: 50px;
   }
 
   .nowplaying-book-ticket-button {
-    width: 150px;
+    width: 130px;
+    font-size: 14px;
+  }
+
+  .nowplaying-title {
+    font-size: 36px;
+  }
+}
+
+@media (max-width: 768px) {
+  .nowplaying-wrapper {
+    height: 450px;
+    gap: 8px;
+  }
+
+  .nowplaying-card {
+    width: calc((100% - 16px) / 2); /* Chỉ hiển thị 2 cột */
+  }
+
+  .nowplaying-poster-container {
+    height: 300px;
+  }
+
+  .nowplaying-poster {
+    height: 300px;
+  }
+
+  .nowplaying-info-container {
+    width: 100%;
+    padding: 0.5rem;
+  }
+
+  .nowplaying-info-title {
+    font-size: 13px;
+    height: 35px;
+  }
+
+  .nowplaying-actions {
+    flex-direction: column;
+    gap: 6px;
+  }
+
+  .nowplaying-book-ticket-button {
+    width: 100%;
+    font-size: 12px;
+  }
+
+  .nowplaying-title {
+    font-size: 32px;
+  }
+
+  .nowplaying-navigation-button {
+    width: 2rem;
+    height: 2rem;
   }
 }

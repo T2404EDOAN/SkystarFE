@@ -12,27 +12,6 @@
   font-family: "Anton", sans-serif;
 }
 
-@media (min-width: 640px) {
-  .promo-title {
-    font-size: 34px;
-    margin-bottom: 40px;
-  }
-}
-
-@media (max-width: 1023px) {
-  .promo-title {
-    font-size: 28px;
-    margin-bottom: 24px;
-  }
-}
-
-@media (max-width: 639px) {
-  .promo-title {
-    font-size: 24px;
-    margin-bottom: 20px;
-  }
-}
-
 .promo-slider-container {
   width: 100%;
   margin: 0 auto;
@@ -43,77 +22,25 @@
 .promo-slider {
   display: flex;
   gap: 16px;
-  transition: transform 0.5s cubic-bezier(0.4, 0.0, 0.2, 1);
-}
-
-@media (min-width: 640px) {
-  .promo-slider {
-    gap: 24px;
-  }
-}
-
-@media (min-width: 1024px) {
-  .promo-slider {
-    gap: 32px;
-  }
-}
-
-@media (max-width: 1023px) {
-  .promo-slider {
-    gap: 24px;
-  }
-}
-
-@media (max-width: 639px) {
-  .promo-slider {
-    gap: 16px;
-  }
+  transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .promo-slide {
-  min-width: 300px;
-  height: 160px;
+  min-width: 400px;
+  height: 210px;
   flex-shrink: 0;
   background-size: cover;
   background-position: center;
 }
 
-@media (min-width: 640px) {
-  .promo-slide {
-    min-width: 320px;
-    height: 180px;
-  }
-}
-
-@media (min-width: 1024px) {
-  .promo-slide {
-    min-width: 378px;
-    height: 212px;
-  }
-}
-
-@media (max-width: 1023px) {
-  .promo-slide {
-    min-width: 320px;
-    height: 180px;
-  }
-}
-
-@media (max-width: 639px) {
-  .promo-slide {
-    min-width: 300px;
-    height: 160px;
-  }
-}
-
 .promo-nav-button {
   position: absolute;
-  top: 45%; /* Điều chỉnh vị trí dọc */
+  top: 45%;
   transform: translateY(-50%);
-  background-color: transparent; /* Bỏ background */
+  background-color: transparent;
   border: none;
-  width: 50px; /* Tăng kích thước */
-  height: 50px; /* Tăng kích thước */
+  width: 50px;
+  height: 50px;
   border-radius: 50%;
   cursor: pointer;
   display: flex;
@@ -133,17 +60,17 @@
 }
 
 .promo-left-button {
-  left: -60px; 
+  left: -60px;
 }
 
 .promo-right-button {
-  right: -60px; 
+  right: -60px;
 }
 
 .nav-icon {
-  width: 32px; 
+  width: 32px;
   height: 32px;
-  color: white; 
+  color: white;
 }
 
 .promo-nav-icon {
@@ -165,7 +92,6 @@
   background-color: #ccc;
   cursor: pointer;
   transition: background-color 0.3s ease;
-  
 }
 
 .promo-dot.active {
@@ -222,36 +148,76 @@
 .promo-all-button:hover::after {
   transform: translateX(0);
 }
+@media (max-width: 1024px) {
+  .promo-title {
+    font-size: 26px;
+  }
 
-@media (min-width: 640px) {
+  .promo-slide {
+    min-width: 450px; /* Thu nhỏ slide một chút */
+    height: 250px;
+  }
+
+  .promo-nav-button {
+    width: 45px;
+    height: 45px;
+  }
+
+  .nav-icon {
+    width: 28px;
+    height: 28px;
+  }
+
+  .promo-dots-container {
+    margin-top: 18px;
+  }
+
+  .promo-dot {
+    width: 14px;
+    height: 14px;
+  }
+
   .promo-all-button {
-    width: 200px;
+    width: 170px;
+    height: 34px;
+  }
+}
+@media (max-width: 768px) {
+  .promo-title {
+    font-size: 22px;
+    text-align: center;
+  }
+
+  .promo-slider-container {
+    padding: 0 10px; /* Thêm padding để slider không sát mép */
+  }
+
+  .promo-slide {
+    min-width: 350px; /* Slide chiếm 90% màn hình */
+    height: 190px;
+  }
+
+  .promo-nav-button {
+    width: 40px;
     height: 40px;
-    font-size: 16px;
-    line-height: 40px;
   }
-}
 
-@media (min-width: 1024px) {
-  .promo-all-button {
-    width: 236px;
+  .promo-left-button {
+    left: 10px;
   }
-}
 
-@media (max-width: 1023px) {
-  .promo-all-button {
-    width: 200px;
-    height: 40px;
-    font-size: 16px;
-    line-height: 40px;
+  .promo-right-button {
+    right: 10px;
   }
-}
 
-@media (max-width: 639px) {
+  .promo-dot {
+    width: 12px;
+    height: 12px;
+  }
+
   .promo-all-button {
-    width: 180px;
-    height: 36px;
-    font-size: 14px;
-    line-height: 36px;
+    width: 150px;
+    height: 32px;
+    font-size: 13px;
   }
 }

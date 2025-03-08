@@ -1,172 +1,168 @@
 .membership-container {
-    min-height: 100vh;
-    width: 100vw;
-  
-    
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    position: relative;
-    left: 50%;
-    right: 50%;
-    margin-left: -50vw;
-    margin-right: -50vw;
+  min-height: 100vh;
+  width: 100vw;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  left: 50%;
+  right: 50%;
+  margin-left: -50vw;
+  margin-right: -50vw;
 }
 
 .membership-inner {
-
-    width: 95%;
-    background-color: transparent;
-    position: relative;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    padding: 0 15px;
+  width: 95%;
+  background-color: transparent;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 0 15px;
 }
 
 .membership-title {
-    font-family: "Anton", sans-serif;
-    font-size: 1.5rem;
-    color: white;
-    margin-bottom: 1.5rem;
-    text-align: center;
+  font-family: "Anton", sans-serif;
+  font-size: 1.5rem;
+  color: white;
+  margin-bottom: 1.5rem;
+  text-align: center;
 }
 
 .membership-card-container {
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    width: 100%;
-    gap: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  width: 100%;
+  gap: 1.5rem;
 }
 
 .membership-card {
-    width: 100%;
-    border-radius: 0.75rem;
-    overflow: hidden;
+  width: 100%;
+  border-radius: 0.75rem;
+  overflow: hidden;
 }
 
 .membership-card-image {
-    height: 200px;
+  height: 200px;
 }
 
 .membership-card-image img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    border-radius: 0.75rem;
-    
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 0.75rem;
 }
 
 .membership-card-content {
-    padding: 1rem;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
+  padding: 1rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
 }
 
 .membership-card-title {
-    font-family: "Anton", sans-serif;
-    font-size: 1.5rem;
-    color: white;
+  font-family: "Anton", sans-serif;
+  font-size: 1.5rem;
+  color: white;
 }
 
 .membership-card-description {
-    font-size: 0.875rem;
-    color: white;
-    margin-top: 0.5rem;
+  font-size: 0.875rem;
+  color: white;
+  margin-top: 0.5rem;
 }
 
 .membership-button-wrapper {
-    position: relative;
-    overflow: hidden;
-    border-radius: 0.25rem;
-    margin-top: 1rem;
-    align-self: flex-start;
+  position: relative;
+  overflow: hidden;
+  border-radius: 0.25rem;
+  margin-top: 1rem;
+  align-self: flex-start;
 }
 
 .membership-button-gradient {
-    position: absolute;
-    inset: 0;
-    width: 100%;
-    height: 100%;
-    background: linear-gradient(to right, #663399, #3366cc);
-    transform: translateX(-100%);
-    transition: transform 700ms ease-out;
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(to right, #663399, #3366cc);
+  transform: translateX(-100%);
+  transition: transform 700ms ease-out;
 }
 
 .membership-button-wrapper:hover .membership-button-gradient {
-    transform: translateX(0);
+  transform: translateX(0);
 }
 
 .membership-button {
-    font-family: "Anton", sans-serif;
-    position: relative;
-    width: 100%;
-    padding: 0.5rem 1rem;
-    color: black;
-    background-color: #f3ea28;
-    font-size: 0.875rem;
-    transition: colors 300ms;
+  font-family: "Anton", sans-serif;
+  position: relative;
+  width: 100%;
+  padding: 0.5rem 1rem;
+  color: black;
+  background-color: #f3ea28;
+  font-size: 0.875rem;
+  transition: colors 300ms;
 }
 
 .membership-button:hover {
-    background-color: transparent;
-    color: white;
+  background-color: transparent;
+  color: white;
 }
 
 @media (min-width: 768px) {
-    .membership-inner {
-        width: 90%;
-    }
+  .membership-inner {
+    width: 90%;
+  }
 
-    .membership-title {
-        font-size: 1.875rem;
-        margin-bottom: 2.5rem;
-    }
+  .membership-title {
+    font-size: 1.875rem;
+    margin-bottom: 2.5rem;
+  }
 
-    .membership-card-container {
-        flex-direction: row;
-        gap: 1rem;
-    }
+  .membership-card-container {
+    flex-direction: row;
+    gap: 1rem;
+  }
 
-    .membership-card {
-        width: 48%;
-    }
+  .membership-card {
+    width: 48%;
+  }
 
-    .membership-card-image {
-        height: 250px;
-    }
+  .membership-card-image {
+    height: 250px;
+  }
 
-    .membership-card-title {
-        font-size: 1.875rem;
-    }
+  .membership-card-title {
+    font-size: 1.875rem;
+  }
 
-    .membership-card-description,
-    .membership-button {
-        font-size: 1rem;
-    }
+  .membership-card-description,
+  .membership-button {
+    font-size: 1rem;
+  }
 
-    .membership-button {
-        width: 236px;
-        padding: 0.5rem 1.5rem;
-    }
+  .membership-button {
+    width: 236px;
+    padding: 0.5rem 1.5rem;
+  }
 }
 
 @media (min-width: 1024px) {
-    .membership-inner {
-        width: 1200px;
-    }
+  .membership-inner {
+    width: 1024px;
+  }
 
-    .membership-title {
-        font-size: 2.25rem;
-    }
+  .membership-title {
+    font-size: 2.25rem;
+  }
 
-    .membership-card {
-        width: 580px;
-    }
+  .membership-card {
+    width: 580px;
+  }
 
-    .membership-card-image {
-        height: 300px;
-    }
+  .membership-card-image {
+    height: 300px;
+  }
 }

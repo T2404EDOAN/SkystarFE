@@ -223,7 +223,7 @@ const ComingSoonMovies: React.FC = () => {
         className="nowplaying-title1"
         style={{ fontFamily: "Anton, sans-serif" }}
       >
-        PHIM ĐANG CHIẾU
+        PHIM SẮP CHIẾU
       </h2>
       {trailerUrl && (
         <TrailerModal trailerUrl={trailerUrl} onClose={closeTrailer} />

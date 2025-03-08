@@ -11,11 +11,10 @@
 
 .entertainment-title-wrapper {
   margin: 1.5rem 0 1.5rem 0;
-  
 }
 
 .entertainment-title {
-    font-family: "Anton", sans-serif;
+  font-family: "Anton", sans-serif;
   color: white;
   font-size: 28px;
   margin-bottom: 1rem;
@@ -48,13 +47,13 @@
   border-radius: 0.125rem;
 }
 
-@media (min-width: 640px) {
+@media (min-width: 768px) {
   .entertainment-grid {
     grid-template-columns: repeat(2, 1fr);
     gap: 1rem;
   }
   .entertainment-grid-item {
-    height: 250px;
+    height: 280px;
   }
 }
 
@@ -71,6 +70,6 @@
     grid-template-columns: repeat(3, 1fr);
   }
   .entertainment-grid-item {
-    height: 308px;
+    height: 250px;
   }
 }
