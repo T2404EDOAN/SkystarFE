@@ -53,7 +53,8 @@ interface DateOption {
 }
 
 const Showtimes: React.FC = () => {
-  const [selectedDate, setSelectedDate] = useState("");
+  const today = new Date().toISOString().split("T")[0];
+  const [selectedDate, setSelectedDate] = useState(today);
   const [selectedMovie, setSelectedMovie] = useState("");
   const [selectedTheater, setSelectedTheater] = useState("");
   const [selectedTimes, setSelectedTimes] = useState<{ [key: string]: string }>(
@@ -67,16 +68,18 @@ const Showtimes: React.FC = () => {
   useEffect(() => {
     const fetchInitialData = async () => {
       try {
-        const response = await axios.get("http://skystar.io.vn/api/movies");
-        const data = response.data;
-        setMovies(data.content);
+        setLoading(true);
+        // First fetch all movies
+        const moviesResponse = await axios.get(
+          "http://skystar.io.vn/api/movies"
+        );
+        setMovies(moviesResponse.data.content);
 
         // Set up dates
-        const today = new Date();
         const next7Days: DateOption[] = [];
         for (let i = 0; i < 7; i++) {
-          const date = new Date(today);
-          date.setDate(today.getDate() + i);
+          const date = new Date();
+          date.setDate(date.getDate() + i);
           next7Days.push({
             date: date.toISOString().split("T")[0],
             display: `${date.toLocaleDateString("en-US", {
@@ -86,22 +89,8 @@ const Showtimes: React.FC = () => {
         }
         setDates(next7Days);
 
-        // Set default date and trigger initial filter
-        const defaultDate = today.toISOString().split("T")[0];
-        setSelectedDate(defaultDate);
-
-        // Perform initial filter
-        const params = {
-          title: "",
-          searchDate: defaultDate,
-          cinema: "",
-        };
-        const filterResponse = await axios.get(
-          "http://localhost:8081/api/movies/search",
-          { params }
-        );
-        setFilteredMovies(filterResponse.data);
-
+        // Fetch initial filtered movies
+        await handleFilter(today, "", "");
         setLoading(false);
       } catch (error) {
         console.error("Error fetching initial data:", error);
@@ -112,25 +101,28 @@ const Showtimes: React.FC = () => {
     fetchInitialData();
   }, []);
 
-  // Modify the existing useEffect to only run when selection changes
   useEffect(() => {
-    if (selectedDate) {
-      // Only run if selectedDate is not empty
-      handleFilter();
+    if (!loading) {
+      handleFilter(selectedDate, selectedMovie, selectedTheater);
+    }
+  }, [loading]); // Chạy handleFilter ngay sau khi loading hoàn tất
+
+  useEffect(() => {
+    if (selectedDate && !loading) {
+      handleFilter(selectedDate, selectedMovie, selectedTheater);
     }
   }, [selectedDate, selectedMovie, selectedTheater]);
 
-  const handleFilter = async () => {
+  const handleFilter = async (date: string, movie: string, theater: string) => {
     try {
-      // Find the selected movie's title if a movie is selected
-      const selectedMovieTitle = selectedMovie
-        ? movies.find((m) => m.id.toString() === selectedMovie)?.title || ""
+      const selectedMovieTitle = movie
+        ? movies.find((m) => m.id.toString() === movie)?.title || ""
         : "";
 
       const params = {
         title: selectedMovieTitle,
-        searchDate: selectedDate || undefined,
-        cinema: selectedTheater || undefined,
+        searchDate: date || undefined,
+        cinema: theater || undefined,
       };
       console.log("Params sent to backend:", params);
       const response = await axios.get(

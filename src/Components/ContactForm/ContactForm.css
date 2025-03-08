@@ -2,7 +2,7 @@
   display: flex;
   justify-content: center;
   margin-top: 50px;
-  margin-bottom: 50px;
+
   padding: 0 1rem;
 }
 
@@ -175,7 +175,7 @@
 @media (min-width: 768px) {
   .contact-container {
     margin-top: 100px;
-    margin-bottom: 450px;
+    margin-bottom: 100px;
   }
 
   .contact-wrapper {
