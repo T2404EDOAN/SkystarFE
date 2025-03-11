@@ -185,13 +185,16 @@ const EventRentalPage = () => {
         </section>
 
         {/* Voucher Banner */}
-        {/* <div className="w-full px-4 pb-[50px] md:pb-[100px]">
-          <img
-            src="https://skystarimages.s3.us-east-1.amazonaws.com/event/bannerEvent.jpg"
-            alt="Voucher Banner"
-            className="w-full h-auto rounded-lg"
-          />
-        </div> */}
+        <section className="w-full px-4 pb-[50px] md:pb-[100px]">
+          <Link to="/promotions">
+            <img
+              src="https://skystarimages.s3.us-east-1.amazonaws.com/banner/voucherSS.JPEG"
+              alt="Voucher Banner"
+              className="w-full h-auto rounded-lg"
+              style={{ marginBottom: "50px" }}
+            />
+          </Link>
+        </section>
       </main>
     </div>
   );

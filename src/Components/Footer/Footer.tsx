@@ -40,12 +40,14 @@ const Footer: React.FC = () => {
                 </Link>
               </div>
             </div>
-            <p className="footer-tagline">ABOUT US</p>
-            <div className="footer-social-icons">
-              <FaYoutube className="footer-social-icon" />
-              <FaFacebook className="footer-social-icon" />
-              <FaTiktok className="footer-social-icon" />
-              <FaWhatsapp className="footer-social-icon" />
+            <div>
+              <h4 className="footer-title" style={{ fontFamily: "Anton, sans-serif" }}>ABOUT SKYSTAR</h4>
+              <div className="footer-social-icons">
+                <FaYoutube className="footer-social-icon" />
+                <FaFacebook className="footer-social-icon" />
+                <FaTiktok className="footer-social-icon" />
+                <FaWhatsapp className="footer-social-icon" />
+              </div>
             </div>
           </div>
 

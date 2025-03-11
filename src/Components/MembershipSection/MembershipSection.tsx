@@ -6,7 +6,7 @@ const MembershipSection: React.FC = () => {
     <div
       className="membership-container"
       style={{
-        backgroundImage: `url('https://i.ibb.co/W4qqRZ3h/fixx.jpg')`,
+        backgroundImage: `url('https://skystarimages.s3.us-east-1.amazonaws.com/banner/fix9.JPEG')`,
       }}
     >
       <div className="membership-inner">
