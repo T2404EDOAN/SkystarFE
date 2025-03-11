@@ -2,7 +2,6 @@
   min-height: 100vh;
 }
 
-
 .header-selection-showtimes {
   display: flex;
   gap: 16px;
@@ -61,7 +60,6 @@
 }
 
 .movie-details-showtimes ul {
-  color: gray;
   font-size: 16px;
 }
 
@@ -144,4 +142,25 @@
 .time-showtimes button.selected {
   color: #f3ea28;
   border: 1px solid #f3ea28;
+}
+@media (max-width: 768px) {
+  .movie-poster-showtimes img {
+    width: 230px;
+    height: 320px;
+  }
+  .movie-details-showtimes {
+    width: 230px;
+  }
+  .movie-title-showtimes {
+    font-size: 18px;
+  }
+  .movie-details-showtimes li {
+    color: white;
+  }
+  .movie-poster-showtimes {
+    width: 230px;
+  }
+  .theater-info-main-showtimes {
+    width: 450px;
+  }
 }

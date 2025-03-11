@@ -53,7 +53,14 @@ interface DateOption {
 }
 
 const Showtimes: React.FC = () => {
-  const today = new Date().toISOString().split("T")[0];
+  const formatDate = (date: Date) => {
+    // Adjust timezone offset
+    const offset = date.getTimezoneOffset();
+    const adjustedDate = new Date(date.getTime() - offset * 60 * 1000);
+    return adjustedDate.toISOString().split("T")[0];
+  };
+
+  const today = formatDate(new Date());
   const [selectedDate, setSelectedDate] = useState(today);
   const [selectedMovie, setSelectedMovie] = useState("");
   const [selectedTheater, setSelectedTheater] = useState("");
@@ -69,19 +76,18 @@ const Showtimes: React.FC = () => {
     const fetchInitialData = async () => {
       try {
         setLoading(true);
-        // First fetch all movies
         const moviesResponse = await axios.get(
           "https://skystar.io.vn/api/movies"
         );
         setMovies(moviesResponse.data.content);
 
-        // Set up dates
+        // Set up dates with timezone adjustment
         const next7Days: DateOption[] = [];
         for (let i = 0; i < 7; i++) {
           const date = new Date();
           date.setDate(date.getDate() + i);
           next7Days.push({
-            date: date.toISOString().split("T")[0],
+            date: formatDate(date),
             display: `${date.toLocaleDateString("en-US", {
               weekday: "long",
             })}, ${date.toLocaleDateString("en-US")}`,
@@ -89,11 +95,10 @@ const Showtimes: React.FC = () => {
         }
         setDates(next7Days);
 
-        // Fetch initial filtered movies
         await handleFilter(today, "", "");
-        setLoading(false);
       } catch (error) {
         console.error("Error fetching initial data:", error);
+      } finally {
         setLoading(false);
       }
     };
@@ -105,8 +110,7 @@ const Showtimes: React.FC = () => {
     if (!loading) {
       handleFilter(selectedDate, selectedMovie, selectedTheater);
     }
-  }, [loading]); // Chạy handleFilter ngay sau khi loading hoàn tất
-
+  }, [loading]);
   useEffect(() => {
     if (selectedDate && !loading) {
       handleFilter(selectedDate, selectedMovie, selectedTheater);
@@ -115,18 +119,16 @@ const Showtimes: React.FC = () => {
 
   const handleFilter = async (date: string, movie: string, theater: string) => {
     try {
-      const selectedMovieTitle = movie
-        ? movies.find((m) => m.id.toString() === movie)?.title || ""
-        : "";
-
       const params = {
-        title: selectedMovieTitle,
+        title: movie
+          ? movies.find((m) => m.id.toString() === movie)?.title
+          : undefined,
         searchDate: date || undefined,
         cinema: theater || undefined,
       };
       console.log("Params sent to backend:", params);
       const response = await axios.get(
-        "https://skystar.io.vn/api/movies/search",
+        "http://localhost:8081/api/movies/search",
         {
           params,
         }
@@ -263,7 +265,7 @@ const Showtimes: React.FC = () => {
                     <img src={movie.posterUrl} alt={movie.title} />
                   </div>
                   <div className="movie-details-showtimes">
-                    <h2 className="movie-title-showtimes">{movie.title}</h2>
+                    <p className="movie-title-showtimes">{movie.title}</p>
                     <ul>
                       <li>
                         <FaTag size={24} />
