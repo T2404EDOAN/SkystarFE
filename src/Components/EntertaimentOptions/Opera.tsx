@@ -5,7 +5,7 @@ const Opera = () => {
     <div className="box">
       <div className="img_main">
         <img
-          src="https://api-website.cinestar.com.vn/media/wysiwyg/CMSPage/opera/opera-banner.png"
+          src="https://skystarimages.s3.us-east-1.amazonaws.com/products/opera.JPEG"
           alt="opera"
           className="img"
         />

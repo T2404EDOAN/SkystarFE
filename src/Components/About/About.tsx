@@ -40,7 +40,7 @@ const About = () => {
     <div className="box_about">
       <div className="image-container">
         <img
-          src="https://api-website.cinestar.com.vn/media/wysiwyg/CMSPage/Abouts/ht-qc-br.jpg"
+          src="https://skystarimages.s3.us-east-1.amazonaws.com/banner/cinema.JPG"
           alt="cinema"
           className="image"
         />
@@ -100,7 +100,7 @@ const About = () => {
         <div className="contact_img">
           <div className="img_1">
             <img
-              src="https://cinestar.com.vn/assets/images/ts-img-2.jpg"
+              src="https://skystarimages.s3.us-east-1.amazonaws.com/banner/abt2.jpg"
               alt="Headquarter"
               className="contact-image"
             />

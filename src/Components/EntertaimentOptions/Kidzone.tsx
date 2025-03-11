@@ -6,7 +6,7 @@ const Kidzone = () => {
     <div className="box">
       <div className="img_main">
         <img
-          src="https://api-website.cinestar.com.vn/media/wysiwyg/CMSPage/Service/bg-kidzone_1_.jpg"
+          src="https://skystarimages.s3.us-east-1.amazonaws.com/products/kidz.jpg"
           alt="kidzone"
           className="img"
         />

@@ -11,7 +11,7 @@ const EntertaimentOptions = () => {
           <li className="item_entertaiment">
             <Link to="/khu-tre-em">
               <img
-                src="https://api-website.cinestar.com.vn/media/entertainment_images/s/e/service-1_1_.png"
+                src="https://skystarimages.s3.us-east-1.amazonaws.com/banner/entKid.jpg"
                 alt="kidzone"
                 className="img_entertaiment"
               />
@@ -20,7 +20,7 @@ const EntertaimentOptions = () => {
           <li className="item_entertaiment">
             <Link to="/nha-hang">
               <img
-                src="https://api-website.cinestar.com.vn/media/entertainment_images/r/e/rectangle_3463983_1_.png"
+                src="https://skystarimages.s3.us-east-1.amazonaws.com/banner/entMonngon.jpg"
                 alt="restaurant"
                 className="img_entertaiment"
               />
@@ -29,7 +29,7 @@ const EntertaimentOptions = () => {
           <li className="item_entertaiment">
             <Link to="/bowling">
               <img
-                src="https://api-website.cinestar.com.vn/media/entertainment_images/b/o/bowling-dt-2_1_.png"
+                src="https://skystarimages.s3.us-east-1.amazonaws.com/banner/entBow.jpg"
                 alt="bowling"
                 className="img_entertaiment"
               />
@@ -38,7 +38,7 @@ const EntertaimentOptions = () => {
           <li className="item_entertaiment">
             <Link to="/billiard">
               <img
-                src="https://api-website.cinestar.com.vn/media/entertainment_images/b/i/billards-dt-2_1_.png"
+                src="https://skystarimages.s3.us-east-1.amazonaws.com/banner/entBil.jpg"
                 alt="billiard"
                 className="img_entertaiment"
               />
@@ -47,7 +47,7 @@ const EntertaimentOptions = () => {
           <li className="item_entertaiment">
             <Link to="/opera">
               <img
-                src="https://api-website.cinestar.com.vn/media/entertainment_images/o/p/opera-dt-2_1_.png"
+                src="https://skystarimages.s3.us-east-1.amazonaws.com/banner/entOpera.jpg"
                 alt="opera"
                 className="img_entertaiment"
               />
@@ -56,7 +56,7 @@ const EntertaimentOptions = () => {
           <li className="item_entertaiment">
             <Link to="/gym">
               <img
-                src="https://api-website.cinestar.com.vn/media/entertainment_images/g/y/gym-dt-2_1_.png"
+                src="https://skystarimages.s3.us-east-1.amazonaws.com/banner/entGym.jpg"
                 alt="gym"
                 className="img_entertaiment"
               />
@@ -65,7 +65,7 @@ const EntertaimentOptions = () => {
           <li className="item_entertaiment">
             <Link to="/coffee">
               <img
-                src="https://api-website.cinestar.com.vn/media/entertainment_images/c/o/coffee-dt-2_1_.png"
+                src="https://skystarimages.s3.us-east-1.amazonaws.com/banner/entCf.jpg"
                 alt="coffee"
                 className="img_entertaiment"
               />

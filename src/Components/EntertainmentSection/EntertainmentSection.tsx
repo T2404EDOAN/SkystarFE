@@ -16,33 +16,33 @@ const EntertainmentSection: React.FC = () => {
         <div className="entertainment-grid">
           {[
             {
-              src: "https://cinestar.com.vn/assets/images/img-service0.webp",
+              src: "https://skystarimages.s3.us-east-1.amazonaws.com/banner/mainKid.jpg",
               alt: "Kidzone",
               link: "/khu-tre-em",
               
             },
             {
-              src: "https://cinestar.com.vn/assets/images/img-service1.webp",
+              src: "https://skystarimages.s3.us-east-1.amazonaws.com/banner/mainBow.jpg",
               alt: "Bowling",
               link: "/bowling",
             },
             {
-              src: "https://cinestar.com.vn/assets/images/img-service2.webp",
+              src: "https://skystarimages.s3.us-east-1.amazonaws.com/banner/mainBil.jpg",
               alt: "Billiards",
               link: "/billiard",
             },
             {
-              src: "https://cinestar.com.vn/assets/images/img-service3.webp",
+              src: "https://skystarimages.s3.us-east-1.amazonaws.com/banner/mainMon.jpg",
               alt: "Món ngon",
               link: "/nha-hang",
             },
             {
-              src: "https://cinestar.com.vn/assets/images/img-service4.webp",
+              src: "https://skystarimages.s3.us-east-1.amazonaws.com/banner/mainGym.jpg",
               alt: "Gym",
               link: "/gym",
             },
             {
-              src: "https://cinestar.com.vn/assets/images/img-service5.webp",
+              src: "https://skystarimages.s3.us-east-1.amazonaws.com/banner/mainOpera.jpg",
               alt: "Opera",
               link: "/opera",
             }, 

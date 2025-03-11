@@ -6,7 +6,7 @@ const Restaurant = () => {
     <div className="box">
       <div className="img_main">
         <img
-          src="https://api-website.cinestar.com.vn/media/.renditions/wysiwyg/CMSPage/Service/bg-restaurant.jpg"
+          src="https://skystarimages.s3.us-east-1.amazonaws.com/products/monngon.jpg"
           alt="restaurant"
           className="img"
         />
