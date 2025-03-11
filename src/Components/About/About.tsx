@@ -5,13 +5,13 @@ import "./About.css";
 const fakeData = [
   {
     title: "TRỤ SỞ | HEADQUARTER",
-    email: "marketing.cinestar@gmail.com",
+    email: "marketing.skystar@gmail.com",
     phone: "028 7500 7279",
-    address: "135 Hai Bà Trưng, Phường Bến Nghé, Quận 1",
-    mapLink: "https://goo.gl/maps/xyz",
+    address: "Yên Hoà, Cầu Giấy, Hà Nội",
+    mapLink: "https://www.google.com/maps/place/Skystar+cinema/@21.0259146,105.789596,17z/data=!3m1!4b1!4m6!3m5!1s0x3135ab2d70bc72af:0x1835edd6462ab44!8m2!3d21.0259146!4d105.789596!16s%2Fg%2F11m5r8t6rn?entry=ttu&g_ep=EgoyMDI1MDMwNC4wIKXMDSoASAFQAw%3D%3D",
   },
   {
-    title: "CINESTAR QUỐC THANH",
+    title: "SKYSTAR QUỐC THANH",
     email: "",
     phone: "",
     address:
@@ -19,14 +19,14 @@ const fakeData = [
     mapLink: "https://goo.gl/maps/abc",
   },
   {
-    title: "CINESTAR HAI BÀ TRƯNG (TP.HCM)",
+    title: "SKYSTAR HAI BÀ TRƯNG (TP.HCM)",
     email: "",
     phone: "",
     address: "135 Hai Bà Trưng, Phường Bến Nghé, Quận 1, Thành Phố Hồ Chí Minh",
     mapLink: "https://goo.gl/maps/def",
   },
   {
-    title: "CINESTAR SINH VIÊN (BÌNH DƯƠNG)",
+    title: "SKYSTAR SINH VIÊN (BÌNH DƯƠNG)",
     email: "",
     phone: "",
     address: "Bình Dương",
@@ -109,8 +109,8 @@ const About = () => {
 
           <div className="contact-text-overlay">
             <h2 style={{ fontFamily: "Anton, sans-serif" }}>TRỤ SỞ | HEADQUARTER</h2>
-            <p>📍 135 Hai Bà Trưng, Phường Bến Nghé, Quận 1</p>
-            <p>📧 marketing.cinestar@gmail.com</p>
+            <p>📍 Yên Hoà, Cầu Giấy, Hà Nội</p> <br/>
+            <p>📧 marketing.skystar@gmail.com</p>
             <p>📞 028 7300 7279</p>
           </div>
         </div>
