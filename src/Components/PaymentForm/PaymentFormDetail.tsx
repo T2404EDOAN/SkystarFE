@@ -166,7 +166,7 @@ const PaymentFormDetail = () => {
       const checkPaymentStatus = async () => {
         try {
           const response = await axios.get(
-            `http://skystar.io.vn/api/payments/status?orderId=${orderId}`
+            `https://skystar.io.vn/api/payments/status?orderId=${orderId}`
           );
           setPaymentStatus((prev) => ({
             ...prev,
@@ -233,7 +233,7 @@ const PaymentFormDetail = () => {
         });
 
         const response = await axios.post(
-          "http://skystar.io.vn/api/bookings/create",
+          "https://skystar.io.vn/api/bookings/create",
           bookingData
         );
 
@@ -274,7 +274,7 @@ const PaymentFormDetail = () => {
       });
 
       const response = await axios.post(
-        "http://skystar.io.vn/api/payments/momo",
+        "https://skystar.io.vn/api/payments/momo",
         paymentData
       );
 

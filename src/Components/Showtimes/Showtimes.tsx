@@ -71,7 +71,7 @@ const Showtimes: React.FC = () => {
         setLoading(true);
         // First fetch all movies
         const moviesResponse = await axios.get(
-          "http://skystar.io.vn/api/movies"
+          "https://skystar.io.vn/api/movies"
         );
         setMovies(moviesResponse.data.content);
 
@@ -126,7 +126,7 @@ const Showtimes: React.FC = () => {
       };
       console.log("Params sent to backend:", params);
       const response = await axios.get(
-        "http://localhost:8081/api/movies/search",
+        "https://skystar.io.vn/api/movies/search",
         {
           params,
         }

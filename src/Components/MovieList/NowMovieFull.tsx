@@ -58,7 +58,7 @@ const NowMovieFull: React.FC = () => {
       try {
         setIsLoading(true);
         setError(null);
-        const response = await axios.get("http://skystar.io.vn/api/movies", {
+        const response = await axios.get("https://skystar.io.vn/api/movies", {
           headers: {
             Accept: "application/json",
             "Content-Type": "application/json",

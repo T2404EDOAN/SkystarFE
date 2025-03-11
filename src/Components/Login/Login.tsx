@@ -54,7 +54,7 @@ const Login = () => {
         setLoginError("");
 
         const response = await axios.post(
-          "http://skystar.io.vn/api/users/login",
+          "https://skystar.io.vn/api/users/login",
           {
             email: identifier,
             password: password,
@@ -101,7 +101,7 @@ const Login = () => {
 
       try {
         const response = await axios.post(
-          "http://skystar.io.vn/api/users/register",
+          "https://skystar.io.vn/api/users/register",
           {
             email: identifier,
             password: password,

@@ -73,7 +73,7 @@ const PaymentTicketForm: React.FC<PaymentFormProps> = (props) => {
     const checkSeatsStatus = async () => {
       try {
         const response = await axios.get(
-          `http://skystar.io.vn/api/seats/${props.showtimeId}/check-seats`
+          `https://skystar.io.vn/api/seats/${props.showtimeId}/check-seats`
         );
         const unavailableSeats = response.data;
 

@@ -93,7 +93,7 @@ const UserInfo: React.FC = () => {
 
     try {
       const response = await axios.put(
-        `http://skystar.io.vn/api/users/${user.id}`,
+        `https://skystar.io.vn/api/users/${user.id}`,
         userFormData
       );
 
@@ -147,7 +147,7 @@ const UserInfo: React.FC = () => {
     try {
       // Verify mật khẩu cũ
       const verifyResponse = await axios.get(
-        `http://skystar.io.vn/api/users/${user.id}`
+        `https://skystar.io.vn/api/users/${user.id}`
       );
 
       // Kiểm tra mật khẩu cũ
@@ -161,7 +161,7 @@ const UserInfo: React.FC = () => {
 
       // Thay đổi mật khẩu
       const response = await axios.put(
-        `http://skystar.io.vn/api/users/${user.id}`,
+        `https://skystar.io.vn/api/users/${user.id}`,
         {
           ...verifyResponse.data,
           password: passwordFormData.newPassword,
@@ -197,7 +197,7 @@ const UserInfo: React.FC = () => {
     setLoadingHistory(true);
     try {
       const response = await axios.get(
-        `http://skystar.io.vn/api/bookings/${user.id}`
+        `https://skystar.io.vn/api/bookings/${user.id}`
       );
       setBookingHistory(response.data);
     } catch (error) {

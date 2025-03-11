@@ -11,8 +11,13 @@ const Footer: React.FC = () => {
         <div className="main-container">
           {/* Logo và phần tagline */}
           <div className="logo-section">
-            <img src="https://skystarimages.s3.us-east-1.amazonaws.com/test/logo.PNG" alt="Cinestar Logo" className="footer-logo" />
-            <p className="footer-tagline">BE HAPPY, BE A STAR</p>
+            <img
+              src="https://skystarimages.s3.us-east-1.amazonaws.com/test/logo.PNG"
+              alt="Cinestar Logo"
+              className="footer-logo"
+              style={{ marginLeft: "80px" }}
+            />
+
             <div className="footer-buttons">
               <div className="footer-button footer-button-yellow">
                 <Link to="/mua-ve" className="footer-button-link">
@@ -35,6 +40,7 @@ const Footer: React.FC = () => {
                 </Link>
               </div>
             </div>
+            <p className="footer-tagline">ABOUT US</p>
             <div className="footer-social-icons">
               <FaYoutube className="footer-social-icon" />
               <FaFacebook className="footer-social-icon" />
@@ -124,20 +130,25 @@ const Footer: React.FC = () => {
         </div>
 
         <div className="footer-company-info">
-          <img src="https://api-website.cinestar.com.vn/media/wysiwyg/bocongthuong/dathongbao.webp" alt="Đã thông báo" className="img-tb"/>
+          <img
+            src="https://api-website.cinestar.com.vn/media/wysiwyg/bocongthuong/dathongbao.webp"
+            alt="Đã thông báo"
+            className="img-tb"
+          />
           <p>
             CÔNG TY CỔ PHẦN GIẢI TRÍ PHÁT HÀNH PHIM – RẠP CHIẾU PHIM NGÔI SAO
           </p>
-          <p>
-            ĐỊA CHỈ: Yên Hoà ,Cầu Giấy, Hà Nội
-          </p>
+          <p>ĐỊA CHỈ: Yên Hoà ,Cầu Giấy, Hà Nội</p>
           {/* <p>
             GIẤY CNĐKKD SỐ: 0329247444, ĐĂNG KÝ LẦN ĐẦU NGÀY 18/04/2004, ĐĂNG KÝ
             THAY ĐỔI LẦN THỨ 2 NGÀY 15/09/2004, CẤP BỞI SỞ KH&ĐT TPHCM
           </p> */}
         </div>
         <div className="gg-app">
-          <img src="https://skystarimages.s3.us-east-1.amazonaws.com/test/download.PNG" alt="bdbasb" />
+          <img
+            src="https://skystarimages.s3.us-east-1.amazonaws.com/test/download.PNG"
+            alt="bdbasb"
+          />
         </div>
       </div>
     </footer>

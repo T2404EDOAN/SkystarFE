@@ -19,7 +19,7 @@ const PopcornDrink = ({ onSelectionChange }) => {
 
   const fetchProducts = async () => {
     try {
-      const response = await fetch("http://skystar.io.vn/api/products");
+      const response = await fetch("https://skystar.io.vn/api/products");
       if (!response.ok) {
         throw new Error("Network response was not ok");
       }

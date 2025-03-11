@@ -85,7 +85,7 @@ const Header: React.FC = () => {
       try {
         setLoading(true);
         const response = await axios.get<{ content: Movie[] }>(
-          "http://localhost:8081/api/movies"
+          "https://skystar.io.vn/api/movies"
         );
 
         // Extract unique theaters from movies' showtimes
