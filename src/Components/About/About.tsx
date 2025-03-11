@@ -109,7 +109,7 @@ const About = () => {
 
           <div className="contact-text-overlay">
             <h2 style={{ fontFamily: "Anton, sans-serif" }}>TRỤ SỞ | HEADQUARTER</h2>
-            <p>📍 Yên Hoà, Cầu Giấy, Hà Nội</p> <br/>
+            <p>📍 Yên Hoà, Cầu Giấy, Hà Nội</p>
             <p>📧 marketing.skystar@gmail.com</p>
             <p>📞 028 7300 7279</p>
           </div>
