@@ -125,7 +125,7 @@ const About = () => {
         <div className="des_ab_main">
           <div className="main_left">
             <img
-              src="https://api-website.cinestar.com.vn/media/wysiwyg/CMSPage/Abouts/Tru_o_ng_Sa_1.png"
+              src="https://skystarimages.s3.us-east-1.amazonaws.com/banner/abtmap.png"
               alt="map"
             />
           </div>
