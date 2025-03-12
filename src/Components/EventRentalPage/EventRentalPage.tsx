@@ -2,6 +2,7 @@ import React from "react";
 import { Link } from "react-router-dom";
 import "./EventRentalPage.css";
 
+const email = "cinemaskystar@gmail.com";
 const EventRentalPage = () => {
   return (
     <div className="container-event-rental">
@@ -28,7 +29,7 @@ const EventRentalPage = () => {
             className={`event-section ${index % 2 === 1 ? "reverse" : ""}`}
           >
             <div className="event-text-event-rental">
-              <span className="event-title-event-rental">
+              <span className="event-title-event-rental" style={{ fontFamily: "Anton, sans-serif", fontSize: "22px" }}>
                 {index === 0 && "Fanclub, Cầu hôn, Sinh nhật"}
                 {index === 1 &&
                   "Ra Mắt Chương Trình, Họp Hội Bộ, Music Video, Ra Mắt Phim"}
@@ -41,13 +42,15 @@ const EventRentalPage = () => {
               <p className="event-info">
                 Để biết thêm thông tin về việc thuê, vui lòng gọi:
               </p>
-              <p className="event-phone">0342556642</p>
+              <p className="event-phone">📞 0342556642</p>
               <button
                 className="promotion-button"
                 id="promotion-button12"
                 style={{ fontFamily: "Anton, sans-serif" }}
               >
-                <Link to="/mua-ve">Liên hệ ngay</Link>
+                <a href={`mailto:${email}`}>
+                LIÊN HỆ NGAY
+                </a>
               </button>
             </div>
             <div>
@@ -191,7 +194,7 @@ const EventRentalPage = () => {
               src="https://skystarimages.s3.us-east-1.amazonaws.com/banner/voucherSS.JPEG"
               alt="Voucher Banner"
               className="w-full h-auto rounded-lg"
-              style={{ marginBottom: "50px" }}
+              style={{ marginBottom: "100px" }}
             />
           </Link>
         </section>

@@ -113,7 +113,7 @@ const Cinema = () => {
               Chúng tôi sẽ liên hệ sớm nhất có thể.</p>
           </Col>
           <Col xs={12} lg={6}>
-            <img src={anh4344} alt="anh4344" className="img-fluid" />
+            <img src="https://skystarimages.s3.us-east-1.amazonaws.com/event/event2.JPG" alt="anh4344" className="img-fluid" />
           </Col>
         </Row>
       </div>

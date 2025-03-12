@@ -8,7 +8,13 @@
   align-items: center;
   justify-content: center;
   margin-top: 30px;
+  margin-bottom: 80px;
 }
+
+.header-subtitle-event-rental {
+  margin: 0;
+}
+
 #event-section1 {
   display: flex;
   align-items: center;
@@ -30,6 +36,8 @@
   width: 600px;
 }
 .services-section {
+  margin-top: 100px;
+  margin-bottom: 50px;
   padding: 2rem 0;
   color: white;
   padding-bottom: 50px;
@@ -124,4 +132,12 @@
   .event-image {
     width: 369px;
   }
+}
+
+.event-info {
+  margin: 0;
+}
+
+.event-description {
+  margin-top: 1rem;
 }
