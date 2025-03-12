@@ -12,14 +12,14 @@ const Restaurant = () => {
         />
       </div>
       <div className="content">
-        <h2 className="title">NHÀ HÀNG</h2>
+        <h2 className="title" style={{ fontFamily: "Anton, sans-serif" }}>NHÀ HÀNG</h2>
         <div className="description">
           <div className="des2">
             Bắt tay vào cuộc phiêu lưu ẩm thực tại Món Ngon Đà Lạt & Huế!
           </div>
           <div className="des2">
             Trải nghiệm hương vị đa dạng của Việt Nam và quốc tế tại Món Ngon Đà
-            Lạt & Huế, nhà hàng độc đáo của Cinestar. Chúng tôi cung cấp thực
+            Lạt & Huế, nhà hàng độc đáo của SkyStar. Chúng tôi cung cấp thực
             đơn phong phú với hơn 100 món ăn ngon hàng ngày, thể hiện tinh hoa
             ẩm thực của địa phương và hương vị quốc tế.
           </div>
@@ -43,9 +43,9 @@ const Restaurant = () => {
       <div className="address">
         <div className="location-list">
           <div className="location-card">
-            <h3 className="title_address">HUẾ</h3>
+            <h3 className="title_address" style={{ fontFamily: "Anton, sans-serif" }}>HUẾ</h3>
             <div>
-              <a href="https://www.google.com/maps/place/Cinestar+Hu%E1%BA%BF/@16.4609673,107.5871789,17z/data=!3m1!4b1!4m6!3m5!1s0x3141a1ed3c48b8e9:0xfafa16e6a736e872!8m2!3d16.4609622!4d107.5897538!16s%2Fg%2F11h10w6mv5?entry=tts">
+              <a href="https://www.google.com/maps/dir//Y%C3%AAn+Ho%C3%A0,+C%E1%BA%A7u+Gi%E1%BA%A5y,+H%C3%A0+N%E1%BB%99i/@21.0258948,105.7071943,12z/data=!4m8!4m7!1m0!1m5!1m1!1s0x3135ab2d70bc72af:0x1835edd6462ab44!2m2!1d105.789596!2d21.0259146?entry=ttu&g_ep=EgoyMDI1MDMwOC4wIKXMDSoASAFQAw%3D%3D">
                 📍 25 Hai Bà Trưng, Phường Vĩnh Ninh, TP.Huế
               </a>
             </div>
@@ -55,14 +55,14 @@ const Restaurant = () => {
                 target="_blank"
                 rel="noopener noreferrer"
               >
-                🔗 https://www.facebook.com/CinestarHue
+                🔗 https://www.facebook.com/SkyStarHue
               </a>
             </div>
           </div>
           <div className="location-card">
-            <h3 className="title_address">ĐÀ LẠT</h3>
+            <h3 className="title_address" style={{ fontFamily: "Anton, sans-serif" }}>ĐÀ LẠT</h3>
             <div>
-              <a href="https://www.google.com/maps/place/Cinestar+Đà+Lạt/@11.9404181,108.4369027,17z/data=!4m6!3m5!1s0x3171137c2a4627f1:0x6e5fc3140ac9da8b!8m2!3d11.9404129!4d108.4394776!16s%2Fg%2F11fqfc1sdm">
+              <a href="https://www.google.com/maps/dir//Y%C3%AAn+Ho%C3%A0,+C%E1%BA%A7u+Gi%E1%BA%A5y,+H%C3%A0+N%E1%BB%99i/@21.0258948,105.7071943,12z/data=!4m8!4m7!1m0!1m5!1m1!1s0x3135ab2d70bc72af:0x1835edd6462ab44!2m2!1d105.789596!2d21.0259146?entry=ttu&g_ep=EgoyMDI1MDMwOC4wIKXMDSoASAFQAw%3D%3D">
                 📍 Quảng trường Lâm Viên, Thành phố Đà Lạt
               </a>
             </div>
@@ -72,7 +72,7 @@ const Restaurant = () => {
                 target="_blank"
                 rel="noopener noreferrer"
               >
-                🔗 https://www.facebook.com/CinestarDaLat
+                🔗 https://www.facebook.com/SkyStarDaLat
               </a>
             </div>
           </div>

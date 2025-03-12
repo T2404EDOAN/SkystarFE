@@ -12,7 +12,7 @@ const Kidzone = () => {
         />
       </div>
       <div className="content">
-        <h2 className="title">KIDZONE</h2>
+        <h2 className="title" style={{ fontFamily: "Anton, sans-serif" }}>KIDZONE</h2>
         <div className="description">
           <div className="des1">
             Giải phóng trí tưởng tượng của con bạn tại Kidzone, sân chơi trong
@@ -24,18 +24,18 @@ const Kidzone = () => {
             em ở mọi lứa tuổi.
           </div>
           <div className="des1">
-            C’Kidzone cung cấp hơn 25 trò chơi đa dạng và hấp dẫn, bao gồm các
+            S’Kidzone cung cấp hơn 25 trò chơi đa dạng và hấp dẫn, bao gồm các
             hồ banh kết hợp chướng ngại vật đầy thử thách và mảng tường leo núi
             thú vị. Tất cả các thiết bị đều được chọn lọc kỹ và cẩn thận để đảm
             bảo môi trường vui chơi an toàn cho các bé.
           </div>
           <div className="des1">
-            C’Kidzone không chỉ là một không gian vui chơi giải trí, chúng tôi
+            S’Kidzone không chỉ là một không gian vui chơi giải trí, chúng tôi
             còn cung cấp một không gian sôi động, nơi các bé có thể kết bạn mới,
             phát triển các kỹ năng thể chất và khơi dậy khả năng sáng tạo.
           </div>
           <div className="des1">
-            C’Kidzone có thêm dịch vụ trọn gói nhận tổ chức tiệc, sự kiện cho
+            S’Kidzone có thêm dịch vụ trọn gói nhận tổ chức tiệc, sự kiện cho
             các bé
           </div>
           <div className="des1">
@@ -46,9 +46,9 @@ const Kidzone = () => {
       <div className="address">
         <div className="location-list">
           <div className="location-card">
-            <h3 className="title_address">CINESTAR HUẾ</h3>
+            <h3 className="title_address" style={{ fontFamily: "Anton, sans-serif" }}>SKYSTAR HUẾ</h3>
             <div>
-              <a href="https://www.google.com/maps/place/Cinestar+Hu%E1%BA%BF/@16.4609673,107.5871789,17z/data=!3m1!4b1!4m6!3m5!1s0x3141a1ed3c48b8e9:0xfafa16e6a736e872!8m2!3d16.4609622!4d107.5897538!16s%2Fg%2F11h10w6mv5?entry=tts">
+              <a href="https://www.google.com/maps?sca_esv=0cea375fb25910d8&rlz=1C5MACD_enVN1068VN1069&biw=1440&bih=716&sxsrf=AHTn8zqmsDZlpd44O9SgiJmBYOe0mfl_mQ:1741770881075&gs_lp=Egxnd3Mtd2l6LXNlcnAiDXNreXN0YXIgY2luZW0qAggAMgcQIxiwAhgnMgYQABgWGB4yBhAAGBYYHjIGEAAYFhgeMgYQABgWGB4yCBAAGAgYDRgeMggQABgIGA0YHjIFEAAY7wUyBRAAGO8FMgUQABjvBUiyKlCmC1joHHABeAGQAQCYAeABoAHMBqoBBTEuNC4xuAEByAEA-AEBmAIHoAL1BsICChAAGLADGNYEGEfCAg0QABiABBiwAxhDGIoFwgILEAAYgAQYsAMY5wTCAhMQLhiABBiwAxhDGMgDGIoF2AEBwgIZEC4YgAQYsAMY0QMYQxjHARjIAxiKBdgBAcICBxAAGIAEGBPCAgcQLhiABBgTwgIIEAAYExgWGB7CAgoQABgTGBYYChgewgIIEAAYgAQYogTCAgYQABgNGB7CAggQABgWGAoYHpgDAIgGAZAGCboGBAgBGAiSBwUyLjQuMaAH0Sw&um=1&ie=UTF-8&fb=1&gl=vn&sa=X&geocode=Ka9yvHAtqzUxMUSrYmTdXoMB&daddr=Y%C3%AAn+Ho%C3%A0,+C%E1%BA%A7u+Gi%E1%BA%A5y,+H%C3%A0+N%E1%BB%99i">
                 📍 25 Hai Bà Trưng, Phường Vĩnh Ninh, TP.Huế
               </a>
             </div>
@@ -58,14 +58,14 @@ const Kidzone = () => {
                 target="_blank"
                 rel="noopener noreferrer"
               >
-                🔗 https://www.facebook.com/CinestarHue
+                🔗 https://www.facebook.com/SkyStarHue
               </a>
             </div>
           </div>
           <div className="location-card">
-            <h3 className="title_address">CINESTAR ĐÀ LẠT</h3>
+            <h3 className="title_address" style={{ fontFamily: "Anton, sans-serif" }}>SKYSTAR ĐÀ LẠT</h3>
             <div>
-              <a href="https://www.google.com/maps/place/Cinestar+Đà+Lạt/@11.9404181,108.4369027,17z/data=!4m6!3m5!1s0x3171137c2a4627f1:0x6e5fc3140ac9da8b!8m2!3d11.9404129!4d108.4394776!16s%2Fg%2F11fqfc1sdm">
+              <a href="https://www.google.com/maps?sca_esv=0cea375fb25910d8&rlz=1C5MACD_enVN1068VN1069&biw=1440&bih=716&sxsrf=AHTn8zqmsDZlpd44O9SgiJmBYOe0mfl_mQ:1741770881075&gs_lp=Egxnd3Mtd2l6LXNlcnAiDXNreXN0YXIgY2luZW0qAggAMgcQIxiwAhgnMgYQABgWGB4yBhAAGBYYHjIGEAAYFhgeMgYQABgWGB4yCBAAGAgYDRgeMggQABgIGA0YHjIFEAAY7wUyBRAAGO8FMgUQABjvBUiyKlCmC1joHHABeAGQAQCYAeABoAHMBqoBBTEuNC4xuAEByAEA-AEBmAIHoAL1BsICChAAGLADGNYEGEfCAg0QABiABBiwAxhDGIoFwgILEAAYgAQYsAMY5wTCAhMQLhiABBiwAxhDGMgDGIoF2AEBwgIZEC4YgAQYsAMY0QMYQxjHARjIAxiKBdgBAcICBxAAGIAEGBPCAgcQLhiABBgTwgIIEAAYExgWGB7CAgoQABgTGBYYChgewgIIEAAYgAQYogTCAgYQABgNGB7CAggQABgWGAoYHpgDAIgGAZAGCboGBAgBGAiSBwUyLjQuMaAH0Sw&um=1&ie=UTF-8&fb=1&gl=vn&sa=X&geocode=Ka9yvHAtqzUxMUSrYmTdXoMB&daddr=Y%C3%AAn+Ho%C3%A0,+C%E1%BA%A7u+Gi%E1%BA%A5y,+H%C3%A0+N%E1%BB%99i">
                 📍 Quảng trường Lâm Viên, Thành phố Đà Lạt
               </a>
             </div>
@@ -75,14 +75,14 @@ const Kidzone = () => {
                 target="_blank"
                 rel="noopener noreferrer"
               >
-                🔗 https://www.facebook.com/CinestarDaLat
+                🔗 https://www.facebook.com/SkyStarDaLat
               </a>
             </div>
           </div>
           <div className="location-card">
-            <h3 className="title_address">TÂY NINH</h3>
+            <h3 className="title_address" style={{ fontFamily: "Anton, sans-serif" }}>SKYSTAR TÂY NINH</h3>
             <div>
-              <a href="https://www.google.com/maps/place/TTC+Plaza+Tây+Ninh/@11.2860595,106.0901076,17z/data=!3m1!4b1!4m6!3m5!1s0x31746e3f69721f75:0xa770a4a7081d53a5!8m2!3d11.2860543!4d106.0926825!16s%2Fg%2F11c1ws6fvn">
+              <a href="https://www.google.com/maps?sca_esv=0cea375fb25910d8&rlz=1C5MACD_enVN1068VN1069&biw=1440&bih=716&sxsrf=AHTn8zqmsDZlpd44O9SgiJmBYOe0mfl_mQ:1741770881075&gs_lp=Egxnd3Mtd2l6LXNlcnAiDXNreXN0YXIgY2luZW0qAggAMgcQIxiwAhgnMgYQABgWGB4yBhAAGBYYHjIGEAAYFhgeMgYQABgWGB4yCBAAGAgYDRgeMggQABgIGA0YHjIFEAAY7wUyBRAAGO8FMgUQABjvBUiyKlCmC1joHHABeAGQAQCYAeABoAHMBqoBBTEuNC4xuAEByAEA-AEBmAIHoAL1BsICChAAGLADGNYEGEfCAg0QABiABBiwAxhDGIoFwgILEAAYgAQYsAMY5wTCAhMQLhiABBiwAxhDGMgDGIoF2AEBwgIZEC4YgAQYsAMY0QMYQxjHARjIAxiKBdgBAcICBxAAGIAEGBPCAgcQLhiABBgTwgIIEAAYExgWGB7CAgoQABgTGBYYChgewgIIEAAYgAQYogTCAgYQABgNGB7CAggQABgWGAoYHpgDAIgGAZAGCboGBAgBGAiSBwUyLjQuMaAH0Sw&um=1&ie=UTF-8&fb=1&gl=vn&sa=X&geocode=Ka9yvHAtqzUxMUSrYmTdXoMB&daddr=Y%C3%AAn+Ho%C3%A0,+C%E1%BA%A7u+Gi%E1%BA%A5y,+H%C3%A0+N%E1%BB%99i">
                 📍 TTC Plaza Tây Ninh, 217 - 219 đường 30/4, phường 2, Tây Ninh
               </a>
             </div>
@@ -92,14 +92,14 @@ const Kidzone = () => {
                 target="_blank"
                 rel="noopener noreferrer"
               >
-                🔗 https://www.facebook.com/CKidzoneTayNinh
+                🔗 https://www.facebook.com/SKidzoneTayNinh
               </a>
             </div>
           </div>
           <div className="location-card">
-            <h3 className="title_address">CINESTAR MỸ THO</h3>
+            <h3 className="title_address" style={{ fontFamily: "Anton, sans-serif" }}>SKYSTAR MỸ THO</h3>
             <div>
-              <a href="https://www.google.com/maps/place/Cinestar+Mỹ+Tho/@10.352924,106.356649,17z/data=!3m1!4b1!4m6!3m5!1s0x31096d23e7971151:0x7868a1489e78a8ac!8m2!3d10.3529188!4d106.3592239!16s%2Fg%2F11fksv3dfh">
+              <a href="https://www.google.com/maps?sca_esv=0cea375fb25910d8&rlz=1C5MACD_enVN1068VN1069&biw=1440&bih=716&sxsrf=AHTn8zqmsDZlpd44O9SgiJmBYOe0mfl_mQ:1741770881075&gs_lp=Egxnd3Mtd2l6LXNlcnAiDXNreXN0YXIgY2luZW0qAggAMgcQIxiwAhgnMgYQABgWGB4yBhAAGBYYHjIGEAAYFhgeMgYQABgWGB4yCBAAGAgYDRgeMggQABgIGA0YHjIFEAAY7wUyBRAAGO8FMgUQABjvBUiyKlCmC1joHHABeAGQAQCYAeABoAHMBqoBBTEuNC4xuAEByAEA-AEBmAIHoAL1BsICChAAGLADGNYEGEfCAg0QABiABBiwAxhDGIoFwgILEAAYgAQYsAMY5wTCAhMQLhiABBiwAxhDGMgDGIoF2AEBwgIZEC4YgAQYsAMY0QMYQxjHARjIAxiKBdgBAcICBxAAGIAEGBPCAgcQLhiABBgTwgIIEAAYExgWGB7CAgoQABgTGBYYChgewgIIEAAYgAQYogTCAgYQABgNGB7CAggQABgWGAoYHpgDAIgGAZAGCboGBAgBGAiSBwUyLjQuMaAH0Sw&um=1&ie=UTF-8&fb=1&gl=vn&sa=X&geocode=Ka9yvHAtqzUxMUSrYmTdXoMB&daddr=Y%C3%AAn+Ho%C3%A0,+C%E1%BA%A7u+Gi%E1%BA%A5y,+H%C3%A0+N%E1%BB%99i">
                 📍 52 Đinh Bộ Lĩnh, Phường 3, Thành phố Mỹ Tho
               </a>
             </div>
@@ -109,14 +109,14 @@ const Kidzone = () => {
                 target="_blank"
                 rel="noopener noreferrer"
               >
-                🔗 https://www.facebook.com/CinestarMyTho
+                🔗 https://www.facebook.com/SkyStarMyTho
               </a>
             </div>
           </div>
           <div className="location-card">
-            <h3 className="title_address">CINESTAR KIÊN GIANG</h3>
+            <h3 className="title_address" style={{ fontFamily: "Anton, sans-serif" }}>SKYSTAR KIÊN GIANG</h3>
             <div>
-              <a href="https://www.google.com/maps/place/Cinestar+Kiên+Giang/@10.0104073,105.0809751,17z/data=!3m1!4b1!4m6!3m5!1s0x31a0635ab56b0ad3:0x1266a947b2ee8f56!8m2!3d10.0104021!4d105.08355!16s%2Fg%2F11k4sv84s7">
+              <a href="https://www.google.com/maps?sca_esv=0cea375fb25910d8&rlz=1C5MACD_enVN1068VN1069&biw=1440&bih=716&sxsrf=AHTn8zqmsDZlpd44O9SgiJmBYOe0mfl_mQ:1741770881075&gs_lp=Egxnd3Mtd2l6LXNlcnAiDXNreXN0YXIgY2luZW0qAggAMgcQIxiwAhgnMgYQABgWGB4yBhAAGBYYHjIGEAAYFhgeMgYQABgWGB4yCBAAGAgYDRgeMggQABgIGA0YHjIFEAAY7wUyBRAAGO8FMgUQABjvBUiyKlCmC1joHHABeAGQAQCYAeABoAHMBqoBBTEuNC4xuAEByAEA-AEBmAIHoAL1BsICChAAGLADGNYEGEfCAg0QABiABBiwAxhDGIoFwgILEAAYgAQYsAMY5wTCAhMQLhiABBiwAxhDGMgDGIoF2AEBwgIZEC4YgAQYsAMY0QMYQxjHARjIAxiKBdgBAcICBxAAGIAEGBPCAgcQLhiABBgTwgIIEAAYExgWGB7CAgoQABgTGBYYChgewgIIEAAYgAQYogTCAgYQABgNGB7CAggQABgWGAoYHpgDAIgGAZAGCboGBAgBGAiSBwUyLjQuMaAH0Sw&um=1&ie=UTF-8&fb=1&gl=vn&sa=X&geocode=Ka9yvHAtqzUxMUSrYmTdXoMB&daddr=Y%C3%AAn+Ho%C3%A0,+C%E1%BA%A7u+Gi%E1%BA%A5y,+H%C3%A0+N%E1%BB%99i">
                 📍 TTTM Rạch Sỏi, Phường Rạch Sỏi, TP. Rạch Giá
               </a>
             </div>
@@ -126,7 +126,7 @@ const Kidzone = () => {
                 target="_blank"
                 rel="noopener noreferrer"
               >
-                🔗 https://www.facebook.com/CinestarKienGiang
+                🔗 https://www.facebook.com/SkyStarKienGiang
               </a>
             </div>
           </div>

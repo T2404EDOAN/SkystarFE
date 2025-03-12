@@ -12,15 +12,15 @@ const Coffee = () => {
         />
       </div>
       <div className="content">
-        <h2 className="title">COFFEE</h2>
+        <h2 className="title" style={{ fontFamily: "Anton, sans-serif" }}>COFFEE</h2>
         <div className="description">
           <div className="des2">
-            Nhâm nhi, thưởng thức và kết nối tại C'Coffee - Góc cà phê ấm cúng
-            của Cinestar!
+            Nhâm nhi, thưởng thức và kết nối tại S'Coffee - Góc cà phê ấm cúng
+            của SkyStar!
           </div>
           <div className="des2">
-            Thư giãn và kết nối trước hoặc sau bộ phim của bạn tại C'Coffee, tọa
-            lạc tại vị trí thuận tiện trong khu phức hợp Cinestar.
+            Thư giãn và kết nối trước hoặc sau bộ phim của bạn tại S'Coffee, tọa
+            lạc tại vị trí thuận tiện trong khu phức hợp SkyStar.
           </div>
           <div className="des2">
             Khám phá thực đơn phong phú của chúng tôi bao gồm các loại đồ uống
@@ -32,16 +32,16 @@ const Coffee = () => {
             bình thường hoặc một khoảnh khắc yên bình.
           </div>
           <div className="des2">
-            C'Coffee - Nơi mỗi tách cà phê khơi dậy sự kết nối.
+            S'Coffee - Nơi mỗi tách cà phê khơi dậy sự kết nối.
           </div>
         </div>
       </div>
       <div className="address">
         <div className="location-list">
           <div className="location-card">
-            <h3 className="title_address">HUẾ</h3>
+            <h3 className="title_address" style={{ fontFamily: "Anton, sans-serif" }}>HUẾ</h3>
             <div>
-              <a href="https://www.google.com/maps/place/Cinestar+Hu%E1%BA%BF/@16.4609673,107.5871789,17z/data=!3m1!4b1!4m6!3m5!1s0x3141a1ed3c48b8e9:0xfafa16e6a736e872!8m2!3d16.4609622!4d107.5897538!16s%2Fg%2F11h10w6mv5?entry=tts">
+              <a href="https://www.google.com/maps/dir//Y%C3%AAn+Ho%C3%A0,+C%E1%BA%A7u+Gi%E1%BA%A5y,+H%C3%A0+N%E1%BB%99i/@21.0258948,105.7071943,12z/data=!4m8!4m7!1m0!1m5!1m1!1s0x3135ab2d70bc72af:0x1835edd6462ab44!2m2!1d105.789596!2d21.0259146?entry=ttu&g_ep=EgoyMDI1MDMwOC4wIKXMDSoASAFQAw%3D%3D">
                 📍 25 Hai Bà Trưng, Phường Vĩnh Ninh, TP.Huế
               </a>
             </div>
@@ -51,14 +51,14 @@ const Coffee = () => {
                 target="_blank"
                 rel="noopener noreferrer"
               >
-                🔗 https://www.facebook.com/CinestarHue
+                🔗 https://www.facebook.com/SkyStarHue
               </a>
             </div>
           </div>
           <div className="location-card">
-            <h3 className="title_address">ĐÀ LẠT</h3>
+            <h3 className="title_address" style={{ fontFamily: "Anton, sans-serif" }}>ĐÀ LẠT</h3>
             <div>
-              <a href="https://www.google.com/maps/place/Cinestar+Đà+Lạt/@11.9404181,108.4369027,17z/data=!4m6!3m5!1s0x3171137c2a4627f1:0x6e5fc3140ac9da8b!8m2!3d11.9404129!4d108.4394776!16s%2Fg%2F11fqfc1sdm">
+              <a href="https://www.google.com/maps/dir//Y%C3%AAn+Ho%C3%A0,+C%E1%BA%A7u+Gi%E1%BA%A5y,+H%C3%A0+N%E1%BB%99i/@21.0258948,105.7071943,12z/data=!4m8!4m7!1m0!1m5!1m1!1s0x3135ab2d70bc72af:0x1835edd6462ab44!2m2!1d105.789596!2d21.0259146?entry=ttu&g_ep=EgoyMDI1MDMwOC4wIKXMDSoASAFQAw%3D%3D">
                 📍 Quảng trường Lâm Viên, Thành phố Đà Lạt
               </a>
             </div>
@@ -68,7 +68,7 @@ const Coffee = () => {
                 target="_blank"
                 rel="noopener noreferrer"
               >
-                🔗 https://www.facebook.com/CinestarDaLat
+                🔗 https://www.facebook.com/SkyStarDaLat
               </a>
             </div>
           </div>
