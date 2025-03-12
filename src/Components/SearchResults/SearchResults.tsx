@@ -105,7 +105,7 @@ const SearchResults: React.FC = () => {
 
         console.log("Search params:", params);
         const response = await axios.get(
-          "https://skystar.io.vn/api/movies/search",
+          "http://localhost:8081/api/movies/search",
           {
             params,
           }

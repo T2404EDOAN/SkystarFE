@@ -87,8 +87,6 @@ const Header: React.FC = () => {
         const response = await axios.get<{ content: Movie[] }>(
           "https://skystar.io.vn/api/movies"
         );
-
-        // Extract unique theaters from movies' showtimes
         const uniqueTheaters = response.data.content.reduce(
           (acc: Theater[], movie) => {
             movie.showtimes?.forEach((showtime) => {
@@ -149,26 +147,28 @@ const Header: React.FC = () => {
   const handleSearch = async (value: string) => {
     setSearchTerm(value);
     if (value.trim()) {
-      const searchQuery = new URLSearchParams();
+      try {
+        const searchQuery = new URLSearchParams();
+        // Kiểm tra giá trị có khớp với tên rạp không
+        const isTheaterSearch = theaters.some(
+          (theater) =>
+            theater.name.toLowerCase().includes(value.toLowerCase()) ||
+            theater.address.toLowerCase().includes(value.toLowerCase())
+        );
 
-      // Kiểm tra giá trị có khớp với tên rạp không
-      const isTheaterSearch = theaters.some(
-        (theater) =>
-          theater.name.toLowerCase().includes(value.toLowerCase()) ||
-          theater.address.toLowerCase().includes(value.toLowerCase())
-      );
+        if (isTheaterSearch) {
+          searchQuery.append("cinemaName", value.trim());
+        } else {
+          // Ngược lại search theo tên phim
+          searchQuery.append("movieTitle", value.trim());
+        }
 
-      // Nếu khớp với tên rạp, search theo rạp
-      if (isTheaterSearch) {
-        searchQuery.append("cinemaName", value.trim());
-      } else {
-        // Ngược lại search theo tên phim
-        searchQuery.append("movieTitle", value.trim());
+        navigate(`/search?${searchQuery.toString()}`);
+        setShowSearch(false);
+        setSearchTerm("");
+      } catch (error) {
+        console.error("Search error:", error);
       }
-
-      navigate(`/search?${searchQuery.toString()}`);
-      setShowSearch(false);
-      setSearchTerm("");
     }
   };
 
@@ -193,34 +193,41 @@ const Header: React.FC = () => {
             <Link to="/" className="logo-link">
               <img src="/logo.png" alt="Logo" className="logo" />
             </Link>
-            {isTabletOrMobile && (
+            {/* {isTabletOrMobile && (
               <FontAwesomeIcon
                 icon={faBars}
                 className="menu-icon"
                 onClick={toggleMenu}
               />
-            )}
-            {!isTabletOrMobile && (
-              <>
-                <Link to="/payment">
-                  <Button
-                    type="primary"
-                    style={{ backgroundColor: "#f3ea28", color: "black" }}
-                    className="action-button"
-                  >
-                    <img
-                      src="https://cinestar.com.vn/assets/images/ic-ticket.svg"
-                      alt="ticket"
-                      className="w-5 h-5"
-                    />
-                    <span>ĐẶT VÉ NGAY</span>
-                  </Button>
-                </Link>
-              </>
-            )}
+            )} */}
+            {/* {!isTabletOrMobile && ( */}
+            <>
+              <Link to="/payment">
+                <Button
+                  type="primary"
+                  style={{ backgroundColor: "#f3ea28", color: "black" }}
+                  className="action-button"
+                >
+                  <img
+                    src="https://cinestar.com.vn/assets/images/ic-ticket.svg"
+                    alt="ticket"
+                    className="w-5 h-5"
+                  />
+                  <span>ĐẶT VÉ NGAY</span>
+                </Button>
+              </Link>
+            </>
+            {/* )} */}
           </div>
           <div className="actions-section">
-            {!isTabletOrMobile && searchBox}
+            <Input
+              placeholder="Tìm phim, rạp"
+              value={searchTerm}
+              onChange={(e) => setSearchTerm(e.target.value)}
+              onPressEnter={() => handleSearch(searchTerm)}
+              prefix={<SearchOutlined className="search-icon" />}
+              className="search-bar"
+            />
             <div id="search1">
               <Button
                 icon={<SearchOutlined />}
@@ -234,15 +241,20 @@ const Header: React.FC = () => {
                     position: "fixed",
                     left: 0,
                     right: 0,
-                    top: "70px",
-                    background: "rgba(0,0,0,0.8)",
+                    top: "70px", // Adjust this value based on your header height
+                    background: "rgba(0,0,0,0.1)",
                     padding: "15px",
                     boxShadow: "0px 4px 6px rgba(0,0,0,0.1)",
-                    zIndex: 1000,
                   }}
                   id="search2"
                 >
-                  {searchBox}
+                  <Input
+                    placeholder="Tìm kiếm..."
+                    autoFocus
+                    value={searchTerm}
+                    onChange={(e) => setSearchTerm(e.target.value)}
+                    onPressEnter={() => handleSearch(searchTerm)}
+                  />
                 </div>
               )}
             </div>
@@ -280,124 +292,120 @@ const Header: React.FC = () => {
       </div>
 
       {/* Secondary Navigation - Desktop Only */}
-      {!isTabletOrMobile && (
-        <div className="secondary-nav secondary-nav-lg">
-          <div className="secondary-nav-container">
-            <nav className="secondary-nav-content">
-              <div className="secondary-nav-item">
-                <div className="dropdown-content">
-                  <Link
-                    to="/books-ticket"
-                    className={`dropdown-item1 ${
-                      isActive("/books-ticket") ? "active" : ""
-                    }`}
-                  >
-                    <Dropdown
-                      overlay={
-                        <Menu
-                          style={{
-                            width: 1200,
-                            background: "#0d0d1f",
-                            color: "white",
-                            padding: "10px",
-                          }}
-                        >
-                          <Row gutter={16}>
-                            {chunkArray(theaters, 3).map((group, index) => (
-                              <Col key={index} span={8}>
-                                {group.map((theater, idx) => (
-                                  <Menu.Item
-                                    key={`${index}-${idx}`}
-                                    style={{ background: "transparent" }}
-                                  >
-                                    <Typography.Text
-                                      style={{
-                                        color: "white",
-                                        cursor: "pointer",
-                                      }}
-                                      onClick={() =>
-                                        handleTheaterSelect(theater)
-                                      }
-                                    >
-                                      <div className="theater-menu-item">
-                                        <div className="theater-name">
-                                          {theater.name}
-                                        </div>
-                                      </div>
-                                    </Typography.Text>
-                                  </Menu.Item>
-                                ))}
-                              </Col>
-                            ))}
-                          </Row>
-                        </Menu>
-                      }
-                    >
-                      <Typography.Text
-                        style={{
-                          color: isActive("/books-ticket")
-                            ? "#f3ea28"
-                            : "white",
-                          cursor: "pointer",
-                          fontSize: 16,
-                        }}
-                        className="choose-theater-text"
-                      >
-                        Chọn rạp
-                      </Typography.Text>
-                    </Dropdown>
-                  </Link>
-                </div>
 
+      <div className="secondary-nav secondary-nav-lg">
+        <div className="secondary-nav-container">
+          <nav className="secondary-nav-content">
+            <div className="secondary-nav-item">
+              <div className="dropdown-content">
                 <Link
-                  to="/showtimes"
-                  className={`secondary-nav-link ${
-                    isActive("/showtimes") ? "active" : ""
+                  to="/books-ticket"
+                  className={`dropdown-item1 ${
+                    isActive("/books-ticket") ? "active" : ""
                   }`}
                 >
-                  Lịch chiếu
+                  <Dropdown
+                    overlay={
+                      <Menu
+                        style={{
+                          width: 1200,
+                          background: "#0d0d1f",
+                          color: "white",
+                          padding: "10px",
+                        }}
+                      >
+                        <Row gutter={16}>
+                          {chunkArray(theaters, 3).map((group, index) => (
+                            <Col key={index} span={8}>
+                              {group.map((theater, idx) => (
+                                <Menu.Item
+                                  key={`${index}-${idx}`}
+                                  style={{ background: "transparent" }}
+                                >
+                                  <Typography.Text
+                                    style={{
+                                      color: "white",
+                                      cursor: "pointer",
+                                    }}
+                                    onClick={() => handleTheaterSelect(theater)}
+                                  >
+                                    <div className="theater-menu-item">
+                                      <div className="theater-name">
+                                        {theater.name}
+                                      </div>
+                                    </div>
+                                  </Typography.Text>
+                                </Menu.Item>
+                              ))}
+                            </Col>
+                          ))}
+                        </Row>
+                      </Menu>
+                    }
+                  >
+                    <Typography.Text
+                      style={{
+                        color: isActive("/books-ticket") ? "#f3ea28" : "white",
+                        cursor: "pointer",
+                        fontSize: 16,
+                      }}
+                      className="choose-theater-text"
+                    >
+                      Chọn rạp
+                    </Typography.Text>
+                  </Dropdown>
                 </Link>
               </div>
-              <div className="secondary-nav-item">
-                <Link
-                  to="/promotions"
-                  className={`secondary-nav-link ${
-                    isActive("/promotions") ? "active" : ""
-                  }`}
-                >
-                  Khuyến mãi
-                </Link>
-                <Link
-                  to="/thue-su-kien"
-                  className={`secondary-nav-link ${
-                    isActive("/thue-su-kien") ? "active" : ""
-                  }`}
-                >
-                  Thuê sự kiện
-                </Link>
-                <Link
-                  to="/entertaiment"
-                  className={`secondary-nav-link ${
-                    isActive("/entertaiment") ? "active" : ""
-                  }`}
-                >
-                  Tất cả các giải trí
-                </Link>
-                <Link
-                  to="/about"
-                  className={`secondary-nav-link ${
-                    isActive("/about") ? "active" : ""
-                  }`}
-                  id="about11"
-                >
-                  Giới thiệu
-                </Link>
-              </div>
-            </nav>
-          </div>
+
+              <Link
+                to="/showtimes"
+                className={`secondary-nav-link ${
+                  isActive("/showtimes") ? "active" : ""
+                }`}
+              >
+                Lịch chiếu
+              </Link>
+            </div>
+            <div className="secondary-nav-item">
+              <Link
+                to="/promotions"
+                className={`secondary-nav-link ${
+                  isActive("/promotions") ? "active" : ""
+                }`}
+              >
+                Khuyến mãi
+              </Link>
+              <Link
+                to="/thue-su-kien"
+                className={`secondary-nav-link ${
+                  isActive("/thue-su-kien") ? "active" : ""
+                }`}
+              >
+                Thuê sự kiện
+              </Link>
+              <Link
+                to="/entertaiment"
+                className={`secondary-nav-link ${
+                  isActive("/entertaiment") ? "active" : ""
+                }`}
+              >
+                Tất cả các giải trí
+              </Link>
+              <Link
+                to="/about"
+                className={`secondary-nav-link ${
+                  isActive("/about") ? "active" : ""
+                }`}
+                id="about11"
+              >
+                Giới thiệu
+              </Link>
+            </div>
+          </nav>
         </div>
-      )}
-      {isTabletOrMobile && (
+      </div>
+
+      {/* {isTabletOrMobile && (
         <div className={`mobile-menu ${menuOpen ? "open" : ""}`}>
           <Link to="/payment" onClick={toggleMenu}>
             ĐẶT VÉ NGAY
@@ -421,7 +429,7 @@ const Header: React.FC = () => {
             Giới thiệu
           </Link>
         </div>
-      )}
+      )} */}
     </header>
   );
 };
