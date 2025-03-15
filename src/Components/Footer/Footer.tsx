@@ -15,7 +15,6 @@ const Footer: React.FC = () => {
               src="https://skystarimages.s3.us-east-1.amazonaws.com/test/logo.PNG"
               alt="Cinestar Logo"
               className="footer-logo"
-              style={{ marginLeft: "80px" }}
             />
 
             <div className="footer-buttons">
@@ -41,7 +40,12 @@ const Footer: React.FC = () => {
               </div>
             </div>
             <div>
-              <h4 className="footer-title" style={{ fontFamily: "Anton, sans-serif" }}>ABOUT SKYSTAR</h4>
+              <h4
+                className="footer-title1"
+                style={{ fontFamily: "Anton, sans-serif" }}
+              >
+                ABOUT SKYSTAR
+              </h4>
               <div className="footer-social-icons">
                 <FaYoutube className="footer-social-icon" />
                 <FaFacebook className="footer-social-icon" />
