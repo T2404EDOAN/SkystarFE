@@ -196,17 +196,14 @@ const MovieDetail = () => {
         const url = `http://localhost:8085/api/seats/${selectedShowtimeId}/hold`;
         const requestData = {
           seatId: seat.id,
-          // Add userId if user is logged in
-          // userId: currentUser?.id // Uncomment and add logic for logged in user
         };
-
-        console.log("API Call URL:", url);
-        console.log("Request Data:", requestData);
 
         const response = await axios.post(url, requestData);
         console.log("API Response:", response.data);
 
         if (response.status === 200) {
+          const expireAt = Date.now() + 5 * 60 * 1000; // 5 minutes from now
+
           setSelectedSeats((prev) => {
             const newSeats = [
               ...prev,
@@ -215,12 +212,19 @@ const MovieDetail = () => {
                 id: seat.id,
                 type: seat.seatType,
                 price: seat.price,
-                holdExpiration: new Date(Date.now() + 5 * 60 * 1000),
+                holdExpiration: new Date(expireAt),
               },
             ];
             setShowPayment(newSeats.length > 0);
             return newSeats;
           });
+
+          // Update localStorage with expiration time
+          const currentBooking = JSON.parse(localStorage.getItem("currentBooking") || "{}");
+          localStorage.setItem("currentBooking", JSON.stringify({
+            ...currentBooking,
+            expireAt
+          }));
         }
       }
     } catch (error) {
@@ -339,6 +343,15 @@ const MovieDetail = () => {
       const isVIP = ["A", "B", "C"].includes(seat.seatNumber.charAt(0));
       return total + (isVIP ? ticketPrices.vip : ticketPrices.standard);
     }, 0);
+  };
+
+  // Add this helper function to check if showtime is past
+  const isShowtimePast = (showDate: string, showTime: string) => {
+    const now = new Date();
+    const [hours, minutes] = showTime.split(':').map(Number);
+    const showDateTime = new Date(showDate);
+    showDateTime.setHours(hours, minutes, 0);
+    return now > showDateTime;
   };
 
   if (loading) return <div>Loading...</div>;
@@ -523,24 +536,26 @@ const MovieDetail = () => {
                           </div>
                         </div>
                         <div className="movie-detail-showtime-buttons">
-                          {cinema.showtimes.map((show, index) => (
-                            <button
-                              key={index}
-                              className={`movie-detail-time-btn ${
-                                selectedTime === show.time &&
-                                selectedCinema?.name === cinema.name
-                                  ? "selected"
-                                  : ""
-                              }`}
-                              onClick={() =>
-                                handleTimeSelection(cinema, show.time, show.id)
-                              }
-                            >
-                              <span className="movie-detail-time">
-                                {show.time}
-                              </span>
-                            </button>
-                          ))}
+                          {cinema.showtimes.map((show, index) => {
+                            const isPast = isShowtimePast(selectedDate, show.time);
+                            return (
+                              <button
+                                key={index}
+                                className={`movie-detail-time-btn ${
+                                  selectedTime === show.time &&
+                                  selectedCinema?.name === cinema.name
+                                    ? "selected"
+                                    : ""
+                                } ${isPast ? "disabled" : ""}`}
+                                onClick={() =>
+                                  !isPast && handleTimeSelection(cinema, show.time, show.id)
+                                }
+                                disabled={isPast}
+                              >
+                                <span className="movie-detail-time">{show.time}</span>
+                              </button>
+                            );
+                          })}
                         </div>
                       </div>
                     )

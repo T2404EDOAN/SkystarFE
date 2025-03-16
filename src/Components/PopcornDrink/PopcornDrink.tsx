@@ -19,7 +19,7 @@ const PopcornDrink = ({ onSelectionChange }) => {
 
   const fetchProducts = async () => {
     try {
-      const response = await fetch("https://100.121.56.65:8085/api/products");
+      const response = await fetch("http://localhost:8085/api/products");
       if (!response.ok) {
         throw new Error("Network response was not ok");
       }

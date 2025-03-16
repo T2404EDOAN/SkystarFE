@@ -8,6 +8,7 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import axios from "axios";
 import { Tabs } from "antd"; // Import Tabs from antd
+import { useNavigate } from "react-router-dom";  // Thêm import này
 
 import "./BookTickets.css"; // Import the new CSS file
 import { useAuth } from "../../context/AuthContext";
@@ -31,6 +32,8 @@ const BookTickets: React.FC = () => {
     theaterId: null,
     status: null,
   });
+
+  const navigate = useNavigate();
 
   const getStatusFromTab = (tabKey: string) => {
     const statusMap = {
@@ -64,7 +67,7 @@ const BookTickets: React.FC = () => {
       console.log("Request params:", params);
 
       const response = await axios.get(
-        "https://100.121.56.65:8085/api/movies/filter",
+        "http://localhost:8085/api/movies/filter",
         {
           params,
         }
@@ -96,26 +99,63 @@ const BookTickets: React.FC = () => {
     setActiveTab(key);
   };
 
+  const isShowtimePassed = (showDate: string, showTime: string) => {
+    const [hours, minutes] = showTime.split(':');
+    const showtimeDate = new Date(showDate);
+    showtimeDate.setHours(parseInt(hours), parseInt(minutes));
+    return new Date() > showtimeDate;
+  };
+
   const groupShowtimesByDate = (showtimes: any[]) => {
-    return showtimes.reduce((acc, showtime) => {
+    const now = new Date();
+    
+    // Lọc bỏ các suất chiếu đã qua
+    const validShowtimes = showtimes.filter(showtime => 
+      !isShowtimePassed(showtime.showDate, showtime.showTime)
+    );
+  
+    return validShowtimes.reduce((acc, showtime) => {
       const date = new Date(showtime.showDate).toLocaleDateString("vi-VN", {
         weekday: "long",
         year: "numeric",
         month: "numeric",
         day: "numeric",
       });
-
+  
       if (!acc[date]) {
         acc[date] = [];
       }
-
+  
       acc[date].push(showtime);
-
-      // Sắp xếp theo thời gian
       acc[date].sort((a, b) => a.showTime.localeCompare(b.showTime));
-
       return acc;
     }, {});
+  };
+
+  const handlePosterClick = (movieId: string) => {
+    navigate(`/movie/${movieId}`);
+  };
+
+  const handleShowtimeClick = (movie: any, showtime: any) => {
+    navigate(`/movie/${movie.id}`, { 
+      state: { 
+        selectedShowtimeId: showtime.id,
+        selectedTheaterName: showtime.theatresName,
+        selectedDate: showtime.showDate,
+        selectedTime: showtime.showTime,
+        selectedTheater: {
+          name: showtime.theatresName,
+          address: showtime.theaterAddress,
+          showtimes: [{
+            id: showtime.id,
+            time: showtime.showTime,
+            roomName: showtime.roomName,
+            roomId: showtime.roomId
+          }]
+        },
+        autoSelect: true
+      } 
+    });
   };
 
   return (
@@ -135,7 +175,7 @@ const BookTickets: React.FC = () => {
           {/* Phần thông tin bên phải */}
           <div className="header-info">
             <div className="header-info-content">
-              <h1 className="header-title">{selectedTheater.name}</h1>
+              <h1 className="header-title">{selectedTheater?.name || 'Chọn rạp chiếu'}</h1>
               <div className="header-address">
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
@@ -157,7 +197,7 @@ const BookTickets: React.FC = () => {
                     d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"
                   />
                 </svg>
-                <span>{selectedTheater.address}</span>
+                <span>{selectedTheater?.address || 'Địa chỉ sẽ hiển thị ở đây'}</span>
               </div>
             </div>
           </div>
@@ -173,7 +213,7 @@ const BookTickets: React.FC = () => {
             tab={
               <span
                 style={{
-                  color: activeTab === "dangChieu" ? "#f3ea28" : "white",
+                  color: activeTab === "dangChieu" ? "#f3ea28" : "white", fontFamily: "Anton"
                 }}
               >
                 PHIM ĐANG CHIẾU
@@ -187,7 +227,11 @@ const BookTickets: React.FC = () => {
                 {filteredMovies.map((movie) => (
                   <div key={movie.id} className="movie-card">
                     {/* Cột bên trái: Ảnh */}
-                    <div className="movie-poster">
+                    <div 
+                      className="movie-poster" 
+                      onClick={() => handlePosterClick(movie.id)}
+                      style={{ cursor: 'pointer' }}
+                    >
                       <img
                         src={movie.posterUrl}
                         alt={movie.title}
@@ -316,9 +360,7 @@ const BookTickets: React.FC = () => {
                                     <span
                                       key={showtime.id}
                                       className="movie-schedule-session-time"
-                                      onClick={() =>
-                                        handleSelectShowtime(showtime)
-                                      }
+                                      onClick={() => handleShowtimeClick(movie, showtime)}
                                     >
                                       {showtime.showTime}
                                     </span>
@@ -343,7 +385,7 @@ const BookTickets: React.FC = () => {
             tab={
               <span
                 style={{
-                  color: activeTab === "sapChieu" ? "#f3ea28" : "white",
+                  color: activeTab === "sapChieu" ? "#f3ea28" : "white",fontFamily: "Anton"
                 }}
               >
                 PHIM SẮP CHIẾU
@@ -356,7 +398,11 @@ const BookTickets: React.FC = () => {
               <div className="movie-grid">
                 {filteredMovies.map((movie) => (
                   <div key={movie.id} className="movie-card">
-                    <div className="movie-poster">
+                    <div 
+                      className="movie-poster" 
+                      onClick={() => handlePosterClick(movie.id)}
+                      style={{ cursor: 'pointer' }}
+                    >
                       <img
                         src={movie.posterUrl}
                         alt={movie.title}
@@ -480,9 +526,7 @@ const BookTickets: React.FC = () => {
                                     <span
                                       key={showtime.id}
                                       className="movie-schedule-session-time"
-                                      onClick={() =>
-                                        handleSelectShowtime(showtime)
-                                      }
+                                      onClick={() => handleShowtimeClick(movie, showtime)}
                                     >
                                       {showtime.showTime}
                                     </span>
@@ -506,7 +550,7 @@ const BookTickets: React.FC = () => {
           <TabPane
             tab={
               <span
-                style={{ color: activeTab === "dacBiet" ? "#f3ea28" : "white" }}
+                style={{ color: activeTab === "dacBiet" ? "#f3ea28" : "white",fontFamily: "Anton" }}
               >
                 SUẤT CHIẾU ĐẶC BIỆT
               </span>
@@ -527,7 +571,7 @@ const BookTickets: React.FC = () => {
           <TabPane
             tab={
               <span
-                style={{ color: activeTab === "bangGia" ? "#f3ea28" : "white" }}
+                style={{ color: activeTab === "bangGia" ? "#f3ea28" : "white",fontFamily: "Anton" }}
               >
                 BẢNG GIÁ VÉ
               </span>

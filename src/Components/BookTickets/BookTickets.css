@@ -1,4 +1,5 @@
 .book-tickets-container {
+  font-family: "Josefin Sans", Inter, system-ui, Avenir, Helvetica, Arial, sans-serif !important;
 }
 
 .header-section {
@@ -39,11 +40,13 @@
   font-size: 2.25rem;
   font-weight: 700;
   margin-bottom: 0.5rem;
+  font-family: "Anton", sans-serif;
 }
 
 .header-address {
   display: flex;
   align-items: center;
+  font-family: "Josefin Sans", Inter, system-ui, Avenir, Helvetica, Arial, sans-serif !important;
 }
 
 .header-address-icon {
@@ -100,21 +103,23 @@
   font-size: 2.5rem;
   margin: 2.5rem 0;
   font-family: "Anton", sans-serif;
+  
 }
 
 .movie-grid {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
-  gap: 0.5rem;
+  gap: 1rem;
+  margin-bottom: 100px;
 }
 
 .movie-card {
   display: flex;
   color: white;
-  border-radius: 0.5rem;
-  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1),
-    0 4px 6px -2px rgba(0, 0, 0, 0.05);
+  border-radius: 0.2rem;
+
   overflow: hidden;
+  max-width: 100%;
 }
 
 .movie-poster {
@@ -122,23 +127,41 @@
   height: 468px;
   flex-shrink: 0;
   border-radius: 0.5rem 0 0 0.5rem;
+  cursor: pointer;
+  transition: transform 0.2s;
+}
+
+.movie-poster:hover {
+  transform: scale(1.02);
 }
 
 .movie-poster-img {
   width: 100%;
   height: 100%;
   object-fit: cover;
-  border-radius: 0.5rem 0 0 0.5rem;
+
 }
 
 .movie-info {
   padding: 1rem;
+  flex: 1;
+  min-width: 0; /* Cho phép co lại khi cần */
+  overflow-y: auto; /* Cho phép cuộn dọc nếu nội dung quá dài */
+  max-height: 468px; /* Khớp với chiều cao của movie-poster */
+  flex: 1;
+  padding: 20px;
+  overflow-y: auto;
+  max-height: none;
+  height: auto;
 }
 
 .movie-title {
   font-size: 1.25rem;
   font-weight: 700;
   margin-bottom: 0.5rem;
+  word-wrap: break-word; /* Cho phép văn bản xuống dòng */
+  overflow-wrap: break-word;
+  font-family: "Anton", sans-serif;
 }
 
 .movie-details {
@@ -147,6 +170,7 @@
   flex-wrap: wrap;
   align-items: center;
   font-size: 0.875rem;
+  font-family: "Josefin Sans", Inter, system-ui, Avenir, Helvetica, Arial, sans-serif !important;
 }
 
 .movie-detail-item {
@@ -172,6 +196,7 @@
   font-size: 0.875rem;
   color: white;
   margin-bottom: 1rem;
+  font-family: "Josefin Sans", Inter, system-ui, Avenir, Helvetica, Arial, sans-serif !important;
 }
 
 .movie-description-icon {
@@ -182,20 +207,24 @@
 }
 
 .movie-description-text {
-  width: 240px;
+  width: auto; /* Thay đổi từ width cố định */
+  max-width: 100%; /* Giới hạn chiều rộng tối đa */
+  overflow-wrap: break-word;
 }
 
 .movie-schedule {
   margin-bottom: 1rem;
   border: 1px solid #9ca3af;
-  border-radius: 0.5rem;
-  padding: 1rem;
+  border-radius: 0.3rem;
+  padding: 10px;
+  width: 100%;
+  margin-bottom: 15px;
 }
 
 .movie-schedule-date {
-  font-size: 1.125rem;
+  font-size: 14px;
   font-weight: 700;
-  padding: 0.5rem;
+  font-family: "Josefin Sans", Inter, system-ui, Avenir, Helvetica, Arial, sans-serif !important;
 }
 
 .movie-schedule-session {
@@ -214,6 +243,9 @@
   display: flex;
   flex-wrap: wrap;
   gap: 1rem;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
 }
 
 .movie-schedule-session-time {
@@ -223,6 +255,13 @@
   font-size: 0.75rem;
   color: white;
   cursor: pointer;
+  transition: all 0.2s;
+  font-family: "Josefin Sans", Inter, system-ui, Avenir, Helvetica, Arial, sans-serif !important;
+}
+
+.movie-schedule-session-time:hover {
+  background-color: #f3ea28;
+  color: black;
 }
 
 .movie-schedule-empty {
@@ -315,6 +354,7 @@
   font-size: 18px !important; /* Tăng cỡ chữ */
   font-weight: 900 !important; /* Làm đậm chữ */
   padding: 0 15px; /* Thêm padding ngang */
+  font-family: "Josefin Sans", Inter, system-ui, Avenir, Helvetica, Arial, !important
 }
 
 .no-movies-message {
@@ -322,6 +362,7 @@
   color: white;
   font-size: 1.25rem;
   margin-top: 2rem;
+  font-family: "Josefin Sans", Inter, system-ui, Avenir, Helvetica, Arial, sans-serif !important;
 }
 @media (max-width: 1024px) {
   .header-section {
@@ -338,6 +379,7 @@
 
   .header-title {
     font-size: 1.75rem;
+    font-family: "Anton", sans-serif;
   }
 
   .tab-navigation-container,
@@ -390,6 +432,7 @@
 
   .header-title {
     font-size: 1.5rem;
+    font-family: "Anton", sans-serif;
   }
 
   .tab-navigation-container,
@@ -444,4 +487,12 @@
   .no-movies-message {
     font-size: 1rem;
   }
+}
+
+.movie-schedules {
+  display: flex;
+  flex-direction: column;
+  margin-top: 20px;
+  overflow: visible;
+  height: auto;
 }

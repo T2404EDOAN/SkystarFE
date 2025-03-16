@@ -85,7 +85,7 @@ const Header: React.FC = () => {
       try {
         setLoading(true);
         const response = await axios.get<{ content: Movie[] }>(
-          "https://100.121.56.65:8085/api/movies"
+          "http://localhost:8085/api/movies"
         );
         const uniqueTheaters = response.data.content.reduce(
           (acc: Theater[], movie) => {

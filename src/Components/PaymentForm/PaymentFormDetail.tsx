@@ -48,6 +48,36 @@ const PaymentFormDetail = () => {
   });
   const [user, setUser] = useState(null); // Add user state
   const [selectedPayment, setSelectedPayment] = useState<string | null>(null);
+  const [timeRemaining, setTimeRemaining] = useState<number | null>(null);
+  const [showTimeoutModal, setShowTimeoutModal] = useState(false);
+
+  const formatTime = (seconds: number): string => {
+    const minutes = Math.floor(seconds / 60);
+    const remainingSeconds = seconds % 60;
+    return `${minutes}:${remainingSeconds.toString().padStart(2, "0")}`;
+  };
+
+  // Replace the existing TimeoutModal component with this Ant Design version
+  const TimeoutModal = () => (
+    <Modal
+      title="Thông báo hết thời gian"
+      open={showTimeoutModal}
+      onOk={() => navigate("/")}
+      centered
+      okText="Về trang chủ"
+      closable={false}
+      maskClosable={false}
+      keyboard={false}
+      cancelButtonProps={{ style: { display: 'none' } }}
+    >
+      <div style={{ textAlign: 'center', padding: '20px 0' }}>
+        <h3 style={{ marginBottom: '16px', color: '#ff4d4f' }}>
+          Phiên đặt vé đã hết hạn!
+        </h3>
+        <p>Vui lòng thực hiện đặt vé lại</p>
+      </div>
+    </Modal>
+  );
 
   useEffect(() => {
     const searchParams = new URLSearchParams(window.location.search);
@@ -96,6 +126,40 @@ const PaymentFormDetail = () => {
       setActiveStep(3);
     }
   }, []);
+
+  useEffect(() => {
+    const storedBooking = JSON.parse(localStorage.getItem("currentBooking") || "{}");
+    const expireAt = storedBooking.expireAt;
+
+    if (expireAt) {
+      const updateTimer = () => {
+        const now = Date.now();
+        const remaining = Math.max(0, Math.floor((expireAt - now) / 1000));
+        
+        if (remaining === 0) {
+          setShowTimeoutModal(true);
+          // Clear the booking from localStorage
+          localStorage.removeItem("currentBooking");
+          // Cancel any pending booking if needed
+          // You might want to add an API call here to release the seats
+          return;
+        }
+        
+        setTimeRemaining(remaining);
+      };
+
+      updateTimer();
+      const timerId = setInterval(updateTimer, 1000);
+
+      return () => {
+        clearInterval(timerId);
+        const remainingTime = Math.max(0, Math.floor((expireAt - Date.now()) / 1000));
+        if (remainingTime === 0) {
+          localStorage.removeItem("currentBooking");
+        }
+      };
+    }
+  }, [navigate]);
 
   // Simple UI handlers
   const showVoucherModal = () => setIsVoucherModalVisible(true);
@@ -195,6 +259,7 @@ const PaymentFormDetail = () => {
 
   return (
     <div className="skystar-payment-container">
+      <TimeoutModal />
       <div className="skystar-payment-header">
         <h1 className={`skystar-payment-title ${activeStep === 3 ? 'success-message' : ''}`}>
           {activeStep === 3 
@@ -573,8 +638,8 @@ const PaymentFormDetail = () => {
                 </div>
                 <div className="hold-time">
                   <span className="hold-timer">
-                    {movieInfo?.holdExpirationTime && (
-                      <>Thời gian giữ ghế: {movieInfo.holdExpirationTime}</>
+                    {timeRemaining !== null && (
+                      <>Thời gian giữ ghế: {formatTime(timeRemaining)}</>
                     )}
                   </span>
                 </div>

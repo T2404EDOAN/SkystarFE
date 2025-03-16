@@ -104,8 +104,12 @@
   height: 423px;
   object-fit: cover;
   border-radius: 0.2rem;
-  border: 0 solid #edf2f7;
+  border: 1px solid rgba(216, 206, 206, 0.1);
+
+  
 }
+
+
 
 .nowplaying-overlay {
   position: absolute;
@@ -121,10 +125,12 @@
   justify-content: center;
   padding: 1rem;
   pointer-events: auto;
+  
 }
 
 .nowplaying-card:hover .nowplaying-overlay {
   opacity: 1;
+  
 }
 
 .nowplaying-info-container {
@@ -551,6 +557,7 @@
   .nowplaying-overlay {
     max-height: 350px;
     height: 100%;
+    
   }
   .nowplaying-info-title {
     font-size: 14px;
@@ -583,6 +590,8 @@
 
   .nowplaying-poster {
     height: 300px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+
   }
 
   .nowplaying-info-container {

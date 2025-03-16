@@ -203,6 +203,16 @@
     box-shadow: none !important;
 }
 
+.movie-detail-time-btn.disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+
+}
+
+.movie-detail-time-btn.disabled:hover {
+  transform: none;
+}
+
 .movie-detail-cinema-list-title {
     font-family: "Anton", sans-serif;
     font-size: 40px;
