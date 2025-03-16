@@ -1,11 +1,13 @@
 import React, { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import Header from "../Header/Header";
 import TrailerModal from "../Trailer/TrailerModal";
 import axios from "axios";
 import "./NowPlayingMovies.css";
 
 const NowPlayingMovies: React.FC = () => {
+  const navigate = useNavigate();
+  
   interface Movie {
     id: number;
     title: string;
@@ -89,7 +91,7 @@ const NowPlayingMovies: React.FC = () => {
       try {
         setIsLoading(true);
         setError(null);
-        const response = await axios.get("https://skystar.io.vn/api/movies", {
+        const response = await axios.get("http://localhost:8085/api/movies", {
           headers: {
             Accept: "application/json",
             "Content-Type": "application/json",
@@ -244,9 +246,11 @@ const NowPlayingMovies: React.FC = () => {
             <div
               key={index}
               className="nowplaying-card"
-              onClick={() =>
-                (window.location.href = `/movie-detail/${movie.id}`)
-              }
+              onClick={(e) => {
+                if (!(e.target as HTMLElement).closest('.nowplaying-trailer-button')) {
+                  navigate(`/movie/${movie.id}`);
+                }
+              }}
             >
               <div className="cursor-pointer">
                 <div className="nowplaying-poster-container">
@@ -257,7 +261,7 @@ const NowPlayingMovies: React.FC = () => {
                   />
                   <div className="nowplaying-overlay">
                     <div className="nowplaying-info-container">
-                      <Link to={`/movie-detail/${movie.id}`}>
+                      <Link to={`/movie/${movie.id}`}>
                         <h3 className="nowplaying-info-title1 hover:text-white">
                           {movie.title}
                         </h3>
@@ -348,7 +352,7 @@ const NowPlayingMovies: React.FC = () => {
                 </div>
               </div>
               <div className="nowplaying-title-wrapper">
-                <Link to={`/movie-detail/${movie.id}`}>
+                <Link to={`/movie/${movie.id}`}>
                   <h3 className="nowplaying-info-title hover:text-orange-500 cursor-pointer">
                     {movie.title}
                   </h3>
@@ -376,7 +380,7 @@ const NowPlayingMovies: React.FC = () => {
                   </span>
                 </div>
                 <Link
-                  to={`/movie-detail/${movie.id}`}
+                  to={`/movie/${movie.id}`}
                   className="nowplaying-book-ticket-button"
                   onClick={(e) => e.stopPropagation()}
                 >
@@ -457,11 +461,9 @@ const NowPlayingMovies: React.FC = () => {
         ))}
       </div>
       <button className="nowplaying-see-more-button">
-        <span className="nowplaying-see-more-text">
-          <Link to="/movie/showing" className="nowplaying-see-more-link">
-            XEM THÊM
-          </Link>
-        </span>
+        <Link to="/movie/showing" className="nowplaying-see-more-text nowplaying-see-more-link">
+          XEM THÊM
+        </Link>
         <div className="nowplaying-see-more-gradient" />
       </button>
     </div>

@@ -50,13 +50,14 @@ const Login = () => {
 
     if (activeTab === "login") {
       try {
-        // Clear previous errors
         setLoginError("");
 
         const response = await axios.post(
-          "https://skystar.io.vn/api/users/login",
+          "http://localhost:8085/api/users/login",
           {
+            username: identifier,
             email: identifier,
+            phoneNumber: identifier,
             password: password,
           }
         );
@@ -82,7 +83,7 @@ const Login = () => {
         if (axios.isAxiosError(error)) {
           setLoginError(
             error.response?.data?.message ||
-              "Tài khoản hoặc mật khẩu không đúng"
+              "Thông tin đăng nhập không đúng"
           );
         } else {
           setLoginError("Đăng nhập thất bại. Vui lòng thử lại.");
@@ -100,18 +101,22 @@ const Login = () => {
       }
 
       try {
+        const registrationData = {
+          email: identifier,
+          password: password,
+          fullName: fullName,
+          phoneNumber: phoneNumber,
+          username: username,
+          citizenId: cccd,
+          dateOfBirth: dob,
+          address: address,
+        };
+
+        console.log("Registration data being sent:", registrationData);
+
         const response = await axios.post(
-          "https://skystar.io.vn/api/users/register",
-          {
-            email: identifier,
-            password: password,
-            fullName: fullName,
-            phoneNumber: phoneNumber,
-            username: username,
-            citizenId: cccd,
-            dateOfBirth: dob,
-            address: address,
-          }
+          "http://localhost:8085/api/users/register",
+          registrationData
         );
 
         if (response.status === 200 || response.status === 201) {
@@ -131,10 +136,18 @@ const Login = () => {
         }
       } catch (error) {
         console.error("Registration error:", error);
-        setRegistrationError(
-          error.response?.data?.message ||
-            "Đăng ký thất bại. Vui lòng kiểm tra lại thông tin."
-        );
+        if (axios.isAxiosError(error)) {
+          if (error.response?.status === 400) {
+            setRegistrationError("Email đã tồn tại trong hệ thống!");
+          } else {
+            setRegistrationError(
+              error.response?.data?.message ||
+              "Đăng ký thất bại. Vui lòng kiểm tra lại thông tin."
+            );
+          }
+        } else {
+          setRegistrationError("Đăng ký thất bại. Vui lòng thử lại sau.");
+        }
       }
     }
   };
@@ -179,7 +192,7 @@ const Login = () => {
                 <span className="login-red">*</span>
               </label>
               <input
-                type="email"
+                type="text"
                 required
                 className="login-form-input"
                 placeholder="Tài khoản, Email hoặc số điện thoại"

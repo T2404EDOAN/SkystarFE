@@ -64,7 +64,7 @@ const BookTickets: React.FC = () => {
       console.log("Request params:", params);
 
       const response = await axios.get(
-        "https://skystar.io.vn/api/movies/filter",
+        "https://100.121.56.65:8085/api/movies/filter",
         {
           params,
         }

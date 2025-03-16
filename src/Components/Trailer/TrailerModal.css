@@ -2,7 +2,7 @@
   position: fixed;
   inset: 0;
   background-color: rgba(0, 0, 0, 0.9);
-  z-index: 50;
+  z-index: 99999; 
   display: flex;
   align-items: center;
   justify-content: center;
@@ -15,6 +15,7 @@
   max-width: 56rem;
   aspect-ratio: 16/9;
   animation: modalFadeIn 0.3s ease-out;
+  z-index: 99999;
 }
 
 .trailer-close-button {
@@ -34,7 +35,7 @@
 .trailer-close-button svg {
   width: 24px;
   height: 24px;
-  strokeWidth: 2.5px;
+  stroke-Width: 2.5px;
 }
 
 .trailer-close-button:hover {

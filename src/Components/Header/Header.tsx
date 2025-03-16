@@ -3,7 +3,7 @@ import { Link, useNavigate, useLocation } from "react-router-dom";
 import { useAuth } from "../../context/AuthContext";
 import "./Header.css";
 import { Input, Button, Dropdown, Menu, Typography, Row, Col } from "antd";
-import { SearchOutlined, DownOutlined } from "@ant-design/icons";
+import { SearchOutlined, DownOutlined, UserOutlined, LogoutOutlined, SettingOutlined } from "@ant-design/icons";
 import type { MenuProps, Avatar } from "antd";
 import axios from "axios";
 import { useMediaQuery } from "react-responsive";
@@ -85,7 +85,7 @@ const Header: React.FC = () => {
       try {
         setLoading(true);
         const response = await axios.get<{ content: Movie[] }>(
-          "https://skystar.io.vn/api/movies"
+          "https://100.121.56.65:8085/api/movies"
         );
         const uniqueTheaters = response.data.content.reduce(
           (acc: Theater[], movie) => {
@@ -119,16 +119,60 @@ const Header: React.FC = () => {
   }, []);
   const userMenuItems: MenuProps["items"] = [
     {
-      label: "Thông tin tài khoản",
+      label: (
+        <div style={{ padding: "8px 16px" }} className="menu-item">
+          <UserOutlined style={{ marginRight: 8 }} />
+          Thông tin tài khoản
+        </div>
+      ),
       key: "profile",
       onClick: handleProfileClick,
+      style: {
+        backgroundColor: "transparent",
+        color: "white",
+      },
+    },
+    // Add console.log to debug
+    ...(user?.role === 'ADMIN' || user?.role === 'admin' ? [{
+      label: (
+        <div style={{ padding: "8px 16px" }} className="menu-item">
+          <SettingOutlined style={{ marginRight: 8 }} />
+          Trang quản trị
+        </div>
+      ),
+      key: "admin",
+      onClick: () => {
+        console.log("Admin clicked");
+        navigate('/admin');
+      },
+      style: {
+        backgroundColor: "transparent",
+        color: "white",
+      },
+    }] : []),
+    {
+      type: "divider",
+      style: { backgroundColor: "rgba(255,255,255,0.1)" }
     },
     {
-      label: "Đăng xuất",
+      label: (
+        <div style={{ padding: "8px 16px" }} className="menu-item">
+          <LogoutOutlined style={{ marginRight: 8 }} />
+          Đăng xuất
+        </div>
+      ),
       key: "logout",
       onClick: handleLogout,
+      style: {
+        backgroundColor: "transparent",
+        color: "white",
+      },
     },
   ];
+
+  // Add this console.log to debug
+  console.log("User role:", user?.role);
+
   const handleClickOutside = (event) => {
     if (inputRef.current && !inputRef.current.contains(event.target)) {
       setShowSearch(false);
@@ -202,20 +246,23 @@ const Header: React.FC = () => {
             )} */}
             {/* {!isTabletOrMobile && ( */}
             <>
-              <Link to="/payment">
+              
                 <Button
                   type="primary"
                   style={{ backgroundColor: "#f3ea28", color: "black" }}
                   className="action-button"
                 >
+                  <Link to="/payment" className="action-button">
                   <img
                     src="https://cinestar.com.vn/assets/images/ic-ticket.svg"
                     alt="ticket"
                     className="w-5 h-5"
                   />
+
                   <span>ĐẶT VÉ NGAY</span>
+                  </Link>
                 </Button>
-              </Link>
+              
             </>
             {/* )} */}
           </div>
@@ -259,7 +306,21 @@ const Header: React.FC = () => {
               )}
             </div>
             {isAuthenticated ? (
-              <Dropdown menu={{ items: userMenuItems }} placement="bottomRight">
+              <Dropdown 
+                menu={{ 
+                  items: userMenuItems,
+                  style: {
+                    backgroundColor: "#0d0d1f",
+                    padding: "2px 0",
+                    border: "1px solid rgba(255,255,255,0.1)",
+                    borderRadius: "8px",
+                  }
+                }} 
+                placement="bottomRight"
+                overlayStyle={{
+                  minWidth: "200px"
+                }}
+              >
                 <div className="user-actions">
                   {user?.avatarUrl ? (
                     <img
@@ -298,11 +359,11 @@ const Header: React.FC = () => {
           <nav className="secondary-nav-content">
             <div className="secondary-nav-item">
               <div className="dropdown-content">
-                <Link
-                  to="/books-ticket"
+                <div
                   className={`dropdown-item1 ${
                     isActive("/books-ticket") ? "active" : ""
                   }`}
+                  style={{ pointerEvents: "none" }}
                 >
                   <Dropdown
                     overlay={
@@ -342,19 +403,23 @@ const Header: React.FC = () => {
                         </Row>
                       </Menu>
                     }
+                    trigger={['hover']}
                   >
-                    <Typography.Text
-                      style={{
-                        color: isActive("/books-ticket") ? "#f3ea28" : "white",
-                        cursor: "pointer",
-                        fontSize: 16,
-                      }}
-                      className="choose-theater-text"
-                    >
-                      Chọn rạp
-                    </Typography.Text>
+                    <div style={{ pointerEvents: "auto" }}>
+                      <Typography.Text
+                        style={{
+                          color: isActive("/books-ticket") ? "#f3ea28" : "white",
+                          cursor: "default",
+                          fontSize: 16,
+                          userSelect: "none"
+                        }}
+                        className="choose-theater-text"
+                      >
+                        Chọn rạp
+                      </Typography.Text>
+                    </div>
                   </Dropdown>
-                </Link>
+                </div>
               </div>
 
               <Link
@@ -362,6 +427,9 @@ const Header: React.FC = () => {
                 className={`secondary-nav-link ${
                   isActive("/showtimes") ? "active" : ""
                 }`}
+                style={{
+                  color: isActive("/showtimes") ? "#f3ea28" : "white"
+                }}
               >
                 Lịch chiếu
               </Link>
@@ -372,6 +440,9 @@ const Header: React.FC = () => {
                 className={`secondary-nav-link ${
                   isActive("/promotions") ? "active" : ""
                 }`}
+                style={{
+                  color: isActive("/promotions") ? "#f3ea28" : "white"
+                }}
               >
                 Khuyến mãi
               </Link>
@@ -380,6 +451,9 @@ const Header: React.FC = () => {
                 className={`secondary-nav-link ${
                   isActive("/thue-su-kien") ? "active" : ""
                 }`}
+                style={{
+                  color: isActive("/thue-su-kien") ? "#f3ea28" : "white"
+                }}
               >
                 Thuê sự kiện
               </Link>
@@ -388,6 +462,9 @@ const Header: React.FC = () => {
                 className={`secondary-nav-link ${
                   isActive("/entertaiment") ? "active" : ""
                 }`}
+                style={{
+                  color: isActive("/entertaiment") ? "#f3ea28" : "white"
+                }}
               >
                 Tất cả các giải trí
               </Link>
@@ -396,6 +473,9 @@ const Header: React.FC = () => {
                 className={`secondary-nav-link ${
                   isActive("/about") ? "active" : ""
                 }`}
+                style={{
+                  color: isActive("/about") ? "#f3ea28" : "white"
+                }}
                 id="about11"
               >
                 Giới thiệu

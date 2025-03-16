@@ -89,24 +89,32 @@ const MovieDetail = () => {
 
   useEffect(() => {
     const fetchMovieDetail = async () => {
+      const apiUrl = `http://localhost:8085/api/movies/${movieId}`;
+      console.log('Fetching from URL:', apiUrl);
+      
       try {
-        const response = await axios.get(
-          `https://skystar.io.vn/api/movies/${movieId}`
-        );
-        setMovieData(response.data);
-        const grouped = groupShowtimesByDate(response.data.showtimes);
-        setGroupedShowtimes(grouped);
+        const response = await axios.get(apiUrl);
+        console.log('API Response:', response.data);
+        
+        if (response.data) {
+          setMovieData(response.data);
+          const grouped = groupShowtimesByDate(response.data.showtimes);
+          setGroupedShowtimes(grouped);
 
-        // Set initial selected date to first available date
-        const availableDates = getNext5Days(response.data.showtimes);
-        if (availableDates.length > 0) {
-          setSelectedDate(availableDates[0].date);
+          const availableDates = getNext5Days(response.data.showtimes);
+          if (availableDates.length > 0) {
+            setSelectedDate(availableDates[0].date);
+          }
         }
-        console.ư;
         setLoading(false);
       } catch (error) {
-        console.error("Error fetching movie details:", error);
+        console.error("Error fetching movie details:", {
+          message: error.message,
+          response: error.response,
+          url: apiUrl
+        });
         setLoading(false);
+        alert(`Không thể tải thông tin phim. Lỗi: ${error.message}`);
       }
     };
 
@@ -118,7 +126,7 @@ const MovieDetail = () => {
   const fetchSeats = async (showtimeId) => {
     try {
       const response = await axios.get(
-        `https://skystar.io.vn/api/showtimes/${showtimeId}/seats`
+        `http://localhost:8085/api/showtimes/${showtimeId}/seats`
       );
       setAvailableSeats(response.data.content);
     } catch (error) {
@@ -127,22 +135,40 @@ const MovieDetail = () => {
   };
 
   const handleTimeSelection = async (cinema, time, showtimeId) => {
-    console.log("Selected Showtime ID:", showtimeId); // Debug log
+    console.log("Selected Showtime ID:", showtimeId);
     setSelectedTime(time);
     setSelectedCinema(cinema);
     setSelectedSeats([]);
     setSelectedShowtimeId(showtimeId);
 
-    // Fetch seats first
     await fetchSeats(showtimeId);
 
-    // Scroll after a longer delay to ensure content is rendered
     setTimeout(() => {
       seatsRef.current?.scrollIntoView({
         behavior: "smooth",
         block: "start",
       });
-    }, 300); // Increased delay to 300ms
+    }, 300);
+
+    const movieInfo = {
+      title: movieData.title,
+      roomName: cinema.showtimes.find(s => s.time === time)?.roomName,
+      cinemaName: cinema.name,
+      cinemaAddress: cinema.address,
+      showTime: `${time} - ${selectedDate}`,
+      selectedSeats: [],
+      showtimeId: showtimeId,
+      posterUrl: movieData.posterUrl,
+      backdropUrl: movieData.backdropUrl,
+      selectedProducts: [], // Add this to store products
+    };
+
+    // Store in localStorage
+    localStorage.setItem("currentBooking", JSON.stringify({
+      bookingId: null, // Will be updated after booking creation
+      amount: 0, // Will be updated with actual amount
+      movieInfo: movieInfo
+    }));
   };
 
   const handleTrailerClick = () => {
@@ -167,7 +193,7 @@ const MovieDetail = () => {
 
     try {
       if (selectedShowtimeId) {
-        const url = `https://skystar.io.vn/api/seats/${selectedShowtimeId}/hold`;
+        const url = `http://localhost:8085/api/seats/${selectedShowtimeId}/hold`;
         const requestData = {
           seatId: seat.id,
           // Add userId if user is logged in
@@ -346,7 +372,7 @@ const MovieDetail = () => {
                     alt="Age Restriction"
                     className="movie-detail-info-icon"
                   />
-                  {movieData.category.name}
+           
                 </li>
                 <li className="movie-detail-info-item">
                   <img
@@ -422,6 +448,8 @@ const MovieDetail = () => {
                 Đạo diễn: {movieData.director}
                 <br />
                 Diễn viên: {movieData.cast}
+                <br />
+                Khởi chiếu ngày : {movieData.releaseDate}
               </p>
             </div>
             <div>
@@ -600,6 +628,7 @@ const MovieDetail = () => {
             showtimeId={selectedShowtimeId}
             totalPrice={calculateTotalPrice()}
             selectedProducts={selectedProducts}
+            backdropUrl={movieData.backdropUrl || movieData.posterUrl}
             onConfirm={(movieInfo) => {
               console.log("Payment confirmed:", {
                 ...movieInfo,

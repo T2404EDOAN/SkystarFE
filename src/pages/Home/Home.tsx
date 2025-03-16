@@ -13,7 +13,6 @@ const Home: React.FC = () => {
       <Banner />
       <NowPlayingMovies />
       <CommingSoonMovies />
-
       <PromotionSection />
       <MembershipSection />
       <EntertainmentSection />

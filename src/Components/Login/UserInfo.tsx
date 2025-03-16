@@ -93,7 +93,7 @@ const UserInfo: React.FC = () => {
 
     try {
       const response = await axios.put(
-        `https://skystar.io.vn/api/users/${user.id}`,
+        `http://localhost:8085/api/users/${user.id}`,
         userFormData
       );
 
@@ -147,7 +147,7 @@ const UserInfo: React.FC = () => {
     try {
       // Verify mật khẩu cũ
       const verifyResponse = await axios.get(
-        `https://skystar.io.vn/api/users/${user.id}`
+        `http://localhost:8085/api/users/${user.id}`
       );
 
       // Kiểm tra mật khẩu cũ
@@ -161,7 +161,7 @@ const UserInfo: React.FC = () => {
 
       // Thay đổi mật khẩu
       const response = await axios.put(
-        `https://skystar.io.vn/api/users/${user.id}`,
+        `http://localhost:8085/api/users/${user.id}`,
         {
           ...verifyResponse.data,
           password: passwordFormData.newPassword,
@@ -197,7 +197,7 @@ const UserInfo: React.FC = () => {
     setLoadingHistory(true);
     try {
       const response = await axios.get(
-        `https://skystar.io.vn/api/bookings/${user.id}`
+        `https://100.121.56.65:8085/api/bookings/${user.id}`
       );
       setBookingHistory(response.data);
     } catch (error) {
@@ -313,7 +313,7 @@ const UserInfo: React.FC = () => {
           </div>
         );
       case "member":
-        return <div>Thông tin thành viên Cinestar</div>;
+        return <div>Thông tin thành viên Skystar</div>;
       case "history":
         return (
           <div className="user-info-section1">
@@ -406,7 +406,7 @@ const UserInfo: React.FC = () => {
                 className={activeTab === "member" ? "active" : ""}
                 onClick={() => setActiveTab("member")}
               >
-                Thành viên Cinestar
+                Thành viên Skystar 
               </li>
               <li
                 className={activeTab === "history" ? "active" : ""}

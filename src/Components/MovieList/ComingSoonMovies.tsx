@@ -89,7 +89,7 @@ const ComingSoonMovies: React.FC = () => {
       try {
         setIsLoading(true);
         setError(null);
-        const response = await axios.get("https://skystar.io.vn/api/movies", {
+        const response = await axios.get("http://localhost:8085/api/movies", {
           headers: {
             Accept: "application/json",
             "Content-Type": "application/json",
@@ -251,7 +251,7 @@ const ComingSoonMovies: React.FC = () => {
                   />
                   <div className="nowplaying-overlay">
                     <div className="nowplaying-info-container">
-                      <Link to={`/movie-detail/${movie.id}`}>
+                      <Link to={`/movie/${movie.id}`}>
                         <h3 className="nowplaying-info-title hover:text-orange-500">
                           {movie.title}
                         </h3>
@@ -342,7 +342,7 @@ const ComingSoonMovies: React.FC = () => {
                 </div>
               </div>
               <div className="nowplaying-title-wrapper">
-                <Link to={`/movie-detail/${movie.id}`}>
+                <Link to={`/movie/${movie.id}`}>
                   <h3 className="nowplaying-info-title hover:text-orange-500 cursor-pointer">
                     {movie.title}
                   </h3>
@@ -369,7 +369,7 @@ const ComingSoonMovies: React.FC = () => {
                   </span>
                 </div>
                 <Link
-                  to={`/movie-detail/${movie.id}`}
+                  to={`/movie/${movie.id}`}
                   className="nowplaying-book-ticket-button"
                 >
                   <span className="nowplaying-book-ticket-text">ĐẶT VÉ</span>

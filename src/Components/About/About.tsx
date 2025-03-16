@@ -47,14 +47,14 @@ const About = () => {
         <div className="text-overlay">
           <h1 className="title_about" style={{ fontFamily: "Anton, sans-serif" }}>HỆ THỐNG CỤM RẠP TRÊN TOÀN QUỐC</h1>
           <p>
-            Cinestar là một trong những hệ thống rạp chiếu phim được yêu thích
+            Skystar là một trong những hệ thống rạp chiếu phim được yêu thích
             nhất tại Việt Nam, cung cấp nhiều mô hình giải trí hợp dẫn bao gồm
             Các Cụm Rạp Chiếu Phim hiện đại, Nhà hát, Khu vui chơi trẻ em
             Kidzone, Bowling, Billiards, Games, Phòng Gym, Nhà Hàng, và Phố Bia
             CBbeer. Với mục tiêu trở thành điểm đến giải trí theo mô hình phức
-            hợp hiện đại nhất tại Việt Nam, Cinestar đang được biết đến là cụm
+            hợp hiện đại nhất tại Việt Nam, Skystar  đang được biết đến là cụm
             rạp ưu tú phim Việt, góp phần phát triển điện ảnh Việt. Không chỉ
-            chiếu các bộ phim bom tấn quốc tế, Cinestar còn đang thành công các
+            chiếu các bộ phim bom tấn quốc tế, Skystar còn đang thành công các
             nhà làm phim Việt Nam, đưa những tác phẩm điện ảnh đặc sắc của Việt
             Nam đến gần hơn với khán giả.
           </p>

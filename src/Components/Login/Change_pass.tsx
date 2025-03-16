@@ -17,7 +17,7 @@ const Change_pass = () => {
 
     try {
       const response = await axios.get(
-        `https://skystar.io.vn/api/users/searchEmail`,
+        `http://localhost:8085/api/users/searchEmail`,
         {
           params: { email },
         }

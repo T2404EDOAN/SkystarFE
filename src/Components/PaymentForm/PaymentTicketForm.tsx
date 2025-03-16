@@ -31,6 +31,7 @@ interface PaymentFormProps {
     price: number;
     category: string;
   }>;
+  backdropUrl?: string;
 }
 
 const PaymentTicketForm: React.FC<PaymentFormProps> = (props) => {
@@ -73,7 +74,7 @@ const PaymentTicketForm: React.FC<PaymentFormProps> = (props) => {
     const checkSeatsStatus = async () => {
       try {
         const response = await axios.get(
-          `https://skystar.io.vn/api/seats/${props.showtimeId}/check-seats`
+          `http://localhost:8085/api/seats/${props.showtimeId}/check-seats`
         );
         const unavailableSeats = response.data;
 
@@ -121,6 +122,10 @@ const PaymentTicketForm: React.FC<PaymentFormProps> = (props) => {
   };
 
   const handleProceedToPayment = () => {
+    const seatNumbers = props.selectedSeats.map(seat => seat.seatNumber).join(", ");
+    const seatType = props.selectedSeats[0]?.seatType || "Standard";
+    const seatCount = props.selectedSeats.length;
+
     navigate("/payment", {
       state: {
         title: props.title,
@@ -133,7 +138,12 @@ const PaymentTicketForm: React.FC<PaymentFormProps> = (props) => {
         movieType: "Hành động",
         showtimeId: props.showtimeId,
         selectedProducts: props.selectedProducts,
-        timeRemaining: timeRemaining, // Add this line
+        timeRemaining: timeRemaining,
+        seatNumbers: seatNumbers,
+        seatType: seatType,
+        seatCount: seatCount,
+        holdExpirationTime: formatTime(timeRemaining),
+        backdropUrl: props.backdropUrl
       },
     });
   };

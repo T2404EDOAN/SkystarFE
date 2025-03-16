@@ -58,7 +58,7 @@ const NowMovieFull: React.FC = () => {
       try {
         setIsLoading(true);
         setError(null);
-        const response = await axios.get("https://skystar.io.vn/api/movies", {
+        const response = await axios.get("http://localhost:8085/api/movies", {
           headers: {
             Accept: "application/json",
             "Content-Type": "application/json",
@@ -169,7 +169,7 @@ const NowMovieFull: React.FC = () => {
                   />
                   <div className="nowmoviefull-overlay">
                     <div className="nowmoviefull-info-container">
-                      <Link to={`/movie-detail/${movie.id}`}>
+                      <Link to={`/movie/${movie.id}`}>
                         <h3 className="nowmoviefull-info-title hover:text-orange-500">
                           {movie.title}
                         </h3>
@@ -258,34 +258,35 @@ const NowMovieFull: React.FC = () => {
                 </div>
               </div>
               <div className="nowmoviefull-title-wrapper">
-                <Link to={`/movie-detail/${movie.id}`}>
+                <Link to={`/movie/${movie.id}`}>
                   <h3 className="nowmoviefull-info-title hover:text-orange-500 cursor-pointer">
                     {movie.title}
                   </h3>
                 </Link>
               </div>
               <div className="nowmoviefull-actions">
-                <div
-                  className="nowmoviefull-trailer-button"
-                  onClick={() => handleTrailerClick(movie.trailerUrl || "")}
+              <div
+                  className="nowplaying-trailer-button"
+                  onClick={(e) => {
+                    e.stopPropagation(); // Ngăn sự kiện click lan truyền lên card
+                    handleTrailerClick(movie.trailerUrl || "");
+                  }}
                 >
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    width="24"
-                    height="24"
-                    fill="#FFA500"
-                    className="bi bi-play-circle dark:text-white mr-2"
-                    viewBox="0 0 16 16"
-                  >
-                    <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14m0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16" />
-                    <path d="M6.271 5.055a.5.5 0 0 1 .52.038l3.5 2.5a.5.5 0 0 1 0 .814l-3.5 2.5A.5.5 0 0 1 6 10.5v-5a.5.5 0 0 1 .271-.445" />
-                  </svg>
+                  <div className="nowplaying-trailer-icon-circle">
+                    <img
+                      src="https://cinestar.com.vn/assets/images/ic-play-circle-red.svg"
+                      alt="Play Trailer"
+                      width="23"
+                      height="23"
+                      className="mr-2"
+                    />
+                  </div>
                   <span style={{ marginLeft: "0.5rem", fontSize: "14px" }}>
                     Xem Trailer
                   </span>
                 </div>
                 <Link
-                  to={`/movie-detail/${movie.id}`}
+                  to={`/movie/${movie.id}`}
                   className="nowmoviefull-book-ticket-button"
                 >
                   <span className="nowmoviefull-book-ticket-text">ĐẶT VÉ</span>

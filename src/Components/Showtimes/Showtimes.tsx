@@ -14,7 +14,7 @@ interface Movie {
   duration: number;
   description: string;
   shortDescription: string;
-  category: {
+  category?: {    // Make category optional
     id: number;
     name: string;
     description: string;
@@ -77,7 +77,7 @@ const Showtimes: React.FC = () => {
       try {
         setLoading(true);
         const moviesResponse = await axios.get(
-          "https://skystar.io.vn/api/movies"
+          "http://localhost:8085/api/movies"
         );
         setMovies(moviesResponse.data.content);
 
@@ -128,7 +128,7 @@ const Showtimes: React.FC = () => {
       };
       console.log("Params sent to backend:", params);
       const response = await axios.get(
-        "http://localhost:8081/api/movies/search",
+        "http://localhost:8085/api/movies/search",
         {
           params,
         }
@@ -269,25 +269,23 @@ const Showtimes: React.FC = () => {
                     <ul>
                       <li>
                         <FaTag size={24} />
-                        <p className="text1">Genre: {movie.category.name}</p>
+                        <p className="text1">Genre: {movie.category?.name || 'N/A'}</p>
                       </li>
                       <li>
                         <FaClock size={24} />
-                        <p className="text1">Duration: {movie.duration} min</p>
+                        <p className="text1">Duration: {movie.duration || 'N/A'} min</p>
                       </li>
                       <li>
                         <FaGlobe size={24} />
-                        <p className="text1">
-                          Country: {movie.productionCountry}
-                        </p>
+                        <p className="text1">Country: {movie.productionCountry || 'N/A'}</p>
                       </li>
                       <li>
                         <FaComment size={24} />
-                        <p className="text1">Language: {movie.language}</p>
+                        <p className="text1">Language: {movie.language || 'N/A'}</p>
                       </li>
                       <li>
                         <FaUserPlus size={24} />
-                        <p className="text1">Age Rating: {movie.ageRating}</p>
+                        <p className="text1">Age Rating: {movie.ageRating || 'N/A'}</p>
                       </li>
                     </ul>
                   </div>

@@ -4,6 +4,7 @@
   margin: 2.5rem auto 0;
   color: white;
   border-radius: 0.5rem;
+  overflow: hidden; /* Thêm dòng này */
 }
 
 .nowplaying-title1 {
@@ -226,13 +227,16 @@
   align-items: center;
   padding: 0.5rem 0;
   gap: 10px;
+
 }
 
 .nowplaying-trailer-button {
+  flex: 0 0 40%; /* Chiếm 40% không gian */
   display: flex;
   align-items: center;
-  justify-content: center;
+  justify-content: flex-start; /* Đổi thành flex-start */
   position: relative;
+  min-width: 0; /* Thêm min-width */
 }
 
 .nowplaying-trailer-button:hover {
@@ -256,10 +260,11 @@
 }
 
 .nowplaying-book-ticket-button {
+
   background-color: #f3ea28;
   color: black;
   height: 40px;
-  width: 100%;
+  width: 150px; /* Cố định width 150px */
   border-radius: 0.375rem;
   overflow: hidden;
   position: relative;
@@ -267,6 +272,8 @@
   align-items: center;
   justify-content: center;
   font-family: "Anton", sans-serif;
+  min-width: 0; /* Thêm min-width */
+
 }
 
 .nowplaying-book-ticket-text {
@@ -478,11 +485,34 @@
   display: inline-flex;
   justify-content: center;
   align-items: center;
-  width: 30px;
-  height: 30px;
+  width: 25px;
+  height: 25px;
   border-radius: 50%;
-
   border: 1px solid white;
+}
+
+.global-overlay {
+  position: fixed;
+  inset: 0;
+  background-color: rgba(0, 0, 0, 0.9);
+  z-index: 9998;
+}
+
+.global-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, 0.9);
+  z-index: 500;
+}
+
+.trailer-modal-container {
+  z-index: 999;
+  position: relative;
 }
 
 @keyframes spin {
@@ -566,13 +596,21 @@
   }
 
   .nowplaying-actions {
-    flex-direction: column;
+    flex-direction: row; /* Giữ nguyên là row thay vì column */
     gap: 6px;
+    padding: 0.5rem;
+    max-width: 100%;
   }
 
   .nowplaying-book-ticket-button {
-    width: 100%;
+    width: 150px; /* Giữ nguyên width 150px cho mobile */
     font-size: 12px;
+    min-width: 0;
+  }
+
+  .nowplaying-trailer-button {
+    flex: 0 0 40%;
+    min-width: 0;
   }
 
   .nowplaying-title {
