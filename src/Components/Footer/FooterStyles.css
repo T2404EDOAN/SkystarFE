@@ -190,7 +190,12 @@ footer {
   }
 
   .footer-social-icons {
+    padding-top: 20px;
     justify-content: center;
+  }
+  .footer-link-column h4 {
+    font-weight: 600;
+    padding-top: 15px;
   }
 }
 
@@ -206,6 +211,7 @@ footer {
 
   .footer-social-icons {
     justify-content: center;
+    margin-top: 50px;
   }
 
   .footer-bottom {
@@ -216,6 +222,9 @@ footer {
   .footer-bottom-links {
     flex-direction: column;
     gap: 8px;
+  }
+  .footer-title1 {
+    padding-bottom: 15px !important;
   }
 }
 

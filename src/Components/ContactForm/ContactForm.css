@@ -2,6 +2,7 @@
   display: flex;
   justify-content: center;
   margin-top: 50px;
+  margin-bottom: 330px;
 
   padding: 0 1rem;
 }
@@ -172,16 +173,16 @@
   transform: translateX(0);
 }
 
-@media (min-width: 768px) {
+/* @media (min-width: 768px) {
   .contact-container {
     margin-top: 100px;
-    margin-bottom: 100px;
+    margin-bottom: 400px;
   }
 
   .contact-wrapper {
     flex-direction: row;
     gap: 2rem;
-    justify-content: space-between; /* Add this line */
+    justify-content: space-between; 
   }
 
   .contact-title {
@@ -217,9 +218,13 @@
   .submit-button {
     width: 230px;
   }
-}
+} */
 
 @media (max-width: 1024px) {
+  .contact-container {
+    margin-top: 100px;
+    margin-bottom: 400px;
+  }
   .contact-wrapper {
     flex-direction: column;
     gap: 1rem;
