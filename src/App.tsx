@@ -34,6 +34,7 @@ import NowMovieFull from "./Components/MovieList/NowMovieFull";
 import ComingMovieFull from "./Components/MovieList/ComingMovieFull";
 import BookTickets from "./Components/BookTickets/BookTickets";
 import SearchResults from "./Components/SearchResults/SearchResults";
+import Movie from "./pages/movie/movie";
 // ...other imports
 
 function App() {
@@ -69,6 +70,7 @@ function App() {
             <Route path="/movie/comings" element={<ComingMovieFull />} />
             <Route path="/books-ticket" element={<BookTickets />} />
             <Route path="/search" element={<SearchResults />} />
+            <Route path="/movie" element={<Movie />} />
           </Routes>
         </MainLayout>
       </BrowserRouter>

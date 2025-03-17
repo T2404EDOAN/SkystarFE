@@ -105,7 +105,6 @@ const Header: React.FC = () => {
           },
           []
         );
-        console.log("Fetched theaters:", uniqueTheaters);
         setTheaters(uniqueTheaters);
       } catch (err) {
         console.error("Error fetching theaters:", err);
@@ -170,8 +169,6 @@ const Header: React.FC = () => {
     },
   ];
 
-  // Add this console.log to debug
-  console.log("User role:", user?.role);
 
   const handleClickOutside = (event) => {
     if (inputRef.current && !inputRef.current.contains(event.target)) {
@@ -252,7 +249,7 @@ const Header: React.FC = () => {
                   style={{ backgroundColor: "#f3ea28", color: "black" }}
                   className="action-button"
                 >
-                  <Link to="/payment" className="action-button">
+                  <Link to="/movie" className="action-button">
                   <img
                     src="https://cinestar.com.vn/assets/images/ic-ticket.svg"
                     alt="ticket"
