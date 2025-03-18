@@ -77,7 +77,7 @@ const Showtimes: React.FC = () => {
       try {
         setLoading(true);
         const moviesResponse = await axios.get(
-          "http://localhost:8085/api/movies"
+          "http://54.83.174.210:8085/api/movies"
         );
         setMovies(moviesResponse.data.content);
 
@@ -128,7 +128,7 @@ const Showtimes: React.FC = () => {
       };
       console.log("Params sent to backend:", params);
       const response = await axios.get(
-        "http://localhost:8085/api/movies/search",
+        "http://54.83.174.210:8085/api/movies/search",
         {
           params,
         }

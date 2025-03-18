@@ -67,7 +67,7 @@ const BookTickets: React.FC = () => {
       console.log("Request params:", params);
 
       const response = await axios.get(
-        "http://localhost:8085/api/movies/filter",
+        "http://54.83.174.210:8085/api/movies/filter",
         {
           params,
         }
