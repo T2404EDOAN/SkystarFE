@@ -8,7 +8,7 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import axios from "axios";
 import { Tabs } from "antd"; // Import Tabs from antd
-import { useNavigate } from "react-router-dom";  // Thêm import này
+import { useNavigate } from "react-router-dom"; // Thêm import này
 
 import "./BookTickets.css"; // Import the new CSS file
 import { useAuth } from "../../context/AuthContext";
@@ -17,6 +17,7 @@ interface TabProps {
   cinema?: {
     name: string;
     address: string;
+    facilities: string;
   };
 }
 
@@ -67,7 +68,7 @@ const BookTickets: React.FC = () => {
       console.log("Request params:", params);
 
       const response = await axios.get(
-        "http://localhost:8085/api/movies/filter",
+        "http://localhost:8081/api/movies/filter",
         {
           params,
         }
@@ -100,7 +101,7 @@ const BookTickets: React.FC = () => {
   };
 
   const isShowtimePassed = (showDate: string, showTime: string) => {
-    const [hours, minutes] = showTime.split(':');
+    const [hours, minutes] = showTime.split(":");
     const showtimeDate = new Date(showDate);
     showtimeDate.setHours(parseInt(hours), parseInt(minutes));
     return new Date() > showtimeDate;
@@ -108,12 +109,12 @@ const BookTickets: React.FC = () => {
 
   const groupShowtimesByDate = (showtimes: any[]) => {
     const now = new Date();
-    
+
     // Lọc bỏ các suất chiếu đã qua
-    const validShowtimes = showtimes.filter(showtime => 
-      !isShowtimePassed(showtime.showDate, showtime.showTime)
+    const validShowtimes = showtimes.filter(
+      (showtime) => !isShowtimePassed(showtime.showDate, showtime.showTime)
     );
-  
+
     return validShowtimes.reduce((acc, showtime) => {
       const date = new Date(showtime.showDate).toLocaleDateString("vi-VN", {
         weekday: "long",
@@ -121,11 +122,11 @@ const BookTickets: React.FC = () => {
         month: "numeric",
         day: "numeric",
       });
-  
+
       if (!acc[date]) {
         acc[date] = [];
       }
-  
+
       acc[date].push(showtime);
       acc[date].sort((a, b) => a.showTime.localeCompare(b.showTime));
       return acc;
@@ -137,8 +138,8 @@ const BookTickets: React.FC = () => {
   };
 
   const handleShowtimeClick = (movie: any, showtime: any) => {
-    navigate(`/movie/${movie.id}`, { 
-      state: { 
+    navigate(`/movie/${movie.id}`, {
+      state: {
         selectedShowtimeId: showtime.id,
         selectedTheaterName: showtime.theatresName,
         selectedDate: showtime.showDate,
@@ -146,15 +147,18 @@ const BookTickets: React.FC = () => {
         selectedTheater: {
           name: showtime.theatresName,
           address: showtime.theaterAddress,
-          showtimes: [{
-            id: showtime.id,
-            time: showtime.showTime,
-            roomName: showtime.roomName,
-            roomId: showtime.roomId
-          }]
+          facilities: showtime.theaterFacilities,
+          showtimes: [
+            {
+              id: showtime.id,
+              time: showtime.showTime,
+              roomName: showtime.roomName,
+              roomId: showtime.roomId,
+            },
+          ],
         },
-        autoSelect: true
-      } 
+        autoSelect: true,
+      },
     });
   };
 
@@ -166,7 +170,7 @@ const BookTickets: React.FC = () => {
           {/* Phần ảnh bên trái */}
           <div className="header-image">
             <img
-              src="path/to/your/image.jpg"
+              src={selectedTheater?.facilities}
               alt="Cinema Image"
               className="header-image-img"
             />
@@ -175,7 +179,9 @@ const BookTickets: React.FC = () => {
           {/* Phần thông tin bên phải */}
           <div className="header-info">
             <div className="header-info-content">
-              <h1 className="header-title">{selectedTheater?.name || 'Chọn rạp chiếu'}</h1>
+              <h1 className="header-title">
+                {selectedTheater?.name || "Chọn rạp chiếu"}
+              </h1>
               <div className="header-address">
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
@@ -197,7 +203,9 @@ const BookTickets: React.FC = () => {
                     d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"
                   />
                 </svg>
-                <span>{selectedTheater?.address || 'Địa chỉ sẽ hiển thị ở đây'}</span>
+                <span>
+                  {selectedTheater?.address || "Địa chỉ sẽ hiển thị ở đây"}
+                </span>
               </div>
             </div>
           </div>
@@ -213,7 +221,8 @@ const BookTickets: React.FC = () => {
             tab={
               <span
                 style={{
-                  color: activeTab === "dangChieu" ? "#f3ea28" : "white", fontFamily: "Anton"
+                  color: activeTab === "dangChieu" ? "#f3ea28" : "white",
+                  fontFamily: "Anton",
                 }}
               >
                 PHIM ĐANG CHIẾU
@@ -221,16 +230,16 @@ const BookTickets: React.FC = () => {
             }
             key="dangChieu"
           >
-            <div className="tab-title">PHIM ĐANG CHIẾU</div>
+            <div className="tab-title">PHIM ĐANG CHIẾU </div>
             {filteredMovies.length > 0 ? (
               <div className="movie-grid">
                 {filteredMovies.map((movie) => (
                   <div key={movie.id} className="movie-card">
                     {/* Cột bên trái: Ảnh */}
-                    <div 
-                      className="movie-poster" 
+                    <div
+                      className="movie-poster"
                       onClick={() => handlePosterClick(movie.id)}
-                      style={{ cursor: 'pointer' }}
+                      style={{ cursor: "pointer" }}
                     >
                       <img
                         src={movie.posterUrl}
@@ -360,7 +369,9 @@ const BookTickets: React.FC = () => {
                                     <span
                                       key={showtime.id}
                                       className="movie-schedule-session-time"
-                                      onClick={() => handleShowtimeClick(movie, showtime)}
+                                      onClick={() =>
+                                        handleShowtimeClick(movie, showtime)
+                                      }
                                     >
                                       {showtime.showTime}
                                     </span>
@@ -385,7 +396,8 @@ const BookTickets: React.FC = () => {
             tab={
               <span
                 style={{
-                  color: activeTab === "sapChieu" ? "#f3ea28" : "white",fontFamily: "Anton"
+                  color: activeTab === "sapChieu" ? "#f3ea28" : "white",
+                  fontFamily: "Anton",
                 }}
               >
                 PHIM SẮP CHIẾU
@@ -398,10 +410,10 @@ const BookTickets: React.FC = () => {
               <div className="movie-grid">
                 {filteredMovies.map((movie) => (
                   <div key={movie.id} className="movie-card">
-                    <div 
-                      className="movie-poster" 
+                    <div
+                      className="movie-poster"
                       onClick={() => handlePosterClick(movie.id)}
-                      style={{ cursor: 'pointer' }}
+                      style={{ cursor: "pointer" }}
                     >
                       <img
                         src={movie.posterUrl}
@@ -526,7 +538,9 @@ const BookTickets: React.FC = () => {
                                     <span
                                       key={showtime.id}
                                       className="movie-schedule-session-time"
-                                      onClick={() => handleShowtimeClick(movie, showtime)}
+                                      onClick={() =>
+                                        handleShowtimeClick(movie, showtime)
+                                      }
                                     >
                                       {showtime.showTime}
                                     </span>
@@ -550,7 +564,10 @@ const BookTickets: React.FC = () => {
           <TabPane
             tab={
               <span
-                style={{ color: activeTab === "dacBiet" ? "#f3ea28" : "white",fontFamily: "Anton" }}
+                style={{
+                  color: activeTab === "dacBiet" ? "#f3ea28" : "white",
+                  fontFamily: "Anton",
+                }}
               >
                 SUẤT CHIẾU ĐẶC BIỆT
               </span>
@@ -571,7 +588,10 @@ const BookTickets: React.FC = () => {
           <TabPane
             tab={
               <span
-                style={{ color: activeTab === "bangGia" ? "#f3ea28" : "white",fontFamily: "Anton" }}
+                style={{
+                  color: activeTab === "bangGia" ? "#f3ea28" : "white",
+                  fontFamily: "Anton",
+                }}
               >
                 BẢNG GIÁ VÉ
               </span>
