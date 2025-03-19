@@ -53,7 +53,7 @@ const Login = () => {
         setLoginError("");
 
         const response = await axios.post(
-          "http://54.83.174.210:8085/api/users/login",
+          "http://localhost:8081/api/users/login",
           {
             username: identifier,
             email: identifier,
@@ -82,8 +82,7 @@ const Login = () => {
         console.error("Login error:", error);
         if (axios.isAxiosError(error)) {
           setLoginError(
-            error.response?.data?.message ||
-              "Thông tin đăng nhập không đúng"
+            error.response?.data?.message || "Thông tin đăng nhập không đúng"
           );
         } else {
           setLoginError("Đăng nhập thất bại. Vui lòng thử lại.");
@@ -142,7 +141,7 @@ const Login = () => {
           } else {
             setRegistrationError(
               error.response?.data?.message ||
-              "Đăng ký thất bại. Vui lòng kiểm tra lại thông tin."
+                "Đăng ký thất bại. Vui lòng kiểm tra lại thông tin."
             );
           }
         } else {

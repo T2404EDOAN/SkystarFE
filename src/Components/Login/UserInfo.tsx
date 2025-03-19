@@ -11,6 +11,7 @@ interface UserFormData {
   dateOfBirth: string;
   phoneNumber: string;
   email: string;
+  lastLogin: number | null; // Add lastLogin
 }
 
 interface PasswordFormData {
@@ -42,6 +43,16 @@ interface BookingHistory {
   createdAt: string;
 }
 
+interface User {
+  id: number;
+  username: string;
+  email: string;
+  fullName: string;
+  phoneNumber: string;
+  lastLogin: number;
+  // ...other properties
+}
+
 const UserInfo: React.FC = () => {
   const { user, isAuthenticated, updateUser } = useAuth();
   const navigate = useNavigate();
@@ -54,6 +65,7 @@ const UserInfo: React.FC = () => {
     dateOfBirth: user?.dateOfBirth || "",
     phoneNumber: user?.phoneNumber || "",
     email: user?.email || "",
+    lastLogin: user?.lastLogin || null, // Add lastLogin
   });
 
   const [passwordFormData, setPasswordFormData] = useState<PasswordFormData>({
@@ -68,6 +80,12 @@ const UserInfo: React.FC = () => {
       navigate("/login");
     }
   }, [isAuthenticated, navigate]);
+
+  React.useEffect(() => {
+    // Debug log to check user data
+    console.log("User data:", user);
+    console.log("Last login value:", user?.lastLogin);
+  }, [user]);
 
   if (!user) {
     return null;
@@ -112,6 +130,7 @@ const UserInfo: React.FC = () => {
           dateOfBirth: userFormData.dateOfBirth,
           phoneNumber: userFormData.phoneNumber,
           email: userFormData.email,
+          lastLogin: userFormData.lastLogin, // Add lastLogin
         });
 
         setMessage({
@@ -147,7 +166,7 @@ const UserInfo: React.FC = () => {
     try {
       // Verify mật khẩu cũ
       const verifyResponse = await axios.get(
-        `http://54.83.174.210:8085/api/users/${user.id}`
+        `http://localhost:8081/api/users/${user.id}`
       );
 
       // Kiểm tra mật khẩu cũ
@@ -211,6 +230,17 @@ const UserInfo: React.FC = () => {
       fetchBookingHistory();
     }
   }, [activeTab]);
+
+  const formatPoints = (points: number | null | undefined) => {
+    if (!points) return 0;
+    return Math.floor(points);
+  };
+
+  const calculateProgress = (points: number | null | undefined) => {
+    const currentPoints = points || 0;
+    const targetPoints = 10000;
+    return `${formatPoints(currentPoints)}/${targetPoints}`;
+  };
 
   const renderTabContent = () => {
     switch (activeTab) {
@@ -358,6 +388,38 @@ const UserInfo: React.FC = () => {
     }
   };
 
+  const renderCFriends = () => (
+    <div className="c-friends">
+      <h3>C'Friends</h3>
+      <div className="tich-diem-c-friends">
+        <span>{calculateProgress(user?.lastLogin)}</span>
+        <div
+          className="points-progress"
+          style={{
+            width: "100%",
+            height: "8px",
+            backgroundColor: "#eee",
+            borderRadius: "4px",
+            overflow: "hidden",
+          }}
+        >
+          <div
+            style={{
+              width: `${((user?.lastLogin || 0) / 10000) * 100}%`,
+              height: "100%",
+              backgroundColor: "#007bff",
+              transition: "width 0.3s ease",
+            }}
+          />
+        </div>
+      </div>
+      {/* Debug display */}
+      <div style={{ fontSize: "12px", marginTop: "5px", color: "#fff" }}>
+        Points: {user?.lastLogin || 0}
+      </div>
+    </div>
+  );
+
   return (
     <div className="container-info">
       <div className="main-conten-info-user">
@@ -387,12 +449,7 @@ const UserInfo: React.FC = () => {
               <span>Thay đổi ảnh đại diện</span>
             </div>
           </div>
-          <div className="c-friends">
-            <h3>C'Friends</h3>
-            <div className="tich-diem-c-friends">
-              <span>0/10K</span>
-            </div>
-          </div>
+          {renderCFriends()}
           <div className="thong-tin-khach-hang">
             <h3>Thông tin khách hàng</h3>
             <ul>
@@ -406,7 +463,7 @@ const UserInfo: React.FC = () => {
                 className={activeTab === "member" ? "active" : ""}
                 onClick={() => setActiveTab("member")}
               >
-                Thành viên Skystar 
+                Thành viên Skystar
               </li>
               <li
                 className={activeTab === "history" ? "active" : ""}
