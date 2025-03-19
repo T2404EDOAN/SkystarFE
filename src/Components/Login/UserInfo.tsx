@@ -93,7 +93,7 @@ const UserInfo: React.FC = () => {
 
     try {
       const response = await axios.put(
-        `http://localhost:8085/api/users/${user.id}`,
+        `http://54.83.174.210:8085/api/users/${user.id}`,
         userFormData
       );
 
@@ -147,7 +147,7 @@ const UserInfo: React.FC = () => {
     try {
       // Verify mật khẩu cũ
       const verifyResponse = await axios.get(
-        `http://localhost:8085/api/users/${user.id}`
+        `http://54.83.174.210:8085/api/users/${user.id}`
       );
 
       // Kiểm tra mật khẩu cũ
@@ -161,7 +161,7 @@ const UserInfo: React.FC = () => {
 
       // Thay đổi mật khẩu
       const response = await axios.put(
-        `http://localhost:8085/api/users/${user.id}`,
+        `http://54.83.174.210:8085/api/users/${user.id}`,
         {
           ...verifyResponse.data,
           password: passwordFormData.newPassword,
@@ -197,7 +197,7 @@ const UserInfo: React.FC = () => {
     setLoadingHistory(true);
     try {
       const response = await axios.get(
-        `https://100.121.56.65:8085/api/bookings/${user.id}`
+        `https://54.83.174.210:8085/api/bookings/${user.id}`
       );
       setBookingHistory(response.data);
     } catch (error) {

@@ -185,7 +185,7 @@ const PaymentFormDetail = () => {
       };
   
       const bookingResponse = await axios.post(
-        "http://localhost:8085/api/bookings/create",
+        "http://54.83.174.210:8085/api/bookings/create",
         bookingData
       );
      
@@ -233,7 +233,7 @@ const PaymentFormDetail = () => {
       };
 
       const response = await axios.post(
-        "http://localhost:8085/api/payments/momo",
+        "http://54.83.174.210:8085/api/payments/momo",
         paymentData
       );
 

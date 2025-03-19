@@ -89,7 +89,7 @@ const MovieDetail = () => {
 
   useEffect(() => {
     const fetchMovieDetail = async () => {
-      const apiUrl = `http://localhost:8085/api/movies/${movieId}`;
+      const apiUrl = `http://54.83.174.210:8085/api/movies/${movieId}`;
       console.log('Fetching from URL:', apiUrl);
       
       try {
@@ -126,7 +126,7 @@ const MovieDetail = () => {
   const fetchSeats = async (showtimeId) => {
     try {
       const response = await axios.get(
-        `http://localhost:8085/api/showtimes/${showtimeId}/seats`
+        `http://54.83.174.210:8085/api/showtimes/${showtimeId}/seats`
       );
       setAvailableSeats(response.data.content);
     } catch (error) {
@@ -193,7 +193,7 @@ const MovieDetail = () => {
 
     try {
       if (selectedShowtimeId) {
-        const url = `http://localhost:8085/api/seats/${selectedShowtimeId}/hold`;
+        const url = `http://54.83.174.210:8085/api/seats/${selectedShowtimeId}/hold`;
         const requestData = {
           seatId: seat.id,
         };

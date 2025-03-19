@@ -8,8 +8,8 @@ export default defineConfig({
   server: {
     port: 5173, // Cổng mặc định
     https: {
-      key: fs.readFileSync(path.resolve(__dirname, 'localhost-key.pem')),
-      cert: fs.readFileSync(path.resolve(__dirname, 'localhost.pem')),
+      key: fs.readFileSync(path.resolve(__dirname, '54.83.174.210-key.pem')),
+      cert: fs.readFileSync(path.resolve(__dirname, '54.83.174.210.pem')),
     }, // Bật HTTPS nếu cần
     
   },

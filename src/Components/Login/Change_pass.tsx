@@ -17,7 +17,7 @@ const Change_pass = () => {
 
     try {
       const response = await axios.get(
-        `http://localhost:8085/api/users/searchEmail`,
+        `http://54.83.174.210:8085/api/users/searchEmail`,
         {
           params: { email },
         }

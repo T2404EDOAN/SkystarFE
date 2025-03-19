@@ -105,7 +105,7 @@ const SearchResults: React.FC = () => {
 
         console.log("Search params:", params);
         const response = await axios.get(
-          "http://localhost:8085/api/movies/search",
+          "http://54.83.174.210:8085/api/movies/search",
           {
             params,
           }

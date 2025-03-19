@@ -53,7 +53,7 @@ const Login = () => {
         setLoginError("");
 
         const response = await axios.post(
-          "http://localhost:8085/api/users/login",
+          "http://54.83.174.210:8085/api/users/login",
           {
             username: identifier,
             email: identifier,
@@ -115,7 +115,7 @@ const Login = () => {
         console.log("Registration data being sent:", registrationData);
 
         const response = await axios.post(
-          "http://localhost:8085/api/users/register",
+          "http://54.83.174.210:8085/api/users/register",
           registrationData
         );
 
