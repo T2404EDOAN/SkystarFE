@@ -3,7 +3,13 @@ import { Link, useNavigate, useLocation } from "react-router-dom";
 import { useAuth } from "../../context/AuthContext";
 import "./Header.css";
 import { Input, Button, Dropdown, Menu, Typography, Row, Col } from "antd";
-import { SearchOutlined, DownOutlined, UserOutlined, LogoutOutlined, SettingOutlined } from "@ant-design/icons";
+import {
+  SearchOutlined,
+  DownOutlined,
+  UserOutlined,
+  LogoutOutlined,
+  SettingOutlined,
+} from "@ant-design/icons";
 import type { MenuProps, Avatar } from "antd";
 import axios from "axios";
 import { useMediaQuery } from "react-responsive";
@@ -132,26 +138,36 @@ const Header: React.FC = () => {
       },
     },
     // Add console.log to debug
-    ...(user?.role === 'ADMIN' || user?.role === 'admin' ? [{
-      label: (
-        <div style={{ padding: "8px 16px" }} className="menu-item">
-          <SettingOutlined style={{ marginRight: 8 }} />
-          Trang quản trị
-        </div>
-      ),
-      key: "admin",
-      onClick: () => {
-        console.log("Admin clicked");
-        navigate('/admin');
-      },
-      style: {
-        backgroundColor: "transparent",
-        color: "white",
-      },
-    }] : []),
+    ...(user?.role === "ADMIN" || user?.role === "admin"
+      ? [
+          {
+            label: (
+              <a
+                href="https://admin.skystar.io.vn/"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                <div style={{ padding: "8px 16px" }} className="menu-item">
+                  <SettingOutlined style={{ marginRight: 8 }} />
+                  Trang quản trị
+                </div>
+              </a>
+            ),
+            key: "admin",
+            onClick: () => {
+              console.log("Admin clicked");
+              navigate("/admin");
+            },
+            style: {
+              backgroundColor: "transparent",
+              color: "white",
+            },
+          },
+        ]
+      : []),
     {
       type: "divider",
-      style: { backgroundColor: "rgba(255,255,255,0.1)" }
+      style: { backgroundColor: "rgba(255,255,255,0.1)" },
     },
     {
       label: (
@@ -168,7 +184,6 @@ const Header: React.FC = () => {
       },
     },
   ];
-
 
   const handleClickOutside = (event) => {
     if (inputRef.current && !inputRef.current.contains(event.target)) {
@@ -243,13 +258,12 @@ const Header: React.FC = () => {
             )} */}
             {/* {!isTabletOrMobile && ( */}
             <>
-              
-                <Button
-                  type="primary"
-                  style={{ backgroundColor: "#f3ea28", color: "black" }}
-                  className="action-button"
-                >
-                  <Link to="/movie" className="action-button">
+              <Button
+                type="primary"
+                style={{ backgroundColor: "#f3ea28", color: "black" }}
+                className="action-button"
+              >
+                <Link to="/movie" className="action-button">
                   <img
                     src="https://cinestar.com.vn/assets/images/ic-ticket.svg"
                     alt="ticket"
@@ -257,9 +271,8 @@ const Header: React.FC = () => {
                   />
 
                   <span>ĐẶT VÉ NGAY</span>
-                  </Link>
-                </Button>
-              
+                </Link>
+              </Button>
             </>
             {/* )} */}
           </div>
@@ -303,19 +316,19 @@ const Header: React.FC = () => {
               )}
             </div>
             {isAuthenticated ? (
-              <Dropdown 
-                menu={{ 
+              <Dropdown
+                menu={{
                   items: userMenuItems,
                   style: {
                     backgroundColor: "#0d0d1f",
                     padding: "2px 0",
                     border: "1px solid rgba(255,255,255,0.1)",
                     borderRadius: "8px",
-                  }
-                }} 
+                  },
+                }}
                 placement="bottomRight"
                 overlayStyle={{
-                  minWidth: "200px"
+                  minWidth: "200px",
                 }}
               >
                 <div className="user-actions">
@@ -400,15 +413,17 @@ const Header: React.FC = () => {
                         </Row>
                       </Menu>
                     }
-                    trigger={['hover']}
+                    trigger={["hover"]}
                   >
                     <div style={{ pointerEvents: "auto" }}>
                       <Typography.Text
                         style={{
-                          color: isActive("/books-ticket") ? "#f3ea28" : "white",
+                          color: isActive("/books-ticket")
+                            ? "#f3ea28"
+                            : "white",
                           cursor: "default",
                           fontSize: 16,
-                          userSelect: "none"
+                          userSelect: "none",
                         }}
                         className="choose-theater-text"
                       >
@@ -425,7 +440,7 @@ const Header: React.FC = () => {
                   isActive("/showtimes") ? "active" : ""
                 }`}
                 style={{
-                  color: isActive("/showtimes") ? "#f3ea28" : "white"
+                  color: isActive("/showtimes") ? "#f3ea28" : "white",
                 }}
               >
                 Lịch chiếu
@@ -438,7 +453,7 @@ const Header: React.FC = () => {
                   isActive("/promotions") ? "active" : ""
                 }`}
                 style={{
-                  color: isActive("/promotions") ? "#f3ea28" : "white"
+                  color: isActive("/promotions") ? "#f3ea28" : "white",
                 }}
               >
                 Khuyến mãi
@@ -449,7 +464,7 @@ const Header: React.FC = () => {
                   isActive("/thue-su-kien") ? "active" : ""
                 }`}
                 style={{
-                  color: isActive("/thue-su-kien") ? "#f3ea28" : "white"
+                  color: isActive("/thue-su-kien") ? "#f3ea28" : "white",
                 }}
               >
                 Thuê sự kiện
@@ -460,7 +475,7 @@ const Header: React.FC = () => {
                   isActive("/entertaiment") ? "active" : ""
                 }`}
                 style={{
-                  color: isActive("/entertaiment") ? "#f3ea28" : "white"
+                  color: isActive("/entertaiment") ? "#f3ea28" : "white",
                 }}
               >
                 Tất cả các giải trí
@@ -471,7 +486,7 @@ const Header: React.FC = () => {
                   isActive("/about") ? "active" : ""
                 }`}
                 style={{
-                  color: isActive("/about") ? "#f3ea28" : "white"
+                  color: isActive("/about") ? "#f3ea28" : "white",
                 }}
                 id="about11"
               >

@@ -23,7 +23,7 @@ const PaymentFormDetail = () => {
   const location = useLocation();
   const movieInfo = location.state;
   const navigate = useNavigate();
-  
+
   const [fullName, setFullName] = useState("");
   const [phone, setPhone] = useState("");
   const [email, setEmail] = useState("");
@@ -68,10 +68,10 @@ const PaymentFormDetail = () => {
       closable={false}
       maskClosable={false}
       keyboard={false}
-      cancelButtonProps={{ style: { display: 'none' } }}
+      cancelButtonProps={{ style: { display: "none" } }}
     >
-      <div style={{ textAlign: 'center', padding: '20px 0' }}>
-        <h3 style={{ marginBottom: '16px', color: '#ff4d4f' }}>
+      <div style={{ textAlign: "center", padding: "20px 0" }}>
+        <h3 style={{ marginBottom: "16px", color: "#ff4d4f" }}>
           Phiên đặt vé đã hết hạn!
         </h3>
         <p>Vui lòng thực hiện đặt vé lại</p>
@@ -81,61 +81,67 @@ const PaymentFormDetail = () => {
 
   useEffect(() => {
     const searchParams = new URLSearchParams(window.location.search);
-    const resultCode = searchParams.get('resultCode');
-    const orderId = searchParams.get('orderId');
-    const amount = searchParams.get('amount');
-    const transId = searchParams.get('transId');
+    const resultCode = searchParams.get("resultCode");
+    const orderId = searchParams.get("orderId");
+    const amount = searchParams.get("amount");
+    const transId = searchParams.get("transId");
 
     // Get stored booking data
-    const storedBooking = JSON.parse(localStorage.getItem("currentBooking") || "{}");
+    const storedBooking = JSON.parse(
+      localStorage.getItem("currentBooking") || "{}"
+    );
     const storedMovieInfo = storedBooking.movieInfo || {};
 
-    if (resultCode === '0') { // Payment successful
+    if (resultCode === "0") {
+      // Payment successful
       setPaymentStatus({
         success: true,
-        orderId: orderId || '',
-        transId: transId || '',
-        amount: amount || '',
+        orderId: orderId || "",
+        transId: transId || "",
+        amount: amount || "",
         details: {
-          paymentStatus: 'PAID',
-          theaterName: storedMovieInfo.cinemaName || '',
+          paymentStatus: "PAID",
+          theaterName: storedMovieInfo.cinemaName || "",
           totalAmount: Number(amount) || 0,
-          bookingNumber: orderId || '',
-          roomName: storedMovieInfo.roomName || '',
-          movieTitle: storedMovieInfo.title || '',
-          showtime: storedMovieInfo.showTime || ''
-        }
+          bookingNumber: orderId || "",
+          roomName: storedMovieInfo.roomName || "",
+          movieTitle: storedMovieInfo.title || "",
+          showtime: storedMovieInfo.showTime || "",
+        },
       });
       setActiveStep(3);
-    } else if (resultCode) { // Payment failed
+    } else if (resultCode) {
+      // Payment failed
       setPaymentStatus({
         success: false,
-        orderId: '',
-        transId: '',
-        amount: '',
+        orderId: "",
+        transId: "",
+        amount: "",
         details: {
-          paymentStatus: 'FAILED',
-          theaterName: '',
+          paymentStatus: "FAILED",
+          theaterName: "",
           totalAmount: 0,
-          bookingNumber: '',
-          roomName: '',
-          movieTitle: '',
-          showtime: ''
-        }
+          bookingNumber: "",
+          roomName: "",
+          movieTitle: "",
+          showtime: "",
+        },
       });
       setActiveStep(3);
     }
   }, []);
 
   useEffect(() => {
-    const storedBooking = JSON.parse(localStorage.getItem("currentBooking") || "{}");
+    const storedBooking = JSON.parse(
+      localStorage.getItem("currentBooking") || "{}"
+    );
     const expireAt = storedBooking.expireAt;
 
     if (expireAt) {
       const updateTimer = () => {
         const now = Date.now();
         const remaining = Math.max(0, Math.floor((expireAt - now) / 1000));
-        
+
         if (remaining === 0) {
           setShowTimeoutModal(true);
           // Clear the booking from localStorage
@@ -144,7 +150,7 @@ const PaymentFormDetail = () => {
           // You might want to add an API call here to release the seats
           return;
         }
-        
+
         setTimeRemaining(remaining);
       };
 
@@ -153,7 +159,10 @@ const PaymentFormDetail = () => {
 
       return () => {
         clearInterval(timerId);
-        const remainingTime = Math.max(0, Math.floor((expireAt - Date.now()) / 1000));
+        const remainingTime = Math.max(
+          0,
+          Math.floor((expireAt - Date.now()) / 1000)
+        );
         if (remainingTime === 0) {
           localStorage.removeItem("currentBooking");
         }
@@ -166,11 +175,14 @@ const PaymentFormDetail = () => {
   const handleVoucherCancel = () => setIsVoucherModalVisible(false);
   const handleBack = () => setActiveStep(1);
   const handleVoucherContinue = () => setIsVoucherModalVisible(false);
-  
-  const handleNameChange = (e: React.ChangeEvent<HTMLInputElement>) => setFullName(e.target.value);
-  const handlePhoneChange = (e: React.ChangeEvent<HTMLInputElement>) => setPhone(e.target.value);
-  const handleEmailChange = (e: React.ChangeEvent<HTMLInputElement>) => setEmail(e.target.value);
-  
+
+  const handleNameChange = (e: React.ChangeEvent<HTMLInputElement>) =>
+    setFullName(e.target.value);
+  const handlePhoneChange = (e: React.ChangeEvent<HTMLInputElement>) =>
+    setPhone(e.target.value);
+  const handleEmailChange = (e: React.ChangeEvent<HTMLInputElement>) =>
+    setEmail(e.target.value);
+
   const createBooking = async () => {
     try {
       const bookingData = {
@@ -183,28 +195,30 @@ const PaymentFormDetail = () => {
         seatIds: movieInfo.selectedSeats.map((seat) => seat.id),
         user: user,
       };
-  
+
       const bookingResponse = await axios.post(
         "http://54.83.174.210:8085/api/bookings/create",
         bookingData
       );
-     
+
       const bookingId = bookingResponse.data.id;
-  
+
       // Store booking data in localStorage for later use
-      localStorage.setItem("currentBooking", JSON.stringify({
-        bookingId,
-        amount: finalPrice,
-        movieInfo: movieInfo
-      }));
-  
+      localStorage.setItem(
+        "currentBooking",
+        JSON.stringify({
+          bookingId,
+          amount: finalPrice,
+          movieInfo: movieInfo,
+        })
+      );
+
       return bookingResponse.data;
     } catch (error) {
       console.error("Error creating booking:", error);
       throw error;
     }
   };
-  
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -223,13 +237,15 @@ const PaymentFormDetail = () => {
   const handleMomoPayment = async () => {
     try {
       setIsLoading(true);
-      const currentBooking = JSON.parse(localStorage.getItem("currentBooking") || "{}");
-      
+      const currentBooking = JSON.parse(
+        localStorage.getItem("currentBooking") || "{}"
+      );
+
       const paymentData = {
         orderInfo: "Thanh toán vé xem phim",
         amount: finalPrice.toString(),
         bookingId: currentBooking.bookingId,
-        returnUrl: `${window.location.origin}/payment`, 
+        returnUrl: `${window.location.origin}/payment`,
       };
 
       const response = await axios.post(
@@ -261,11 +277,14 @@ const PaymentFormDetail = () => {
     <div className="skystar-payment-container">
       <TimeoutModal />
       <div className="skystar-payment-header">
-        <h1 className={`skystar-payment-title ${activeStep === 3 ? 'success-message' : ''}`}>
-          {activeStep === 3 
+        <h1
+          className={`skystar-payment-title ${
+            activeStep === 3 ? "success-message" : ""
+          }`}
+        >
+          {activeStep === 3
             ? "CHÚC MỪNG BẠN ĐÃ THANH TOÁN THÀNH CÔNG"
-            : "TRANG THANH TOÁN"
-          }
+            : "TRANG THANH TOÁN"}
         </h1>
         <ul className="skystar-payment-steps">
           <li className={activeStep === 1 ? "active" : ""}>
@@ -379,8 +398,10 @@ const PaymentFormDetail = () => {
           <div className="skystar-payment-step2">
             <div className="payment-methods-container">
               <div
-                className={`payment-method-box ${selectedPayment === 'momo' ? 'selected' : ''}`}
-                onClick={() => setSelectedPayment('momo')}
+                className={`payment-method-box ${
+                  selectedPayment === "momo" ? "selected" : ""
+                }`}
+                onClick={() => setSelectedPayment("momo")}
                 style={{ cursor: "pointer" }}
               >
                 <img
@@ -389,19 +410,33 @@ const PaymentFormDetail = () => {
                 />
                 <p>Thanh toán qua ví Momo</p>
               </div>
-              <div 
-                className={`payment-method-box ${selectedPayment === 'zalopay' ? 'selected' : ''}`}
-                onClick={() => setSelectedPayment('zalopay')}
+              <div
+                className={`payment-method-box ${
+                  selectedPayment === "zalopay" ? "selected" : ""
+                }`}
+                onClick={() => setSelectedPayment("zalopay")}
+                style={{ opacity: 0.5, cursor: "not-allowed" }}
               >
-                <img src="/zalopay-logo.png" alt="ZaloPay" />
-                <p>Thanh toán qua ví ZaloPay</p>
+                <img
+                  src="https://cdn.haitrieu.com/wp-content/uploads/2022/10/Logo-ZaloPay-Square.png"
+                  style={{ width: "35px", height: "35px", marginLeft: "12px" }}
+                  alt="ZaloPay"
+                />
+                <p>Thanh toán qua ví ZaloPay (Sắp ra mắt)</p>
               </div>
-              <div 
-                className={`payment-method-box ${selectedPayment === 'vnpay' ? 'selected' : ''}`}
-                onClick={() => setSelectedPayment('vnpay')}
+              <div
+                className={`payment-method-box ${
+                  selectedPayment === "vnpay" ? "selected" : ""
+                }`}
+                onClick={() => setSelectedPayment("vnpay")}
+                style={{ opacity: 0.5, cursor: "not-allowed" }}
               >
-                <img src="/vnpay-logo.png" alt="VNPay" />
-                <p>Thanh toán qua VNPay</p>
+                <img
+                  src="https://cdn.brandfetch.io/vnpay.vn/fallback/lettermark/theme/dark/h/256/w/256/icon?c=1bfwsmEH20zzEfSNTed"
+                  style={{ width: "35px", height: "35px", marginLeft: "12px" }}
+                  alt="VNPay"
+                />
+                <p>Thanh toán qua VNPay (Sắp ra mắt)</p>
               </div>
               <div
                 className="payment-method-box voucher-box"
@@ -419,7 +454,7 @@ const PaymentFormDetail = () => {
                 </p>
               </div>
             </div>
-           
+
             <Modal
               title="Áp dụng ưu đãi"
               open={isVoucherModalVisible}
@@ -466,12 +501,11 @@ const PaymentFormDetail = () => {
               </div>
             </Modal>
             <div className="payment-total-section1">
-              
               <div className="payment-buttons">
                 <button onClick={handleBack} className="skystar-form-back">
                   Quay lại
                 </button>
-                <button 
+                <button
                   className="payment-confirm-btn"
                   onClick={handleMomoPayment}
                   disabled={!selectedPayment}
@@ -480,7 +514,6 @@ const PaymentFormDetail = () => {
                 </button>
               </div>
             </div>
-            
           </div>
         )}
         {activeStep === 3 && (
@@ -498,17 +531,20 @@ const PaymentFormDetail = () => {
               </div>
             ) : paymentStatus.details.paymentStatus === "PAID" ? (
               <div className="payment-success-content">
-           
-            
                 <div className="skystar-payment-movie-info">
                   <div className="info-row movie-title-row">
                     <div className="title-hold">
                       <div className="payment-movie-details">
-                        <span className="movie-name">{paymentStatus.details.movieTitle}</span>
+                        <span className="movie-name">
+                          {paymentStatus.details.movieTitle}
+                        </span>
                         <span className="movie-genre">
                           {(() => {
-                            const storedBooking = JSON.parse(localStorage.getItem("currentBooking") || "{}");
-                            const storedMovieInfo = storedBooking.movieInfo || {};
+                            const storedBooking = JSON.parse(
+                              localStorage.getItem("currentBooking") || "{}"
+                            );
+                            const storedMovieInfo =
+                              storedBooking.movieInfo || {};
                             return storedMovieInfo.movieType || "Phim";
                           })()}
                         </span>
@@ -518,10 +554,14 @@ const PaymentFormDetail = () => {
 
                   <div className="info-row cinema-info-row">
                     <div className="cinema-details">
-                      <span className="cinema-name">{paymentStatus.details.theaterName}</span>
+                      <span className="cinema-name">
+                        {paymentStatus.details.theaterName}
+                      </span>
                       <span className="cinema-address">
                         {(() => {
-                          const storedBooking = JSON.parse(localStorage.getItem("currentBooking") || "{}");
+                          const storedBooking = JSON.parse(
+                            localStorage.getItem("currentBooking") || "{}"
+                          );
                           const storedMovieInfo = storedBooking.movieInfo || {};
                           return storedMovieInfo.cinemaAddress || "";
                         })()}
@@ -532,24 +572,32 @@ const PaymentFormDetail = () => {
                   <div className="info-row showtime-info-row">
                     <div className="showtime-details">
                       <span className="time-label">Thời gian</span>
-                      <span className="time-value">{paymentStatus.details.showtime}</span>
+                      <span className="time-value">
+                        {paymentStatus.details.showtime}
+                      </span>
                     </div>
                     <div className="booking-number-details">
                       <span className="time-label">Mã đặt vé</span>
-                      <span className="time-value">{paymentStatus.details.bookingNumber}</span>
+                      <span className="time-value">
+                        {paymentStatus.details.bookingNumber}
+                      </span>
                     </div>
                   </div>
 
                   <div className="info-row room-info-row">
                     <div className="room-details">
                       <span className="detail-label">Phòng chiếu</span>
-                      <span className="detail-value">{paymentStatus.details.roomName}</span>
+                      <span className="detail-value">
+                        {paymentStatus.details.roomName}
+                      </span>
                     </div>
                     <div className="ticket-count">
                       <span className="detail-label">Số vé</span>
                       <span className="detail-value">
                         {(() => {
-                          const storedBooking = JSON.parse(localStorage.getItem("currentBooking") || "{}");
+                          const storedBooking = JSON.parse(
+                            localStorage.getItem("currentBooking") || "{}"
+                          );
                           const storedMovieInfo = storedBooking.movieInfo || {};
                           return storedMovieInfo.selectedSeats?.length || 0;
                         })()}
@@ -559,9 +607,14 @@ const PaymentFormDetail = () => {
                       <span className="detail-label">Loại vé</span>
                       <span className="detail-value">
                         {(() => {
-                          const storedBooking = JSON.parse(localStorage.getItem("currentBooking") || "{}");
+                          const storedBooking = JSON.parse(
+                            localStorage.getItem("currentBooking") || "{}"
+                          );
                           const storedMovieInfo = storedBooking.movieInfo || {};
-                          return storedMovieInfo.selectedSeats?.[0]?.seatType || "Thường";
+                          return (
+                            storedMovieInfo.selectedSeats?.[0]?.seatType ||
+                            "Thường"
+                          );
                         })()}
                       </span>
                     </div>
@@ -569,38 +622,58 @@ const PaymentFormDetail = () => {
                       <span className="detail-label">Số ghế</span>
                       <span className="detail-value">
                         {(() => {
-                          const storedBooking = JSON.parse(localStorage.getItem("currentBooking") || "{}");
+                          const storedBooking = JSON.parse(
+                            localStorage.getItem("currentBooking") || "{}"
+                          );
                           const storedMovieInfo = storedBooking.movieInfo || {};
-                          return storedMovieInfo.selectedSeats?.map(seat => seat.seatNumber).join(", ") || "";
+                          return (
+                            storedMovieInfo.selectedSeats
+                              ?.map((seat) => seat.seatNumber)
+                              .join(", ") || ""
+                          );
                         })()}
                       </span>
                     </div>
                   </div>
 
                   {(() => {
-                    const storedBooking = JSON.parse(localStorage.getItem("currentBooking") || "{}");
+                    const storedBooking = JSON.parse(
+                      localStorage.getItem("currentBooking") || "{}"
+                    );
                     const storedMovieInfo = storedBooking.movieInfo || {};
-                    return storedMovieInfo.selectedProducts && storedMovieInfo.selectedProducts.length > 0 && (
-                      <div className="info-row concession-info-row">
-                        <div className="concession-details">
-                          <span className="detail-label">Bắp nước:</span>
-                          <span className="detail-value">
-                            {storedMovieInfo.selectedProducts.map((product, index) => (
-                              <span key={index}>
-                                {product.name} x {product.quantity}
-                                {index < storedMovieInfo.selectedProducts.length - 1 ? ", " : ""}
-                              </span>
-                            ))}
-                          </span>
+                    return (
+                      storedMovieInfo.selectedProducts &&
+                      storedMovieInfo.selectedProducts.length > 0 && (
+                        <div className="info-row concession-info-row">
+                          <div className="concession-details">
+                            <span className="detail-label">Bắp nước:</span>
+                            <div
+                              className="detail-value"
+                              style={{
+                                display: "flex",
+                                flexDirection: "column",
+                                gap: "4px",
+                              }}
+                            >
+                              {storedMovieInfo.selectedProducts.map(
+                                (product, index) => (
+                                  <span key={index}>
+                                    {product.name} x {product.quantity}
+                                  </span>
+                                )
+                              )}
+                            </div>
+                          </div>
                         </div>
-                      </div>
+                      )
                     );
                   })()}
-
-                  
                 </div>
                 <div className="payment-actions">
-                  <button onClick={() => navigate("/")} className="back-to-home">
+                  <button
+                    onClick={() => navigate("/")}
+                    className="back-to-home"
+                  >
                     Về trang chủ
                   </button>
                 </div>
@@ -705,12 +778,13 @@ const PaymentFormDetail = () => {
                 </div>
               </div>
               <div className="payment-total-section">
-              <div className="payment-total-amount">
-                <span className="total-label">TỔNG TIỀN THANH TOÁN:</span>
-                <span className="total-value">{finalPrice.toLocaleString('vi-VN')} VNĐ</span>
+                <div className="payment-total-amount">
+                  <span className="total-label">TỔNG TIỀN THANH TOÁN:</span>
+                  <span className="total-value">
+                    {finalPrice.toLocaleString("vi-VN")} VNĐ
+                  </span>
+                </div>
               </div>
-            </div>
-             
             </div>
           </div>
         )}
