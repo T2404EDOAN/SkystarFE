@@ -166,7 +166,7 @@ const UserInfo: React.FC = () => {
     try {
       // Verify mật khẩu cũ
       const verifyResponse = await axios.get(
-        `http://localhost:8081/api/users/${user.id}`
+        `http://54.83.174.210:8085/api/users/${user.id}`
       );
 
       // Kiểm tra mật khẩu cũ

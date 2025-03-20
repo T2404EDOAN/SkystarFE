@@ -1,7 +1,6 @@
 .box_about {
-  
   width: 100%;
-  
+
   color: #f8fafc;
 }
 
@@ -13,7 +12,7 @@
 
 .image,
 .contact-image {
-  width: 100%;
+  width: 1200px;
   height: 440px;
   object-fit: cover;
   border-radius: 1px;
@@ -62,7 +61,7 @@
   font-size: 16px;
   line-height: 1.5;
 }
-.text-des-112{
+.text-des-112 {
   font-size: 30px;
 }
 .des_about_page {
@@ -159,14 +158,14 @@
   font-size: 16px;
   line-height: 1.6;
   margin-bottom: 8px;
-  
 }
 
 .main_left img {
   width: 570px;
 }
 @media (max-width: 1024px) {
-  .des_ab_1, .des_ab_3 {
+  .des_ab_1,
+  .des_ab_3 {
     width: 90%;
   }
   .contact-text-overlay {
@@ -180,10 +179,10 @@
   .main_left img {
     width: 100%;
   }
-  .des_about_page{
+  .des_about_page {
     width: 295px;
   }
-  .text-des-112{
+  .text-des-112 {
     font-size: 20px;
   }
 }
@@ -206,11 +205,10 @@
   .contact-text-overlay p {
     font-size: 14px;
   }
-  .des_about_page{
+  .des_about_page {
     width: 235px;
-  
   }
-  .des_about_page{
+  .des_about_page {
     padding-top: 1px;
   }
   .contact-text-overlay {
@@ -219,7 +217,8 @@
     left: 50%;
     transform: translate(-50%, -50%);
   }
-  .des_ab_1, .des_ab_3 {
+  .des_ab_1,
+  .des_ab_3 {
     width: 100%;
   }
   .main_left img {
